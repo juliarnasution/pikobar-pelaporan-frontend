@@ -118,6 +118,21 @@ export default {
       return error.response
     }
   },
+  async exportExcelDailyReport({
+    commit
+  }, params) {
+    try {
+      const response = await request({
+        url: `/api/reports/daily-report-xls`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async importExcel({ commit }, data) {
     try {
       const response = await requestServer('/api/cases-import', 'POST', data)

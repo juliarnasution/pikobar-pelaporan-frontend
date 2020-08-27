@@ -21,7 +21,7 @@
         <p>{{ $t('label.latest_patient_status') }}</p>
       </v-col>
       <v-col>
-        <v-row><final-result :final-result="detail.final_result" /> Per-Tanggal {{ detail.last_date_status_patient ? this.$moment(detail.last_date_status_patient).format('DD MMMM YYYY'):'-' }}</v-row>
+        <v-row><final-result :final-result="detail.last_history.final_result" /> Per-Tanggal {{ detail.last_date_status_patient ? this.$moment(detail.last_date_status_patient).format('DD MMMM YYYY'):'-' }}</v-row>
       </v-col>
     </v-row>
     <v-row class="row-detail">

@@ -194,7 +194,7 @@ export default {
     },
     async handleExport() {
       this.loading = true
-      const response = await this.$store.dispatch('statistic/exportAgregateCriteriaExcel', this.listQuery)
+      const response = await this.$store.dispatch('reports/exportExcelDailyReport', this.listQuery)
       const dateNow = Date.now()
       const fileName = `${this.$t('label.patient_recap')} ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       await FileSaver.saveAs(response, fileName)

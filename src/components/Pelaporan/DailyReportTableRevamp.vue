@@ -112,9 +112,9 @@
           <tr>
             <td>&nbsp;</td>
             <td>{{ $t('label.number_of_contact_confirmation_cases') }}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>{{ data ? data.confirmedContact.aDay:0 }}</td>
+            <td>{{ data ? data.confirmedContact.aWeek:0 }}</td>
+            <td>{{ data ? data.confirmedContact.aMonth:0 }}</td>
           </tr>
           <tr>
             <td>&nbsp;</td>
