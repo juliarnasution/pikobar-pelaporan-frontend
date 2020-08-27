@@ -195,8 +195,13 @@ export default {
     async handleExport() {
       this.loading = true
       const response = await this.$store.dispatch('reports/exportExcelDailyReport', this.listQuery)
-      const dateNow = Date.now()
-      const fileName = `${this.$t('label.patient_recap')} ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      let reportingDate
+      if (this.listQuery.date.length > 1) {
+        reportingDate = this.$moment(this.listQuery.date).format('YYYY/MM/DD')
+      } else {
+        reportingDate = this.$moment().format('YYYY/MM/DD')
+      }
+      const fileName = `${this.fullName} - ${reportingDate} - ${this.fullName}.xlsx`
       await FileSaver.saveAs(response, fileName)
       this.loading = false
     },
