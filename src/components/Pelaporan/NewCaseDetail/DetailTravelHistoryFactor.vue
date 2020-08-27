@@ -89,6 +89,9 @@
                   <v-divider />
                 </div>
               </div>
+              <div v-else class="text-center">
+                -
+              </div>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -146,6 +149,9 @@
                   </v-row>
                   <v-divider />
                 </div>
+              </div>
+              <div v-else class="text-center">
+                -
               </div>
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -240,6 +246,9 @@
                   </v-row>
                   <v-divider />
                 </div>
+              </div>
+              <div v-else class="text-center">
+                -
               </div>
             </v-expansion-panel-content>
           </v-expansion-panel>

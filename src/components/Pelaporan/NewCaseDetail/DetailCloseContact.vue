@@ -117,6 +117,9 @@
       <v-divider />
     </div>
   </div>
+  <div v-else class="text-center">
+    -
+  </div>
 </template>
 <script>
 import { completeAddress } from '@/utils/utilsFunction'
