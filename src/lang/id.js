@@ -825,7 +825,8 @@ export default {
     survei_label: 'Kami tim pikobar ingin mengetahui persepsi para pengguna Aplikasi Pelaporan Pikobar. Partisipasi anda sangat penting karena hasil survei ini akan menjadi bahan masukkan/evaluasi bagi kami untuk meningkatkan layanan saat ini. Yuk, bantu isi survei berikut!',
     tight_contact: 'Kontak Erat',
     where_is_patient_isolation_quarantine_location: 'Dimana Lokasi Isolasi/Karantina Pasien',
-    hp_contact_number: 'No.HP / Yang Dapat Dihubungi'
+    hp_contact_number: 'No.HP / Yang Dapat Dihubungi',
+    search_author_district_health_office: 'Cari berdasarkan Author Dinkes Kota/Kab'
   },
   success: {
     login_success: 'Login Berhasil',

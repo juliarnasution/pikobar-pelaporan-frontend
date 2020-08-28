@@ -9,7 +9,7 @@
         <p>{{ $t('label.travel_history_label_1') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.travelling_history_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.travelling_history_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row>
@@ -106,7 +106,7 @@
         <p>{{ $t('label.travel_history_label_2') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.visited_local_area_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.visited_local_area_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row>
@@ -167,7 +167,7 @@
         <p>{{ $t('label.travel_history_label_3') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.has_visited_public_place ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.has_visited_public_place ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row>

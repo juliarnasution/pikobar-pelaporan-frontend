@@ -33,7 +33,7 @@
         <p>{{ $t('label.there_symptoms') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.there_are_symptoms ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.there_are_symptoms ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -81,7 +81,7 @@
         <p>{{ $t('label.diagnosis_ards') }}</p>
       </v-col>
       <v-col>
-        <p>{{ answerList[detail.last_history.diagnosis_ards].text }}</p>
+        <p><answer-list :answer="detail.last_history.diagnosis_ards" /></p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -93,7 +93,7 @@
         <p>{{ $t('label.diagnosis_covid') }}</p>
       </v-col>
       <v-col>
-        <p>{{ answerList[detail.last_history.diagnosis_covid].text }}</p>
+        <p><answer-list :answer="detail.last_history.diagnosis_covid" /></p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -105,7 +105,7 @@
         <p>{{ $t('label.diagnosis_pneumonia') }}</p>
       </v-col>
       <v-col>
-        <p>{{ answerList[detail.last_history.diagnosis_pneumonia].text }}</p>
+        <p><answer-list :answer="detail.last_history.diagnosis_pneumonia" /></p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -123,18 +123,12 @@
   </div>
 </template>
 <script>
-import { answerList } from '@/utils/constantVariable'
 export default {
   name: 'DetailCaseHistory',
   props: {
     detail: {
       type: Object,
       default: null
-    }
-  },
-  data() {
-    return {
-      answerList: answerList
     }
   },
   methods: {

@@ -1,133 +1,85 @@
 <template>
   <div>
-    <v-card
-      outlined
-    >
-      <v-row align="center" justify="space-between">
-        <v-col>
-          <div class="title ml-4">
-            {{ $t('label.patient_recap') }} <span>{{ fullName }} {{ this.$moment().format('DD MMMM YYYY HH:mm') }} WIB</span>
-          </div>
-        </v-col>
-      </v-row>
-      <hr class="table-divider">
-      <v-row align="center" justify="space-between">
-        <v-col>
-          <div class="title ml-4">
-            <v-row>
-              <v-col>
-                <input-date-picker
-                  :format-date="formatDate"
-                  :label="$t('label.input_date_filters')"
-                  :date-value="listQuery.date"
-                  :value-date.sync="listQuery.date"
-                  @changeDate="listQuery.date = $event"
-                />
-              </v-col>
-              <v-col>
-                <v-btn
-                  color="#4f4f4f"
-                  class="ml-5 btn-reset"
-                  @click="onReset"
-                >
-                  {{ $t('label.reset') }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </div>
-        </v-col>
-        <v-col cols="12" sm="6" class="align-right">
-          <v-btn
-            class="mr-5"
-            style="float: right;"
-            color="#b3e2cd"
-            :loading="loading"
-            @click="handleVisualReport"
-          >
-            <v-icon left>mdi-upload</v-icon>
-            {{ $t('label.export_png') }}
-          </v-btn>
-          <v-btn
-            class="mr-5"
-            style="float: right;"
-            color="#b3e2cd"
-            :loading="loading"
-            @click="handleExport"
-          >
-            <v-icon left>mdi-upload</v-icon>
-            {{ $t('label.export_xls') }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-card>
-    <div ref="printMe">
+    <v-row>
+      <v-col v-if="rolesWidget['superadmin'].includes(roles[0])" cols="5">
+        <v-autocomplete
+          v-model="listQuery.address_district_code"
+          :items="listDistrictCity"
+          :label="$t('label.search_author_district_health_office')"
+          prepend-inner-icon="search"
+          item-value="kota_kode"
+          item-text="kota_nama"
+          single-line
+          solo
+          autocomplete
+        />
+      </v-col>
+      <v-col>
+        <input-date-picker
+          :format-date="formatDate"
+          :label="$t('label.choose_date')"
+          :date-value="listQuery.date"
+          :value-date.sync="listQuery.date"
+          @changeDate="listQuery.date = $event"
+        />
+      </v-col>
+      <v-col>
+        <v-btn
+          color="#27ae60"
+          class="ml-5 btn-reset"
+          @click="handleSearch"
+        >
+          {{ $t('label.look_for_it') }}
+        </v-btn>
+        <v-btn
+          color="#4f4f4f"
+          class="ml-5 btn-reset"
+          @click="onReset"
+        >
+          {{ $t('label.reset') }}
+        </v-btn>
+      </v-col>
+    </v-row>
+    <div>
       <v-card
         outlined
       >
-        <daily-report-table-revamp :data="data" :date="listQuery.date" />
-        <!-- <daily-report-table
-          :list="list"
-          :table-headers="headers"
-          :list-query="listQuery"
-        /> -->
+        <v-row>
+          <v-col cols="8" sm="8">
+            <div class="title ml-3">
+              {{ $t('label.patient_recap') }} <span>{{ fullName }} {{ this.$moment().format('DD MMMM YYYY HH:mm') }} WIB</span>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="4" class="align-right">
+            <v-btn
+              class="mr-5"
+              style="float: right;min-width:90px;"
+              outlined
+              color="#27ae60"
+              :loading="loading"
+              @click="handleVisualReport"
+            >
+              <v-icon left>mdi-upload</v-icon>
+              {{ $t('label.export_png') }}
+            </v-btn>
+            <v-btn
+              class="mr-5"
+              style="float: right;min-width:90px;"
+              outlined
+              color="#27ae60"
+              :loading="loading"
+              @click="handleExport"
+            >
+              <v-icon left>mdi-upload</v-icon>
+              {{ $t('label.export_xls') }}
+            </v-btn>
+          </v-col>
+        </v-row>
+        <hr class="table-divider">
+        <div ref="printMe">
+          <daily-report-table-revamp :data="data" :date="listQuery.date" />
+        </div>
       </v-card>
-      <!-- <v-row>
-        <v-col
-          auto
-        >
-          <card-repot-daily
-            :title="'Distribusi Total OTG'"
-            :total="listTotal.otg_total"
-            :process="listTotal.otg_proses"
-            :done="listTotal.otg_selesai"
-            :gender="listTotal.otg_by_gender"
-            :nationality="listTotal.otg_by_nationality"
-            :age="listTotal.otg_by_usia"
-          />
-        </v-col>
-        <v-col
-          auto
-        >
-          <card-repot-daily
-            :title="'Distribusi Total ODP'"
-            :active-color="'#2D9CDB'"
-            :total="listTotal.odp_total"
-            :process="listTotal.odp_proses"
-            :done="listTotal.odp_selesai"
-            :gender="listTotal.odp_by_gender"
-            :nationality="listTotal.odp_by_nationality"
-            :age="listTotal.odp_by_usia"
-          />
-        </v-col>
-        <v-col
-          auto
-        >
-          <card-repot-daily
-            :title="'Distribusi Total PDP'"
-            :active-color="'#F2C94C'"
-            :total="listTotal.pdp_total"
-            :process="listTotal.pdp_proses"
-            :done="listTotal.pdp_selesai"
-            :gender="listTotal.pdp_by_gender"
-            :nationality="listTotal.pdp_by_nationality"
-            :age="listTotal.pdp_by_usia"
-          />
-        </v-col>
-        <v-col
-          auto
-        >
-          <card-repot-daily
-            :title="'Distribusi Total Positif'"
-            :active-color="'#EB5757'"
-            :total="listTotal.positif_total"
-            :process="listTotal.positif_proses"
-            :done="listTotal.positif_selesai"
-            :gender="listTotal.positif_by_gender"
-            :nationality="listTotal.positif_by_nationality"
-            :age="listTotal.positif_by_usia"
-          />
-        </v-col>
-      </v-row> -->
     </div>
   </div>
 </template>
@@ -136,11 +88,13 @@
 import { mapGetters } from 'vuex'
 import FileSaver from 'file-saver'
 import { formatDatetime } from '@/utils/parseDatetime'
+import { rolesWidget } from '@/utils/constantVariable'
 
 export default {
   name: 'DailyReport',
   data() {
     return {
+      rolesWidget,
       formatDate: 'YYYY-MM-DD',
       loading: false,
       headers: [
@@ -156,6 +110,7 @@ export default {
         { text: this.$t('label.grand_total').toUpperCase(), value: 'grand_total' }
       ],
       listQuery: {
+        address_district_code: '',
         date: ''
       },
       data: null
@@ -165,6 +120,9 @@ export default {
     ...mapGetters('user', [
       'roles',
       'fullName'
+    ]),
+    ...mapGetters('region', [
+      'listDistrictCity'
     ])
   },
   watch: {
@@ -184,6 +142,7 @@ export default {
       this.headers.unshift({ text: this.$t('label.select_district').toUpperCase(), value: 'kotkabkec' })
     }
     this.handleSearch()
+    await this.$store.dispatch('region/getListDistrictCity')
   },
   methods: {
     async handleSearch() {
@@ -218,6 +177,7 @@ export default {
       this.loading = false
     },
     onReset() {
+      this.listQuery.address_district_code = ''
       this.listQuery.date = ''
       this.handleSearch()
     }
@@ -227,7 +187,7 @@ export default {
 
 <style scoped>
   .btn-reset {
-    min-width: 37px!important;
+    min-width: 120px!important;
     height: 46px !important;
     color: white !important;
   }

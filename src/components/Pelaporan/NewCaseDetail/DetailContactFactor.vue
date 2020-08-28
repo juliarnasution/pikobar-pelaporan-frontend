@@ -9,7 +9,7 @@
         <p>{{ $t('label.primary_contact_label_1') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.close_contacted_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.close_contacted_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row>
@@ -123,7 +123,7 @@
         <p>{{ $t('label.primary_contact_label_2') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.close_contact_heavy_ispa_group ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.close_contact_heavy_ispa_group ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -135,7 +135,7 @@
         <p>{{ $t('label.primary_contact_label_3') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.close_contact_have_pets ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.close_contact_have_pets ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -147,7 +147,7 @@
         <p>{{ $t('label.primary_contact_label_4') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.close_contact_health_worker ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.close_contact_health_worker ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -171,7 +171,7 @@
         <p>{{ $t('label.primary_contact_label_5') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.close_contact_performing_aerosol_procedures ? $t('label.yes'):$t('label.no') }}</p>
+        <p>{{ detail.last_history.close_contact_performing_aerosol_procedures ? $t('label.yes'):$t('label.no') }}</p>
       </v-col>
     </v-row>
   </div>
