@@ -45,7 +45,7 @@
         <p>{{ $t('label.symptoms') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.last_history.diagnosis.length > 1 ? splitArray(detail.last_history.diagnosis):'Tidak Ada Gejala' }}</p>
+        <p>{{ detail.last_history.diagnosis.length > 0 ? splitArray(detail.last_history.diagnosis):'Tidak Ada Gejala' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -57,7 +57,7 @@
         <p>{{ $t('label.additional_condition') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.last_history.diseases.length > 1 ? splitArray(detail.last_history.diseases):'Tidak Ada Kondisi Penyerta' }}</p>
+        <p>{{ detail.last_history.diseases.length > 0 ? splitArray(detail.last_history.diseases):'Tidak Ada Kondisi Penyerta' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
