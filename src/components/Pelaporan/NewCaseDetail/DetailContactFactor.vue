@@ -159,7 +159,7 @@
         <p>{{ $t('label.protective_equipment_used') }}</p>
       </v-col>
       <v-col>
-        <p>{{ splitArray(detail.apd_use) }}</p>
+        <p>{{ detail.last_history.apd_use.length > 0 ? splitArray(detail.last_history.apd_use):'-' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
