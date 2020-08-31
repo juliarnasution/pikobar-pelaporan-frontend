@@ -47,7 +47,7 @@
         <v-row>
           <v-col cols="8" sm="8">
             <div class="title ml-3">
-              {{ $t('label.patient_recap') }} <span>{{ fullName }} {{ this.$moment().format('DD MMMM YYYY HH:mm') }} WIB</span>
+              {{ $t('label.patient_recap') }} <span>{{ fullName }} {{ reportingDate }} WIB</span>
             </div>
           </v-col>
           <v-col cols="12" sm="4" class="align-right">
@@ -96,6 +96,7 @@ export default {
     return {
       rolesWidget,
       formatDate: 'YYYY-MM-DD',
+      reportingDate: this.$moment().format('DD MMMM YYYY HH:mm'),
       loading: false,
       headers: [
         { text: this.$t('label.otg_procces').toUpperCase(), value: 'otg_proses' },
@@ -129,7 +130,10 @@ export default {
     'listQuery.date': {
       handler: function(value) {
         if (value.length > 0) {
+          this.reportingDate = this.$moment(value).format('DD MMMM YYYY HH:mm')
           this.handleSearch()
+        } else {
+          this.reportingDate = this.$moment().format('DD MMMM YYYY HH:mm')
         }
       },
       immediate: true
