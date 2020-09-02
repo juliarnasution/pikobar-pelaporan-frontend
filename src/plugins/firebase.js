@@ -23,7 +23,7 @@ export function getFCMNotifToken() {
   messaging.requestPermission().then(() => {
     console.log('Notification permission granted.')
     messaging.getToken().then((token) => {
-      console.log('New token created: ', token)
+      // console.log('New token created: ', token)
       //   this.saveNotificationToken(token)
     })
   }).catch((err) => {
@@ -34,7 +34,7 @@ export function getFCMNotifToken() {
 export function refreshFCMNotifToken() {
   messaging.onTokenRefresh(function() {
     messaging.getToken().then(function(newToken) {
-      console.log('Token refreshed: ', newToken)
+      // console.log('Token refreshed: ', newToken)
       //   this.saveNotificationToken(newToken)
     }).catch(function(err) {
       console.log('Unable to retrieve refreshed token ', err)
