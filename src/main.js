@@ -10,6 +10,7 @@ import moment from 'moment'
 import infiniteScroll from 'vue-infinite-scroll'
 import FlagIcon from 'vue-flag-icon'
 import VueAnalytics from 'vue-analytics'
+import vueDebounce from 'vue-debounce'
 
 moment.locale('id')
 
@@ -53,6 +54,10 @@ import i18n from './lang' // Internationalization
 import '@/helpers/filters' // include all filters
 import VueHtml2Canvas from 'vue-html2canvas'
 // import './registerServiceWorker'
+
+Vue.use(vueDebounce, {
+  listenTo: 'input'
+})
 
 Vue.use(VueHtml2Canvas)
 Vue.use(FlagIcon)

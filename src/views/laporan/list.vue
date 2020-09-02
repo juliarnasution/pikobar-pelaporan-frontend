@@ -435,22 +435,6 @@ export default {
     ])
   },
   watch: {
-    'listQuery.search': {
-      handler: function(value) {
-        if ((value !== undefined) && (value.length >= 2)) {
-          this.loadingTable = true
-          this.listQuery.page = 1
-          this.handleSearch()
-          this.loadingTable = false
-        } else if (value.length === 0) {
-          this.loadingTable = true
-          this.listQuery.page = 1
-          this.handleSearch()
-          this.loadingTable = false
-        }
-      },
-      immediate: true
-    },
     'optionsDataTable': {
       handler: function(value) {
         if (value.sortBy !== undefined) {
@@ -565,8 +549,10 @@ export default {
     },
     async handleSearch() {
       this.listQuery.page = 1
+      this.loadingTable = true
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
       await this.getStatistic()
+      this.loadingTable = false
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
