@@ -11,6 +11,7 @@
               v-model="formPasien.close_contacted_before_sick_14_days"
               :error-messages="errors"
               row
+              @change="handleCheckContactPremier"
             >
               <v-radio :label="$t('label.yes')" :value="true" />
               <v-radio :label="$t('label.no')" :value="false" />
@@ -470,6 +471,11 @@ export default {
     },
     onSelectHealthWorker(value) {
       this.formPasien.health_workers = value
+    },
+    handleCheckContactPremier(value) {
+      if ((value) && (this.formPasien.close_contact_premier.length < 1)) {
+        this.handleAddFormSupportingInvestigation()
+      }
     },
     handleChangeSameHouse(value, index) {
       if (value) {
