@@ -88,7 +88,7 @@
           </v-row>
         </v-container>
       </div>
-      <div v-for="(data, index) in formPasien.inspection_support" :key="index">
+      <div v-for="(data, index) in formPasien.inspection_support" :key="index" :class="`form-${index + 1}`">
         <v-container fluid>
           <v-card outlined>
             <v-row align="center" justify="space-between">
@@ -222,7 +222,7 @@
           </v-card>
         </v-container>
       </div>
-      <v-container fluid>
+      <v-container fluid style="position: static;">
         <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormSupportingInvestigation">
           <v-btn class="ma-2 mt-5" outlined small fab>
             <v-icon>mdi-plus</v-icon>
@@ -259,10 +259,18 @@ export default {
       formatDate: 'YYYY/MM/DD'
     }
   },
-  mounted() {
-    this.handleAddFormSupportingInvestigation()
-  },
+  // mounted() {
+  //   this.handleAddFormSupportingInvestigation()
+  // },
   methods: {
+    // async updateScroll(key) {
+    //   console.log(key)
+    //   console.log('jancok')
+    //   const element = await document.querySelector(key)
+    //   if (element) {
+    //     element.scrollIntoView()
+    //   }
+    // },
     handleAddFormSupportingInvestigation() {
       this.isValid = true
       this.showAlert = false
@@ -275,6 +283,16 @@ export default {
         get_specimens_to: '',
         inspection_result: ''
       })
+      if (this.formPasien.inspection_support.length > 0) {
+        const index = this.formPasien.inspection_support.length
+        setTimeout(function() {
+          const key = `.form-${index}`
+          const element = document.querySelector(key)
+          if (element) {
+            element.scrollIntoView()
+          }
+        }, 500)
+      }
     },
     handleDeleteFormCloseContact(index) {
       this.formPasien.inspection_support.splice(index, 1)
