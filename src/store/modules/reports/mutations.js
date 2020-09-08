@@ -81,8 +81,10 @@ export default {
     state.formPasien.close_contact_animal_market = 2
     state.formPasien.close_contact_public_place = 2
     state.formPasien.close_contact_medical_facility = 2
-    state.formPasien.close_contact_heavy_ispa_group = null
+    state.formPasien.close_contact_heavy_ispa_group = false
+    state.formPasien.close_contact_have_pets = false
     state.formPasien.close_contact_health_worker = false
+    state.formPasien.close_contact_performing_aerosol_procedures = false
     state.formPasien.apd_use = []
     state.formPasien.close_contact_premier = []
     state.formPasien.inspection_support = []

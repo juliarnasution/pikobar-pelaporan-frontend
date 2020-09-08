@@ -237,6 +237,7 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import { specimenType } from '@/utils/constantVariable'
+import { scrollUp } from '@/utils/utilsFunction'
 export default {
   name: 'FormMultipleSupportingInvestigation',
   components: {
@@ -259,18 +260,10 @@ export default {
       formatDate: 'YYYY/MM/DD'
     }
   },
-  // mounted() {
-  //   this.handleAddFormSupportingInvestigation()
-  // },
+  mounted() {
+    this.handleAddFormSupportingInvestigation()
+  },
   methods: {
-    // async updateScroll(key) {
-    //   console.log(key)
-    //   console.log('jancok')
-    //   const element = await document.querySelector(key)
-    //   if (element) {
-    //     element.scrollIntoView()
-    //   }
-    // },
     handleAddFormSupportingInvestigation() {
       this.isValid = true
       this.showAlert = false
@@ -287,10 +280,7 @@ export default {
         const index = this.formPasien.inspection_support.length
         setTimeout(function() {
           const key = `.form-${index}`
-          const element = document.querySelector(key)
-          if (element) {
-            element.scrollIntoView()
-          }
+          scrollUp(key)
         }, 500)
       }
     },
