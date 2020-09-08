@@ -50,6 +50,13 @@ export function varUndefined(variable) {
   return Number(variable.count)
 }
 
+export function scrollUp(key) {
+  const element = document.querySelector(key)
+  if (element) {
+    element.scrollIntoView()
+  }
+}
+
 export function validateScrollUp() {
   const el = document.querySelector('.v-messages.error--text')
   this.$vuetify.goTo(el.parentElement.parentElement)

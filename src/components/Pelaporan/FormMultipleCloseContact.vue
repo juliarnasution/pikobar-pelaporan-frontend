@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <div v-for="(data, index) in formPasien.close_contact_patient" :key="index">
+    <div v-for="(data, index) in formPasien.close_contact_patient" :key="index" :class="`form-${index + 1}`">
       <v-container fluid>
         <v-card outlined>
           <v-row align="center" justify="space-between">
@@ -287,6 +287,7 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import { listActivitiesUndertaken, listRelationships } from '@/utils/constantVariable'
+import { scrollUp } from '@/utils/utilsFunction'
 export default {
   name: 'FormMultipleCloseContact',
   components: {
@@ -344,6 +345,13 @@ export default {
         start_contact_date: '',
         end_contact_date: ''
       })
+      if (this.formPasien.close_contact_patient.length > 0) {
+        const index = this.formPasien.close_contact_patient.length
+        setTimeout(function() {
+          const key = `.form-${index}`
+          scrollUp(key)
+        }, 500)
+      }
     },
     handleDeleteFormCloseContact(index) {
       this.formPasien.close_contact_patient.splice(index, 1)

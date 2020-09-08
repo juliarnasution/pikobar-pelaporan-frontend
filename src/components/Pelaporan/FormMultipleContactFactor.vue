@@ -19,7 +19,7 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <div v-for="(data, index) in formPasien.close_contact_premier" :key="index">
+      <div v-for="(data, index) in formPasien.close_contact_premier" :key="index" :class="`form-${index + 1}`">
         <v-container fluid>
           <v-card outlined>
             <v-row align="center" justify="space-between">
@@ -231,7 +231,10 @@
           </v-card>
         </v-container>
       </div>
-      <v-container fluid>
+      <v-container
+        v-if="formPasien.close_contacted_before_sick_14_days"
+        fluid
+      >
         <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormSupportingInvestigation">
           <v-btn class="ma-2 mt-5" outlined small fab>
             <v-icon>mdi-plus</v-icon>
@@ -275,7 +278,7 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row align="center">
+      <v-row v-if="formPasien.close_contact_have_pets" align="center">
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider>
@@ -305,7 +308,11 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row align="start" class="mb-1">
+      <v-row
+        v-if="formPasien.close_contact_health_worker"
+        align="start"
+        class="mb-1"
+      >
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label>{{ $t('label.protective_equipment_used') }}</label>
         </v-col>
@@ -324,7 +331,10 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row align="center">
+      <v-row
+        v-if="formPasien.close_contact_health_worker"
+        align="center"
+      >
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label>{{ $t('label.primary_contact_label_5') }}</label>
         </v-col>
@@ -342,7 +352,10 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row align="center">
+      <v-row
+        v-if="formPasien.close_contact_performing_aerosol_procedures"
+        align="center"
+      >
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider>
@@ -361,6 +374,7 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import { answerList, yesOrNoAnswer, healthWorkerList, listRelationships, apd } from '@/utils/constantVariable'
+import { scrollUp } from '@/utils/utilsFunction'
 
 export default {
   name: 'FormMultipleContactFactor',
@@ -437,6 +451,13 @@ export default {
         close_contact_first_date: '',
         close_contact_last_date: ''
       })
+      if (this.formPasien.close_contact_premier.length > 0) {
+        const index = this.formPasien.close_contact_premier.length
+        setTimeout(function() {
+          const key = `.form-${index}`
+          scrollUp(key)
+        }, 500)
+      }
     },
     handleDeleteFormCloseContact(index) {
       this.formPasien.close_contact_premier.splice(index, 1)

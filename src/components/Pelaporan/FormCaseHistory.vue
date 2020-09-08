@@ -180,7 +180,10 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row align="start">
+      <v-row
+        v-if="formPasien.there_are_symptoms"
+        align="start"
+      >
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label :class="formPasien.there_are_symptoms ? 'required' : ''">{{ $t('label.date_symptoms') }}</label>
         </v-col>
@@ -194,7 +197,10 @@
           />
         </v-col>
       </v-row>
-      <v-row align="start">
+      <v-row
+        v-if="formPasien.there_are_symptoms"
+        align="start"
+      >
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label :class="formPasien.there_are_symptoms ? 'required' : ''">{{ $t('label.symptoms') }}</label>
         </v-col>
@@ -213,7 +219,11 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row align="start" class="mt-4">
+      <v-row
+        v-if="formPasien.there_are_symptoms"
+        align="start"
+        class="mt-4"
+      >
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider>
@@ -258,24 +268,6 @@
           <v-container>
             <v-row>
               <v-radio-group v-model="formPasien.diagnosis_ards" row>
-                <span v-for="(item, index) in answerList" :key="index">
-                  <v-radio :label="item.text" :value="item.value" />
-                </span>
-              </v-radio-group>
-            </v-row>
-          </v-container>
-        </ValidationProvider>
-      </v-col>
-    </v-row>
-    <v-row align="center">
-      <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-        <label>{{ $t('label.diagnosis_covid') }}</label>
-      </v-col>
-      <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-        <ValidationProvider>
-          <v-container>
-            <v-row>
-              <v-radio-group v-model="formPasien.diagnosis_covid" row>
                 <span v-for="(item, index) in answerList" :key="index">
                   <v-radio :label="item.text" :value="item.value" />
                 </span>

@@ -18,7 +18,11 @@
           </v-row>
         </v-container>
       </div>
-      <div v-for="(data, indexTraveling) in formPasien.travelling_history" :key="`traveling-${indexTraveling}`">
+      <div
+        v-for="(data, indexTraveling) in formPasien.travelling_history"
+        :key="`traveling-${indexTraveling}`"
+        :class="`traveling-form-${indexTraveling + 1}`"
+      >
         <v-container fluid>
           <v-card outlined>
             <v-row align="center" justify="space-between">
@@ -92,7 +96,10 @@
           </v-card>
         </v-container>
       </div>
-      <v-container fluid>
+      <v-container
+        v-if="formPasien.travelling_history_before_sick_14_days"
+        fluid
+      >
         <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormSupportingInvestigation">
           <v-btn class="ma-2 mt-5" outlined small fab>
             <v-icon>mdi-plus</v-icon>
@@ -117,7 +124,7 @@
           </v-row>
         </v-container>
       </div>
-      <div v-for="(data, indexArea) in formPasien.visited_local_area" :key="`area-${indexArea}`">
+      <div v-for="(data, indexArea) in formPasien.visited_local_area" :key="`area-${indexArea}`" :class="`area-form-${indexArea + 1}`">
         <v-container fluid>
           <v-card outlined>
             <v-row align="center" justify="space-between">
@@ -139,7 +146,10 @@
           </v-card>
         </v-container>
       </div>
-      <v-container fluid>
+      <v-container
+        v-if="formPasien.visited_local_area_before_sick_14_days"
+        fluid
+      >
         <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormAreaTransmisi">
           <v-btn class="ma-2 mt-5" outlined small fab>
             <v-icon>mdi-plus</v-icon>
@@ -168,7 +178,7 @@
           </v-row>
         </v-container>
       </div>
-      <div v-for="(data, indexVisited) in formPasien.visited_public_place" :key="`visited-${indexVisited}`">
+      <div v-for="(data, indexVisited) in formPasien.visited_public_place" :key="`visited-${indexVisited}`" :class="`visited-form-${indexVisited + 1}`">
         <v-container fluid>
           <v-card outlined>
             <v-row align="center" justify="space-between">
@@ -276,7 +286,10 @@
           </v-card>
         </v-container>
       </div>
-      <v-container fluid>
+      <v-container
+        v-if="formPasien.has_visited_public_place"
+        fluid
+      >
         <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormTravelHistory">
           <v-btn class="ma-2 mt-5" outlined small fab>
             <v-icon>mdi-plus</v-icon>
@@ -291,6 +304,7 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import { specimenType, listPlaceCategory } from '@/utils/constantVariable'
+import { scrollUp } from '@/utils/utilsFunction'
 export default {
   name: 'FormMultipleTravelHistoryFactor',
   components: {
@@ -329,6 +343,13 @@ export default {
         travelling_date: '',
         travelling_arrive: ''
       })
+      if (this.formPasien.travelling_history.length > 0) {
+        const index = this.formPasien.travelling_history.length
+        setTimeout(function() {
+          const key = `.traveling-form-${index}`
+          scrollUp(key)
+        }, 500)
+      }
     },
     handleDeleteFormCloseContact(index) {
       this.formPasien.travelling_history.splice(index, 1)
@@ -341,6 +362,13 @@ export default {
         visited_local_area_province: '',
         visited_local_area_city: ''
       })
+      if (this.formPasien.visited_local_area.length > 0) {
+        const index = this.formPasien.visited_local_area.length
+        setTimeout(function() {
+          const key = `.area-form-${index}`
+          scrollUp(key)
+        }, 500)
+      }
     },
     handleDeleteFormAreaTransmisi(index) {
       this.formPasien.visited_local_area.splice(index, 1)
@@ -356,6 +384,13 @@ export default {
         public_place_date_visited: '',
         public_place_duration_visited: ''
       })
+      if (this.formPasien.visited_public_place.length > 0) {
+        const index = this.formPasien.visited_public_place.length
+        setTimeout(function() {
+          const key = `.visited-form-${index}`
+          scrollUp(key)
+        }, 500)
+      }
     },
     handleDeleteFormTravelHistory(index) {
       this.formPasien.visited_public_place.splice(index, 1)
