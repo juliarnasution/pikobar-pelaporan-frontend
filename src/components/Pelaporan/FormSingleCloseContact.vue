@@ -8,8 +8,15 @@
               <label class="required">{{ $t('label.name') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="required|isHtml">
-                <v-text-field v-model="formCloseContact.name" :error-messages="errors" solo-inverted />
+              <ValidationProvider
+                v-slot="{ errors }"
+                rules="required"
+              >
+                <v-text-field
+                  v-model="formCloseContact.name"
+                  :error-messages="errors"
+                  solo-inverted
+                />
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -25,11 +32,11 @@
           </v-row>
           <v-row align="center">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-              <label class="required">{{ $t('label.gender') }}</label>
+              <label>{{ $t('label.gender') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="required">
-                <v-radio-group v-model="formCloseContact.gender" :error-messages="errors" row>
+              <ValidationProvider>
+                <v-radio-group v-model="formCloseContact.gender" row>
                   <v-radio :label="$t('label.male')" value="L" />
                   <v-radio :label="$t('label.female')" value="P" />
                 </v-radio-group>
@@ -90,7 +97,7 @@
                   v-model="formCloseContact.is_patient_address_same"
                   class="mt-0 pt-0"
                   :error-messages="errors"
-                  @change="handleChangeSameHouse"
+                  @change="handleChangeSameHouse($event)"
                 />
               </ValidationProvider>
             </v-col>
@@ -150,8 +157,13 @@
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider>
-                <v-textarea v-model="formCloseContact.address_street" solo :placeholder="$t('label.complete_address')" />
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <v-textarea
+                  v-model="formCloseContact.address_street"
+                  solo
+                  :error-messages="errors"
+                  :placeholder="$t('label.complete_address')"
+                />
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -160,28 +172,91 @@
               <label class="required">{{ $t('label.relationship_with_primary_cases') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="required|isHtml">
-                <v-text-field v-model="formCloseContact.relationship" type="text" solo-inverted :error-messages="errors" />
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <v-select
+                  v-model="formCloseContact.relationship"
+                  :items="listRelationships"
+                  :error-messages="errors"
+                  solo
+                />
               </ValidationProvider>
             </v-col>
           </v-row>
-          <v-row align="start">
-            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-              <label class="required">{{ $t('label.activities_carried_out') }}</label>
-            </v-col>
+          <v-row align="center">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="required|isHtml">
-                <v-text-field v-model="formCloseContact.activity" type="text" solo-inverted :error-messages="errors" />
+              <ValidationProvider>
+                <v-text-field
+                  v-if="formCloseContact.relationship === 'Lainnya'"
+                  v-model="formCloseContact.relationship_other"
+                  :label="$t('label.mention_it')"
+                  solo-inverted
+                />
               </ValidationProvider>
             </v-col>
           </v-row>
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-              <label class="required">{{ $t('label.contact_date') }}</label>
+              <label>{{ $t('label.activities_carried_out') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
               <ValidationProvider v-slot="{ errors }">
-                <input-date-picker :format-date="formatDate" :error-messages="errors" :label="$t('label.contact_date')" :date-value="formCloseContact.contact_date" :value-date.sync="formCloseContact.contact_date" @changeDate="handleChangeContactDate($event)" />
+                <v-row>
+                  <v-col v-for="item in listActivitiesUndertaken" :key="item" cols="12" sm="12" md="12">
+                    <label class="material-checkbox-custom">
+                      <input v-model="formCloseContact.activity" :value="item" type="checkbox">
+                      <span v-if="errors.length" class="error--text">{{ item }}</span>
+                      <span v-else>{{ item }}</span>
+                    </label>
+                  </v-col>
+                </v-row>
+                <span v-if="errors.length" class="v-messages error--text">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row align="center" class="mt-6">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider>
+                <v-text-field
+                  v-model="formCloseContact.activity_other"
+                  :label="$t('label.mention_it')"
+                  solo-inverted
+                />
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row align="center">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <label class="required">{{ $t('label.first_contact_date') }}</label>
+            </v-col>
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider>
+                <input-date-picker
+                  :format-date="formatDate"
+                  :date-value="formCloseContact.start_contact_date"
+                  :value-date.sync="formCloseContact.start_contact_date"
+                  :label="$t('label.choose_date')"
+                  :required="true"
+                  @changeDate="formCloseContact.start_contact_date = $event"
+                />
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row align="center">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <label class="required">{{ $t('label.last_contact_date') }}</label>
+            </v-col>
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider>
+                <input-date-picker
+                  :format-date="formatDate"
+                  :date-value="formCloseContact.end_contact_date"
+                  :value-date.sync="formCloseContact.end_contact_date"
+                  :label="$t('label.choose_date')"
+                  :required="true"
+                  @changeDate="formCloseContact.end_contact_date = $event"
+                />
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -193,6 +268,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { listActivitiesUndertaken, listRelationships } from '@/utils/constantVariable'
 export default {
   name: 'FormSingleCloseContact',
   components: {
@@ -215,6 +291,8 @@ export default {
   },
   data() {
     return {
+      listActivitiesUndertaken: listActivitiesUndertaken,
+      listRelationships: listRelationships,
       formatDate: 'YYYY/MM/DD'
     }
   },
@@ -222,7 +300,7 @@ export default {
     handleChangeContactDate(value) {
       this.formCloseContact.contact_date = value
     },
-    handleChangeSameHouse(value, index) {
+    handleChangeSameHouse(value) {
       if (value) {
         this.formCloseContact.address_district_code = this.formPasien.address_district_code
         this.formCloseContact.address_district_name = this.formPasien.address_district_name

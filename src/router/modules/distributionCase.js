@@ -35,6 +35,17 @@ const distributionCaseRouter = {
         noCache: true,
         roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
       }
+    },
+    {
+      path: '/distribution-case/network/:id',
+      component: () => import('@/views/distributionCase/network_detail'),
+      hidden: true,
+      meta: {
+        title: 'distribution_case_network',
+        icon: 'location_on',
+        noCache: true,
+        roles: ['superadmin', 'dinkesprov', 'dinkeskota']
+      }
     }
   ]
 }

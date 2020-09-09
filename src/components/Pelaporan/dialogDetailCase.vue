@@ -37,12 +37,10 @@
               :value="'tab-' + i"
               style="min-width: 100%"
             >
-              <v-card v-if="tab === 'tab-1'">
-                <detail-case
-                  :detail-case="detailCase"
-                  :birth-date.sync="birthDate"
-                  :detail-gender.sync="detailGender"
-                  :detail-address.sync="detailAddress"
+              <v-card v-if="tab === 'tab-1'" class="pa-7">
+                <new-case-detail
+                  :detail="detailCase"
+                  :close-contact-case="closeContactCase"
                 />
               </v-card>
               <v-card v-if="tab === 'tab-2'">
@@ -133,6 +131,10 @@ export default {
     },
     detailCase: {
       type: Object,
+      default: null
+    },
+    closeContactCase: {
+      type: Array,
       default: null
     },
     listHistoryCase: {

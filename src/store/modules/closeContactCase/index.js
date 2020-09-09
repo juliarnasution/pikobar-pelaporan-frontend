@@ -51,7 +51,11 @@ const getDefaultState = () => {
       home_contact_activities: [],
       officer_is_contact: true,
       officer_protection_tools: [],
-      activity: '',
+      activity: [],
+      activity_other: '',
+      relationship_other: '',
+      start_contact_date: '',
+      end_contact_date: '',
       latest_history: {
         symptoms: [],
         symptoms_date: '',

@@ -5,6 +5,9 @@ import {
   removeToken
 } from '@/utils/cookies'
 import { resetRouter } from '@/router'
+// import {
+//   getFCMNotifToken
+// } from '@/plugins/firebase'
 
 export default {
   // user login
@@ -15,6 +18,7 @@ export default {
         commit('SET_TOKEN', token)
         setToken(token)
         setUserSurvey(true)
+        // getFCMNotifToken()
         resolve(response.data)
       }).catch((error) => {
         reject(error)

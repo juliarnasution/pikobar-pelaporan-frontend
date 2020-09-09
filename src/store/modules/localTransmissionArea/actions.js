@@ -15,10 +15,10 @@ export default {
     commit
   }, data) {
     const {
-      idCTransmissionArea
+      idCase
     } = data
     try {
-      const response = await requestServer(`/api/local-transmission/${idCTransmissionArea}`, 'GET')
+      const response = await requestServer(`/api/local-transmission/${idCase}`, 'GET')
       return response
     } catch (error) {
       return error.response
@@ -42,11 +42,11 @@ export default {
     commit
   }, data) {
     const {
-      idCloseContact,
+      idCase,
       body
     } = data
     try {
-      const response = await requestServer(`/api/local-transmission/${idCloseContact}`, 'PUT', body)
+      const response = await requestServer(`/api/local-transmission/${idCase}`, 'PUT', body)
       return response
     } catch (error) {
       return error.response
@@ -62,7 +62,7 @@ export default {
       return error.response
     }
   },
-  resetStateCloseContactCase({
+  resetStateLocalTransmissionArea({
     commit
   }) {
     commit('resetState')

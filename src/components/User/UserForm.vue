@@ -185,6 +185,7 @@
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { mapGetters } from 'vuex'
+import { validateScrollUp } from '@/utils/utilsFunction'
 import { ResponseRequest, rolesPerm } from '@/utils/constantVariable'
 export default {
   name: 'UserForm',
@@ -263,10 +264,12 @@ export default {
     }
   },
   methods: {
+    validateScrollUp,
     async handleCreate() {
       const valid = await this.$refs.observer.validate()
       let response
       if (!valid) {
+        this.validateScrollUp()
         return
       }
       await delete this.formUser['token']

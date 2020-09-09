@@ -24,38 +24,34 @@
     >
       {{ status }}
     </v-chip>
-    <v-chip
+    <v-btn
       v-else-if="status === 'CLOSECONTACT'"
-      class="ma-2"
-      color="rgb(82, 143, 196)"
-      outlined
+      class="white--text btn-status"
+      color="#27AE60"
     >
       {{ $t('route.tight_contact') }}
-    </v-chip>
-    <v-chip
+    </v-btn>
+    <v-btn
       v-else-if="status === 'SUSPECT'"
-      class="ma-2"
-      color="#0f7d33"
-      outlined
+      class="white--text btn-status"
+      color="#F2994A"
     >
       {{ $t('label.suspect') }}
-    </v-chip>
-    <v-chip
+    </v-btn>
+    <v-btn
       v-else-if="status === 'PROBABLE'"
-      class="ma-2"
-      color="rgb(255, 206, 79)"
-      outlined
+      class="white--text btn-status"
+      color="#2D9CDB"
     >
       {{ $t('label.probable') }}
-    </v-chip>
-    <v-chip
+    </v-btn>
+    <v-btn
       v-else-if="status === 'CONFIRMATION'"
-      class="ma-2"
+      class="white--text btn-status"
       color="#EB5757"
-      outlined
     >
       {{ $t('label.confirmation') }}
-    </v-chip>
+    </v-btn>
     <v-chip
       v-else-if="status === 'DISCARDED'"
       class="ma-2"
@@ -86,3 +82,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .btn-status {
+    font-size: 0.7rem !important;
+    min-width: 90px !important;
+    height: 30px !important;
+    width: 100px;
+  }
+</style>

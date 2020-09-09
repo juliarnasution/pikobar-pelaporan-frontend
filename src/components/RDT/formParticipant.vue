@@ -147,7 +147,7 @@
                 :error-messages="errors"
                 :return-object="false"
                 :items="targetOptions"
-                item-text="targets"
+                item-text="label"
                 item-value="targets"
                 solo
               />

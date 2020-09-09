@@ -10,7 +10,7 @@
           <v-row justify="space-between">
             <v-col cols="auto">
               <v-card-text class="header-survey-text">
-                <div>{{ $t('label.total_case_data') }} : {{ totalReport }}</div>
+                <div>{{ $t('label.total_case_data') }} : {{ totalData }}</div>
                 <div>{{ fullName }}</div>
               </v-card-text>
             </v-col>
@@ -28,10 +28,10 @@
             class="mx-auto"
             outlined
           >
-            <v-list-item two-line style="background: #9f9f9f">
+            <v-list-item two-line style="background-color: #eb5757">
               <v-list-item-content>
-                <v-list-item-title style="color: #FFFFFF;">{{ $t('label.people_without_symptoms') }}</v-list-item-title>
-                <v-list-item-title class="headline mb-1" style="color: #FFFFFF;padding-top: 2rem;">{{ totalOTG }} {{ $t('label.people') }}</v-list-item-title>
+                <v-list-item-title style="color: #FFFFFF;">{{ $t('label.total_case_confirmed').toUpperCase() }}</v-list-item-title>
+                <v-list-item-title class="headline mb-1 font-weight-bold" style="color: #FFFFFF;">{{ totalConfirmation }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -44,12 +44,13 @@
         >
           <v-card
             class="mx-auto"
+            style="border: 2px solid #F2C94C;"
             outlined
           >
-            <v-list-item two-line style="background: #D2EAFF">
+            <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title style="color: #2F80ED;">{{ $t('label.insiders_monitoring') }}</v-list-item-title>
-                <v-list-item-title class="headline mb-1" style="color: #2F80ED;padding-top: 2rem;">{{ totalODP }} {{ $t('label.people') }}</v-list-item-title>
+                <v-list-item-title>{{ $t('label.total_probable').toUpperCase() }}</v-list-item-title>
+                <v-list-item-title class="headline mb-1 font-weight-bold">{{ totalProbable }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -62,14 +63,15 @@
         >
           <v-card
             class="mx-auto"
+            style="border: 2px solid #27AE60;"
             outlined
           >
-            <v-list-item two-line style="background: #FEF9EC">
+            <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title style="color: #F2994A;">
-                  {{ $t('label.patients_under_supervision') }}
+                <v-list-item-title>
+                  {{ $t('label.total_suspect').toUpperCase() }}
                 </v-list-item-title>
-                <v-list-item-title class="headline mb-1" style="color: #F2994A;padding-top: 2rem;">{{ totalPDP }} {{ $t('label.people') }}</v-list-item-title>
+                <v-list-item-title class="headline mb-1 font-weight-bold">{{ totalSuspect }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -78,18 +80,19 @@
       <v-col>
         <v-skeleton-loader
           :loading="loading"
+          style="border: 2px solid #2D9CDB;"
           type="article"
         >
           <v-card
             class="mx-auto"
             outlined
           >
-            <v-list-item two-line style="background: #FDEDED">
+            <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title style="color: #EB5757;">
-                  {{ $t('label.positif').toUpperCase() }}
+                <v-list-item-title>
+                  {{ $t('label.total_close_contact').toUpperCase() }}
                 </v-list-item-title>
-                <v-list-item-title class="headline mb-1" style="color: #EB5757;padding-top: 2rem;">{{ totalPositif }} {{ $t('label.people') }}</v-list-item-title>
+                <v-list-item-title class="headline mb-1 font-weight-bold">{{ totalCloseCase }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -101,17 +104,41 @@
       class="mt-2"
     >
       <v-row>
-        <v-col class="ml-4">
+        <v-col cols="12" md="6" sm="6" class="ma-1">
           <search
             :list-query="listQuery"
             :handle-search="handleSearch"
           />
         </v-col>
         <v-col class="pb-4">
+          <!-- <v-btn
+            v-if="roles[0] !== 'faskes'"
+            color="#27AE60"
+            class="btn-import-export margin-right"
+            depressed
+            @click="showImportForm = true"
+          >
+            <v-icon left>
+              mdi-download
+            </v-icon>
+            {{ $t('label.import') }}
+          </v-btn> -->
+          <v-btn
+            class="btn-import-export mr-2 float-right"
+            color="#27AE60"
+            block
+            outlined
+            @click="onExport"
+          >
+            <v-icon left>mdi-upload</v-icon>
+            {{ $t('label.export') }}
+          </v-btn>
+        </v-col>
+        <v-col>
           <v-btn
             color="primary"
-            class="mr-4"
-            style="float: right;"
+            class="mr-4 float-right"
+            block
             @click="handleFilter"
           >
             {{ $t('label.filter') }}
@@ -128,6 +155,7 @@
           <case-filter
             :list-query="listQuery"
             :query-list.sync="listQuery"
+            :reset-statistic.sync="resetStatistic"
             :on-search="handleSearch"
           />
         </v-container>
@@ -138,28 +166,6 @@
           <div class="title">
             {{ $t('label.case_data') }}
           </div>
-        </v-col>
-        <v-col cols="12" sm="4" class="align-right">
-          <!-- <v-btn
-            v-if="roles[0] !== 'faskes'"
-            color="#b3e2cd"
-            class="btn-import-export margin-right"
-            depressed
-            @click="showImportForm = true"
-          >
-            <v-icon left>
-              mdi-download
-            </v-icon>
-            {{ $t('label.import') }}
-          </v-btn> -->
-          <v-btn
-            class="btn-import-export margin-left"
-            color="#b3e2cd"
-            @click="onExport"
-          >
-            <v-icon left>mdi-upload</v-icon>
-            {{ $t('label.export') }}
-          </v-btn>
         </v-col>
       </v-row>
       <hr class="table-divider">
@@ -191,29 +197,7 @@
                 </td>
                 <td>{{ item.phone_number }}</td>
                 <td><status :status="item.status" /> </td>
-                <td>
-                  <div v-if=" item.final_result ==='0'">
-                    {{ $t('label.negatif') }}
-                  </div>
-                  <div v-else-if=" item.final_result ==='1'">
-                    {{ $t('label.recovery') }}
-                  </div>
-                  <div v-else-if=" item.final_result ==='2'">
-                    {{ $t('label.dead') }}
-                  </div>
-                  <div v-else-if=" item.final_result ==='3'">
-                    {{ $t('label.discarded') }}
-                  </div>
-                  <div v-else-if=" item.final_result ==='4'">
-                    {{ $t('label.still_sick') }}
-                  </div>
-                  <div v-else-if=" item.final_result ==='5'">
-                    {{ $t('label.still_quarantine') }}
-                  </div>
-                  <div v-else>
-                    -
-                  </div>
-                </td>
+                <td><final-result :final-result="item.final_result" /></td>
                 <td>{{ item.author.username }}</td>
                 <td>{{ item.last_history ? formatDatetime(item.last_history.last_changed, 'DD MMMM YYYY') : '-' }}</td>
                 <td>
@@ -298,6 +282,7 @@
       :show-dialog="dialogDetailCase"
       :show.sync="dialogDetailCase"
       :detail-case="detailCase"
+      :close-contact-case="closeContactCase"
       :case-detail.sync="detailCase"
       :list-history-case="listHistoryCase"
       :referral-history-case="referralHistoryCase"
@@ -398,12 +383,12 @@ export default {
         { text: this.$t('label.action'), value: 'actions', sortable: false }
       ],
       loading: true,
+      resetStatistic: false,
       loadingTable: false,
-      totalOTG: 0,
-      totalODP: 0,
-      totalPDP: 0,
-      totalPositif: 0,
-      totalReport: 0,
+      totalConfirmation: 0,
+      totalProbable: 0,
+      totalSuspect: 0,
+      totalCloseCase: 0,
       queryReportCase: {
         address_district_code: ''
       },
@@ -434,6 +419,7 @@ export default {
       errorMessage: null,
       successDialog: false,
       detailCase: {},
+      closeContactCase: [],
       listCloseContact: [],
       listTransmissionArea: [],
       idCase: null,
@@ -450,35 +436,18 @@ export default {
   computed: {
     ...mapGetters('reports', [
       'listKasus',
-      'totalList'
+      'totalData',
+      'totalList',
+      'formPasien',
+      'formRiwayatPasien'
     ]),
     ...mapGetters('user', [
       'roles',
       'fullName',
       'district_user'
-    ]),
-    ...mapGetters('reports', [
-      'formPasien',
-      'formRiwayatPasien'
     ])
   },
   watch: {
-    'listQuery.search': {
-      handler: function(value) {
-        if ((value !== undefined) && (value.length >= 2)) {
-          this.loadingTable = true
-          this.listQuery.page = 1
-          this.handleSearch()
-          this.loadingTable = false
-        } else if (value.length === 0) {
-          this.loadingTable = true
-          this.listQuery.page = 1
-          this.handleSearch()
-          this.loadingTable = false
-        }
-      },
-      immediate: true
-    },
     'optionsDataTable': {
       handler: function(value) {
         if (value.sortBy !== undefined) {
@@ -496,6 +465,11 @@ export default {
         }
       },
       immediate: true
+    },
+    'resetStatistic'(value) {
+      if (value) {
+        this.getStatistic()
+      }
     }
   },
   async mounted() {
@@ -508,21 +482,17 @@ export default {
     if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) this.listQuery.address_district_code = this.district_user
     this.queryReportCase.address_district_code = this.district_user
     await this.$store.dispatch('reports/listReportCase', this.listQuery)
-    const response = await this.$store.dispatch('reports/countReportCase', this.queryReportCase)
-    if (response) this.loading = false
-    this.totalOTG = response.data.OTG
-    this.totalODP = response.data.ODP
-    this.totalPDP = response.data.PDP
-    this.totalPositif = response.data.POSITIF
-    this.totalReport = this.totalOTG + this.totalODP + this.totalPDP + this.totalPositif
+    await this.getStatistic()
   },
   methods: {
     formatDatetime,
     async handleDetail(item, id) {
       const detail = await this.$store.dispatch('reports/detailReportCase', id)
+      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       const responseHistory = await this.$store.dispatch('reports/listHistoryCase', id)
       const responseReferralHistory = await this.$store.dispatch('reports/caseHospitalReferralHistory', id)
       this.detailCase = detail.data
+      this.closeContactCase = responseCloseContact.data
       this.listHistoryCase = responseHistory
       this.referralHistoryCase = responseReferralHistory.data
       this.dialogDetailCase = true
@@ -592,7 +562,10 @@ export default {
     },
     async handleSearch() {
       this.listQuery.page = 1
+      this.loadingTable = true
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
+      await this.getStatistic()
+      this.loadingTable = false
     },
     async handleTransmissionArea(id) {
       this.idCase = id
@@ -605,13 +578,40 @@ export default {
     },
     async getListTransmissionArea(id) {
       const response = await this.$store.dispatch('localTransmissionArea/getListLocalTransmissionArea', id)
-      this.listTransmissionArea = response.data
+      if (response.data) {
+        this.listTransmissionArea = response.data[0].visited_local_area
+      }
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
+    },
+    async getStatistic() {
+      const listQueryStatistic = {
+        address_district_code: this.listQuery.address_district_code,
+        address_subdistrict_code: this.listQuery.address_subdistrict_code,
+        address_village_code: this.listQuery.address_village_code,
+        status: this.listQuery.status,
+        final_result: this.listQuery.final_result,
+        min_date: this.listQuery.start_date,
+        max_date: this.listQuery.end_date
+      }
+
+      const response = await this.$store.dispatch('reports/countReportCase', listQueryStatistic)
+      if (response) this.loading = false
+      if (response.data === undefined) {
+        this.totalConfirmation = 0
+        this.totalProbable = 0
+        this.totalSuspect = 0
+        this.totalCloseCase = 0
+      } else {
+        this.totalConfirmation = response.data.confirmed
+        this.totalProbable = response.data.probable
+        this.totalSuspect = response.data.suspect
+        this.totalCloseCase = response.data.closeContact
+      }
     },
     async onExport() {
       const response = await this.$store.dispatch('reports/exportExcel', this.listQuery)
@@ -639,10 +639,9 @@ export default {
     padding-right: 50px;
   }
   .btn-import-export {
-    width: 36%;
-    height: 46px !important;
+    width: 25%;
+    height: 50px !important;
     min-width: 100px !important;
-    color: black !important;
   }
   .margin-right {
     margin-right: 8px;

@@ -1,9 +1,10 @@
 <template>
   <v-dialog v-model="show" :max-width="maxWidthDialog">
     <v-card class="pa-7">
-      <view-verification
+      <new-case-detail
         v-if="caseDetail && caseDetail.verified_status !== 'declined'"
-        :case-data="caseDetail"
+        :detail="caseDetail"
+        :close-contact-case="closeContactCase"
       />
       <edit-verification
         v-else
@@ -17,7 +18,7 @@
         :update-case="updateCase"
         :show.sync="show"
       />
-      <v-row v-if="showActionButton && caseDetail && caseDetail.verified_status !== 'declined'" class="mx-0">
+      <v-row v-if="showActionButton && caseDetail && caseDetail.verified_status !== 'declined'" class="mt-2">
         <v-col class="pa-0 mr-6">
           <v-btn
             color="grey"
@@ -53,6 +54,10 @@ export default {
     },
     caseData: {
       type: Object,
+      default: null
+    },
+    closeContactCase: {
+      type: Array,
       default: null
     },
     queryData: {

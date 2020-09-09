@@ -87,16 +87,34 @@
       <v-row>
         <v-col auto>
           <v-expansion-panels
-            v-model="historySocioeconomicPanel"
+            v-model="multipleSupportingInvestigationPanel"
             multiple
           >
             <v-expansion-panel>
               <v-expansion-panel-header class="font-weight-bold text-lg">
-                {{ $t('label.form_socioeconomic_title') }}
+                {{ $t('label.supporting_investigation') }}
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-socioeconomic-history :form-pasien="formPasien" />
+                <form-multiple-supporting-investigation :form-pasien="formPasien" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col auto>
+          <v-expansion-panels
+            v-model="travelHistoryFactorPanel"
+            multiple
+          >
+            <v-expansion-panel>
+              <v-expansion-panel-header class="font-weight-bold text-lg">
+                {{ $t('label.travel_history_factor') }}
+              </v-expansion-panel-header>
+              <v-divider />
+              <v-expansion-panel-content>
+                <form-multiple-travel-history-factor :form-pasien="formPasien" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -114,7 +132,25 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-contact-factor :form-pasien="formPasien" />
+                <form-multiple-contact-factor :form-pasien="formPasien" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col auto>
+          <v-expansion-panels
+            v-model="historySocioeconomicPanel"
+            multiple
+          >
+            <v-expansion-panel>
+              <v-expansion-panel-header class="font-weight-bold text-lg">
+                {{ $t('label.form_socioeconomic_title') }}
+              </v-expansion-panel-header>
+              <v-divider />
+              <v-expansion-panel-content>
+                <form-socioeconomic-history :form-pasien="formPasien" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -153,6 +189,7 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { validateScrollUp } from '@/utils/utilsFunction'
 import { mapGetters } from 'vuex'
 import { rolesPerm, ResponseRequest } from '@/utils/constantVariable'
 
@@ -173,6 +210,8 @@ export default {
       patientPanel: [0],
       historyCasePanel: [0],
       historySocioeconomicPanel: [0],
+      travelHistoryFactorPanel: [0],
+      multipleSupportingInvestigationPanel: [0],
       contactFactorPanel: [0],
       multipleCloseContactPanel: [0]
     }
@@ -216,9 +255,11 @@ export default {
     }
   },
   methods: {
+    validateScrollUp,
     async saveData() {
       const valid = await this.$refs.observer.validate()
       if (!valid) {
+        this.validateScrollUp()
         return
       }
       if ((!this.isFixCase) && (this.formPasien.nik)) {

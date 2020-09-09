@@ -94,7 +94,7 @@
             >
               <div class="legend-color cluster-positive-active" />
               <span class="legend-text">
-                {{ `${$t('label.positive')} - ${$t('label.active')}` }}
+                {{ `${$t('label.positive')} - ${$t('label.isolation_still_sick')}` }}
               </span>
             </li>
             <li
@@ -116,57 +116,66 @@
               </span>
             </li>
             <li
-              :class="[stage.pdp_process.filter ? 'filter-active' : '']"
-              @click="onFilter('pdp_process')"
+              :class="[stage.probable_sick.filter ? 'filter-active' : '']"
+              @click="onFilter('probable_sick')"
             >
-              <div class="legend-color cluster-pdp-process" />
+              <div class="legend-color cluster-probable-sick" />
               <span class="legend-text">
-                {{ `${$t('label.PDP')} - ${$t('label.process')}` }}
+                {{ `${$t('label.probable')} - ${$t('label.still_sick')}` }}
               </span>
             </li>
             <li
-              :class="[stage.pdp_done.filter ? 'filter-active' : '']"
-              @click="onFilter('pdp_done')"
+              :class="[stage.probable_recovery.filter ? 'filter-active' : '']"
+              @click="onFilter('probable_recovery')"
             >
-              <div class="legend-color cluster-pdp-done" />
+              <div class="legend-color cluster-probable-recovery" />
               <span class="legend-text">
-                {{ `${$t('label.PDP')} - ${$t('label.done')}` }}
+                {{ `${$t('label.probable')} - ${$t('label.recovery')}` }}
               </span>
             </li>
             <li
-              :class="[stage.odp_process.filter ? 'filter-active' : '']"
-              @click="onFilter('odp_process')"
+              :class="[stage.probable_dead.filter ? 'filter-active' : '']"
+              @click="onFilter('probable_dead')"
             >
-              <div class="legend-color cluster-odp-process" />
+              <div class="legend-color cluster-probable-dead" />
               <span class="legend-text">
-                {{ `${$t('label.ODP')} - ${$t('label.process')}` }}
+                {{ `${$t('label.probable')} - ${$t('label.dead')}` }}
               </span>
             </li>
             <li
-              :class="[stage.odp_done.filter ? 'filter-active' : '']"
-              @click="onFilter('odp_done')"
+              :class="[stage.suspect_sick.filter ? 'filter-active' : '']"
+              @click="onFilter('suspect_sick')"
             >
-              <div class="legend-color cluster-odp-done" />
+              <div class="legend-color cluster-suspect-sick" />
               <span class="legend-text">
-                {{ `${$t('label.ODP')} - ${$t('label.done')}` }}
+                {{ `${$t('label.suspect')} - ${$t('label.still_sick')}` }}
               </span>
             </li>
             <li
-              :class="[stage.otg_process.filter ? 'filter-active' : '']"
-              @click="onFilter('otg_process')"
+              :class="[stage.suspect_discarded.filter ? 'filter-active' : '']"
+              @click="onFilter('suspect_discarded')"
             >
-              <div class="legend-color cluster-otg-process" />
+              <div class="legend-color cluster-suspect-discarded" />
               <span class="legend-text">
-                {{ `${$t('label.OTG')} - ${$t('label.process')}` }}
+                {{ `${$t('label.suspect')} - ${$t('label.discarded')}` }}
               </span>
             </li>
             <li
-              :class="[stage.otg_done.filter ? 'filter-active' : '']"
-              @click="onFilter('otg_done')"
+              :class="[stage.close_contact_quarantine.filter ? 'filter-active' : '']"
+              @click="onFilter('close_contact_quarantine')"
             >
-              <div class="legend-color cluster-otg-done" />
+              <div class="legend-color cluster-close-contact-quarantine" />
               <span class="legend-text">
-                {{ `${$t('label.OTG')} - ${$t('label.done')}` }}
+                {{ `${$t('label.tight_contact')} - ${$t('label.still_quarantine')}` }}
+              </span>
+            </li>
+            <li
+              :class="[stage.close_contact_discarded.filter ? 'filter-active' : '']"
+              @click="onFilter('close_contact_discarded')"
+            >
+              <div class="legend-color cluster-close-contact-discarded" />
+              <span class="legend-text">
+                {{ `${$t('label.tight_contact')} - ${$t('label.discarded')}` }}
               </span>
             </li>
           </ul>
@@ -177,21 +186,7 @@
       <v-row class="mx-2 mt-1 mb-2">
         <v-col
           cols="12"
-          md="6"
-        >
-          <div class="d-flex mb-1">
-            <div class="legend-color-title legend-description margin-top-3" />
-            <div class="legend-text-title">{{ $t('label.information') }}</div>
-          </div>
-          <ol class="text-description">
-            <li>{{ $t('label.map_description_step_1') }}</li>
-            <li>{{ $t('label.map_description_step_2') }}</li>
-            <li>{{ $t('label.map_description_step_3') }}</li>
-          </ol>
-        </v-col>
-        <v-col
-          cols="12"
-          md="6"
+          md="12"
         >
           <v-row>
             <v-col
@@ -205,59 +200,82 @@
             </v-col>
             <v-col
               cols="12"
-              md="4"
+              md="3"
               class="py-0"
             >
-              <div class="d-flex mb-1">
-                <div class="legend-color cluster-otg-process margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.otg')} ${$t('label.process')}` }}</div>
-              </div>
-              <div class="d-flex mb-1">
-                <div class="legend-color cluster-otg-done margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.otg')} ${$t('label.done')}` }}</div>
-              </div>
-              <div class="d-flex mb-1">
-                <div class="legend-color cluster-odp-process margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.odp')} ${$t('label.process')}` }}</div>
-              </div>
-            </v-col>
-            <v-col
-              cols="12"
-              md="4"
-              class="py-0"
-            >
-              <div class="d-flex mb-1">
-                <div class="legend-color cluster-odp-done margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.odp')} ${$t('label.done')}` }}</div>
-              </div>
-              <div class="d-flex mb-1">
-                <div class="legend-color cluster-pdp-process margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.pdp')} ${$t('label.process')}` }}</div>
-              </div>
-              <div class="d-flex mb-1">
-                <div class="legend-color cluster-pdp-done margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.pdp')} ${$t('label.done')}` }}</div>
-              </div>
-            </v-col>
-            <v-col
-              cols="12"
-              md="4"
-              class="py-0"
-            >
-              <div class="d-flex mb-1">
+              <div class="d-flex mb-1 align-top">
                 <div class="legend-color cluster-positive-active margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.positive')} ${$t('label.active')}` }}</div>
+                <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.isolation_still_sick')}` }}</div>
               </div>
-              <div class="d-flex mb-1">
+              <div class="d-flex mb-1 align-top">
                 <div class="legend-color cluster-positive-recovery margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.positive')} ${$t('label.recovery')}` }}</div>
+                <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.finished_isolation_recovery')}` }}</div>
               </div>
-              <div class="d-flex mb-1">
+              <div class="d-flex mb-1 align-top">
                 <div class="legend-color cluster-positive-dead margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.positive')} ${$t('label.dead')}` }}</div>
+                <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.dead')}` }}</div>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              md="3"
+              class="py-0"
+            >
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-probable-sick margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.still_sick')}` }}</div>
+              </div>
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-probable-recovery margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.finished_isolation_recovery')}` }}</div>
+              </div>
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-probable-dead margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.discarded')}` }}</div>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              md="3"
+              class="py-0"
+            >
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-suspect-sick margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.suspect')} - ${$t('label.still_sick')}` }}</div>
+              </div>
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-suspect-discarded margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.suspect')} - ${$t('label.discarded')}` }}</div>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              md="3"
+              class="py-0"
+            >
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-close-contact-quarantine margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.tight_contact')} - ${$t('label.still_quarantine')}` }}</div>
+              </div>
+              <div class="d-flex mb-1 align-top">
+                <div class="legend-color cluster-close-contact-discarded margin-top-3" />
+                <div class="legend-text">{{ `${$t('label.tight_contact')} - ${$t('label.discarded')}` }}</div>
               </div>
             </v-col>
           </v-row>
+        </v-col>
+        <v-col
+          cols="12"
+          md="12"
+        >
+          <div class="d-flex mb-1">
+            <div class="legend-color-title legend-description margin-top-3" />
+            <div class="legend-text-title">{{ $t('label.information') }}</div>
+          </div>
+          <ol class="text-description">
+            <li>{{ $t('label.map_description_step_1') }}</li>
+            <li>{{ $t('label.map_description_step_2') }}</li>
+          </ol>
         </v-col>
       </v-row>
     </div>
@@ -367,63 +385,66 @@ export default {
         village: null
       },
       stage: {
-        positive_active: {
-          name: `${this.$t('label.positive')} - ${this.$t('label.active')}`,
+        all: {
+          name: `Semua`,
           data: [],
           filter: true
         },
+        positive_active: {
+          name: `${this.$t('label.confirmation')} - ${this.$t(
+            'label.isolation_still_sick'
+          )}`,
+          data: [],
+          filter: false
+        },
         positive_recovery: {
-          name: `${this.$t('label.positive')} - ${this.$t('label.recovery')}`,
+          name: `${this.$t('label.confirmation')} - ${this.$t(
+            'label.recovery'
+          )}`,
           data: [],
           filter: false
         },
         positive_dead: {
-          name: `${this.$t('label.positive')} - ${this.$t('label.dead')}`,
+          name: `${this.$t('label.confirmation')} - ${this.$t('label.dead')}`,
           data: [],
           filter: false
         },
-        pdp_process: {
-          name: `${this.$t('label.pdp')} - ${this.$t('label.process')}`,
+        probable_sick: {
+          name: `${this.$t('label.probable')} - ${this.$t('label.still_sick')}`,
           data: [],
           filter: false
         },
-        pdp_done: {
-          name: `${this.$t('label.pdp')} - ${this.$t('label.done')}`,
+        probable_recovery: {
+          name: `${this.$t('label.probable')} - ${this.$t('label.recovery')}`,
           data: [],
           filter: false
         },
-        pdp_dead: {
-          name: `${this.$t('label.pdp')} - ${this.$t('label.dead')}`,
+        probable_dead: {
+          name: `${this.$t('label.probable')} - ${this.$t('label.dead')}`,
           data: [],
           filter: false
         },
-        odp_process: {
-          name: `${this.$t('label.odp')} - ${this.$t('label.process')}`,
+        suspect_sick: {
+          name: `${this.$t('label.suspect')} - ${this.$t('label.still_sick')}`,
           data: [],
           filter: false
         },
-        odp_done: {
-          name: `${this.$t('label.odp')} - ${this.$t('label.done')}`,
+        suspect_discarded: {
+          name: `${this.$t('label.suspect')} - ${this.$t('label.discarded')}`,
           data: [],
           filter: false
         },
-        odp_dead: {
-          name: `${this.$t('label.odp')} - ${this.$t('label.dead')}`,
+        close_contact_qurantine: {
+          name: `${this.$t('label.tight_contact')} - ${this.$t(
+            'label.still_quarantine'
+          )}`,
           data: [],
           filter: false
         },
-        otg_process: {
-          name: `${this.$t('label.otg')} - ${this.$t('label.process')}`,
-          data: [],
-          filter: false
-        },
-        otg_done: {
-          name: `${this.$t('label.otg')} - ${this.$t('label.done')}`,
-          data: [],
-          filter: false
-        },
-        otg_dead: {
-          name: `${this.$t('label.otg')} - ${this.$t('label.dead')}`,
+        close_contact_discarded: {
+          name: `${this.$t('label.tight_contact')} - ${this.$t(
+            'label.discarded'
+          )}`,
           data: [],
           filter: false
         }
@@ -433,7 +454,7 @@ export default {
       clusterVillage: [],
       clusterVillageSingle: [],
       isFilter: false,
-      filterActive: 'positive_active',
+      filterActive: 'all',
       sidebar: null,
       sidebarContent: '',
       map: null,
@@ -464,7 +485,7 @@ export default {
     ])
   },
   watch: {
-    districtCode: (value) => {
+    districtCode: value => {
       if (value) {
         this.districtCity = {
           kota_kode: value,
@@ -474,13 +495,13 @@ export default {
         this.clearCity()
       }
     },
-    subDistrictCode: (value) => {
+    subDistrictCode: value => {
       this.subDistrict = {
         kecamatan_kode: value,
         kecamatan_nama: this.subDistrictName
       }
     },
-    villageCode: (value) => {
+    villageCode: value => {
       this.village = {
         desa_kode: value,
         desa_nama: this.villageName
@@ -522,13 +543,11 @@ export default {
       }).setView(this.center, 8)
 
       // Copyright
-      L.tileLayer(
-        this.url,
-        {
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 18
-        }
-      ).addTo(this.map)
+      L.tileLayer(this.url, {
+        attribution:
+          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18
+      }).addTo(this.map)
 
       // Zoom
       L.control
@@ -551,17 +570,17 @@ export default {
       }).addTo(this.map)
 
       // Filter
-      L.easyButton({
-        position: 'topright',
-        states: [
-          {
-            icon: '<i class="material-icons">filter_list</i>',
-            onClick: () => {
-              this.isFilter = !this.isFilter
-            }
-          }
-        ]
-      }).addTo(this.map)
+      // L.easyButton({
+      //   position: 'topright',
+      //   states: [
+      //     {
+      //       icon: '<i class="material-icons">filter_list</i>',
+      //       onClick: () => {
+      //         this.isFilter = !this.isFilter
+      //       }
+      //     }
+      //   ]
+      // }).addTo(this.map)
 
       // Sidebar
       this.sidebar = L.control.sidebar('sidebar', {
@@ -581,27 +600,6 @@ export default {
     async getData(type) {
       this.map.spin(true)
       try {
-        let paramStatusPatient = null
-        if (this.filterActive === 'positive_active') {
-          paramStatusPatient = null
-        } else if (this.filterActive === 'positive_recovery') {
-          paramStatusPatient = 'POSITIF-1'
-        } else if (this.filterActive === 'positive_dead') {
-          paramStatusPatient = 'POSITIF-2'
-        } else if (this.filterActive === 'pdp_process') {
-          paramStatusPatient = 'PDP-0'
-        } else if (this.filterActive === 'pdp_done') {
-          paramStatusPatient = 'PDP-1'
-        } else if (this.filterActive === 'odp_process') {
-          paramStatusPatient = 'ODP-0'
-        } else if (this.filterActive === 'odp_done') {
-          paramStatusPatient = 'ODP-1'
-        } else if (this.filterActive === 'otg_process') {
-          paramStatusPatient = 'OTG-0'
-        } else if (this.filterActive === 'otg_done') {
-          paramStatusPatient = 'OTG-1'
-        }
-
         let paramCity = null
         if (this.filterLayer.isCity) {
           if (this.roles[0] === 'dinkeskota') {
@@ -622,17 +620,22 @@ export default {
         }
 
         const params = {
-          status_patient: paramStatusPatient,
           kode_kab: paramCity,
           kode_kec: paramDistrict,
           kode_kel: paramVillage
         }
 
-        const res = await this.$store.dispatch('statistic/distributionCase', params)
+        const res = await this.$store.dispatch(
+          'statistic/distributionCase',
+          params
+        )
         this.stage[this.filterActive].data = res.data
 
         if (type === 'init') {
-          if (this.roles[0] === 'dinkesprov' || this.roles[0] === 'superadmin') {
+          if (
+            this.roles[0] === 'dinkesprov' ||
+            this.roles[0] === 'superadmin'
+          ) {
             this.zoomOld = 1
             this.zoomNew = 1
             this.createLayerCity()
@@ -700,7 +703,10 @@ export default {
         if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
           this.map.fitBounds(geojsonLayer.getBounds())
-        } else if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length === 1) {
+        } else if (
+          geojsonLayer.getLayers() &&
+          geojsonLayer.getLayers().length === 1
+        ) {
           this.map.setView(geojsonLayer.getLayers()[0].getLatLng(), 12)
         }
       }
@@ -731,7 +737,10 @@ export default {
       if (!this.isZoom) {
         if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
           this.map.fitBounds(geojsonLayer.getBounds())
-        } else if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length === 1) {
+        } else if (
+          geojsonLayer.getLayers() &&
+          geojsonLayer.getLayers().length === 1
+        ) {
           this.map.setView(geojsonLayer.getLayers()[0].getLatLng(), 12)
         }
       }
@@ -765,7 +774,7 @@ export default {
     },
     createMarker(value = null) {
       this.jsonAll = []
-      Object.keys(this.stage).map((cat) => {
+      Object.keys(this.stage).map(cat => {
         if (this.stage[cat].filter) {
           this.jsonAll = this.stage[cat].data
         }
@@ -773,14 +782,16 @@ export default {
 
       let geojsonLayer
       if (this.zoomNew === 1) {
-        geojsonLayer = L.geoJSON(this.jsonCity).eachLayer((element) => {
+        geojsonLayer = L.geoJSON(this.jsonCity).eachLayer(element => {
           if (this.map.getBounds().intersects(element._bounds)) {
-            this.clusterCity[element.feature.properties.kemendagri_kabupaten_kode] = this.paramMarkerCluster()
+            this.clusterCity[
+              element.feature.properties.kemendagri_kabupaten_kode
+            ] = this.paramMarkerCluster()
 
-            this.jsonAll.map((elPasien) => {
+            this.jsonAll.map(elPasien => {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
-                const longitude = Number(elPasien.longitude)
-                const latitude = Number(elPasien.latitude)
+                const longitude = Number(elPasien.latitude)
+                const latitude = Number(elPasien.longitude)
                 if (longitude !== null && latitude !== null) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
@@ -802,14 +813,16 @@ export default {
           filter: (feature, layer) => {
             return feature.properties.kemendagri_kabupaten_kode === value
           }
-        }).eachLayer((element) => {
+        }).eachLayer(element => {
           if (this.map.getBounds().intersects(element._bounds)) {
-            this.clusterDistrict[element.feature.properties.kemendagri_kecamatan_kode] = this.paramMarkerCluster()
+            this.clusterDistrict[
+              element.feature.properties.kemendagri_kecamatan_kode
+            ] = this.paramMarkerCluster()
 
-            this.jsonAll.map((elPasien) => {
+            this.jsonAll.map(elPasien => {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
-                const longitude = Number(elPasien.longitude)
-                const latitude = Number(elPasien.latitude)
+                const longitude = Number(elPasien.latitude)
+                const latitude = Number(elPasien.longitude)
                 if (longitude !== null && latitude !== null) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
@@ -831,14 +844,16 @@ export default {
           filter: (feature, layer) => {
             return feature.properties.kemendagri_kecamatan_kode === value
           }
-        }).eachLayer((element) => {
+        }).eachLayer(element => {
           if (this.map.getBounds().intersects(element._bounds)) {
-            this.clusterVillage[element.feature.properties.kemendagri_desa_kode] = this.paramMarkerCluster()
+            this.clusterVillage[
+              element.feature.properties.kemendagri_desa_kode
+            ] = this.paramMarkerCluster()
 
-            this.jsonAll.map((elPasien) => {
+            this.jsonAll.map(elPasien => {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
-                const longitude = Number(elPasien.longitude)
-                const latitude = Number(elPasien.latitude)
+                const longitude = Number(elPasien.latitude)
+                const latitude = Number(elPasien.longitude)
                 if (longitude !== null && latitude !== null) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
@@ -860,19 +875,23 @@ export default {
           filter: (feature, layer) => {
             return feature.properties.kemendagri_desa_kode === value
           }
-        }).eachLayer((element) => {
+        }).eachLayer(element => {
           if (this.map.getBounds().intersects(element._bounds)) {
             this.clusterVillageSingle = this.paramMarkerCluster()
 
-            this.jsonAll.map((elPasien) => {
+            this.jsonAll.map(elPasien => {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
-                const longitude = Number(elPasien.longitude)
-                const latitude = Number(elPasien.latitude)
+                const longitude = Number(elPasien.latitude)
+                const latitude = Number(elPasien.longitude)
                 if (longitude !== null && latitude !== null) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
                   if (isInside) {
-                    this.addMarkerLayer(this.clusterVillageSingle, element, elPasien)
+                    this.addMarkerLayer(
+                      this.clusterVillageSingle,
+                      element,
+                      elPasien
+                    )
                   }
                 }
               }
@@ -887,20 +906,24 @@ export default {
       }
     },
     addMarkerLayer(cluster, element, elPasien) {
-      const latitude = Number(elPasien.latitude)
-      const longitude = Number(elPasien.longitude)
-      const m = L.marker([latitude, longitude]).on('click', (e) => {
+      const longitude = Number(elPasien.latitude)
+      const latitude = Number(elPasien.longitude)
+      const m = L.marker([latitude, longitude]).on('click', e => {
         this.isFilter = false
         this.sidebar.show()
 
-        let stageFinal = null
-        if (elPasien.status === 'POSITIF') {
-          stageFinal = elPasien.final_result
-        } else {
-          stageFinal = elPasien.stage
+        let status
+        if (elPasien.status === 'CONFIRMATION') {
+          status = 'Konfirmasi'
+        } else if (elPasien.status === 'PROBABLE') {
+          status = 'Probable'
+        } else if (elPasien.status === 'SUSPECT') {
+          status = 'Suspek'
+        } else if (elPasien.status === 'CLOSECONTACT') {
+          status = 'Kontak Erat'
         }
 
-        const stage = elPasien.status + ' - ' + stageFinal
+        const stage = status + ' - ' + elPasien.final_result
 
         this.sidebarContent = `
           <div class="d-flex mb-4">
@@ -943,41 +966,99 @@ export default {
         areaStatus = false
       }
 
-      if (elPasien.status === 'POSITIF' && elPasien.stage === 'Proses' && elPasien.final_result === 'Aktif') {
-        areaStatus ? cluster[area].positive_active.addLayer(m) : cluster.positive_active.addLayer(m)
-      } else if (elPasien.status === 'POSITIF' && elPasien.stage === 'Selesai' && elPasien.final_result === 'Sembuh') {
-        areaStatus ? cluster[area].positive_recovery.addLayer(m) : cluster.positive_recovery.addLayer(m)
-      } else if (elPasien.status === 'POSITIF' && elPasien.stage === 'Selesai' && elPasien.final_result === 'Meninggal') {
-        areaStatus ? cluster[area].positive_dead.addLayer(m) : cluster.positive_dead.addLayer(m)
-      } else if (elPasien.status === 'PDP' && elPasien.stage === 'Proses') {
-        areaStatus ? cluster[area].pdp_process.addLayer(m) : cluster.pdp_process.addLayer(m)
-      } else if (elPasien.status === 'PDP' && elPasien.stage === 'Selesai') {
-        areaStatus ? cluster[area].pdp_done.addLayer(m) : cluster.pdp_done.addLayer(m)
-      } else if (elPasien.status === 'ODP' && elPasien.stage === 'Proses') {
-        areaStatus ? cluster[area].odp_process.addLayer(m) : cluster.odp_process.addLayer(m)
-      } else if (elPasien.status === 'ODP' && elPasien.stage === 'Selesai') {
-        areaStatus ? cluster[area].odp_done.addLayer(m) : cluster.odp_done.addLayer(m)
-      } else if (elPasien.status === 'OTG' && elPasien.stage === 'Proses') {
-        areaStatus ? cluster[area].otg_process.addLayer(m) : cluster.otg_process.addLayer(m)
-      } else if (elPasien.status === 'OTG' && elPasien.stage === 'Selesai') {
-        areaStatus ? cluster[area].otg_done.addLayer(m) : cluster.otg_done.addLayer(m)
+      if (
+        elPasien.status === 'CONFIRMATION' &&
+        elPasien.final_result === 'Masih Sakit'
+      ) {
+        areaStatus
+          ? cluster[area].positive_active.addLayer(m)
+          : cluster.positive_active.addLayer(m)
+      } else if (
+        elPasien.status === 'CONFIRMATION' &&
+        elPasien.final_result === 'Selesai Isolasi/Sembuh'
+      ) {
+        areaStatus
+          ? cluster[area].positive_recovery.addLayer(m)
+          : cluster.positive_recovery.addLayer(m)
+      } else if (
+        elPasien.status === 'CONFIRMATION' &&
+        elPasien.final_result === 'Meninggal'
+      ) {
+        areaStatus
+          ? cluster[area].positive_dead.addLayer(m)
+          : cluster.positive_dead.addLayer(m)
+      } else if (
+        elPasien.status === 'PROBABLE' &&
+        elPasien.final_result === 'Masih Sakit'
+      ) {
+        areaStatus
+          ? cluster[area].probable_sick.addLayer(m)
+          : cluster.probable_sick.addLayer(m)
+      } else if (
+        elPasien.status === 'PROBABLE' &&
+        elPasien.final_result === 'Selesai Isolasi/Sembuh'
+      ) {
+        areaStatus
+          ? cluster[area].probable_recovery.addLayer(m)
+          : cluster.probable_recovery.addLayer(m)
+      } else if (
+        elPasien.status === 'PROBABLE' &&
+        elPasien.final_result === 'Meninggal'
+      ) {
+        areaStatus
+          ? cluster[area].probable_dead.addLayer(m)
+          : cluster.probable_dead.addLayer(m)
+      } else if (
+        elPasien.status === 'SUSPECT' &&
+        elPasien.final_result === 'Masih Sakit'
+      ) {
+        areaStatus
+          ? cluster[area].suspect_sick.addLayer(m)
+          : cluster.suspect_sick.addLayer(m)
+      } else if (
+        elPasien.status === 'SUSPECT' &&
+        elPasien.final_result === 'Discarded'
+      ) {
+        areaStatus
+          ? cluster[area].suspect_discarded.addLayer(m)
+          : cluster.suspect_discarded.addLayer(m)
+      } else if (
+        elPasien.status === 'CLOSECONTACT' &&
+        elPasien.final_result === 'Masih Dikarantina'
+      ) {
+        areaStatus
+          ? cluster[area].close_contact_quarantine.addLayer(m)
+          : cluster.close_contact_quarantine.addLayer(m)
+      } else if (
+        elPasien.status === 'CLOSECONTACT' &&
+        elPasien.final_result === 'Discarded'
+      ) {
+        areaStatus
+          ? cluster[area].close_contact_discarded.addLayer(m)
+          : cluster.close_contact_discarded.addLayer(m)
       }
     },
     addMarkerClusterLayer(cluster, element) {
       if (this.zoomNew === 1) {
-        Object.keys(cluster[element.feature.properties.kemendagri_kabupaten_kode]).map((key) => {
-          const newLayer = cluster[element.feature.properties.kemendagri_kabupaten_kode][key].addTo(this.map)
+        Object.keys(
+          cluster[element.feature.properties.kemendagri_kabupaten_kode]
+        ).map(key => {
+          const newLayer = cluster[
+            element.feature.properties.kemendagri_kabupaten_kode
+          ][key].addTo(this.map)
           this.dataMarker.push(newLayer)
 
-          cluster[element.feature.properties.kemendagri_kabupaten_kode][key].on('clusterclick', (c) => {
-            this.isFilter = false
-            this.sidebar.show()
+          cluster[element.feature.properties.kemendagri_kabupaten_kode][key].on(
+            'clusterclick',
+            c => {
+              this.isFilter = false
+              this.sidebar.show()
 
-            const city = element.feature.properties.kemendagri_kabupaten_nama
-            const stage = this.stage[key].name
-            const total = c.layer._childCount
+              const city = element.feature.properties.kemendagri_kabupaten_nama
+              const stage = this.stage[key].name
+              const total = c.layer._childCount
 
-            this.sidebarContent = `
+              this.sidebarContent = `
             <div class="d-flex mb-4">
               <div class="legend-color-title legend-description margin-top-3"></div>
               <div class="legend-text-title">Detail Kasus</div>
@@ -992,23 +1073,31 @@ export default {
               <strong>Kota/Kab.</strong>: ${city} <br>
             </div>
             `
-          })
+            }
+          )
         })
       } else if (this.zoomNew === 2) {
-        Object.keys(cluster[element.feature.properties.kemendagri_kecamatan_kode]).map((key) => {
-          const newLayer = cluster[element.feature.properties.kemendagri_kecamatan_kode][key].addTo(this.map)
+        Object.keys(
+          cluster[element.feature.properties.kemendagri_kecamatan_kode]
+        ).map(key => {
+          const newLayer = cluster[
+            element.feature.properties.kemendagri_kecamatan_kode
+          ][key].addTo(this.map)
           this.dataMarker.push(newLayer)
 
-          cluster[element.feature.properties.kemendagri_kecamatan_kode][key].on('clusterclick', (c) => {
-            this.isFilter = false
-            this.sidebar.show()
+          cluster[element.feature.properties.kemendagri_kecamatan_kode][key].on(
+            'clusterclick',
+            c => {
+              this.isFilter = false
+              this.sidebar.show()
 
-            const city = element.feature.properties.kemendagri_kabupaten_nama
-            const district = element.feature.properties.kemendagri_kecamatan_nama
-            const stage = this.stage[key].name
-            const total = c.layer._childCount
+              const city = element.feature.properties.kemendagri_kabupaten_nama
+              const district =
+                element.feature.properties.kemendagri_kecamatan_nama
+              const stage = this.stage[key].name
+              const total = c.layer._childCount
 
-            this.sidebarContent = `
+              this.sidebarContent = `
             <div class="d-flex mb-4">
               <div class="legend-color-title legend-description margin-top-3"></div>
               <div class="legend-text-title">Detail Kasus</div>
@@ -1026,15 +1115,20 @@ export default {
               <strong>Kec.</strong>: ${district} <br>
             </div>
             `
-          })
+            }
+          )
         })
       } else if (this.zoomNew === 3) {
-        Object.keys(cluster[element.feature.properties.kemendagri_desa_kode]).map((key) => {
-          const newLayer = cluster[element.feature.properties.kemendagri_desa_kode][key].addTo(this.map)
+        Object.keys(
+          cluster[element.feature.properties.kemendagri_desa_kode]
+        ).map(key => {
+          const newLayer = cluster[
+            element.feature.properties.kemendagri_desa_kode
+          ][key].addTo(this.map)
           this.dataMarker.push(newLayer)
         })
       } else if (this.zoomNew === 4) {
-        Object.keys(cluster).map((key) => {
+        Object.keys(cluster).map(key => {
           const newLayer = cluster[key].addTo(this.map)
           this.dataMarker.push(newLayer)
         })
@@ -1042,18 +1136,34 @@ export default {
     },
     paramMarkerCluster() {
       return {
-        positive_active: L.markerClusterGroup(this.configCluster('positive-active')),
-        positive_recovery: L.markerClusterGroup(this.configCluster('positive-recovery')),
-        positive_dead: L.markerClusterGroup(this.configCluster('positive-dead')),
-        pdp_process: L.markerClusterGroup(this.configCluster('pdp-process')),
-        pdp_done: L.markerClusterGroup(this.configCluster('pdp-done')),
-        pdp_dead: L.markerClusterGroup(this.configCluster('pdp-dead')),
-        odp_process: L.markerClusterGroup(this.configCluster('odp-process')),
-        odp_done: L.markerClusterGroup(this.configCluster('odp-done')),
-        odp_dead: L.markerClusterGroup(this.configCluster('odp-dead')),
-        otg_process: L.markerClusterGroup(this.configCluster('otg-process')),
-        otg_done: L.markerClusterGroup(this.configCluster('otg-done')),
-        otg_dead: L.markerClusterGroup(this.configCluster('otg-dead'))
+        positive_active: L.markerClusterGroup(
+          this.configCluster('positive-active')
+        ),
+        positive_recovery: L.markerClusterGroup(
+          this.configCluster('positive-recovery')
+        ),
+        positive_dead: L.markerClusterGroup(
+          this.configCluster('positive-dead')
+        ),
+        probable_sick: L.markerClusterGroup(
+          this.configCluster('probable-sick')
+        ),
+        probable_recovery: L.markerClusterGroup(
+          this.configCluster('probable-recovery')
+        ),
+        probable_dead: L.markerClusterGroup(
+          this.configCluster('probable-dead')
+        ),
+        suspect_sick: L.markerClusterGroup(this.configCluster('suspect-sick')),
+        suspect_discarded: L.markerClusterGroup(
+          this.configCluster('suspect-discarded')
+        ),
+        close_contact_quarantine: L.markerClusterGroup(
+          this.configCluster('close-contact-quarantine')
+        ),
+        close_contact_discarded: L.markerClusterGroup(
+          this.configCluster('close-contact-discarded')
+        )
       }
     },
     configCluster(className = null) {
@@ -1064,7 +1174,7 @@ export default {
         showCoverageOnHover: false,
         zoomToBoundsOnClick: false,
         spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0 },
-        iconCreateFunction: (cluster) => {
+        iconCreateFunction: cluster => {
           let count = cluster.getChildCount()
           const digits = (count + '').length
 
@@ -1088,7 +1198,7 @@ export default {
         return sentence
       }
 
-      const titleizeWord = (name) => {
+      const titleizeWord = name => {
         return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
       }
 
@@ -1100,7 +1210,7 @@ export default {
     },
     onFilter(category) {
       this.sidebar.hide()
-      Object.keys(this.stage).map((res) => {
+      Object.keys(this.stage).map(res => {
         this.stage[res].filter = false
       })
 
@@ -1321,10 +1431,11 @@ export default {
   float: left;
   border-radius: 10px;
   margin-right: 8px;
-  margin-top: 1px;
+  margin-top: 4.5px;
 }
 .legend-text {
   color: black;
+  margin-top: 2px;
 }
 .legend-color-title {
   width: 5px;
@@ -1371,41 +1482,33 @@ export default {
   border: 2px solid rgb(235, 87, 87, 0.9);
   background: rgb(165, 18, 18, 0.9);
 }
-.cluster-odp-process {
+.cluster-probable-sick {
   border: 2px solid rgb(45, 156, 219, 0.9);
   background: rgb(45, 156, 219, 0.9);
 }
-.cluster-odp-done {
+.cluster-probable-recovery {
   border: 2px solid rgb(45, 156, 219, 0.9);
-  background: rgba(196, 195, 195, 0.9);
+  background: rgb(39, 174, 96, 0.9);
 }
-.cluster-odp-dead {
+.cluster-probable-dead {
   border: 2px solid rgb(45, 156, 219, 0.9);
   background: rgb(165, 18, 18, 0.9);
 }
-.cluster-pdp-process {
-  border: 2px solid rgb(242, 201, 76, 0.9);
-  background: rgb(242, 201, 76, 0.9);
+.cluster-suspect-sick {
+  border: 2px solid rgb(242, 153, 74, 0.9);
+  background: rgb(242, 153, 74, 0.9);
 }
-.cluster-pdp-done {
-  border: 2px solid rgb(242, 201, 76, 0.9);
-  background: rgba(196, 195, 195, 0.9);
+.cluster-suspect-discarded {
+  border: 2px solid rgb(242, 153, 74, 0.9);
+  background: rgb(130, 130, 130, 0.9);
 }
-.cluster-pdp-dead {
-  border: 2px solid rgb(242, 201, 76, 0.9);
-  background: rgb(165, 18, 18, 0.9);
+.cluster-close-contact-quarantine {
+  border: 2px solid rgb(39, 174, 96, 0.9);
+  background: rgb(39, 174, 96, 0.9);
 }
-.cluster-otg-process {
-  border: 2px solid rgb(97, 97, 97, 0.9);
-  background: rgb(97, 97, 97, 0.9);
-}
-.cluster-otg-done {
-  border: 2px solid rgb(97, 97, 97, 0.9);
-  background: rgba(196, 195, 195, 0.9);
-}
-.cluster-otg-dead {
-  border: 2px solid rgb(97, 97, 97, 0.9);
-  background: rgb(165, 18, 18, 0.9);
+.cluster-close-contact-discarded {
+  border: 2px solid rgb(39, 174, 96, 0.9);
+  background: rgb(130, 130, 130, 0.9);
 }
 
 .digits-0 {

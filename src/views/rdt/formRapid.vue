@@ -51,6 +51,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { getAge } from '@/utils/constantVariable'
+import { validateScrollUp } from '@/utils/utilsFunction'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -139,9 +140,11 @@ export default {
   },
   methods: {
     getAge,
+    validateScrollUp,
     async saveData() {
       const valid = await this.$refs.observer.validate()
       if (!valid) {
+        this.validateScrollUp()
         return
       } else if (this.formResult.test_date === null) {
         await this.$store.dispatch('toast/errorToast', 'Tanggal Harus Diisi')

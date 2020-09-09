@@ -66,7 +66,7 @@
                             </v-btn>
                           </template>
                           <v-card>
-                            <v-list-item @click="handleUpdateReport(item._id)">
+                            <v-list-item v-if="roles[0] !== 'faskes'" @click="handleUpdateReport(item._id)">
                               {{ $t('route.make_report') }}
                             </v-list-item>
                             <v-list-item @click="handleUpdateCloseContact(item._id)">
@@ -210,6 +210,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', [
+      'roles',
       'fullName',
       'district_user',
       'district_name_user'

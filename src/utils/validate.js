@@ -19,3 +19,9 @@ export function noWhiteSpaces(str) {
 
   return reg.test(str)
 }
+
+export function noAlphabet(str) {
+  const reg = /^-?\d*$/
+
+  return reg.test(str)
+}

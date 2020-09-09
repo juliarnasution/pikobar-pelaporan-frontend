@@ -26,7 +26,46 @@
                   <tr>
                     <td>{{ getTableRowNumbering(index) }}</td>
                     <td>{{ item.visited_local_area_province }}</td>
-                    <td>{{ item.visited_local_area_city }} Th</td>
+                    <td>{{ item.visited_local_area_city }}</td>
+                    <td>
+                      <v-card-actions>
+                        <v-menu
+                          :close-on-content-click="true"
+                          :nudge-width="100"
+                          :nudge-left="220"
+                          :nudge-top="40"
+                          offset-y
+                        >
+                          <template v-slot:activator="{ on }">
+                            <v-btn
+                              class="ma-1"
+                              color="#828282"
+                              style="text-transform: none;height: 30px;min-width: 80px;"
+                              tile
+                              outlined
+                              v-on="on"
+                            >
+                              {{ $t('label.choose_action') }}
+                              <v-icon style="color: #009D57;font-size: 2rem;" right>
+                                mdi-menu-down
+                              </v-icon>
+                            </v-btn>
+                          </template>
+                          <v-card>
+                            <v-list-item>
+                              {{ $t('label.edit_history') }}
+                            </v-list-item>
+                            <v-divider class="mt-0 mb-0" />
+                            <v-list-item
+                              style="color: #EB5757 !important;"
+                              @click="handleDelete(item)"
+                            >
+                              {{ $t('label.delete_history') }}
+                            </v-list-item>
+                          </v-card>
+                        </v-menu>
+                      </v-card-actions>
+                    </td>
                   </tr>
                 </template>
               </v-data-table>
@@ -68,6 +107,21 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
+    <dialog-form-transmission-area-local
+      :show-dialog-add-transmission-area-lokal="showTransmissionAreaLokal"
+      :show-form-add-transmission-area-lokal.sync="showTransmissionAreaLokal"
+      :title-detail="isEditTransmissionAreaLokal ? $t('label.edit_history'):$t('label.input_history')"
+      :form-data="formLocalTransmissionArea"
+      :is-edit.sync="isEditTransmissionAreaLokal"
+      :id-case="idCase"
+    />
+    <dialog-delete
+      :dialog="dialogDelete"
+      :dialog-delete.sync="dialogDelete"
+      :data-deleted="dataDelete"
+      :delete-date.sync="dataDelete"
+      :store-path-delete="`localTransmissionArea/deleteLocalTransmissionArea`"
+    />
   </v-dialog>
 </template>
 <script>
@@ -100,10 +154,9 @@ export default {
       show: this.showDialog,
       showReportCloseContact: false,
       isEdit: false,
-      isEditCloseContact: false,
+      isEditTransmissionAreaLokal: false,
       isLoading: false,
       formBody: {},
-      parentCase: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
         { text: this.$t('label.province').toUpperCase(), value: 'visited_local_area_province' },
@@ -114,7 +167,7 @@ export default {
       formatDate: 'YYYY/MM/DD',
       refreshPageList: false,
       showDialogUpdateCloseContact: false,
-      showCloseContact: false,
+      showTransmissionAreaLokal: false,
       idCloseContact: null,
       dialogDelete: false,
       dataDelete: null
@@ -126,8 +179,8 @@ export default {
       'district_user',
       'district_name_user'
     ]),
-    ...mapState('closeContactCase', [
-      'formCloseContact'
+    ...mapState('localTransmissionArea', [
+      'formLocalTransmissionArea'
     ])
   },
   watch: {
@@ -138,24 +191,21 @@ export default {
       this.$emit('update:show', value)
       if (!value) {
         this.$emit('update:caseId', '')
-        this.$emit('update:uniqueCaseId', '')
       }
     },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
-        EventBus.$emit('refreshPageListReport', true)
+        EventBus.$emit('refreshPageListTransmissionArea', true)
       }
     }
   },
   methods: {
     completeAddress,
     async handleCreate() {
-      await this.$store.dispatch('closeContactCase/resetStateCloseContactCase')
-      const response = await this.$store.dispatch('reports/detailReportCase', this.idCase)
-      this.parentCase = response.data
-      this.isEditCloseContact = false
-      this.showCloseContact = true
+      await this.$store.dispatch('localTransmissionArea/resetStateLocalTransmissionArea')
+      this.isEditTransmissionAreaLokal = false
+      this.showTransmissionAreaLokal = true
     },
     async handleUpdateReport(id) {
       this.formBody = this.formCloseContact
@@ -163,16 +213,23 @@ export default {
         idCloseContact: id
       }
       this.isLoading = true
-      const response = await this.$store.dispatch('closeContactCase/getDetailCloseContactByCase', data)
+      const response = await this.$store.dispatch('localTransmissionArea/getDetailLocalTransmissionArea', data)
       if (response.data !== null) {
         this.formBody = response.data
         this.isEdit = true
-        this.showReportCloseContact = true
         this.isLoading = false
       }
     },
     getTableRowNumbering(index) {
       return (index + 1)
+    },
+    async handleDelete(item) {
+      if (!item.is_reported) {
+        this.dialogDelete = true
+        this.dataDelete = item
+      } else {
+        await this.$store.dispatch('toast/errorToast', this.$t('errors.contact_data_cannot_be_deleted'))
+      }
     }
   }
 }

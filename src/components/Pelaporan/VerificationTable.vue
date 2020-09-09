@@ -89,11 +89,23 @@
                 </template>
                 <v-card>
                   <div v-if="roles[0] === 'faskes'">
-                    <v-list-item @click="handleCorrectCaseReport(item._id)">
-                      {{ item.verified_status === 'declined' ? $t('label.fix_case') : $t('label.view_case_detail') }}
+                    <v-list-item
+                      v-if="item.verified_status === 'declined'"
+                      @click="handleCorrectCaseReport(item._id)"
+                    >
+                      {{ $t('label.fix_case') }}
+                    </v-list-item>
+                    <v-list-item
+                      v-else
+                      @click="handleDetail(item._id)"
+                    >
+                      {{ $t('label.view_case_detail') }}
                     </v-list-item>
                     <v-list-item v-if="item.verified_status !== 'declined'" @click="handleEditCase(item._id)">
                       {{ $t('label.change_patent_data') }}
+                    </v-list-item>
+                    <v-list-item @click="handleCloseContact(item._id, item.id_case)">
+                      {{ $t('label.see_closely_contact') }}
                     </v-list-item>
                     <v-list-item v-if="item.verified_status !== 'declined'" @click="handleEditHistoryCase(item._id)">
                       {{ $t('label.update_history') }}
@@ -123,6 +135,16 @@
       :store-path-get-list="`reports/listReportCase`"
       :list-query="listQuery"
     />
+    <dialog-close-contact
+      :show-dialog="dialogCloseContact"
+      :show.sync="dialogCloseContact"
+      :list-close-contact.sync="listCloseContact"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :id-unique-case="idUniqueCase"
+      :unique-case-id.sync="idUniqueCase"
+      :title-detail="$t('label.close_contact_list')"
+    />
     <dialog-update-case
       :show-dialog="dialogUpdateCase"
       :show.sync="dialogUpdateCase"
@@ -139,6 +161,7 @@
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import { formatDatetime } from '@/utils/parseDatetime'
+import EventBus from '@/utils/eventBus'
 export default {
   name: 'VerificationTable',
   props: {
@@ -161,6 +184,10 @@ export default {
       headers: this.tableHeaders,
       listQuery: this.query,
       dialog: false,
+      idCase: null,
+      idUniqueCase: null,
+      dialogCloseContact: false,
+      listCloseContact: [],
       dataDelete: null,
       verificationQuery: {
         'id': '',
@@ -203,6 +230,13 @@ export default {
       }
     }
   },
+  async mounted() {
+    EventBus.$on('refreshPageListReport', (value) => {
+      if (this.idCase !== null) {
+        this.getListCloseContactByCase(this.idCase)
+      }
+    })
+  },
   methods: {
     formatDatetime,
     getTableRowNumbering(index) {
@@ -218,10 +252,12 @@ export default {
     async handleDetail(id) {
       this.$emit('update:verificationQuery', this.verificationQuery)
       const response = await this.$store.dispatch('reports/detailReportCase', id)
+      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       if (response.data.verified_status === 'verified') {
         this.$emit('update:showFailedDialog', true)
       } else {
         this.$emit('update:caseDetail', response.data)
+        this.$emit('update:closeContactDetail', responseCloseContact.data)
         this.$emit('update:showVerificationForm', true)
       }
     },
@@ -258,6 +294,16 @@ export default {
         delete this.formRiwayatPasien['updatedAt']
       }
       this.dialogHistoryCase = true
+    },
+    async handleCloseContact(id, idUniqueCase) {
+      this.idCase = id
+      this.idUniqueCase = idUniqueCase
+      await this.getListCloseContactByCase(id)
+      this.dialogCloseContact = true
+    },
+    async getListCloseContactByCase(id) {
+      const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      this.listCloseContact = response.data
     },
     async handleDeleteCase(item) {
       this.dialog = true

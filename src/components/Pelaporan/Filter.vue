@@ -100,6 +100,10 @@ export default {
       type: Object,
       default: null
     },
+    resetStatistic: {
+      type: Boolean,
+      default: false
+    },
     onSearch: {
       type: Function,
       default: null
@@ -112,18 +116,6 @@ export default {
       codeDistrict: '',
       nameVillage: '',
       statusList: [
-        {
-          label: 'OTG',
-          value: 'OTG'
-        },
-        {
-          label: 'ODP',
-          value: 'ODP'
-        },
-        {
-          label: 'PDP',
-          value: 'PDP'
-        },
         {
           label: this.$t('label.confirmation').toUpperCase(),
           value: 'CONFIRMATION'
@@ -195,6 +187,7 @@ export default {
         this.codeDistrict = ''
       }
       this.$store.dispatch('reports/listReportCase', this.listQuery)
+      this.$emit('update:resetStatistic', true)
     }
   }
 }

@@ -125,6 +125,7 @@
                 :show-failed-dialog.sync="showFailedDialog"
                 :show-verification-form.sync="showVerificationForm"
                 :case-detail.sync="caseDetail"
+                :close-contact-detail.sync="closeContactCase"
                 :refresh-page.sync="isRefresh"
                 :verification-query="verificationQuery"
               />
@@ -144,6 +145,7 @@
       :show.sync="showVerificationForm"
       :show-confirmation.sync="showConfirmation"
       :case-data="caseDetail"
+      :close-contact-case="closeContactCase"
       :query-data="verificationQuery"
       :query.sync="verificationQuery"
       :refresh-page.sync="isRefresh"
@@ -198,18 +200,6 @@ export default {
       },
       statusList: [
         {
-          label: 'OTG',
-          value: 'OTG'
-        },
-        {
-          label: 'ODP',
-          value: 'ODP'
-        },
-        {
-          label: 'PDP',
-          value: 'PDP'
-        },
-        {
           label: this.$t('label.confirmation').toUpperCase(),
           value: 'CONFIRMATION'
         },
@@ -232,6 +222,7 @@ export default {
       villageName: '',
       dialogForm: true,
       caseDetail: null,
+      closeContactCase: [],
       showVerificationForm: false,
       showConfirmation: false,
       showFailedDialog: false,

@@ -275,7 +275,7 @@
             <v-container>
               <v-row>
                 <v-radio-group v-model="formPasien.close_contact_health_worker" row>
-                  <span v-for="(item, index) in answerList" :key="index">
+                  <span v-for="(item, index) in yesOrNoAnswer" :key="index">
                     <v-radio :label="item.text" :value="item.value" />
                   </span>
                 </v-radio-group>
@@ -284,7 +284,7 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <v-row v-if="formPasien.close_contact_health_worker === 1">
+      <v-row v-if="formPasien.close_contact_health_worker === true">
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider v-slot="{ errors }">
@@ -326,7 +326,7 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { answerList, healthWorkerList, apd } from '@/utils/constantVariable'
+import { answerList, yesOrNoAnswer, healthWorkerList, apd } from '@/utils/constantVariable'
 
 export default {
   name: 'FormContactFactor',
@@ -344,6 +344,7 @@ export default {
       apdList: apd,
       formatDate: 'YYYY/MM/DD',
       answerList: answerList,
+      yesOrNoAnswer: yesOrNoAnswer,
       patientCloseContactList: [],
       patientCloseContactConfirmList: [],
       searchPatientCloseContact: null,

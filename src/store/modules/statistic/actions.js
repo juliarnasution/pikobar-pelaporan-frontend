@@ -104,5 +104,23 @@ export default {
     } catch (error) {
       return error.response
     }
+  },
+  async listCaseRelated({
+    commit
+  }, params) {
+    try {
+      const response = await requestServer('/api/case-related', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async detailCaseRelated({ commit }, id) {
+    try {
+      const response = await requestServer(`/api/case-related/${id}`, 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
   }
 }

@@ -5,6 +5,9 @@ export default {
   totalList: (state, getters) => {
     return state.totalList
   },
+  totalData: (state, getters) => {
+    return state.totalData
+  },
   totalPending: (state, getters) => {
     return state.totalPending
   },

@@ -117,6 +117,18 @@ export const protectionToolOptions = [
   'Masker NIOSH-N95, AN EU STANDARD FFP2'
 ]
 
+export const specimenType = [
+  'Swab Nasofaring',
+  'Swab Orofaring',
+  'Swab Naso - Orofaring',
+  'Sputum',
+  'Bal Fluid',
+  'Cairan Spirasi Trakhea',
+  'Serum',
+  'Darah',
+  'Lainnya'
+]
+
 export const listMonthName = [
   {
     value: 1,
@@ -188,6 +200,7 @@ export const rolesPerm = {
 }
 
 export const rolesWidget = {
+  'superadmin': [rolesPerm.ADMIN, rolesPerm.DINKESPROV],
   'dinkeskota': [rolesPerm.DINKESKOTA],
   'dinkesKotaAndFaskes': [rolesPerm.DINKESKOTA, rolesPerm.FASKES]
 }
@@ -248,6 +261,30 @@ export const listPhysicalActivity = [
     value: 2,
     text: i18n.t('label.physical_exercise_more_than_150_minutes')
   }
+]
+
+export const listActivitiesUndertaken = [
+  'Kontak fisik langsung (contoh: salaman, pelukan, dll)',
+  'Kontak langsung dengan sekresi menular (contoh: batuk atau bersin di depannya, menyentuh tisu bekas pakai dengan tangan telanjang, dll)',
+  'Berada dalam ruang tertutup bersama dalam waktu lebih dari 15 menit',
+  'Berada dalam ruang yang sama dengan jarak kurang dari 1 meter'
+]
+
+export const listPlaceCategory = [
+  'Pasar Modern / Tradisional',
+  'Pasar Hewan',
+  'Fasilitas Kesehatan',
+  'Tempat Wisata',
+  'Tempat Ibadah',
+  'Restoran',
+  'Tempat Publik Lainnya'
+]
+
+export const listRelationships = [
+  'Keluarga serumah',
+  'Teman Kerja',
+  'Jamaah ditempat ibadah',
+  'Lainnya'
 ]
 
 export const incomeList = [

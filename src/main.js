@@ -10,36 +10,38 @@ import moment from 'moment'
 import infiniteScroll from 'vue-infinite-scroll'
 import FlagIcon from 'vue-flag-icon'
 import VueAnalytics from 'vue-analytics'
+import vueDebounce from 'vue-debounce'
 
 moment.locale('id')
 
+import './plugins/firebase'
 import vuetify from './plugins/vuetify'
 Vue.config.performance = process.env.NODE_ENV === 'development'
 
-// import * as Sentry from '@sentry/browser'
-// import * as Integrations from '@sentry/integrations'
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
 
-// if (process.env.NODE_ENV === 'production') {
-//   Sentry.init({
-//     environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
-//     dsn: process.env.VUE_APP_SENTRY_DSN,
-//     release: process.env.VUE_APP_VERSION,
-//     integrations: [new Integrations.Vue({
-//       Vue,
-//       attachProps: true
-//     })]
-//   })
-// } else {
-//   Sentry.init({
-//     environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
-//     dsn: process.env.VUE_APP_SENTRY_DSN,
-//     release: process.env.VUE_APP_VERSION,
-//     integrations: [new Integrations.Vue({
-//       Vue,
-//       attachProps: true
-//     })]
-//   })
-// }
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
+    dsn: process.env.VUE_APP_SENTRY_DSN,
+    release: process.env.VUE_APP_VERSION,
+    integrations: [new Integrations.Vue({
+      Vue,
+      attachProps: true
+    })]
+  })
+} else {
+  Sentry.init({
+    environment: process.env.VUE_APP_ERROR_ENVIRONMENT,
+    dsn: process.env.VUE_APP_SENTRY_DSN,
+    release: process.env.VUE_APP_VERSION,
+    integrations: [new Integrations.Vue({
+      Vue,
+      attachProps: true
+    })]
+  })
+}
 
 import App from './App'
 import store from './store'
@@ -53,6 +55,10 @@ import i18n from './lang' // Internationalization
 import '@/helpers/filters' // include all filters
 import VueHtml2Canvas from 'vue-html2canvas'
 // import './registerServiceWorker'
+
+Vue.use(vueDebounce, {
+  listenTo: 'input'
+})
 
 Vue.use(VueHtml2Canvas)
 Vue.use(FlagIcon)

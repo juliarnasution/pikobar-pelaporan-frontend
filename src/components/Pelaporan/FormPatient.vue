@@ -144,7 +144,14 @@
         <v-row align="center" class="ma-0">
           <v-col cols="12" sm="6" class="pa-1">
             <ValidationProvider>
-              <v-text-field v-model="formPasien.rt" class="input-append-btn" type="number" min="0" max="120" solo-inverted>
+              <v-text-field
+                v-model="formPasien.rt"
+                class="input-append-btn"
+                type="number"
+                min="0"
+                max="120"
+                solo-inverted
+              >
                 <template v-slot:append>
                   <v-btn depressed tile min-width="20">
                     {{ $t('label.rt') }}
@@ -155,7 +162,14 @@
           </v-col>
           <v-col cols="12" sm="6" class="pa-1">
             <ValidationProvider>
-              <v-text-field v-model="formPasien.rw" class="input-append-btn" type="number" min="0" max="11" solo-inverted>
+              <v-text-field
+                v-model="formPasien.rw"
+                class="input-append-btn"
+                type="number"
+                min="0"
+                max="11"
+                solo-inverted
+              >
                 <template v-slot:append>
                   <v-btn depressed tile min-width="20">
                     {{ $t('label.rw') }}
@@ -170,9 +184,59 @@
     <v-row align="start">
       <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
       <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-        <ValidationProvider>
-          <v-textarea v-model="formPasien.address_street" solo :placeholder="$t('label.complete_address')" />
+        <ValidationProvider v-slot="{ errors }" rules="required">
+          <v-textarea
+            v-model="formPasien.address_street"
+            :error-messages="errors"
+            solo
+            :placeholder="$t('label.complete_address')"
+          />
         </ValidationProvider>
+      </v-col>
+    </v-row>
+    <v-row align="start">
+      <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
+      <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+        <v-row align="center" class="ma-0">
+          <v-col cols="12" sm="6" class="pa-1">
+            <ValidationProvider>
+              <v-text-field
+                v-model="formPasien.latitude"
+                disabled
+                class="input-append-btn"
+                type="number"
+                min="0"
+                max="120"
+                solo-inverted
+              >
+                <template v-slot:append>
+                  <v-btn depressed tile min-width="20">
+                    Lat
+                  </v-btn>
+                </template>
+              </v-text-field>
+            </ValidationProvider>
+          </v-col>
+          <v-col cols="12" sm="6" class="pa-1">
+            <ValidationProvider>
+              <v-text-field
+                v-model="formPasien.longitude"
+                disabled
+                class="input-append-btn"
+                type="number"
+                min="0"
+                max="11"
+                solo-inverted
+              >
+                <template v-slot:append>
+                  <v-btn depressed tile min-width="20">
+                    Long
+                  </v-btn>
+                </template>
+              </v-text-field>
+            </ValidationProvider>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <v-row align="start">
@@ -283,6 +347,23 @@ export default {
     'formPasien.monthsOld'(value) {
       if (this.formPasien.yearsOld !== '') {
         this.formPasien.age = Number((Number(this.formPasien.yearsOld) + (Number(this.formPasien.monthsOld) / 12)).toFixed(2))
+      }
+    },
+    async 'formPasien.address_subdistrict_name'() {
+      this.formPasien.latitude = ''
+      this.formPasien.longitude = ''
+    },
+    async 'formPasien.address_street'(value) {
+      if (this.formPasien.address_village_name !== '') {
+        const completeAddress = `${value}, ${this.formPasien.address_village_name}, ${this.formPasien.address_district_name}, ${this.formPasien.address_subdistrict_name}`
+        const params = {
+          address: completeAddress
+        }
+        const response = await this.$store.dispatch('region/getLatitudeLongitude', params)
+        if (response) {
+          this.formPasien.latitude = response.lat
+          this.formPasien.longitude = response.lng
+        }
       }
     }
   },
