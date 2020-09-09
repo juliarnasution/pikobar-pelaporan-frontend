@@ -257,6 +257,9 @@
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
+                          <v-list-item @click="handleTransmissionArea(item._id)">
+                            {{ $t('label.view_local_transmission_area_history') }}
+                          </v-list-item>
                           <v-divider class="mt-0 mb-0" />
                           <v-list-item
                             v-if="rolesWidget['dinkeskota'].includes(roles[0])"
@@ -352,6 +355,14 @@
       :unique-case-id.sync="idUniqueCase"
       :title-detail="$t('label.close_contact_list')"
     />
+    <dialog-transmission-area-local
+      :show-dialog="dialogTransmissionArea"
+      :show.sync="dialogTransmissionArea"
+      :list-close-contact.sync="listTransmissionArea"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :title-detail="$t('label.local_transmission_area_history_list')"
+    />
     <import-form
       :show-import-form="showImportForm"
       :refresh-page="handleSearch"
@@ -424,6 +435,7 @@ export default {
       successDialog: false,
       detailCase: {},
       listCloseContact: [],
+      listTransmissionArea: [],
       idCase: null,
       idUniqueCase: '',
       listHistoryCase: [],
@@ -431,7 +443,8 @@ export default {
       dialogDetailCase: false,
       dialogHistoryCase: false,
       dialogUpdateCase: false,
-      dialogCloseContact: false
+      dialogCloseContact: false,
+      dialogTransmissionArea: false
     }
   },
   computed: {
@@ -581,9 +594,18 @@ export default {
       this.listQuery.page = 1
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
     },
+    async handleTransmissionArea(id) {
+      this.idCase = id
+      await this.getListTransmissionArea(id)
+      this.dialogTransmissionArea = true
+    },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       this.listCloseContact = response.data
+    },
+    async getListTransmissionArea(id) {
+      const response = await this.$store.dispatch('localTransmissionArea/getListLocalTransmissionArea', id)
+      this.listTransmissionArea = response.data
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
