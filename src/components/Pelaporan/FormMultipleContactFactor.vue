@@ -19,7 +19,7 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-      <div v-for="(data, index) in formPasien.close_contact_premier" :key="index" :class="`form-${index + 1}`">
+      <div v-for="(data, index) in formPasien.close_contact_premier" :key="index" :class="`form-contact-premier-${index + 1}`">
         <v-container fluid>
           <v-card outlined>
             <v-row align="center" justify="space-between">
@@ -454,7 +454,7 @@ export default {
       if (this.formPasien.close_contact_premier.length > 0) {
         const index = this.formPasien.close_contact_premier.length
         setTimeout(function() {
-          const key = `.form-${index}`
+          const key = `.form-contact-premier-${index}`
           scrollUp(key)
         }, 500)
       }

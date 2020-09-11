@@ -9,7 +9,11 @@
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
               <ValidationProvider>
-                <v-radio-group v-model="formPasien.travelling_history_before_sick_14_days" row>
+                <v-radio-group
+                  v-model="formPasien.travelling_history_before_sick_14_days"
+                  row
+                  @change="handleTravellingHistory"
+                >
                   <v-radio :label="$t('label.yes')" :value="true" />
                   <v-radio :label="$t('label.no')" :value="false" />
                 </v-radio-group>
@@ -100,7 +104,7 @@
         v-if="formPasien.travelling_history_before_sick_14_days"
         fluid
       >
-        <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormSupportingInvestigation">
+        <v-card outlined class="text-center" color="#F5F5F5" @click="handleAddFormTravelingHistory">
           <v-btn class="ma-2 mt-5" outlined small fab>
             <v-icon>mdi-plus</v-icon>
           </v-btn>
@@ -330,10 +334,10 @@ export default {
     }
   },
   mounted() {
-    this.handleAddFormSupportingInvestigation()
+    this.handleAddFormTravelingHistory()
   },
   methods: {
-    handleAddFormSupportingInvestigation() {
+    handleAddFormTravelingHistory() {
       this.isValid = true
       this.showAlert = false
       this.formPasien.travelling_history.push({
@@ -395,6 +399,11 @@ export default {
     handleDeleteFormTravelHistory(index) {
       this.formPasien.visited_public_place.splice(index, 1)
       this.isValid = this.formPasien.visited_public_place.length !== 0
+    },
+    handleTravellingHistory(value) {
+      if ((value) && (this.formPasien.travelling_history.length < 1)) {
+        this.handleAddFormTravelingHistory()
+      }
     }
   }
 }
