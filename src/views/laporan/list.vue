@@ -343,7 +343,6 @@
     <dialog-transmission-area-local
       :show-dialog="dialogTransmissionArea"
       :show.sync="dialogTransmissionArea"
-      :list-close-contact.sync="listTransmissionArea"
       :id-case="idCase"
       :case-id.sync="idCase"
       :title-detail="$t('label.local_transmission_area_history_list')"
@@ -569,18 +568,11 @@ export default {
     },
     async handleTransmissionArea(id) {
       this.idCase = id
-      await this.getListTransmissionArea(id)
       this.dialogTransmissionArea = true
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       this.listCloseContact = response.data
-    },
-    async getListTransmissionArea(id) {
-      const response = await this.$store.dispatch('localTransmissionArea/getListLocalTransmissionArea', id)
-      if (response.data) {
-        this.listTransmissionArea = response.data[0].visited_local_area
-      }
     },
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)

@@ -15,10 +15,10 @@ export default {
     commit
   }, data) {
     const {
-      idCase
+      idTransmissionArea
     } = data
     try {
-      const response = await requestServer(`/api/local-transmission/${idCase}`, 'GET')
+      const response = await requestServer(`/api/local-transmission/${idTransmissionArea}`, 'GET')
       return response
     } catch (error) {
       return error.response
@@ -42,11 +42,11 @@ export default {
     commit
   }, data) {
     const {
-      idCase,
+      idTransmissionArea,
       body
     } = data
     try {
-      const response = await requestServer(`/api/local-transmission/${idCase}`, 'PUT', body)
+      const response = await requestServer(`/api/local-transmission/${idTransmissionArea}`, 'PUT', body)
       return response
     } catch (error) {
       return error.response
@@ -54,9 +54,9 @@ export default {
   },
   async deleteLocalTransmissionArea({
     commit
-  }, id) {
+  }, idTransmissionArea) {
     try {
-      const response = await requestServer(`/api/local-transmission/${id}`, 'DELETE')
+      const response = await requestServer(`/api/local-transmission/${idTransmissionArea}`, 'DELETE')
       return response
     } catch (error) {
       return error.response

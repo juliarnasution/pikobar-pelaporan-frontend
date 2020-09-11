@@ -16,7 +16,7 @@
             <v-col>
               <v-data-table
                 :headers="headers"
-                :items="listCloseContact"
+                :items="listTransmissionArea"
                 :mobile-breakpoint="NaN"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="10"
@@ -52,7 +52,7 @@
                             </v-btn>
                           </template>
                           <v-card>
-                            <v-list-item>
+                            <v-list-item @click="handleUpdateReport(item)">
                               {{ $t('label.edit_history') }}
                             </v-list-item>
                             <v-divider class="mt-0 mb-0" />
@@ -111,7 +111,7 @@
       :show-dialog-add-transmission-area-lokal="showTransmissionAreaLokal"
       :show-form-add-transmission-area-lokal.sync="showTransmissionAreaLokal"
       :title-detail="isEditTransmissionAreaLokal ? $t('label.edit_history'):$t('label.input_history')"
-      :form-data="formLocalTransmissionArea"
+      :form-data.sync="formBody"
       :is-edit.sync="isEditTransmissionAreaLokal"
       :id-case="idCase"
     />
@@ -126,7 +126,6 @@
 </template>
 <script>
 import { completeAddress } from '@/utils/utilsFunction'
-import EventBus from '@/utils/eventBus'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -143,10 +142,6 @@ export default {
     titleDetail: {
       type: String,
       default: ''
-    },
-    listCloseContact: {
-      type: Array,
-      default: null
     }
   },
   data() {
@@ -156,6 +151,7 @@ export default {
       isEdit: false,
       isEditTransmissionAreaLokal: false,
       isLoading: false,
+      listTransmissionArea: [],
       formBody: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
@@ -186,6 +182,7 @@ export default {
   watch: {
     showDialog(value) {
       this.show = value
+      this.getListTransmissionArea(this.idCase)
     },
     show(value) {
       this.$emit('update:show', value)
@@ -193,10 +190,14 @@ export default {
         this.$emit('update:caseId', '')
       }
     },
+    showTransmissionAreaLokal(value) {
+      if (!value) {
+        this.getListTransmissionArea(this.idCase)
+      }
+    },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
-        EventBus.$emit('refreshPageListTransmissionArea', true)
       }
     }
   },
@@ -207,24 +208,22 @@ export default {
       this.isEditTransmissionAreaLokal = false
       this.showTransmissionAreaLokal = true
     },
-    async handleUpdateReport(id) {
-      this.formBody = this.formCloseContact
-      const data = {
-        idCloseContact: id
-      }
-      this.isLoading = true
-      const response = await this.$store.dispatch('localTransmissionArea/getDetailLocalTransmissionArea', data)
-      if (response.data !== null) {
-        this.formBody = response.data
-        this.isEdit = true
-        this.isLoading = false
+    async handleUpdateReport(item) {
+      this.formBody = item
+      this.isEditTransmissionAreaLokal = true
+      this.showTransmissionAreaLokal = true
+    },
+    async getListTransmissionArea(id) {
+      const response = await this.$store.dispatch('localTransmissionArea/getListLocalTransmissionArea', id)
+      if (response !== undefined) {
+        this.listTransmissionArea = response.data[0].visited_local_area
       }
     },
     getTableRowNumbering(index) {
       return (index + 1)
     },
     async handleDelete(item) {
-      if (!item.is_reported) {
+      if (item) {
         this.dialogDelete = true
         this.dataDelete = item
       } else {

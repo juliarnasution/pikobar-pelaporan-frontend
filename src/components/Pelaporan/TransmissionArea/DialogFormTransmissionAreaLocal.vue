@@ -9,9 +9,9 @@
         </v-card-title>
         <v-divider />
         <ValidationObserver ref="observer">
-          <v-form ref="form" lazy-validation>
-            <form-transmission-area :form-pasien="formData" />
-          </v-form>
+          <form-transmission-area
+            :form-pasien="formData"
+          />
         </ValidationObserver>
         <v-row>
           <v-container fluid>
@@ -44,7 +44,6 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
-// import EventBus from '@/utils/eventBus'
 export default {
   name: 'DialogFormTransmissionAreaLocal',
   components: {
@@ -93,6 +92,7 @@ export default {
       if (value) {
         this.$emit('update:showFormAddTransmissionAreaLokal', false)
       }
+      this.$emit('update:formData', {})
     },
     async handleSave() {
       const valid = await this.$refs.observer.validate()
@@ -100,11 +100,12 @@ export default {
         return
       }
       this.loading = true
-      const data = {
-        idCase: this.idCase,
-        body: this.formData
-      }
+
       if (!this.isEdit) {
+        const data = {
+          idCase: this.idCase,
+          body: this.formData
+        }
         const response = await this.$store.dispatch('localTransmissionArea/postListLocalTransmissionArea', data)
         this.loading = false
         if (response.status === 200 || response.status === 201) {
@@ -115,7 +116,13 @@ export default {
         await this.$store.dispatch('localTransmissionArea/resetStateLocalTransmissionArea')
         this.$emit('update:showFormAddTransmissionAreaLokal', false)
       } else {
-        const response = await this.$store.dispatch('localTransmissionArea/postListLocalTransmissionArea', data)
+        const idTransmissionArea = this.formData._id
+        delete this.formData['_id']
+        const data = {
+          idTransmissionArea: idTransmissionArea,
+          body: this.formData
+        }
+        const response = await this.$store.dispatch('localTransmissionArea/updateDetailLocalTransmissionArea', data)
         this.loading = false
         if (response.status === 200 || response.status === 201) {
           await this.$store.dispatch('toast/successToast', this.$t('success.data_success_edit'))
