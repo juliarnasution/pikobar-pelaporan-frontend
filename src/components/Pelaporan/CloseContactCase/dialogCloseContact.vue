@@ -66,9 +66,9 @@
                             </v-btn>
                           </template>
                           <v-card>
-                            <v-list-item @click="handleUpdateReport(item._id)">
+                            <!-- <v-list-item @click="handleUpdateReport(item._id)">
                               {{ $t('route.make_report') }}
-                            </v-list-item>
+                            </v-list-item> -->
                             <v-list-item @click="handleUpdateCloseContact(item._id)">
                               {{ $t('label.edit_contact_data') }}
                             </v-list-item>

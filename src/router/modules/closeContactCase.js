@@ -14,17 +14,17 @@ const closeContactRouter = {
   },
   active: false,
   children: [
-    {
-      path: '/close-contact/list',
-      component: () => import('@/views/closeContactCase/listReportCloseContact'),
-      meta: {
-        title: 'make_report',
-        icon: 'mdi-account-multiple-outline',
-        child: true,
-        noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
-      }
-    },
+    // {
+    //   path: '/close-contact/list',
+    //   component: () => import('@/views/closeContactCase/listReportCloseContact'),
+    //   meta: {
+    //     title: 'make_report',
+    //     icon: 'mdi-account-multiple-outline',
+    //     child: true,
+    //     noCache: true,
+    //     roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
+    //   }
+    // },
     {
       path: '/close-contact/identification/list',
       component: () => import('@/views/closeContactCase/listIdentification'),
