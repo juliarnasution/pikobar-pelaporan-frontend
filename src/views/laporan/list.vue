@@ -241,6 +241,9 @@
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
+                          <v-list-item @click="handleTransmissionArea(item._id)">
+                            {{ $t('label.view_local_transmission_area_history') }}
+                          </v-list-item>
                           <v-divider class="mt-0 mb-0" />
                           <v-list-item
                             v-if="rolesWidget['dinkeskota'].includes(roles[0])"
@@ -337,6 +340,13 @@
       :unique-case-id.sync="idUniqueCase"
       :title-detail="$t('label.close_contact_list')"
     />
+    <dialog-transmission-area-local
+      :show-dialog="dialogTransmissionArea"
+      :show.sync="dialogTransmissionArea"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :title-detail="$t('label.local_transmission_area_history_list')"
+    />
     <import-form
       :show-import-form="showImportForm"
       :refresh-page="handleSearch"
@@ -410,6 +420,7 @@ export default {
       detailCase: {},
       closeContactCase: [],
       listCloseContact: [],
+      listTransmissionArea: [],
       idCase: null,
       idUniqueCase: '',
       listHistoryCase: [],
@@ -417,7 +428,8 @@ export default {
       dialogDetailCase: false,
       dialogHistoryCase: false,
       dialogUpdateCase: false,
-      dialogCloseContact: false
+      dialogCloseContact: false,
+      dialogTransmissionArea: false
     }
   },
   computed: {
@@ -553,6 +565,10 @@ export default {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
       await this.getStatistic()
       this.loadingTable = false
+    },
+    async handleTransmissionArea(id) {
+      this.idCase = id
+      this.dialogTransmissionArea = true
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)

@@ -16,7 +16,7 @@
             <v-col>
               <v-data-table
                 :headers="headers"
-                :items="listCloseContact"
+                :items="listTransmissionArea"
                 :mobile-breakpoint="NaN"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="10"
@@ -25,22 +25,8 @@
                 <template v-slot:item="{ item, index }">
                   <tr>
                     <td>{{ getTableRowNumbering(index) }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>
-                      <div v-if="item.gender =='P'">
-                        {{ $t('label.female') }}
-                      </div>
-                      <div v-else>
-                        {{ $t('label.male') }}
-                      </div>
-                    </td>
-                    <td>{{ item.age }} Th</td>
-                    <td>{{ completeAddress(
-                      item.address_district_name,
-                      item.address_subdistrict_name,
-                      item.address_village_name,
-                      item.address_street
-                    ) }}</td>
+                    <td>{{ item.visited_local_area_province }}</td>
+                    <td>{{ item.visited_local_area_city }}</td>
                     <td>
                       <v-card-actions>
                         <v-menu
@@ -66,18 +52,15 @@
                             </v-btn>
                           </template>
                           <v-card>
-                            <!-- <v-list-item v-if="roles[0] !== 'faskes'" @click="handleUpdateReport(item._id)">
-                              {{ $t('route.make_report') }}
-                            </v-list-item> -->
-                            <v-list-item @click="handleUpdateCloseContact(item._id)">
-                              {{ $t('label.edit_contact_data') }}
+                            <v-list-item @click="handleUpdateReport(item)">
+                              {{ $t('label.edit_history') }}
                             </v-list-item>
                             <v-divider class="mt-0 mb-0" />
                             <v-list-item
                               style="color: #EB5757 !important;"
-                              @click="handleDeleteCloseContact(item)"
+                              @click="handleDelete(item)"
                             >
-                              {{ $t('label.deleted_contact') }}
+                              {{ $t('label.delete_history') }}
                             </v-list-item>
                           </v-card>
                         </v-menu>
@@ -105,7 +88,7 @@
                   <div>
                     <v-icon>mdi-plus-circle-outline</v-icon>
                   </div>
-                  <div>{{ $t('label.add_contact_data') }}</div>
+                  <div>{{ $t('label.add_history') }}</div>
                 </div>
               </v-row>
             </v-container>
@@ -124,41 +107,29 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
-    <dialog-close-contact-case
-      :show-dialog-add-close-contact="showCloseContact"
-      :show-form-add-close-contact.sync="showCloseContact"
-      :title-detail="isEditCloseContact ? $t('label.edit_contact_data'):$t('label.add_contact_data')"
-      :form-close-contact="formCloseContact"
-      :parent-case="parentCase"
-      :is-edit.sync="isEditCloseContact"
+    <dialog-form-transmission-area-local
+      :show-dialog-add-transmission-area-lokal="showTransmissionAreaLokal"
+      :show-form-add-transmission-area-lokal.sync="showTransmissionAreaLokal"
+      :title-detail="isEditTransmissionAreaLokal ? $t('label.edit_history'):$t('label.input_history')"
+      :form-data.sync="formBody"
+      :is-edit.sync="isEditTransmissionAreaLokal"
       :id-case="idCase"
-    />
-    <dialog-report-close-contact
-      :show-dialog="showReportCloseContact"
-      :show-form.sync="showReportCloseContact"
-      :title-detail="$t('label.create_closely_contact_reports')"
-      :is-edit.sync="isEdit"
-      :id-case.sync="idCase"
-      :form-body.sync="formBody"
     />
     <dialog-delete
       :dialog="dialogDelete"
       :dialog-delete.sync="dialogDelete"
       :data-deleted="dataDelete"
       :delete-date.sync="dataDelete"
-      :store-path-delete="`closeContactCase/deleteCloseContact`"
+      :store-path-delete="`localTransmissionArea/deleteLocalTransmissionArea`"
     />
   </v-dialog>
 </template>
 <script>
-import { formatDatetime } from '@/utils/parseDatetime'
-import { getAgeWithMonth } from '@/utils/constantVariable'
 import { completeAddress } from '@/utils/utilsFunction'
-import EventBus from '@/utils/eventBus'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'DialogCloseContact',
+  name: 'DialogTransmissionAreaLocal',
   props: {
     showDialog: {
       type: Boolean,
@@ -168,17 +139,9 @@ export default {
       type: String,
       default: ''
     },
-    idUniqueCase: {
-      type: String,
-      default: ''
-    },
     titleDetail: {
       type: String,
       default: ''
-    },
-    listCloseContact: {
-      type: Array,
-      default: null
     }
   },
   data() {
@@ -186,23 +149,21 @@ export default {
       show: this.showDialog,
       showReportCloseContact: false,
       isEdit: false,
-      isEditCloseContact: false,
+      isEditTransmissionAreaLokal: false,
       isLoading: false,
+      listTransmissionArea: [],
       formBody: {},
-      parentCase: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.name').toUpperCase(), value: 'name' },
-        { text: this.$t('label.gender').toUpperCase(), value: 'gender' },
-        { text: this.$t('label.age').toUpperCase(), value: 'age' },
-        { text: this.$t('label.address').toUpperCase(), value: 'address_street' },
+        { text: this.$t('label.province').toUpperCase(), value: 'visited_local_area_province' },
+        { text: this.$t('label.city').toUpperCase(), value: 'visited_local_area_city' },
         { text: this.$t('label.action').toUpperCase(), value: 'actions' }
       ],
       dialogDecline: false,
       formatDate: 'YYYY/MM/DD',
       refreshPageList: false,
       showDialogUpdateCloseContact: false,
-      showCloseContact: false,
+      showTransmissionAreaLokal: false,
       idCloseContact: null,
       dialogDelete: false,
       dataDelete: null
@@ -210,93 +171,59 @@ export default {
   },
   computed: {
     ...mapGetters('user', [
-      'roles',
       'fullName',
       'district_user',
       'district_name_user'
     ]),
-    ...mapState('closeContactCase', [
-      'formCloseContact'
+    ...mapState('localTransmissionArea', [
+      'formLocalTransmissionArea'
     ])
   },
   watch: {
     showDialog(value) {
       this.show = value
+      this.getListTransmissionArea(this.idCase)
     },
     show(value) {
       this.$emit('update:show', value)
       if (!value) {
         this.$emit('update:caseId', '')
-        this.$emit('update:uniqueCaseId', '')
+      }
+    },
+    showTransmissionAreaLokal(value) {
+      if (!value) {
+        this.getListTransmissionArea(this.idCase)
       }
     },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
-        EventBus.$emit('refreshPageListReport', true)
       }
     }
   },
   methods: {
     completeAddress,
     async handleCreate() {
-      await this.$store.dispatch('closeContactCase/resetStateCloseContactCase')
-      const response = await this.$store.dispatch('reports/detailReportCase', this.idCase)
-      this.parentCase = response.data
-      this.isEditCloseContact = false
-      this.showCloseContact = true
+      await this.$store.dispatch('localTransmissionArea/resetStateLocalTransmissionArea')
+      this.isEditTransmissionAreaLokal = false
+      this.showTransmissionAreaLokal = true
     },
-    async handleUpdateReport(id) {
-      this.formBody = this.formCloseContact
-      const latestHistory = this.formCloseContact.latest_history
-      const data = {
-        idCloseContact: id
-      }
-      this.isLoading = true
-      const response = await this.$store.dispatch('closeContactCase/getDetailCloseContactByCase', data)
-      if (response.data !== null) {
-        this.formBody = response.data
-        if (response.data.latest_history === null) {
-          this.formBody.latest_history = latestHistory
-        }
-        if (response.data.address_district_code === null) {
-          this.formBody.address_district_code = this.district_user
-          this.formBody.address_district_name = this.district_name_user
-        }
-        if (response.data.interviewer_name === null) this.formBody.interviewer_name = this.fullName
-        if (this.formBody.birth_date !== null) {
-          this.formBody.birth_date = await formatDatetime(this.formBody.birth_date, this.formatDate)
-          const age = getAgeWithMonth(this.formBody.birth_date)
-          this.formBody.yearsOld = age.year
-          this.formBody.month = age.month
-        } else {
-          this.formBody.birth_date = ''
-        }
-        if (this.formBody.age !== null) {
-          this.formBody.yearsOld = Math.floor(this.formBody.age)
-          this.formBody.month = Math.ceil((this.formBody.age - Math.floor(this.formBody.age)) * 12)
-        }
-        this.isEdit = true
-        this.showReportCloseContact = true
-        this.isLoading = false
+    async handleUpdateReport(item) {
+      this.formBody = item
+      this.isEditTransmissionAreaLokal = true
+      this.showTransmissionAreaLokal = true
+    },
+    async getListTransmissionArea(id) {
+      const response = await this.$store.dispatch('localTransmissionArea/getListLocalTransmissionArea', id)
+      if (response !== undefined) {
+        this.listTransmissionArea = response.data[0].visited_local_area
       }
     },
     getTableRowNumbering(index) {
       return (index + 1)
     },
-    async handleUpdateCloseContact(id) {
-      const responseReportCase = await this.$store.dispatch('reports/detailReportCase', this.idCase)
-      this.parentCase = responseReportCase.data
-      const data = {
-        idCloseContact: id
-      }
-      const response = await this.$store.dispatch('closeContactCase/getDetailCloseContactByCase', data)
-      Object.assign(this.formCloseContact, response.data)
-      this.isEditCloseContact = true
-      this.showCloseContact = true
-    },
-    async handleDeleteCloseContact(item) {
-      if (!item.is_reported) {
+    async handleDelete(item) {
+      if (item) {
         this.dialogDelete = true
         this.dataDelete = item
       } else {

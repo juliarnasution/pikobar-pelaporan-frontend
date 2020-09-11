@@ -11,7 +11,7 @@
               v-model="formPasien.visited_local_area_province"
               :items="listProvince"
               item-text="provinsi_nama"
-              return-object
+              item-value="provinsi_nama"
               solo
               @change="getListDistrictByProvince"
             />
@@ -64,10 +64,15 @@ export default {
     async getListProvince() {
       const response = await this.$store.dispatch('region/getListProvince')
       this.listProvince = response.data
+      if (this.formPasien.visited_local_area_city) {
+        await this.getListDistrictByProvince(this.formPasien.visited_local_area_province)
+      }
     },
     async getListDistrictByProvince(item) {
-      this.formPasien.visited_local_area_province = item.provinsi_nama
-      const response = await this.$store.dispatch('region/getListDistrictCity', { provice_code: item.provinsi_kode })
+      const response = await this.$store.dispatch('region/getListDistrictCity', {
+        kemendagri_provinsi_nama: item,
+        status: 'local'
+      })
       this.listDistrict = response.data
     }
   }
