@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" max-width="70%">
+  <v-dialog v-model="show" max-width="50%">
     <v-skeleton-loader
       :loading="isLoading"
       type="table-tbody"
@@ -155,9 +155,9 @@ export default {
       formBody: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.province').toUpperCase(), value: 'visited_local_area_province' },
-        { text: this.$t('label.city').toUpperCase(), value: 'visited_local_area_city' },
-        { text: this.$t('label.action').toUpperCase(), value: 'actions' }
+        { text: this.$t('label.province').toUpperCase(), width: '30%', value: 'visited_local_area_province' },
+        { text: this.$t('label.city').toUpperCase(), width: '30%', value: 'visited_local_area_city' },
+        { text: this.$t('label.action').toUpperCase(), width: '30%', value: 'actions' }
       ],
       dialogDecline: false,
       formatDate: 'YYYY/MM/DD',
@@ -198,6 +198,7 @@ export default {
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
+        this.getListTransmissionArea(this.idCase)
       }
     }
   },
@@ -205,6 +206,7 @@ export default {
     completeAddress,
     async handleCreate() {
       await this.$store.dispatch('localTransmissionArea/resetStateLocalTransmissionArea')
+      this.formBody = {}
       this.isEditTransmissionAreaLokal = false
       this.showTransmissionAreaLokal = true
     },
