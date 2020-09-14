@@ -646,6 +646,7 @@ export default {
     diagnosis_ards: 'Diagnosis ARDS (Acute Respiratory Distress Syndrome)',
     diagnosis_covid: 'Diagnosis COVID-19',
     diagnosis_pneumonia: 'Diagnosis Pneumonia',
+    view_history_from_abroad_outside_the_city: 'Lihat Riwayat Dari Luar Negeri / Luar Kota',
     dont_know: 'Tidak Tahu',
     serum_check: 'Pemeriksaan Serum',
     sputum_check: 'Pemeriksaan Sputum',

@@ -16,7 +16,7 @@
             <v-col>
               <v-data-table
                 :headers="headers"
-                :items="listTransmissionArea"
+                :items="listHistoryTravel"
                 :mobile-breakpoint="NaN"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="10"
@@ -107,12 +107,12 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
-    <dialog-form-transmission-area-local
-      :show-dialog-add-transmission-area-lokal="showTransmissionAreaLokal"
-      :show-form-add-transmission-area-lokal.sync="showTransmissionAreaLokal"
-      :title-detail="isEditTransmissionAreaLokal ? $t('label.edit_history'):$t('label.input_history')"
+    <dialog-form-history-travel
+      :show-dialog-add-history-travel="showFormHistoryTravel"
+      :show-form-add-history-travel.sync="showFormHistoryTravel"
+      :title-detail="isEditHistoryTravel ? $t('label.edit_history'):$t('label.input_history')"
       :form-data.sync="formBody"
-      :is-edit.sync="isEditTransmissionAreaLokal"
+      :is-edit.sync="isEditHistoryTravel"
       :id-case="idCase"
     />
     <dialog-delete
@@ -120,7 +120,7 @@
       :dialog-delete.sync="dialogDelete"
       :data-deleted="dataDelete"
       :delete-date.sync="dataDelete"
-      :store-path-delete="`localTransmissionArea/deleteLocalTransmissionArea`"
+      :store-path-delete="`historyTravel/deleteHistoryTravel`"
     />
   </v-dialog>
 </template>
@@ -129,7 +129,7 @@ import { completeAddress } from '@/utils/utilsFunction'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
-  name: 'DialogTransmissionAreaLocal',
+  name: 'DialogHistoryTravel',
   props: {
     showDialog: {
       type: Boolean,
@@ -149,21 +149,24 @@ export default {
       show: this.showDialog,
       showReportCloseContact: false,
       isEdit: false,
-      isEditTransmissionAreaLokal: false,
+      isEditHistoryTravel: false,
       isLoading: false,
-      listTransmissionArea: [],
+      listHistoryTravel: [],
       formBody: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.province').toUpperCase(), width: '30%', value: 'visited_local_area_province' },
-        { text: this.$t('label.city').toUpperCase(), width: '30%', value: 'visited_local_area_city' },
-        { text: this.$t('label.action').toUpperCase(), width: '30%', value: 'actions' }
+        { text: this.$t('label.trip_type').toUpperCase(), value: 'trip_type' },
+        { text: this.$t('label.province').toUpperCase(), value: 'province' },
+        { text: this.$t('label.city').toUpperCase(), value: 'city' },
+        { text: this.$t('label.start_travel').toUpperCase(), value: 'start_travel' },
+        { text: this.$t('label.end_travel').toUpperCase(), value: 'end_travel' },
+        { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ],
       dialogDecline: false,
       formatDate: 'YYYY/MM/DD',
       refreshPageList: false,
       showDialogUpdateCloseContact: false,
-      showTransmissionAreaLokal: false,
+      showFormHistoryTravel: false,
       idCloseContact: null,
       dialogDelete: false,
       dataDelete: null
@@ -175,15 +178,15 @@ export default {
       'district_user',
       'district_name_user'
     ]),
-    ...mapState('localTransmissionArea', [
-      'formLocalTransmissionArea'
+    ...mapState('historyTravel', [
+      'formHistoryTravel'
     ])
   },
   watch: {
     showDialog(value) {
       this.show = value
       if (value) {
-        this.getListTransmissionArea(this.idCase)
+        this.getListHistoryTravel(this.idCase)
       }
     },
     show(value) {
@@ -192,36 +195,35 @@ export default {
         this.$emit('update:caseId', '')
       }
     },
-    showTransmissionAreaLokal(value) {
+    showHistoryTravel(value) {
       if (!value) {
-        console.log('ss')
-        this.getListTransmissionArea(this.idCase)
+        this.getListHistoryTravel(this.idCase)
       }
     },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
-        this.getListTransmissionArea(this.idCase)
+        this.getListHistoryTravel(this.idCase)
       }
     }
   },
   methods: {
     completeAddress,
     async handleCreate() {
-      await this.$store.dispatch('localTransmissionArea/resetStateLocalTransmissionArea')
+      await this.$store.dispatch('historyTravel/resetStateHistoryTravel')
       this.formBody = {}
-      this.isEditTransmissionAreaLokal = false
-      this.showTransmissionAreaLokal = true
+      this.isEditHistoryTravel = false
+      this.showFormHistoryTravel = true
     },
     async handleUpdateReport(item) {
       this.formBody = item
-      this.isEditTransmissionAreaLokal = true
-      this.showTransmissionAreaLokal = true
+      this.isEditHistoryTravel = true
+      this.showFormHistoryTravel = true
     },
-    async getListTransmissionArea(id) {
-      const response = await this.$store.dispatch('localTransmissionArea/getListLocalTransmissionArea', id)
+    async getListHistoryTravel(id) {
+      const response = await this.$store.dispatch('historyTravel/getListHistoryTravel', id)
       if (response !== undefined) {
-        this.listTransmissionArea = response.data[0].visited_local_area
+        this.listHistoryTravel = response.data[0].travelling_history
       }
     },
     getTableRowNumbering(index) {
