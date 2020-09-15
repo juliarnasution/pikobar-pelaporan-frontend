@@ -192,7 +192,6 @@ export default {
     },
     showTransmissionAreaLokal(value) {
       if (!value) {
-        console.log('ss')
         this.getListTransmissionArea(this.idCase)
       }
     },
