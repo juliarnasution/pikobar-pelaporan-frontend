@@ -649,6 +649,8 @@ export default {
     diagnosis_pneumonia: 'Diagnosis Pneumonia',
     list_history_from_abroad_outside_the_city: 'List Riwayat Dari Luar Negeri / Luar Kota',
     view_history_from_abroad_outside_the_city: 'Lihat Riwayat Dari Luar Negeri / Luar Kota',
+    list_inspection_support: 'List Pemeriksaan Penunjang',
+    view_inspection_support: 'Lihat Pemeriksaan Penunjang',
     dont_know: 'Tidak Tahu',
     serum_check: 'Pemeriksaan Serum',
     sputum_check: 'Pemeriksaan Sputum',
