@@ -11,7 +11,9 @@ import animationLottie from './modules/animationLottie'
 import statistic from './modules/statistic'
 import logistic from './modules/logistic'
 import closeContactCase from './modules/closeContactCase'
+import primaryDrawer from './modules/primaryDrawer'
 import localTransmissionArea from './modules/localTransmissionArea'
+import historyTravel from './modules/historyTravel'
 
 Vue.use(Vuex)
 
@@ -42,6 +44,8 @@ const store = new Vuex.Store({
     statistic,
     logistic,
     closeContactCase,
+    primaryDrawer,
+    historyTravel,
     localTransmissionArea
   }
 })

@@ -5,7 +5,7 @@
       v-model="primaryDrawer.model"
       :clipped="primaryDrawer.clipped"
       :floating="primaryDrawer.floating"
-      :mini-variant="primaryDrawer.mini"
+      :mini-variant.sync="primaryDrawer.mini"
       :permanent="primaryDrawer.type === 'permanent'"
       :temporary="primaryDrawer.type === 'temporary'"
       app
@@ -76,13 +76,6 @@ export default {
     return {
       customizerIn: false, // customizer
       drawers: ['Default (no property)', 'Permanent', 'Temporary'],
-      primaryDrawer: {
-        model: null,
-        type: 'default (no property)',
-        clipped: true,
-        floating: false,
-        mini: false,
-      },
       footer: {
         inset: false,
       },
@@ -120,6 +113,9 @@ export default {
   computed: {
     ...mapGetters('user', [
       'fullName'
+    ]),
+    ...mapGetters('primaryDrawer', [
+      'primaryDrawer'
     ])
   },
   methods: {

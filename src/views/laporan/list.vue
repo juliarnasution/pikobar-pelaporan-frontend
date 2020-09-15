@@ -241,6 +241,9 @@
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
+                          <v-list-item @click="handleHistoryTravel(item._id)">
+                            {{ $t('label.view_history_from_abroad_outside_the_city') }}
+                          </v-list-item>
                           <v-list-item @click="handleTransmissionArea(item._id)">
                             {{ $t('label.view_local_transmission_area_history') }}
                           </v-list-item>
@@ -347,6 +350,13 @@
       :case-id.sync="idCase"
       :title-detail="$t('label.local_transmission_area_history_list')"
     />
+    <dialog-history-travel
+      :show-dialog="dialogHistoryTravel"
+      :show.sync="dialogHistoryTravel"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :title-detail="$t('label.local_transmission_area_history_list')"
+    />
     <import-form
       :show-import-form="showImportForm"
       :refresh-page="handleSearch"
@@ -429,7 +439,8 @@ export default {
       dialogHistoryCase: false,
       dialogUpdateCase: false,
       dialogCloseContact: false,
-      dialogTransmissionArea: false
+      dialogTransmissionArea: false,
+      dialogHistoryTravel: false
     }
   },
   computed: {
@@ -569,6 +580,10 @@ export default {
     async handleTransmissionArea(id) {
       this.idCase = id
       this.dialogTransmissionArea = true
+    },
+    async handleHistoryTravel(id) {
+      this.idCase = id
+      this.dialogHistoryTravel = true
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
