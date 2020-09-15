@@ -125,7 +125,6 @@
   </v-dialog>
 </template>
 <script>
-import { completeAddress } from '@/utils/utilsFunction'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -147,7 +146,6 @@ export default {
   data() {
     return {
       show: this.showDialog,
-      showReportCloseContact: false,
       isEdit: false,
       isEditTransmissionAreaLokal: false,
       isLoading: false,
@@ -206,7 +204,6 @@ export default {
     }
   },
   methods: {
-    completeAddress,
     async handleCreate() {
       await this.$store.dispatch('localTransmissionArea/resetStateLocalTransmissionArea')
       this.formBody = {}

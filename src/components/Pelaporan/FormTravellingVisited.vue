@@ -26,7 +26,7 @@
               :label="$t('label.enter_place')"
               :error-messages="errors"
               item-text="provinsi_nama"
-              return-object
+              item-value="provinsi_nama"
               solo
               @change="getListDistrictByProvince"
             />
@@ -86,6 +86,13 @@ export default {
       formatDate: 'YYYY/MM/DD'
     }
   },
+  watch: {
+    formPasien(value) {
+      if (value.travelling_type === 'Dari Luar Kota') {
+        this.getListProvince()
+      }
+    }
+  },
   async mounted() {
     await this.getListCountry()
     await this.getListProvince()
@@ -98,10 +105,15 @@ export default {
     async getListProvince() {
       const response = await this.$store.dispatch('region/getListProvince')
       this.listProvince = response.data
+      if (this.formPasien.travelling_type === 'Dari Luar Kota') {
+        await this.getListDistrictByProvince(this.formPasien.travelling_visited)
+      }
     },
     async getListDistrictByProvince(item) {
-      this.formPasien.travelling_visited = item.provinsi_nama
-      const response = await this.$store.dispatch('region/getListDistrictCity', { provice_code: item.provinsi_kode })
+      const response = await this.$store.dispatch('region/getListDistrictCity', {
+        kemendagri_provinsi_nama: item,
+        status: 'local'
+      })
       this.listDistrict = response.data
     }
   }

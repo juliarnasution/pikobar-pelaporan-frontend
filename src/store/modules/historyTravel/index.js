@@ -2,7 +2,7 @@ import actions from './actions'
 import getters from './getters'
 const getDefaultState = () => {
   return {
-    formLocalHistoryTravel: {
+    formHistoryTravel: {
       travelling_type: '',
       travelling_visited: '',
       travelling_city: '',

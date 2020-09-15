@@ -25,8 +25,15 @@
                 <template v-slot:item="{ item, index }">
                   <tr>
                     <td>{{ getTableRowNumbering(index) }}</td>
-                    <td>{{ item.visited_local_area_province }}</td>
-                    <td>{{ item.visited_local_area_city }}</td>
+                    <td>{{ item.travelling_type }}</td>
+                    <td>{{ item.travelling_visited }}</td>
+                    <td>{{ item.travelling_city }}</td>
+                    <td>
+                      {{ item.travelling_date ? formatDatetime(item.travelling_date, 'DD MMMM YYYY') : '-' }}
+                    </td>
+                    <td>
+                      {{ item.travelling_arrive ? formatDatetime(item.travelling_arrive, 'DD MMMM YYYY') : '-' }}
+                    </td>
                     <td>
                       <v-card-actions>
                         <v-menu
@@ -125,8 +132,8 @@
   </v-dialog>
 </template>
 <script>
-import { completeAddress } from '@/utils/utilsFunction'
 import { mapState, mapGetters } from 'vuex'
+import { formatDatetime } from '@/utils/parseDatetime'
 
 export default {
   name: 'DialogHistoryTravel',
@@ -147,7 +154,6 @@ export default {
   data() {
     return {
       show: this.showDialog,
-      showReportCloseContact: false,
       isEdit: false,
       isEditHistoryTravel: false,
       isLoading: false,
@@ -155,11 +161,11 @@ export default {
       formBody: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.trip_type').toUpperCase(), value: 'trip_type' },
-        { text: this.$t('label.province').toUpperCase(), value: 'province' },
-        { text: this.$t('label.city').toUpperCase(), value: 'city' },
-        { text: this.$t('label.start_travel').toUpperCase(), value: 'start_travel' },
-        { text: this.$t('label.end_travel').toUpperCase(), value: 'end_travel' },
+        { text: this.$t('label.trip_type').toUpperCase(), value: 'travelling_type' },
+        { text: this.$t('label.country_or_province').toUpperCase(), value: 'travelling_visited' },
+        { text: this.$t('label.city').toUpperCase(), value: 'travelling_city' },
+        { text: this.$t('label.start_travel').toUpperCase(), value: 'travelling_date' },
+        { text: this.$t('label.end_travel').toUpperCase(), value: 'travelling_arrive' },
         { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ],
       dialogDecline: false,
@@ -195,7 +201,7 @@ export default {
         this.$emit('update:caseId', '')
       }
     },
-    showHistoryTravel(value) {
+    showFormHistoryTravel(value) {
       if (!value) {
         this.getListHistoryTravel(this.idCase)
       }
@@ -208,10 +214,10 @@ export default {
     }
   },
   methods: {
-    completeAddress,
+    formatDatetime,
     async handleCreate() {
       await this.$store.dispatch('historyTravel/resetStateHistoryTravel')
-      this.formBody = {}
+      this.formBody = this.formHistoryTravel
       this.isEditHistoryTravel = false
       this.showFormHistoryTravel = true
     },

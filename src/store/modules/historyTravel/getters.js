@@ -1,5 +1,5 @@
 export default {
-  formLocalHistoryTravel: (state, getters) => {
-    return state.formLocalHistoryTravel
+  formHistoryTravel: (state, getters) => {
+    return state.formHistoryTravel
   }
 }
