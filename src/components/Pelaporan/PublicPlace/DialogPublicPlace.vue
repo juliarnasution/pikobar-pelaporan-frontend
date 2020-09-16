@@ -6,7 +6,7 @@
     >
       <v-card>
         <v-container>
-          <v-card-title :class="{'subtitle-1': $vuetify.breakpoint.xs}">
+          <v-card-title>
             {{ titleDetail }}
             <v-spacer />
             <v-icon @click="show = false">mdi-close</v-icon>
@@ -16,7 +16,7 @@
             <v-col>
               <v-data-table
                 :headers="headers"
-                :items="listHistoryTravel"
+                :items="listPublicPlace"
                 :mobile-breakpoint="NaN"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="10"
@@ -25,14 +25,14 @@
                 <template v-slot:item="{ item, index }">
                   <tr>
                     <td>{{ getTableRowNumbering(index) }}</td>
-                    <td>{{ item.travelling_type }}</td>
-                    <td>{{ item.travelling_visited }}</td>
-                    <td>{{ item.travelling_city }}</td>
+                    <td>{{ item.public_place_category }}</td>
+                    <td>{{ item.public_place_name }}</td>
+                    <td>{{ item.public_place_address }}</td>
                     <td>
-                      {{ item.travelling_date ? formatDatetime(item.travelling_date, 'DD MMMM YYYY') : '-' }}
+                      {{ item.public_place_date_visited ? formatDatetime(item.public_place_date_visited, 'DD MMMM YYYY') : '-' }}
                     </td>
                     <td>
-                      {{ item.travelling_arrive ? formatDatetime(item.travelling_arrive, 'DD MMMM YYYY') : '-' }}
+                      {{ item.public_place_duration_visited }} {{ item.public_place_duration_visited ? $t('label.minutes') : '-' }}
                     </td>
                     <td>
                       <v-card-actions>
@@ -114,12 +114,12 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
-    <dialog-form-history-travel
-      :show-dialog-add-history-travel="showFormHistoryTravel"
-      :show-form-add-history-travel.sync="showFormHistoryTravel"
-      :title-detail="isEditHistoryTravel ? $t('label.edit_history'):$t('label.input_history')"
+    <dialog-form-public-place
+      :show-dialog-add-public-place="showFormPublicPlace"
+      :show-form-add-public-place.sync="showFormPublicPlace"
+      :title-detail="isEditPublicPlace ? $t('label.edit_history'):$t('label.input_history')"
       :form-data.sync="formBody"
-      :is-edit.sync="isEditHistoryTravel"
+      :is-edit.sync="isEditPublicPlace"
       :id-case="idCase"
     />
     <dialog-delete
@@ -127,7 +127,7 @@
       :dialog-delete.sync="dialogDelete"
       :data-deleted="dataDelete"
       :delete-date.sync="dataDelete"
-      :store-path-delete="`historyTravel/deleteHistoryTravel`"
+      :store-path-delete="`publicPlace/deletePublicPlace`"
     />
   </v-dialog>
 </template>
@@ -136,7 +136,7 @@ import { mapState, mapGetters } from 'vuex'
 import { formatDatetime } from '@/utils/parseDatetime'
 
 export default {
-  name: 'DialogHistoryTravel',
+  name: 'DialogPublicPlace',
   props: {
     showDialog: {
       type: Boolean,
@@ -155,24 +155,24 @@ export default {
     return {
       show: this.showDialog,
       isEdit: false,
-      isEditHistoryTravel: false,
+      isEditPublicPlace: false,
       isLoading: false,
-      listHistoryTravel: [],
+      listPublicPlace: [],
       formBody: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.trip_type').toUpperCase(), value: 'travelling_type' },
-        { text: this.$t('label.country_or_province').toUpperCase(), value: 'travelling_visited' },
-        { text: this.$t('label.city').toUpperCase(), value: 'travelling_city' },
-        { text: this.$t('label.start_travel').toUpperCase(), value: 'travelling_date' },
-        { text: this.$t('label.end_travel').toUpperCase(), value: 'travelling_arrive' },
+        { text: this.$t('label.category').toUpperCase(), value: 'public_place_category' },
+        { text: this.$t('label.name_place').toUpperCase(), value: 'public_place_name' },
+        { text: this.$t('label.address').toUpperCase(), value: 'public_place_address' },
+        { text: this.$t('label.date').toUpperCase(), value: 'public_place_date_visited' },
+        { text: this.$t('label.duration').toUpperCase(), value: 'public_place_duration_visited' },
         { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ],
       dialogDecline: false,
       formatDate: 'YYYY/MM/DD',
       refreshPageList: false,
       showDialogUpdateCloseContact: false,
-      showFormHistoryTravel: false,
+      showFormPublicPlace: false,
       idCloseContact: null,
       dialogDelete: false,
       dataDelete: null
@@ -184,15 +184,15 @@ export default {
       'district_user',
       'district_name_user'
     ]),
-    ...mapState('historyTravel', [
-      'formHistoryTravel'
+    ...mapState('publicPlace', [
+      'formPublicPlace'
     ])
   },
   watch: {
     showDialog(value) {
       this.show = value
       if (value) {
-        this.getListHistoryTravel(this.idCase)
+        this.getListPublicPlace(this.idCase)
       }
     },
     show(value) {
@@ -201,35 +201,35 @@ export default {
         this.$emit('update:caseId', '')
       }
     },
-    showFormHistoryTravel(value) {
+    showFormPublicPlace(value) {
       if (!value) {
-        this.getListHistoryTravel(this.idCase)
+        this.getListPublicPlace(this.idCase)
       }
     },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
-        this.getListHistoryTravel(this.idCase)
+        this.getListPublicPlace(this.idCase)
       }
     }
   },
   methods: {
     formatDatetime,
     async handleCreate() {
-      await this.$store.dispatch('historyTravel/resetStateHistoryTravel')
-      this.formBody = this.formHistoryTravel
-      this.isEditHistoryTravel = false
-      this.showFormHistoryTravel = true
+      await this.$store.dispatch('publicPlace/resetStatePublicPlace')
+      this.formBody = this.formPublicPlace
+      this.isEditPublicPlace = false
+      this.showFormPublicPlace = true
     },
     async handleUpdateReport(item) {
       this.formBody = item
-      this.isEditHistoryTravel = true
-      this.showFormHistoryTravel = true
+      this.isEditPublicPlace = true
+      this.showFormPublicPlace = true
     },
-    async getListHistoryTravel(id) {
-      const response = await this.$store.dispatch('historyTravel/getListHistoryTravel', id)
+    async getListPublicPlace(id) {
+      const response = await this.$store.dispatch('publicPlace/getListPublicPlace', id)
       if (response !== undefined) {
-        this.listHistoryTravel = response.data[0].travelling_history
+        this.listPublicPlace = response.data[0].visited_public_place
       }
     },
     getTableRowNumbering(index) {

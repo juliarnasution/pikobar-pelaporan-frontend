@@ -250,6 +250,9 @@
                           <v-list-item @click="handleTransmissionArea(item._id)">
                             {{ $t('label.view_local_transmission_area_history') }}
                           </v-list-item>
+                          <v-list-item @click="handlePublicPlace(item._id)">
+                            {{ $t('label.view_public_place_history') }}
+                          </v-list-item>
                           <v-divider class="mt-0 mb-0" />
                           <v-list-item
                             v-if="rolesWidget['dinkeskota'].includes(roles[0])"
@@ -358,7 +361,14 @@
       :show.sync="dialogHistoryTravel"
       :id-case="idCase"
       :case-id.sync="idCase"
-      :title-detail="$t('label.local_transmission_area_history_list')"
+      :title-detail="$t('label.list_history_from_abroad_outside_the_city')"
+    />
+    <dialog-public-place
+      :show-dialog="dialogPublicPlace"
+      :show.sync="dialogPublicPlace"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :title-detail="$t('label.list_public_place_history')"
     />
     <dialog-inspection-support
       :show-dialog="dialogInspectionSupport"
@@ -451,7 +461,8 @@ export default {
       dialogCloseContact: false,
       dialogTransmissionArea: false,
       dialogHistoryTravel: false,
-      dialogInspectionSupport: false
+      dialogInspectionSupport: false,
+      dialogPublicPlace: false
     }
   },
   computed: {
@@ -599,6 +610,10 @@ export default {
     async handleInspectionSupport(id) {
       this.idCase = id
       this.dialogInspectionSupport = true
+    },
+    async handlePublicPlace(id) {
+      this.idCase = id
+      this.dialogPublicPlace = true
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
