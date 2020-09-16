@@ -6,7 +6,7 @@ import {
 const closeContactRouter = {
   path: '/close-contact',
   component: Layout,
-  redirect: '/close-contact/list',
+  redirect: '/close-contact/identification/list',
   meta: {
     title: 'tight_contact',
     icon: 'mdi-account-multiple-outline',
