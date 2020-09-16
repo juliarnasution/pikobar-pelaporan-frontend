@@ -6,7 +6,7 @@
     >
       <v-card>
         <v-container>
-          <v-card-title>
+          <v-card-title :class="{'subtitle-1': $vuetify.breakpoint.xs}">
             {{ titleDetail }}
             <v-spacer />
             <v-icon @click="show = false">mdi-close</v-icon>

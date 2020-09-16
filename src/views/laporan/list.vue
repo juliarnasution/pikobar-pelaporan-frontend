@@ -355,7 +355,7 @@
       :show.sync="dialogHistoryTravel"
       :id-case="idCase"
       :case-id.sync="idCase"
-      :title-detail="$t('label.local_transmission_area_history_list')"
+      :title-detail="$t('label.list_history_from_abroad_outside_the_city')"
     />
     <import-form
       :show-import-form="showImportForm"
