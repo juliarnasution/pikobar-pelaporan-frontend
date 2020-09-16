@@ -241,6 +241,9 @@
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
+                          <v-list-item @click="handleInspectionSupport(item._id)">
+                            {{ $t('label.view_inspection_support') }}
+                          </v-list-item>
                           <v-list-item @click="handleHistoryTravel(item._id)">
                             {{ $t('label.view_history_from_abroad_outside_the_city') }}
                           </v-list-item>
@@ -367,6 +370,13 @@
       :case-id.sync="idCase"
       :title-detail="$t('label.list_public_place_history')"
     />
+    <dialog-inspection-support
+      :show-dialog="dialogInspectionSupport"
+      :show.sync="dialogInspectionSupport"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :title-detail="$t('label.list_inspection_support')"
+    />
     <import-form
       :show-import-form="showImportForm"
       :refresh-page="handleSearch"
@@ -451,6 +461,7 @@ export default {
       dialogCloseContact: false,
       dialogTransmissionArea: false,
       dialogHistoryTravel: false,
+      dialogInspectionSupport: false,
       dialogPublicPlace: false
     }
   },
@@ -595,6 +606,10 @@ export default {
     async handleHistoryTravel(id) {
       this.idCase = id
       this.dialogHistoryTravel = true
+    },
+    async handleInspectionSupport(id) {
+      this.idCase = id
+      this.dialogInspectionSupport = true
     },
     async handlePublicPlace(id) {
       this.idCase = id

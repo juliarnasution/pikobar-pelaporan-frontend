@@ -14,6 +14,7 @@ import closeContactCase from './modules/closeContactCase'
 import primaryDrawer from './modules/primaryDrawer'
 import localTransmissionArea from './modules/localTransmissionArea'
 import historyTravel from './modules/historyTravel'
+import inspectionSupport from './modules/inspectionSupport'
 import publicPlace from './modules/publicPlace'
 
 Vue.use(Vuex)
@@ -48,6 +49,7 @@ const store = new Vuex.Store({
     primaryDrawer,
     historyTravel,
     localTransmissionArea,
+    inspectionSupport,
     publicPlace
   }
 })
