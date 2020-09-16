@@ -6,7 +6,7 @@
     >
       <v-card>
         <v-container>
-          <v-card-title>
+          <v-card-title :class="{'subtitle-1': $vuetify.breakpoint.xs}">
             {{ titleDetail }}
             <v-spacer />
             <v-icon @click="show = false">mdi-close</v-icon>
@@ -25,15 +25,12 @@
                 <template v-slot:item="{ item, index }">
                   <tr>
                     <td>{{ getTableRowNumbering(index) }}</td>
-                    <td>{{ item.travelling_type }}</td>
-                    <td>{{ item.travelling_visited }}</td>
-                    <td>{{ item.travelling_city }}</td>
+                    <td>{{ item.inspection_type === 'lab_cofirm' ? $t('label.confirmation_lab'):$t('label.other_checks') }}</td>
+                    <td>{{ item.specimens_type }}</td>
                     <td>
-                      {{ item.travelling_date ? formatDatetime(item.travelling_date, 'DD MMMM YYYY') : '-' }}
+                      {{ item.inspection_date ? formatDatetime(item.inspection_date, 'DD MMMM YYYY') : '-' }}
                     </td>
-                    <td>
-                      {{ item.travelling_arrive ? formatDatetime(item.travelling_arrive, 'DD MMMM YYYY') : '-' }}
-                    </td>
+                    <td>{{ item.inspection_result.toUpperCase() }}</td>
                     <td>
                       <v-card-actions>
                         <v-menu
@@ -95,7 +92,7 @@
                   <div>
                     <v-icon>mdi-plus-circle-outline</v-icon>
                   </div>
-                  <div>{{ $t('label.add_history') }}</div>
+                  <div>{{ $t('label.add_inspection_support') }}</div>
                 </div>
               </v-row>
             </v-container>
@@ -117,7 +114,7 @@
     <dialog-form-inspection-support
       :show-dialog-add-inspection-support="showFormInspectionSupport"
       :show-form-add-inspection-support.sync="showFormInspectionSupport"
-      :title-detail="isEditInspectionSupport ? $t('label.edit_history'):$t('label.input_history')"
+      :title-detail="isEditInspectionSupport ? $t('label.edit_inspection_support'):$t('label.input_inspection_support')"
       :form-data.sync="formBody"
       :is-edit.sync="isEditInspectionSupport"
       :id-case="idCase"
@@ -161,11 +158,10 @@ export default {
       formBody: {},
       headers: [
         { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.trip_type').toUpperCase(), value: 'travelling_type' },
-        { text: this.$t('label.country_or_province').toUpperCase(), value: 'travelling_visited' },
-        { text: this.$t('label.city').toUpperCase(), value: 'travelling_city' },
-        { text: this.$t('label.start_travel').toUpperCase(), value: 'travelling_date' },
-        { text: this.$t('label.end_travel').toUpperCase(), value: 'travelling_arrive' },
+        { text: this.$t('label.checking_type').toUpperCase(), value: 'inspection_type' },
+        { text: this.$t('label.specimen_type').toUpperCase(), value: 'specimens_type' },
+        { text: this.$t('label.inspection_date').toUpperCase(), value: 'inspection_date' },
+        { text: this.$t('label.test_results').toUpperCase(), value: 'inspection_result' },
         { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ],
       dialogDecline: false,
@@ -229,7 +225,7 @@ export default {
     async getListInspectionSupport(id) {
       const response = await this.$store.dispatch('inspectionSupport/getListInspectionSupport', id)
       if (response !== undefined) {
-        this.listInspectionSupport = response.data[0].travelling_history
+        this.listInspectionSupport = response.data[0].inspection_support
       }
     },
     getTableRowNumbering(index) {

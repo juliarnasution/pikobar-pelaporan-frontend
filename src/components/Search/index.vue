@@ -2,10 +2,9 @@
   <form>
     <v-text-field
       v-model="listQuery.search"
-      v-debounce:300="handleSearch"
+      v-debounce:500="handleSearch"
       :label="$t('label.search')"
       solo-inverted
-      clearable
       prepend-inner-icon="search"
     />
   </form>

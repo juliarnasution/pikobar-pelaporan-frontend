@@ -88,7 +88,7 @@ export default {
   },
   watch: {
     formPasien(value) {
-      if (value .travelling_type === 'Dari Luar Kota') {
+      if (value.travelling_type === 'Dari Luar Kota') {
         this.getListProvince()
       }
     }

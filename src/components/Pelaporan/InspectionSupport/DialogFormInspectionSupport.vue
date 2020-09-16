@@ -128,28 +128,27 @@
           </v-form>
         </ValidationObserver>
         <v-row>
-          <v-container fluid>
-            <v-row>
-              <v-col class="text-right">
-                <v-btn
-                  :loading="loading"
-                  bottom
-                  @click="handleBack"
-                >
-                  {{ $t('label.cancel') }}
-                </v-btn>
-                <v-btn
-                  :loading="loading"
-                  class="ml-2"
-                  color="success"
-                  bottom
-                  @click="handleSave"
-                >
-                  {{ isEdit ? $t('label.edit'):$t('label.save') }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-col cols="12" lg="6" sm="6">
+            <v-btn
+              :loading="loading"
+              bottom
+              block
+              @click="handleBack"
+            >
+              {{ $t('label.cancel') }}
+            </v-btn>
+          </v-col>
+          <v-col cols="12" lg="6" sm="6">
+            <v-btn
+              :loading="loading"
+              color="success"
+              bottom
+              block
+              @click="handleSave"
+            >
+              {{ isEdit ? $t('label.edit'):$t('label.save') }}
+            </v-btn>
+          </v-col>
         </v-row>
       </v-container>
     </v-card>
