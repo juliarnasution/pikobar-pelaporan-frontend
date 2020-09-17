@@ -30,7 +30,7 @@
                     <td>
                       {{ item.inspection_date ? formatDatetime(item.inspection_date, 'DD MMMM YYYY') : '-' }}
                     </td>
-                    <td>{{ item.inspection_result.toUpperCase() }}</td>
+                    <td><inspection-result :inspection-result="item.inspection_result" /></td>
                     <td>
                       <v-card-actions>
                         <v-menu
