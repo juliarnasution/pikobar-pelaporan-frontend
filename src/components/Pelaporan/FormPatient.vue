@@ -8,7 +8,7 @@
           sm="12"
           :class="{'py-0': $vuetify.breakpoint. smAndDown}"
         >
-          <label class="required">{{ $t('label.place_origin') }}</label>
+          <label>{{ $t('label.place_origin') }}</label>
         </v-col>
         <v-col
           cols="12"
@@ -18,7 +18,6 @@
         >
           <ValidationProvider
             v-slot="{ errors }"
-            rules="required"
           >
             <v-radio-group
               v-model="formPasien.is_west_java"
