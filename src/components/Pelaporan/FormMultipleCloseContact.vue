@@ -6,7 +6,7 @@
           <v-row align="center" justify="space-between">
             <v-col cols="12" md="6" sm="12">
               <div class="title ml-4">
-                {{ `${$t('label.form_contact_data_title')} ${index+1}` }}
+                {{ `${$t('label.exposure_contact')} ${index+1}` }}
               </div>
             </v-col>
             <v-col cols="12" md="6" sm="12">
@@ -312,7 +312,7 @@ export default {
     }
   },
   mounted() {
-    this.handleAddFormCloseContact()
+    // this.handleAddFormCloseContact()
   },
   methods: {
     handleAddFormCloseContact() {

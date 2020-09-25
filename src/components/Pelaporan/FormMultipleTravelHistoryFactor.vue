@@ -334,7 +334,7 @@ export default {
     }
   },
   mounted() {
-    this.handleAddFormTravelingHistory()
+    // this.handleAddFormTravelingHistory()
   },
   methods: {
     handleAddFormTravelingHistory() {

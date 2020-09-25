@@ -16,6 +16,7 @@ function initialState() {
       name_case_related: '',
       name: '',
       nik: '',
+      is_west_java: true,
       is_nik_exists: false,
       is_phone_number_exists: false,
       birth_date: '',

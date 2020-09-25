@@ -16,7 +16,7 @@ const reportRouter = {
   children: [
     {
       path: '/laporan/create-report',
-      component: () => import('@/views/laporan/formCreateReport'),
+      component: () => import('@/views/laporan/newFormCreateReport'),
       meta: {
         title: 'laporan_create',
         icon: 'library_books',
@@ -25,12 +25,35 @@ const reportRouter = {
         roles: [rolesPerm.ADMIN, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     },
+    // {
+    //   path: '/laporan/create-stepper',
+    //   component: () => import('@/views/laporan/formStepper'),
+    //   meta: {
+    //     title: 'laporan_create',
+    //     icon: 'library_books',
+    //     child: true,
+    //     noCache: true,
+    //     roles: [rolesPerm.ADMIN, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
+    //   }
+    // },
     {
       path: '/laporan/correct-case-report/:id',
       component: () => import('@/views/laporan/formCreateReport'),
       hidden: true,
       meta: {
         title: 'correct_case_report',
+        icon: 'library_books',
+        child: true,
+        noCache: true,
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
+      }
+    },
+    {
+      path: '/laporan/detail-report',
+      component: () => import('@/views/laporan/detailReportCase'),
+      hidden: true,
+      meta: {
+        title: 'detail_case',
         icon: 'library_books',
         child: true,
         noCache: true,

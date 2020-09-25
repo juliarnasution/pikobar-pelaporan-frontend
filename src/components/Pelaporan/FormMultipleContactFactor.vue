@@ -308,6 +308,23 @@
           </ValidationProvider>
         </v-col>
       </v-row>
+      <v-row v-if="formPasien.close_contact_health_worker === true">
+        <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
+        <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+          <ValidationProvider v-slot="{ errors }">
+            <v-select
+              v-model="formPasien.health_workers"
+              :items="healthWorkerList"
+              :label="$t('label.choose_health_worker')"
+              item-value="value"
+              item-text="text"
+              solo
+              :error-messages="errors"
+              @change="onSelectHealthWorker"
+            />
+          </ValidationProvider>
+        </v-col>
+      </v-row>
       <v-row
         v-if="formPasien.close_contact_health_worker"
         align="start"

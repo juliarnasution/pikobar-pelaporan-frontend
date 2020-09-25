@@ -42,7 +42,8 @@ export default {
     distribution_case_network: 'Kasus Keterkaitan',
     dashboard_case: 'Kasus Lama',
     dashboard_case_new: 'Kasus Baru',
-    dashboard_test_result: 'Hasil Tes'
+    dashboard_test_result: 'Hasil Tes',
+    detail_case: 'Detail Kasus'
   },
   label: {
     username: 'Username',
@@ -562,6 +563,7 @@ export default {
     change_password: 'Ganti Password',
     log_out: 'Keluar',
     relationship: 'Hubungan',
+    exposure_contact: 'Kontak Paparan',
     relationship_with_primary_cases: 'Hubungan Dengan Kasus Primer',
     primary_case_id_related_case: 'ID Kasus Primer/Kasus Terkait',
     redaction_create_related_case: 'Form laporan di bawah ini mengacu pada lampiran 11 pedoman covid-19 revisi 4',
@@ -644,6 +646,7 @@ export default {
     place_birth: 'Tempat Lahir',
     rt: 'RT',
     rw: 'RW',
+    place_origin: 'Asal Daerah',
     form_case_history_title: 'Riwayat Kasus & Informasi Klinis',
     diagnosis_ards: 'Diagnosis ARDS (Acute Respiratory Distress Syndrome)',
     diagnosis_covid: 'Diagnosis COVID-19',
@@ -684,6 +687,7 @@ export default {
     add_other_primary_contact: 'Tambah Kontak Primer Lainnya',
     contact_name: 'Nama Kontak',
     contact_criteria: 'Kriteria Kontak',
+    patient_criteria: 'Kriteria Pasien',
     name_place_visited: 'Nama tempat yang dikunjungi',
     address_place_visited: 'Alamat tempat yang dikunjungi',
     length_visit_duration: 'Lama kunjungan/durasi',
@@ -767,6 +771,7 @@ export default {
     and: 'dan',
     area: 'Wilayah',
     west_java: 'Jawa Barat',
+    outside_west_java: 'Luar Jawa Barat',
     target: 'Sasaran',
     test_already: 'Sudah Tes',
     provincial_health_service: 'Dinas Kesehatan Provinsi',
