@@ -841,14 +841,16 @@ export default {
     primary_contact_label_5: 'Apakah melakukan prosedur yang menimbulkan erosol?',
     travel_history_label_2: 'Dalam 14 hari sebelum sakit, apakah pernah tinggal ke area transmisi lokal ?',
     travel_history_label_3: 'Dalam 14 hari sebelum sakit, apakah pernah mengunjungi RS/ Pasar/tempat publik lainnya ?',
-    total_test_result: 'Total Hasil Tes',
+    // total_test_result: 'Total Hasil Tes',
+    case_report_verification: 'Verifikasi Laporan Kasus',
     still_quarantined: 'Masih Dikarantina',
     take_survey: 'Ikuti Survei',
     survei_label: 'Kami tim pikobar ingin mengetahui persepsi para pengguna Aplikasi Pelaporan Pikobar. Partisipasi anda sangat penting karena hasil survei ini akan menjadi bahan masukkan/evaluasi bagi kami untuk meningkatkan layanan saat ini. Yuk, bantu isi survei berikut!',
     tight_contact: 'Kontak Erat',
     where_is_patient_isolation_quarantine_location: 'Dimana Lokasi Isolasi/Karantina Pasien',
     hp_contact_number: 'No.HP / Yang Dapat Dihubungi',
-    search_author_district_health_office: 'Cari berdasarkan Author Dinkes Kota/Kab'
+    search_author_district_health_office: 'Cari berdasarkan Author Dinkes Kota/Kab',
+    complete_history_and_patient_information_below: 'Lengkapi data riwayat dan informasi pasien di bawah ini'
   },
   success: {
     login_success: 'Login Berhasil',

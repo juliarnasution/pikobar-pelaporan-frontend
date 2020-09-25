@@ -49,7 +49,7 @@ const reportRouter = {
       }
     },
     {
-      path: '/laporan/detail-report',
+      path: '/laporan/detail-report/:id',
       component: () => import('@/views/laporan/detailReportCase'),
       hidden: true,
       meta: {
