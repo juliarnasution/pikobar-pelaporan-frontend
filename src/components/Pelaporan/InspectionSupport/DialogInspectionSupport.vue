@@ -139,9 +139,17 @@ export default {
       type: Boolean,
       default: false
     },
+    isCompleteData: {
+      type: Boolean,
+      default: false
+    },
     idCase: {
       type: String,
       default: ''
+    },
+    formPasien: {
+      type: Object,
+      default: null
     },
     titleDetail: {
       type: String,

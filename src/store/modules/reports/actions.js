@@ -30,6 +30,22 @@ export default {
       return error.response
     }
   },
+  async createReportCaseV2({ commit }, data) {
+    try {
+      const response = await requestServer('/api/v2/cases', 'POST', data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async getCases({ commit }, params) {
+    try {
+      const response = await requestServer('/api/cases/list-idcase', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async updateReportCase({ commit }, data) {
     const id_case = await data.id
     await delete data['id']

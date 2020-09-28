@@ -17,6 +17,9 @@ export default {
   formPasien: (state, getters) => {
     return state.formPasien
   },
+  formPasienV2: (state, getters) => {
+    return state.formPasienV2
+  },
   formRiwayatPasien: (state, getters) => {
     return state.formRiwayatPasien
   }

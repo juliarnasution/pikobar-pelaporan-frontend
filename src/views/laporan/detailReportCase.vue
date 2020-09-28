@@ -97,7 +97,7 @@
           <v-card
             class="mx-auto"
             outlined
-            @click="handleTransmissionArea"
+            @click="handleInspectionSupport"
           >
             <v-list-item two-line>
               <v-list-item-content>
@@ -143,7 +143,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col
+        <!-- <v-col
           cols="12"
           md="3"
           sm="3"
@@ -167,7 +167,7 @@
               </v-chip>
             </v-row>
           </v-card>
-        </v-col>
+        </v-col> -->
         <v-col
           cols="12"
           md="3"
@@ -176,7 +176,7 @@
           <v-card
             class="mx-auto"
             outlined
-            @click="handleInspectionSupport"
+            @click="handleContactFactor"
           >
             <v-list-item two-line>
               <v-list-item-content>
@@ -252,6 +252,12 @@
       :case-id.sync="idCase"
       :title-detail="$t('label.local_transmission_area_history_list')"
     />
+    <dialog-contact-factor
+      :show-dialog="dialogContactFactor"
+      :show.sync="dialogContactFactor"
+      :id-case="this.$route.params.id"
+      :form-pasien="detail"
+    />
     <dialog-history-travel
       :show-dialog="dialogHistoryTravel"
       :show.sync="dialogHistoryTravel"
@@ -270,6 +276,8 @@
       :show-dialog="dialogInspectionSupport"
       :show.sync="dialogInspectionSupport"
       :id-case="this.$route.params.id"
+      :is-complete-data="true"
+      :form-pasien="detail"
       :case-id.sync="idCase"
       :title-detail="$t('label.list_inspection_support')"
     />
@@ -294,6 +302,7 @@ export default {
       dialogTransmissionArea: false,
       dialogHistoryTravel: false,
       dialogInspectionSupport: false,
+      dialogContactFactor: false,
       dialogPublicPlace: false
     }
   },
@@ -372,6 +381,10 @@ export default {
     async handleHistoryTravel() {
       this.idCase = this.$route.params.id
       this.dialogHistoryTravel = true
+    },
+    async handleContactFactor() {
+      this.idCase = this.$route.params.id
+      this.dialogContactFactor = true
     },
     async handleTransmissionArea() {
       this.idCase = this.$route.params.id

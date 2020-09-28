@@ -13,7 +13,7 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-volunteer :form-pasien="formPasien" />
+                <form-volunteer :form-pasien="formPasienV2" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -31,7 +31,7 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-criteria-patient :form-pasien="formPasien" />
+                <form-criteria-patient :form-pasien="formPasienV2" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -49,7 +49,7 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-patient :form-pasien="formPasien" />
+                <form-patient :form-pasien="formPasienV2" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -69,6 +69,7 @@
 </template>
 <script>
 import { rolesPerm, ResponseRequest } from '@/utils/constantVariable'
+import { validateScrollUp } from '@/utils/utilsFunction'
 import { ValidationObserver } from 'vee-validate'
 import { mapGetters } from 'vuex'
 
@@ -87,7 +88,7 @@ export default {
   },
   computed: {
     ...mapGetters('reports', [
-      'formPasien'
+      'formPasienV2'
     ]),
     ...mapGetters('user', [
       'roles',
@@ -98,39 +99,40 @@ export default {
   },
   async mounted() {
     this.$store.dispatch('reports/resetFormPasien')
-    this.formPasien.interviewers_name = this.fullName
-    this.formPasien.interviewers_phone_number = this.phoneNumber
-    this.formPasien.interview_date = this.$moment().format()
+    this.formPasienV2.interviewers_name = this.fullName
+    this.formPasienV2.interviewers_phone_number = this.phoneNumber
+    this.formPasienV2.interview_date = this.$moment().format()
   },
   methods: {
+    validateScrollUp,
     async onSave() {
       const valid = await this.$refs.observer.validate()
       if (!valid) {
         this.validateScrollUp()
         return
       }
-      if ((!this.isFixCase) && (this.formPasien.nik)) {
+      if ((!this.isFixCase) && (this.formPasienV2.nik)) {
         this.loading = true
         const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
         if (response.data) {
           this.loading = false
-          this.nikNumber = this.formPasien.nik
-          this.nikName = this.formPasien.name
+          this.nikNumber = this.formPasienV2.nik
+          this.nikName = this.formPasienV2.name
           this.showDuplicatedNikDialog = true
           return
         }
       }
-      delete this.formPasien['_id']
-      delete this.formPasien['id_case']
+      delete this.formPasienV2['_id']
+      delete this.formPasienV2['id_case']
       try {
-        this.formPasien.input_source = 'form app'
+        this.formPasienV2.input_source = 'form app'
         let response
         if (!this.isFixCase) {
-          response = await this.$store.dispatch('reports/createRevampReportCase', this.formPasien)
+          response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasienV2)
         } else {
           const data = {
             id: this.$route.params.id,
-            data: this.formPasien
+            data: this.formPasienV2
           }
           response = await this.$store.dispatch('reports/correctCaseReport', data)
         }
@@ -140,7 +142,7 @@ export default {
           if ((this.roles[0] === rolesPerm.FASKES) || (this.isFixCase)) {
             await this.$router.push('/laporan/verification')
           } else {
-            this.$router.push(`/laporan/detail-report/${response._id}`)
+            this.$router.push(`/laporan/detail-report/${response.data._id}`)
           }
         } else {
           await this.$store.dispatch('toast/errorToast', response.message)

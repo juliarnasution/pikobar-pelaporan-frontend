@@ -3,6 +3,42 @@
     <v-container fluid>
       <ValidationObserver ref="observer">
         <v-form ref="form" lazy-validation>
+          <v-row align="center">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+              <label>{{ $t('label.place_origin') }}</label>
+            </v-col>
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider v-slot="{ errors }">
+                <v-radio-group
+                  v-model="formCloseContact.is_west_java"
+                  :error-messages="errors"
+                  row
+                >
+                  <v-radio
+                    :label="$t('label.west_java')"
+                    :value="true"
+                  />
+                  <v-radio
+                    :label="$t('label.outside_west_java')"
+                    :value="false"
+                  />
+                </v-radio-group>
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row align="start">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+              <label>Cari Nama / NIK / Telp</label>
+            </v-col>
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider>
+                <autocomplete-cases
+                  :on-select-case="onSelectCase"
+                  @handle-source-data-info="handleSourceDataInfo"
+                />
+              </ValidationProvider>
+            </v-col>
+          </v-row>
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
               <label class="required">{{ $t('label.name') }}</label>
@@ -17,6 +53,25 @@
                   :error-messages="errors"
                   solo-inverted
                 />
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row align="center">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+              <label class="required">{{ $t('label.criteria') }}</label>
+            </v-col>
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <v-radio-group
+                  v-model="formCloseContact.status"
+                  :error-messages="errors"
+                  row
+                >
+                  <v-radio :label="$t('route.tight_contact')" value="CLOSECONTACT" />
+                  <v-radio :label="$t('label.suspect')" value="SUSPECT" />
+                  <v-radio :label="$t('label.probable')" value="PROBABLE" />
+                  <v-radio :label="$t('label.confirmation')" value="CONFIRMATION" />
+                </v-radio-group>
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -299,6 +354,31 @@ export default {
   methods: {
     handleChangeContactDate(value) {
       this.formCloseContact.contact_date = value
+    },
+    async onSelectCase(value) {
+      if (value) {
+        const getEndSearch = value.indexOf('/')
+        const getName = value.slice(0, getEndSearch)
+        const listQuery = {
+          address_district_code: this.district_user,
+          search: getName
+        }
+        const response = await this.$store.dispatch('rdt/getDetailRegister', listQuery)
+        this.isSearchParticipant = true
+        console.log(response.data)
+        await Object.assign(this.formCloseContact, response.data)
+        this.formCloseContact.address_street = response.data.address_detail
+      }
+    },
+    handleSourceDataInfo(value) {
+      this.isSearchParticipant = value
+    },
+    uncheck(value) {
+      if (value === this.formPasien.final_result) {
+        this.formPasien.final_result = ''
+      } else {
+        this.formPasien.final_result = value
+      }
     },
     handleChangeSameHouse(value) {
       if (value) {
