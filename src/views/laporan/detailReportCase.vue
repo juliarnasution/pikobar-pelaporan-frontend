@@ -19,18 +19,8 @@
               </v-card-subtitle>
             </v-card-text>
           </v-col>
-          <v-col>
-            <div class="background-card">
-              <v-btn
-                class="float-right mt-8"
-                style="height: 40px;min-width: 80px;"
-              >
-                <div style="color: #6FCF97;">
-                  <v-icon>mdi-plus</v-icon>
-                  {{ $t('label.case_report_verification') }}
-                </div>
-              </v-btn>
-            </div>
+          <v-col cols="12" md="4" sm="4">
+            <div class="background-card ml-12" />
           </v-col>
         </v-row>
       </v-container>
@@ -396,6 +386,5 @@ export default {
   .background-card {
       background-image: url('../../static/survey-list-icon.svg');
       min-height: 100%;
-      float: right;
   }
 </style>
