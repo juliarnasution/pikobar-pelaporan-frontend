@@ -6,7 +6,7 @@
   >
     <v-card>
       <v-card-title>
-        Faktor Paparan
+        {{ $t('label.exposure_factor') }}
         <v-spacer />
         <v-icon @click="show = false">mdi-close</v-icon>
       </v-card-title>
@@ -36,7 +36,7 @@
                 block
                 @click="handleUpdate"
               >
-                Ubah Faktor Paparan
+                {{ $t('label.change_exposure_factor') }}
               </v-btn>
             </v-col>
           </v-row>

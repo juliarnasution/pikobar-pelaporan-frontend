@@ -13,9 +13,8 @@
               row
               @change="handleChangeLocationNow"
             >
-              <v-radio :label="$t('label.home')" value="RUMAH" />
-              <v-radio :label="$t('label.hospital')" value="RS" />
-              <v-radio :label="$t('label.other_places')" value="others" />
+              <v-radio :label="$t('label.yes')" value="RS" />
+              <v-radio :label="$t('label.no')" value="RUMAH" />
             </v-radio-group>
           </ValidationProvider>
         </v-col>
