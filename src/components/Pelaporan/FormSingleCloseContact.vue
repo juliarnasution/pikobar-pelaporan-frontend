@@ -41,6 +41,21 @@
           </v-row>
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+              <label :class="!formCloseContact.is_nik_exists ? 'required' : ''">{{ $t('label.nik') }}</label>
+            </v-col>
+            <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+              <ValidationProvider v-slot="{ errors }" :rules="formCloseContact.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits|provinceCode'">
+                <v-text-field v-model="formCloseContact.nik" type="number" :error-messages="errors" solo-inverted />
+              </ValidationProvider>
+              <v-checkbox v-model="formCloseContact.is_nik_exists" :label="$t('label.do_not_have_nik')" class="mt-0 pt-0" />
+              <ValidationProvider v-if="formCloseContact.is_nik_exists" v-slot="{ errors }" rules="required">
+                <label class="required">{{ $t('label.reason_do_not_have_nik') }}</label>
+                <v-text-field v-model="formCloseContact.note_nik" :error-messages="errors" solo-inverted />
+              </ValidationProvider>
+            </v-col>
+          </v-row>
+          <v-row align="start">
+            <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
               <label class="required">{{ $t('label.name') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
@@ -77,11 +92,16 @@
           </v-row>
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-              <label class="required">{{ $t('label.phone_number') }}</label>
+              <label :class="!formCloseContact.is_phone_number_exists ? 'required' : ''">{{ $t('label.phone_number') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="required|isPhoneNumber">
+              <ValidationProvider v-slot="{ errors }" :rules="formCloseContact.is_phone_number_exists ? 'isPhoneNumber' : 'required|isPhoneNumber'">
                 <v-text-field v-model="formCloseContact.phone_number" :error-messages="errors" placeholder="08xxxxxxxxx" solo-inverted type="number" />
+              </ValidationProvider>
+              <v-checkbox v-model="formCloseContact.is_phone_number_exists" :label="$t('label.do_not_have_phone_number')" class="mt-0 pt-0" />
+              <ValidationProvider v-if="formCloseContact.is_phone_number_exists" v-slot="{ errors }" rules="required">
+                <label class="required">{{ $t('label.reason_do_not_have_phone_number') }}</label>
+                <v-text-field v-model="formCloseContact.note_phone_number" :error-messages="errors" solo-inverted />
               </ValidationProvider>
             </v-col>
           </v-row>
@@ -106,7 +126,7 @@
               <v-row align="center" class="ma-0">
                 <v-col cols="12" sm="6" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formCloseContact.age" type="number" min="0" max="120" solo-inverted oninput="if(Number(this.value) > Number(this.max)) this.value = this.max" class="input-append-btn">
+                    <v-text-field v-model="formCloseContact.yearsOld" type="number" min="0" max="120" solo-inverted oninput="if(Number(this.value) > Number(this.max)) this.value = this.max" class="input-append-btn">
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           {{ $t('label.year') }}
@@ -117,7 +137,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formCloseContact.month" type="number" min="0" max="11" solo-inverted oninput="if(Number(this.value) > Number(this.max)) this.value = this.max" class="input-append-btn">
+                    <v-text-field v-model="formCloseContact.monthsOld" type="number" min="0" max="11" solo-inverted oninput="if(Number(this.value) > Number(this.max)) this.value = this.max" class="input-append-btn">
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           {{ $t('label.month') }}
@@ -129,7 +149,7 @@
               </v-row>
             </v-col>
           </v-row>
-          <v-row align="start" class="pb-6">
+          <!-- <v-row align="start" class="pb-6">
             <v-col
               cols="12"
               md="3"
@@ -156,7 +176,7 @@
                 />
               </ValidationProvider>
             </v-col>
-          </v-row>
+          </v-row> -->
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
               <label class="required">{{ $t('label.address_home') }}</label>
@@ -351,6 +371,20 @@ export default {
       formatDate: 'YYYY/MM/DD'
     }
   },
+  watch: {
+    'formCloseContact.yearsOld'(value) {
+      if (this.formCloseContact.monthsOld !== '') {
+        this.formCloseContact.age = Number((Number(this.formCloseContact.yearsOld) + (Number(this.formCloseContact.monthsOld) / 12)).toFixed(2))
+      } else {
+        this.formCloseContact.age = Number(this.formCloseContact.yearsOld)
+      }
+    },
+    'formCloseContact.monthsOld'(value) {
+      if (this.formCloseContact.yearsOld !== '') {
+        this.formCloseContact.age = Number((Number(this.formCloseContact.yearsOld) + (Number(this.formCloseContact.monthsOld) / 12)).toFixed(2))
+      }
+    }
+  },
   methods: {
     handleChangeContactDate(value) {
       this.formCloseContact.contact_date = value
@@ -365,8 +399,9 @@ export default {
         }
         const response = await this.$store.dispatch('rdt/getDetailRegister', listQuery)
         this.isSearchParticipant = true
-        console.log(response.data)
         await Object.assign(this.formCloseContact, response.data)
+        this.formCloseContact.yearsOld = Math.floor(this.formCloseContact.age)
+        this.formCloseContact.monthsOld = Math.ceil((this.formCloseContact.age - Math.floor(this.formCloseContact.age)) * 12)
         this.formCloseContact.address_street = response.data.address_detail
       }
     },

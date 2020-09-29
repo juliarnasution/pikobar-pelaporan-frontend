@@ -49,8 +49,8 @@
           >
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Identitas Pasien</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Data petugas medis, identitas pasien & kriteria pasien</v-list-item-subtitle>
+                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.form_patient_title') }}</v-list-item-title>
+                <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.medical_personnel_data_patient_identity_patient_criteria') }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-row class="justify-center pb-6">
@@ -58,7 +58,7 @@
                 class="ma-2"
                 color="#6FCF97"
               >
-                Lengkap
+                {{ $t('label.complete') }}
               </v-chip>
             </v-row>
           </v-card>
@@ -75,8 +75,8 @@
           >
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Informasi Klinis</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Data riwayat kasus dan info klinis pasien</v-list-item-subtitle>
+                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.clinical_information') }}</v-list-item-title>
+                <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.case_history_data_and_patient_clinical_info') }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-row class="justify-center pb-6">
@@ -84,7 +84,7 @@
                 class="ma-2"
                 color="#6FCF97"
               >
-                Lengkap
+                {{ $t('label.complete') }}
               </v-chip>
             </v-row>
           </v-card>
@@ -101,16 +101,16 @@
           >
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Informasi Penunjang</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Data informasi penunjang dan hasil test pasien</v-list-item-subtitle>
+                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.supporting_information') }}</v-list-item-title>
+                <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.supporting_information_data_and_patient_test_results') }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-row class="justify-center pb-6">
               <v-chip
                 class="ma-2"
-                color="#FFD026"
+                color="#E53935"
               >
-                Belum Lengkap
+                {{ $t('label.incomplete') }}
               </v-chip>
             </v-row>
           </v-card>
@@ -127,8 +127,8 @@
           >
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Riwayat Perjalanan</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Riwayat perjalanan pasien ke luar negeri / luar kota</v-list-item-subtitle>
+                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.travel_history') }}</v-list-item-title>
+                <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.history_of_patient_travel_abroad_out_of_town') }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-row class="justify-center pb-6">
@@ -136,38 +136,13 @@
                 class="ma-2"
                 color="#E53935"
               >
-                Tidak Lengkap
+                {{ $t('label.incomplete') }}
               </v-chip>
             </v-row>
           </v-card>
         </v-col>
       </v-row>
       <v-row>
-        <!-- <v-col
-          cols="12"
-          md="3"
-          sm="3"
-        >
-          <v-card
-            class="mx-auto"
-            outlined
-          >
-            <v-list-item two-line>
-              <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Sosial Ekonomi</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Data informasi kondisi sosial dan ekonomi pasien</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-            <v-row class="justify-center pb-6">
-              <v-chip
-                class="ma-2"
-                color="#E53935"
-              >
-                Tidak Lengkap
-              </v-chip>
-            </v-row>
-          </v-card>
-        </v-col> -->
         <v-col
           cols="12"
           md="3"
@@ -180,8 +155,8 @@
           >
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Faktor Paparan</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Data informasi faktor paparan eksternal pasien</v-list-item-subtitle>
+                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.exposure_factor') }}</v-list-item-title>
+                <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.patient_external_exposure_factor_information_data') }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-row class="justify-center pb-6">
@@ -189,7 +164,7 @@
                 class="ma-2"
                 color="#E53935"
               >
-                Tidak Lengkap
+                {{ $t('label.incomplete') }}
               </v-chip>
             </v-row>
           </v-card>
@@ -206,8 +181,8 @@
           >
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">Kontak Terkait</v-list-item-title>
-                <v-list-item-subtitle class="text-wrap text-center">Data informasi kontak yang berkaitan dengan pasien</v-list-item-subtitle>
+                <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.related_ontacts') }}</v-list-item-title>
+                <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.patient_related_contact_information_data') }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-row class="justify-center pb-6">
@@ -215,7 +190,7 @@
                 class="ma-2"
                 color="#E53935"
               >
-                Tidak Lengkap
+                {{ $t('label.incomplete') }}
               </v-chip>
             </v-row>
           </v-card>
@@ -243,7 +218,7 @@
       :case-id.sync="idCase"
       :id-unique-case="detail ? detail.id_case:''"
       :unique-case-id.sync="idUniqueCase"
-      :title-detail="$t('label.close_contact_list')"
+      :title-detail="$t('label.distribution_case_network')"
     />
     <dialog-transmission-area-local
       :show-dialog="dialogTransmissionArea"
@@ -258,12 +233,13 @@
       :id-case="this.$route.params.id"
       :form-pasien="detail"
     />
-    <dialog-history-travel
+    <dialog-tab-history-travel
       :show-dialog="dialogHistoryTravel"
       :show.sync="dialogHistoryTravel"
       :id-case="this.$route.params.id"
       :case-id.sync="idCase"
-      :title-detail="$t('label.list_history_from_abroad_outside_the_city')"
+      :form-pasien="detail"
+      :title-detail="$t('label.travel_history')"
     />
     <dialog-public-place
       :show-dialog="dialogPublicPlace"
@@ -315,6 +291,13 @@ export default {
       'fullName',
       'district_user'
     ])
+  },
+  watch: {
+    'dialogCloseContact': function(value) {
+      if (!value) {
+        this.getListCloseContactByCase(this.$route.params.id)
+      }
+    }
   },
   async mounted() {
     await this.detailCase()

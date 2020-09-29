@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="show" max-width="70%">
+  <v-dialog
+    v-model="show"
+    :fullscreen="$vuetify.breakpoint.xs"
+    max-width="90%"
+  >
     <v-card>
       <v-card-title>
         Faktor Paparan

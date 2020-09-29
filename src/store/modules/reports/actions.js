@@ -326,7 +326,7 @@ export default {
     const id_case = await data.id
     await delete data['id']
     try {
-      const response = await requestServer(`/api/cases-revamp/${id_case}/contact`, 'POST', data.data)
+      const response = await requestServer(`/api/cases/${id_case}/closecontact`, 'POST', data.data)
       return response
     } catch (error) {
       return error.response

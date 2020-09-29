@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="show" max-width="70%">
+  <v-dialog
+    v-model="show"
+    :fullscreen="$vuetify.breakpoint.xs"
+    max-width="90%"
+  >
     <v-skeleton-loader
       :loading="isLoading"
       type="table-tbody"
@@ -16,7 +20,7 @@
             <v-col>
               <v-data-table
                 :headers="headers"
-                :items="listCloseContact"
+                :items="closeContactList"
                 :mobile-breakpoint="NaN"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="10"
@@ -141,13 +145,13 @@
       :id-case.sync="idCase"
       :form-body.sync="formBody"
     />
-    <dialog-delete
+    <!-- <dialog-delete
       :dialog="dialogDelete"
       :dialog-delete.sync="dialogDelete"
       :data-deleted="dataDelete"
       :delete-date.sync="dataDelete"
       :store-path-delete="`closeContactCase/deleteCloseContact`"
-    />
+    /> -->
   </v-dialog>
 </template>
 <script>
@@ -186,6 +190,7 @@ export default {
       show: this.showDialog,
       showReportCloseContact: false,
       isEdit: false,
+      closeContactList: [],
       isEditCloseContact: false,
       isLoading: false,
       formBody: {},
@@ -230,11 +235,19 @@ export default {
         this.$emit('update:uniqueCaseId', '')
       }
     },
+    showCloseContact(value) {
+      if (!value) {
+        this.getListCloseContactByCase(this.idCase)
+      }
+    },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
         EventBus.$emit('refreshPageListReport', true)
       }
+    },
+    listCloseContact(value) {
+      this.closeContactList = value
     }
   },
   methods: {
@@ -285,23 +298,30 @@ export default {
       return (index + 1)
     },
     async handleUpdateCloseContact(id) {
-      const responseReportCase = await this.$store.dispatch('reports/detailReportCase', this.idCase)
-      this.parentCase = responseReportCase.data
-      const data = {
-        idCloseContact: id
-      }
-      const response = await this.$store.dispatch('closeContactCase/getDetailCloseContactByCase', data)
+      const response = await this.$store.dispatch('reports/detailReportCase', id)
       Object.assign(this.formCloseContact, response.data)
       this.isEditCloseContact = true
       this.showCloseContact = true
     },
     async handleDeleteCloseContact(item) {
-      if (!item.is_reported) {
-        this.dialogDelete = true
-        this.dataDelete = item
-      } else {
-        await this.$store.dispatch('toast/errorToast', this.$t('errors.contact_data_cannot_be_deleted'))
+      this.isLoading = true
+      const data = {
+        idCase: this.idCase,
+        idCloseContact: item._id
       }
+      const response = await this.$store.dispatch('closeContactCase/deleteCloseContact', data)
+      if (response.status === 200) {
+        this.$store.dispatch('toast/successToast', this.$t('success.data_success_delete'))
+        this.isLoading = false
+      } else {
+        this.$store.dispatch('toast/errorToast', response.message)
+        this.isLoading = false
+      }
+      this.getListCloseContactByCase(this.idCase)
+    },
+    async getListCloseContactByCase(id) {
+      const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      this.closeContactList = response.data
     }
   }
 }

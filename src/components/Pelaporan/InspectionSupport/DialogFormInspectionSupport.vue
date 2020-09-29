@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="showFormAddInspectionSupport" max-width="70%">
+  <v-dialog
+    v-model="showFormAddInspectionSupport"
+    :fullscreen="$vuetify.breakpoint.xs"
+    max-width="90%"
+  >
     <v-card>
       <v-container>
         <v-card-title>
@@ -13,28 +17,52 @@
             <v-container fluid>
               <v-row align="center">
                 <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-                  <label>{{ $t('label.checking_type') }}</label>
+                  <label class="required">{{ $t('label.checking_type') }}</label>
                 </v-col>
                 <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                  <ValidationProvider>
-                    <v-radio-group v-model="formData.inspection_type" row>
-                      <v-radio :label="$t('label.confirmation_lab')" value="lab_cofirm" />
-                      <v-radio :label="$t('label.other_checks')" value="other_checks" />
+                  <ValidationProvider v-slot="{ errors }" rules="required">
+                    <v-radio-group
+                      v-model="formData.inspection_type"
+                      :error-messages="errors"
+                      row
+                      @change="onChangeInspectionType"
+                    >
+                      <v-radio :label="$t('label.pcr')" value="pcr" />
+                      <v-radio :label="$t('label.rapid')" value="rapid" />
+                      <v-radio :label="$t('label.radiologi')" value="radiologi" />
+                      <v-radio :label="$t('label.ct_scan')" value="ct_scan" />
+                      <v-radio :label="$t('label.tcm_sars_cov_2')" value="tcm_sars_cov_2" />
                     </v-radio-group>
                   </ValidationProvider>
                 </v-col>
               </v-row>
-              <v-row align="center">
+              <v-row
+                v-if="inspectionType['inspectiontype1'].includes(formData.inspection_type)"
+                align="center"
+              >
                 <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                  <label>{{ $t('label.specimen_type') }}</label>
+                  <label class="required">{{ $t('label.specimen_type') }}</label>
                 </v-col>
                 <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                  <ValidationProvider>
-                    <v-select
+                  <ValidationProvider v-slot="{ errors }" rules="required">
+                    <v-radio-group v-model="formData.specimens_type" :error-messages="errors" row>
+                      <v-radio
+                        v-if="formData.inspection_type === 'rapid'"
+                        :label="$t('label.blood')"
+                        value="blood"
+                      />
+                      <v-row v-else class="ma-0">
+                        <v-radio :label="$t('label.sputum')" value="sputum" />
+                        <v-radio :label="$t('label.swab_nasofaring')" value="swab_nasofaring" />
+                        <v-radio :label="$t('label.swab_orofaring')" value="swab_orofaring" />
+                        <v-radio :label="$t('label.swab_naso_orofaring')" value="swab_naso_orofaring" />
+                      </v-row>
+                    </v-radio-group>
+                    <!-- <v-select
                       v-model="formData.specimens_type"
                       :items="specimenType"
                       solo
-                    />
+                    /> -->
                   </ValidationProvider>
                 </v-col>
               </v-row>
@@ -192,6 +220,9 @@ export default {
       loading: false,
       specimenType: specimenType,
       formatDate: 'YYYY/MM/DD',
+      inspectionType: {
+        'inspectiontype1': ['pcr', 'rapid', 'tcm_sars_cov_2']
+      },
       dataCloseContact: []
     }
   },
@@ -204,6 +235,9 @@ export default {
     }
   },
   methods: {
+    onChangeInspectionType() {
+      this.formData.specimens_type = ''
+    },
     handleBack(value) {
       if (value) {
         this.$emit('update:showFormAddInspectionSupport', false)

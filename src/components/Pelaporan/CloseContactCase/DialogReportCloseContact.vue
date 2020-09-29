@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="showForm" max-width="80%">
+  <v-dialog
+    v-model="showForm"
+    :fullscreen="$vuetify.breakpoint.xs"
+    max-width="90%"
+  >
     <v-card>
       <v-card-title>
         {{ titleDetail }}
