@@ -261,7 +261,7 @@ export default {
     }
   },
   mounted() {
-    this.handleAddFormSupportingInvestigation()
+    // this.handleAddFormSupportingInvestigation()
   },
   methods: {
     handleAddFormSupportingInvestigation() {

@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="showFormAddCloseContact" max-width="70%">
+  <v-dialog
+    v-model="showFormAddCloseContact"
+    :fullscreen="$vuetify.breakpoint.xs"
+    max-width="90%"
+  >
     <v-card>
       <v-container>
         <v-card-title>

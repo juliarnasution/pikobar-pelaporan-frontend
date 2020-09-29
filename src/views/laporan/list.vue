@@ -182,7 +182,9 @@
             hide-default-footer
           >
             <template v-slot:item="{ item, index }">
-              <tr>
+              <tr
+                @click="handleNewDetail(item, item._id)"
+              >
                 <td>{{ getTableRowNumbering(index) }}</td>
                 <td>{{ item.id_case ? item.id_case.toUpperCase() : '-' }}</td>
                 <td>{{ item.name }}</td>
@@ -528,6 +530,9 @@ export default {
       this.listHistoryCase = responseHistory
       this.referralHistoryCase = responseReferralHistory.data
       this.dialogDetailCase = true
+    },
+    handleNewDetail(item, id) {
+      this.$router.push(`/laporan/detail-report/${id}`)
     },
     async handleEditCase(id) {
       const response = await this.$store.dispatch('reports/detailReportCase', id)

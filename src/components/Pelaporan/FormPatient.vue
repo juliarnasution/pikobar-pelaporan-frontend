@@ -1,6 +1,41 @@
 <template>
   <v-container fluid>
     <v-form ref="form" lazy-validation>
+      <v-row align="center">
+        <v-col
+          cols="12"
+          md="3"
+          sm="12"
+          :class="{'py-0': $vuetify.breakpoint. smAndDown}"
+        >
+          <label>{{ $t('label.place_origin') }}</label>
+        </v-col>
+        <v-col
+          cols="12"
+          md="9"
+          sm="12"
+          :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}"
+        >
+          <ValidationProvider
+            v-slot="{ errors }"
+          >
+            <v-radio-group
+              v-model="formPasien.is_west_java"
+              :error-messages="errors"
+              row
+            >
+              <v-radio
+                :label="$t('label.west_java')"
+                :value="true"
+              />
+              <v-radio
+                :label="$t('label.outside_west_java')"
+                :value="false"
+              />
+            </v-radio-group>
+          </ValidationProvider>
+        </v-col>
+      </v-row>
       <v-row align="start">
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label :class="!formPasien.is_nik_exists ? 'required' : ''">{{ $t('label.nik') }}</label>
@@ -282,11 +317,29 @@
         </ValidationProvider>
       </v-col>
     </v-row>
+    <v-row align="center">
+      <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+        <label>{{ $t('label.income') }}</label>
+      </v-col>
+      <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+        <ValidationProvider>
+          <v-container>
+            <v-row>
+              <v-radio-group v-model="formPasien.income" row>
+                <span v-for="(item, index) in incomeList" :key="index">
+                  <v-radio :label="item.text" :value="item.value" />
+                </span>
+              </v-radio-group>
+            </v-row>
+          </v-container>
+        </ValidationProvider>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { getAgeWithMonth } from '@/utils/constantVariable'
+import { getAgeWithMonth, incomeList } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 export default {
   name: 'FormPatient',
@@ -302,6 +355,7 @@ export default {
   data() {
     return {
       loading: false,
+      incomeList: incomeList,
       formatDate: 'YYYY/MM/DD',
       date: '',
       listCountry: [],

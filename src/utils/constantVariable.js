@@ -71,8 +71,7 @@ export function listDays() {
 }
 
 export const symptomOptions = [
-  i18n.t('label.body_temperature_greater_than_38C'),
-  i18n.t('label.body_temperature_less_than_38C'),
+  i18n.t('label.fever'),
   i18n.t('label.cough'),
   i18n.t('label.cold'),
   i18n.t('label.sore_throat'),

@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="show" :fullscreen="$vuetify.breakpoint.xs" max-width="90%">
+  <v-dialog
+    v-model="show"
+    :fullscreen="$vuetify.breakpoint.xs"
+    max-width="90%"
+  >
     <v-card>
       <v-card-title>
         {{ $t('label.identity') }}
@@ -49,57 +53,25 @@
                 </v-expansion-panels>
               </v-col>
             </v-row>
-            <v-row>
-              <v-col auto>
-                <v-expansion-panels
-                  v-model="historySocioeconomicPanel"
-                  multiple
-                >
-                  <v-expansion-panel>
-                    <v-expansion-panel-header class="font-weight-bold text-lg">
-                      {{ $t('label.form_socioeconomic_title') }}
-                    </v-expansion-panel-header>
-                    <v-divider />
-                    <v-expansion-panel-content>
-                      <form-socioeconomic-history :form-pasien="formPasien" />
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col auto>
-                <v-expansion-panels
-                  v-model="contactFactorPanel"
-                  multiple
-                >
-                  <v-expansion-panel>
-                    <v-expansion-panel-header class="font-weight-bold text-lg">
-                      {{ $t('label.form_eposure_factor_title') }}
-                    </v-expansion-panel-header>
-                    <v-divider />
-                    <v-expansion-panel-content>
-                      <form-contact-factor :form-pasien="formPasien" />
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-col>
-            </v-row>
             <v-container fluid>
               <v-row>
-                <v-col class="text-right">
+                <v-col>
                   <v-btn
                     :loading="loading"
                     bottom
+                    block
                     @click="handleCancel"
                   >
                     {{ $t('label.cancel') }}
                   </v-btn>
+                </v-col>
+                <v-col>
                   <v-btn
                     :loading="loading"
                     class="ml-2"
                     color="success"
                     bottom
+                    block
                     @click="handleUpdateCase"
                   >
                     {{ $t('label.change_patent_data') }}
@@ -121,7 +93,7 @@ import { mapGetters } from 'vuex'
 import EventBus from '@/utils/eventBus'
 
 export default {
-  name: 'DialogUpdateCase',
+  name: 'DialogNewUpdateCase',
   components: {
     ValidationObserver
   },
@@ -129,6 +101,10 @@ export default {
     showDialog: {
       type: Boolean,
       default: false
+    },
+    idCase: {
+      type: String,
+      default: ''
     },
     formPasien: {
       type: Object,
@@ -142,8 +118,6 @@ export default {
       formatDate: 'YYYY/MM/DD',
       volunteerPanel: [1],
       patientPanel: [0],
-      historySocioeconomicPanel: [1],
-      contactFactorPanel: [1],
       listCountry: [],
       listHistoryCase: null,
       listQuery: {
@@ -203,10 +177,9 @@ export default {
       if (!valid) {
         return
       }
-      const idData = this.formPasien._id
       delete this.formPasien['_id']
       const updateCase = {
-        id: idData,
+        id: this.idCase,
         data: this.formPasien
       }
       this.loading = true

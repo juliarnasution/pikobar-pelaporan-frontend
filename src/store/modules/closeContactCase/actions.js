@@ -3,7 +3,7 @@ import requestServer from '@/api'
 export default {
   async getListCloseContactByCase({ commit }, idCase) {
     try {
-      const response = await requestServer(`/api/cases/${idCase}/close-contacts`, 'GET')
+      const response = await requestServer(`/api/cases/${idCase}/closecontact`, 'GET')
       return response
     } catch (error) {
       return error.response
@@ -52,9 +52,13 @@ export default {
       return error.response
     }
   },
-  async deleteCloseContact({ commit }, id) {
+  async deleteCloseContact({ commit }, data) {
+    const {
+      idCase,
+      idCloseContact
+    } = data
     try {
-      const response = await requestServer(`/api/close-contacts/${id}`, 'DELETE')
+      const response = await requestServer(`/api/cases/${idCase}/closecontact/${idCloseContact}`, 'DELETE')
       return response
     } catch (error) {
       return error.response
