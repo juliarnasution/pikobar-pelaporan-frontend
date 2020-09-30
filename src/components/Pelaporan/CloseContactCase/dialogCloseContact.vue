@@ -38,7 +38,7 @@
                         {{ $t('label.male') }}
                       </div>
                     </td>
-                    <td>{{ item.age }} Th</td>
+                    <td>{{ Math.floor(item.age) }} Th</td>
                     <td>{{ completeAddress(
                       item.address_district_name,
                       item.address_subdistrict_name,
