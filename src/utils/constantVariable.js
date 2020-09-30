@@ -95,6 +95,44 @@ export const transportOptions = [
   i18n.t('label.taxi')
 ]
 
+export const clusterType = [
+  {
+    value: 2,
+    text: 'Nakes'
+  }, {
+    value: 3,
+    text: 'Pasar/Pusat Perbelanjaan/Toko'
+  }, {
+    value: 4,
+    text: 'Pabrik'
+  }, {
+    value: 5,
+    text: 'Perkantoran'
+  }, {
+    value: 6,
+    text: 'Tempat Wisata'
+  }, {
+    value: 7,
+    text: 'Tempat Ibadah'
+  }, {
+    value: 8,
+    text: 'Rumah Tangga'
+  }, {
+    value: 9,
+    text: 'Rumah Makan'
+  }, {
+    value: 1,
+    text: 'Lainnya'
+  }
+]
+
+export const transmissionTypes = [
+  'Kasus Impor',
+  'Kasus kontak dengan kasus impor',
+  'Kasus lokal tanpa diketahui sumber penuralannya',
+  'Kasus lokal dengan kaitan epidemiologis'
+]
+
 export const activityContactOptions = [
   'Berpelukan',
   'Berjabat Tangan',
