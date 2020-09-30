@@ -4,6 +4,7 @@
     :rules="required ? 'required': ''"
   >
     <v-autocomplete
+      v-if="disabledSelect !== true"
       v-model="nameSubDistrict"
       :items="listSubDistrict"
       :label="$t('label.select_sub_district')"
@@ -17,6 +18,13 @@
       solo
       autocomplete
       @change="onSelectSubDistrict"
+    />
+    <v-text-field
+      v-else
+      v-model="nameSubDistrict"
+      :error-messages="errors"
+      disabled
+      solo-inverted
     />
   </ValidationProvider>
 </template>
@@ -62,7 +70,9 @@ export default {
   },
   watch: {
     'subDistrict': function(value) {
-      if (value && value.kecamatan_kode) {
+      if (this.disabledSelect) {
+        this.nameSubDistrict = this.subDistrict.kecamatan_nama
+      } else if (value && value.kecamatan_kode) {
         this.nameSubDistrict = value
       } else {
         this.nameSubDistrict = ''
@@ -76,6 +86,11 @@ export default {
       } else {
         this.disable = true
       }
+    },
+    disabledSelect(value) {
+      if (value) {
+        this.disable = true
+      }
     }
   },
   async created() {
@@ -84,6 +99,7 @@ export default {
     }
     if (this.disabledSelect) {
       this.disable = true
+      this.nameSubDistrict = this.subDistrict.kecamatan_nama
     } else if (this.codeDistrict) {
       const response = await this.$store.dispatch('region/getListSubDistrict', this.codeDistrict)
       this.listSubDistrict = response.data

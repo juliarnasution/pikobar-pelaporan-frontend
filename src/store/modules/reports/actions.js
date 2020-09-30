@@ -38,9 +38,9 @@ export default {
       return error.response
     }
   },
-  async getCases({ commit }, params) {
+  async searchCase({ commit }, params) {
     try {
-      const response = await requestServer('/api/cases/list-idcase', 'GET', params)
+      const response = await requestServer('/api/search', 'GET', params)
       return response
     } catch (error) {
       return error.response

@@ -657,6 +657,7 @@ export default {
     clinical_information: 'Informasi Klinis',
     supporting_information: 'Informasi Penunjang',
     exposure_factor: 'Faktor Paparan',
+    change_exposure_factor: 'Ubah Faktor Paparan',
     related_ontacts: 'Kontak Terkait',
     form_case_history_title: 'Riwayat Kasus & Informasi Klinis',
     diagnosis_ards: 'Diagnosis ARDS (Acute Respiratory Distress Syndrome)',

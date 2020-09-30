@@ -97,6 +97,9 @@ export default {
       this.showFormAddCloseContact = value
     },
     showFormAddCloseContact(value) {
+      if (!value) {
+        this.$store.dispatch('closeContactCase/resetStateCloseContactCase')
+      }
       this.$emit('update:showFormAddCloseContact', value)
     }
   },
