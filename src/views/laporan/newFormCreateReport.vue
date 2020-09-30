@@ -113,7 +113,7 @@ export default {
       }
       if ((!this.isFixCase) && (this.formPasienV2.nik)) {
         this.loading = true
-        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
+        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasienV2.nik })
         if (response.data) {
           this.loading = false
           this.nikNumber = this.formPasienV2.nik
