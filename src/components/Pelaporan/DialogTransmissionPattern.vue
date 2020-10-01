@@ -104,6 +104,7 @@ export default {
         return
       }
       this.isLoading = true
+      this.formPasien._meta.status_identity = 1
       const updateCase = {
         id: this.idCase,
         data: this.formPasien

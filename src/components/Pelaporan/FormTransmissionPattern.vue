@@ -3,26 +3,24 @@
     <v-form ref="form" lazy-validation>
       <v-row align="center">
         <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-          <label>$t('label.type_transmission')</label>
+          <label>{{ $t('label.type_transmission') }}</label>
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider v-slot="{ errors }">
-            <v-row>
-              <v-col v-for="item in transmissionTypes" :key="item" cols="12" sm="4" md="4">
-                <label class="material-checkbox-custom">
-                  <input v-model="formPasien.transmission_types" :value="item" type="checkbox">
-                  <span v-if="errors.length" class="error--text">{{ item }}</span>
-                  <span v-else>{{ item }}</span>
-                </label>
-              </v-col>
-            </v-row>
-            <span v-if="errors.length" class="v-messages error--text">{{ errors[0] }}</span>
+            <v-select
+              v-model="formPasien.transmission_types"
+              :items="transmissionTypes"
+              :error-messages="errors"
+              solo
+              item-text="text"
+              item-value="value"
+            />
           </ValidationProvider>
         </v-col>
       </v-row>
       <v-row align="center">
         <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-          <label>$t('label.cluster_type')</label>
+          <label>{{ $t('label.cluster_type') }}</label>
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider v-slot="{ errors }">

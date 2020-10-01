@@ -178,6 +178,7 @@ export default {
         return
       }
       delete this.formPasien['_id']
+      this.formPasien._meta.status_identity = 1
       const updateCase = {
         id: this.idCase,
         data: this.formPasien

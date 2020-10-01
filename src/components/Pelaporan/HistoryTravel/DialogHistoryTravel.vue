@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" max-width="70%">
+  <v-dialog v-model="show" max-width="90%">
     <v-skeleton-loader
       :loading="isLoading"
       type="table-tbody"

@@ -127,10 +127,22 @@ export const clusterType = [
 ]
 
 export const transmissionTypes = [
-  'Kasus Impor',
-  'Kasus kontak dengan kasus impor',
-  'Kasus lokal tanpa diketahui sumber penuralannya',
-  'Kasus lokal dengan kaitan epidemiologis'
+  {
+    value: 1,
+    text: 'Kasus Impor'
+  },
+  {
+    value: 2,
+    text: 'Kasus kontak dengan kasus impor'
+  },
+  {
+    value: 3,
+    text: 'Kasus lokal tanpa diketahui sumber penuralannya'
+  },
+  {
+    value: 4,
+    text: 'Kasus lokal dengan kaitan epidemiologis'
+  }
 ]
 
 export const activityContactOptions = [
