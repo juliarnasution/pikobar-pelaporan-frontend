@@ -41,9 +41,9 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#6FCF97"
+              :color="statusCase.status_identity === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.complete') }}
+              {{ statusCase.status_identity === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -67,9 +67,9 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#6FCF97"
+              :color="statusCase.status_clinical === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.complete') }}
+              {{ statusCase.status_clinical === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -93,9 +93,9 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#E53935"
+              :color="statusCase.status_inspection_support === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.incomplete') }}
+              {{ statusCase.status_inspection_support === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -119,9 +119,9 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#E53935"
+              :color="statusCase.status_travel_public === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.incomplete') }}
+              {{ statusCase.status_travel_public === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -141,15 +141,15 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.transmission_pattern') }}</v-list-item-title>
-              <!-- <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.history_of_patient_travel_abroad_out_of_town') }}</v-list-item-subtitle> -->
+              <v-list-item-subtitle class="text-wrap text-center">Data jenis transmisi dan jenis klaster</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#E53935"
+              :color="statusCase.status_transmission === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.incomplete') }}
+              {{ statusCase.status_transmission === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -173,9 +173,9 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#E53935"
+              :color="statusCase.status_exposurecontact === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.incomplete') }}
+              {{ statusCase.status_exposurecontact === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -199,9 +199,9 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              color="#E53935"
+              :color="statusCase.status_closecontact === 1 ? '#6FCF97':'#E53935'"
             >
-              {{ $t('label.incomplete') }}
+              {{ statusCase.status_closecontact === 1 ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -214,11 +214,12 @@
       :id-case="this.$route.params.id"
       :form-pasien="detail"
     />
-    <dialog-update-history-case
+    <dialog-list-history-case
       :show-dialog="dialogHistoryCase"
       :show.sync="dialogHistoryCase"
-      :form-riwayat-pasien="formRiwayatPasien"
-      :form-pasien="detail"
+      :id-case="this.$route.params.id"
+      :detail-case="detail"
+      :title-detail="$t('label.case_history') +' & '+ $t('label.clinical_information')"
     />
     <dialog-close-contact
       :show-dialog="dialogCloseContact"
@@ -288,6 +289,17 @@ export default {
       idUniqueCase: '',
       formatDate: 'YYYY/MM/DD',
       listCloseContact: [],
+      statusCase: {
+        status_clinical: 0,
+        status_closecontact: 0,
+        status_exposurecontact: 0,
+        status_identity: 0,
+        status_inspection_support: 0,
+        status_transmission: 0,
+        status_travel_import: 0,
+        status_travel_local: 0,
+        status_travel_public: 0
+      },
       dialogUpdateCase: false,
       dialogHistoryCase: false,
       dialogCloseContact: false,
@@ -313,11 +325,43 @@ export default {
     'dialogCloseContact': function(value) {
       if (!value) {
         this.getListCloseContactByCase(this.$route.params.id)
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
+    'dialogUpdateCase': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
+    'dialogHistoryCase': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
+    'dialogTransmissionPattern': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
+    'dialogHistoryTravel': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
+    'dialogPublicPlace': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
+    'dialogInspectionSupport': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
       }
     }
   },
   async mounted() {
     await this.detailCase()
+    await this.getStatusCase(this.$route.params.id)
   },
   methods: {
     formatDatetime,
@@ -349,25 +393,7 @@ export default {
       this.dialogUpdateCase = true
     },
     async handleUpdateHistoryCase() {
-      const response = await this.$store.dispatch('reports/detailHistoryCase', this.$route.params.id)
-      if (response) {
-        response.address_district_code = this.detail.address_district_code
-        response.address_subdistrict_code = this.detail.address_subdistrict_code
-        response.address_village_code = this.detail.address_village_code
-        response.address_village_name = this.detail.address_village_name
-        response.address_street = this.detail.address_street
-      }
-      Object.assign(this.formRiwayatPasien, response)
-      this.formRiwayatPasien.case = this.detail
-      if ((this.formRiwayatPasien.first_symptom_date !== null) && (this.formRiwayatPasien.first_symptom_date !== 'Invalid date')) {
-        this.formRiwayatPasien.first_symptom_date = await this.formatDatetime(this.formRiwayatPasien.first_symptom_date, this.formatDate)
-      } else {
-        this.formRiwayatPasien.first_symptom_date = ''
-      }
-      if (this.formRiwayatPasien.case) {
-        delete this.formRiwayatPasien['createdAt']
-        delete this.formRiwayatPasien['updatedAt']
-      }
+      this.idCase = this.$route.params.id
       this.dialogHistoryCase = true
     },
     async handleCloseContact() {
@@ -377,6 +403,10 @@ export default {
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       this.listCloseContact = response.data
+    },
+    async getStatusCase(id) {
+      const response = await this.$store.dispatch('reports/statusCase', id)
+      this.statusCase = response.data
     },
     handleHistoryTravel() {
       this.idCase = this.$route.params.id

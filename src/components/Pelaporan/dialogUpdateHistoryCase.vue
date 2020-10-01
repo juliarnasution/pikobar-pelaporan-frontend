@@ -86,6 +86,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
     formRiwayatPasien: {
       type: Object,
       default: null
@@ -146,7 +150,18 @@ export default {
         return
       }
       this.loading = true
-      const response = await this.$store.dispatch('reports/createHistoryCase', this.formRiwayatPasien)
+      let response
+      if (!this.isEdit) {
+        response = await this.$store.dispatch('reports/createHistoryCase', this.formRiwayatPasien)
+      } else {
+        const _id = this.formRiwayatPasien._id
+        delete this.formRiwayatPasien['_id']
+        const body = {
+          idHistory: _id,
+          data: this.formRiwayatPasien
+        }
+        response = await this.$store.dispatch('reports/updateHistoryCase', body)
+      }
       if (response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.case_history_data_successfully_updated'))
         await this.$store.dispatch('reports/resetFormPasien')

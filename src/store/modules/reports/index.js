@@ -126,7 +126,7 @@ function initialState() {
       physical_check_height: '',
       physical_check_weight: '',
       contact_date: '',
-      transmission_types: [],
+      transmission_types: '',
       cluster_type: 0,
       cluster_other: '',
       animal_market_date: '',

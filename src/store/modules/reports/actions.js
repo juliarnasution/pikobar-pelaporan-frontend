@@ -46,6 +46,14 @@ export default {
       return error.response
     }
   },
+  async statusCase({ commit }, id) {
+    try {
+      const response = await requestServer(`/api/v2/cases/${id}/status`, 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async updateReportCase({ commit }, data) {
     const id_case = await data.id
     await delete data['id']
@@ -116,6 +124,17 @@ export default {
   async createHistoryCase({ commit }, data) {
     try {
       const response = await requestServer('/api/history_cases', 'POST', data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async updateHistoryCase({
+    commit
+  }, body) {
+    const { idHistory, data } = body
+    try {
+      const response = await requestServer(`/api/history_cases/${idHistory}`, 'POST', data)
       return response
     } catch (error) {
       return error.response
