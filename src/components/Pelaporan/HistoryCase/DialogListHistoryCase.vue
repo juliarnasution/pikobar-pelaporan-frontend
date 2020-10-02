@@ -89,7 +89,6 @@ export default {
   data() {
     return {
       show: this.showDialog,
-      isEdit: false,
       isEditHistoryCase: false,
       isLoading: false,
       listHistoryCase: [],
@@ -140,7 +139,7 @@ export default {
     async handleCreate() {
       await this.$store.dispatch('reports/resetRiwayatFormPasien')
       this.getDetailLastHistory(this.$route.params.id)
-      this.isEditHistoryTravel = false
+      this.isEditHistoryCase = false
       this.showFormHistoryCase = true
     },
     async handleUpdateReport(item) {
