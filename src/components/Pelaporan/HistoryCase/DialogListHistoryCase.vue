@@ -139,7 +139,7 @@ export default {
     formatDatetime,
     async handleCreate() {
       await this.$store.dispatch('reports/resetRiwayatFormPasien')
-      this.getDetailHistory(this.$route.params.id)
+      this.getDetailLastHistory(this.$route.params.id)
       this.isEditHistoryTravel = false
       this.showFormHistoryCase = true
     },

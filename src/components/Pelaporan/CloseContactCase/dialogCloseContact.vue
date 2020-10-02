@@ -46,46 +46,16 @@
                       item.address_street
                     ) }}</td>
                     <td>
-                      <v-card-actions>
-                        <v-menu
-                          :close-on-content-click="true"
-                          :nudge-width="100"
-                          :nudge-left="220"
-                          :nudge-top="40"
-                          offset-y
-                        >
-                          <template v-slot:activator="{ on }">
-                            <v-btn
-                              class="ma-1"
-                              color="#828282"
-                              style="text-transform: none;height: 30px;min-width: 80px;"
-                              tile
-                              outlined
-                              v-on="on"
-                            >
-                              {{ $t('label.choose_action') }}
-                              <v-icon style="color: #009D57;font-size: 2rem;" right>
-                                mdi-menu-down
-                              </v-icon>
-                            </v-btn>
-                          </template>
-                          <v-card>
-                            <!-- <v-list-item v-if="roles[0] !== 'faskes'" @click="handleUpdateReport(item._id)">
-                              {{ $t('route.make_report') }}
-                            </v-list-item> -->
-                            <v-list-item @click="handleUpdateCloseContact(item._id)">
-                              {{ $t('label.edit_contact_data') }}
-                            </v-list-item>
-                            <v-divider class="mt-0 mb-0" />
-                            <v-list-item
-                              style="color: #EB5757 !important;"
-                              @click="handleDeleteCloseContact(item)"
-                            >
-                              {{ $t('label.deleted_contact') }}
-                            </v-list-item>
-                          </v-card>
-                        </v-menu>
-                      </v-card-actions>
+                      <v-btn
+                        class="ma-1"
+                        color="#828282"
+                        style="text-transform: none;height: 30px;min-width: 80px;color: #EB5757 !important;"
+                        tile
+                        outlined
+                        @click="handleDeleteCloseContact(item)"
+                      >
+                        {{ $t('label.deleted_contact') }}
+                      </v-btn>
                     </td>
                   </tr>
                 </template>

@@ -353,6 +353,11 @@ export default {
         this.getStatusCase(this.$route.params.id)
       }
     },
+    'dialogContactFactor': function(value) {
+      if (!value) {
+        this.getStatusCase(this.$route.params.id)
+      }
+    },
     'dialogInspectionSupport': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
