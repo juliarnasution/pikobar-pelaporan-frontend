@@ -377,5 +377,8 @@ export default {
   },
   resetRiwayatFormPasien({ commit }) {
     commit('RESET_RIWAYAT_FORM_PASIEN')
+  },
+  resetFormPasienV2({ commit }) {
+    commit('RESET_FORM_PASIEN_V2')
   }
 }

@@ -106,7 +106,11 @@ export default {
       this.isLoading = true
       const updateCase = {
         id: this.idCase,
-        data: this.formPasien
+        data: {
+          transmission_type: this.formPasien.transmission_type,
+          cluster_type: this.formPasien.cluster_type,
+          cluster_other: this.formPasien.cluster_other
+        }
       }
       this.formPasien.status_transmission = 1
       const response = await this.$store.dispatch('reports/updateReportCase', updateCase)

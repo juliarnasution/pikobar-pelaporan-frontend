@@ -61,3 +61,44 @@ export function validateScrollUp() {
   const el = document.querySelector('.v-messages.error--text')
   this.$vuetify.goTo(el.parentElement.parentElement)
 }
+
+export function setUpDataCase2(caseV2, detail) {
+  caseV2.interviewers_name = detail.interviewers_name
+  caseV2.interviewers_phone_number = detail.interviewers_phone_number
+  caseV2.interview_date = detail.interview_date
+  caseV2.status = detail.status
+  caseV2.final_result = detail.final_result
+  caseV2.nik = detail.nik
+  caseV2.is_nik_exists = detail.is_nik_exists
+  caseV2.note_nik = detail.note_nik
+  caseV2.is_phone_number_exists = detail.is_phone_number_exists
+  caseV2.phone_number = detail.phone_number
+  caseV2.note_phone_number = detail.note_phone_number
+  caseV2.name = detail.name
+  caseV2.gender = detail.gender
+  caseV2.place_of_birth = detail.place_of_birth
+  caseV2.birth_date = detail.birth_date
+  caseV2.age = detail.age
+  caseV2.month = detail.month
+  caseV2.yearsOld = detail.yearsOld
+  caseV2.monthsOld = detail.monthsOld
+  caseV2.address_province_code = detail.address_province_code
+  caseV2.address_province_name = detail.address_province_name
+  caseV2.last_date_status_patient = detail.last_date_status_patient
+  caseV2.address_district_code = detail.address_district_code
+  caseV2.address_district_name = detail.address_district_name
+  caseV2.address_subdistrict_code = detail.address_subdistrict_code
+  caseV2.address_subdistrict_name = detail.address_subdistrict_name
+  caseV2.address_village_code = detail.address_village_code
+  caseV2.address_village_name = detail.address_village_name
+  caseV2.address_street = detail.address_street
+  caseV2.rt = detail.rt
+  caseV2.rw = detail.rw
+  caseV2.nationality = detail.nationality
+  caseV2.nationality_name = detail.nationality_name
+  caseV2.occupation = detail.occupation
+  caseV2.office_address = detail.office_address
+  caseV2.report_source = detail.report_source
+  caseV2.name_parents = detail.name_parents
+  return caseV2
+}

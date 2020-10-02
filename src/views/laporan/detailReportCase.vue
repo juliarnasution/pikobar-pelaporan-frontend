@@ -212,7 +212,7 @@
       :show-dialog="dialogUpdateCase"
       :show.sync="dialogUpdateCase"
       :id-case="this.$route.params.id"
-      :form-pasien="detail"
+      :form-pasien="formPasienV2"
     />
     <dialog-list-history-case
       :show-dialog="dialogHistoryCase"
@@ -279,6 +279,7 @@
 
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'
+import { setUpDataCase2 } from '@/utils/utilsFunction'
 import { mapGetters } from 'vuex'
 export default {
   name: 'DetailReportCase',
@@ -313,7 +314,8 @@ export default {
   },
   computed: {
     ...mapGetters('reports', [
-      'formRiwayatPasien'
+      'formRiwayatPasien',
+      'formPasienV2'
     ]),
     ...mapGetters('user', [
       'roles',
@@ -370,6 +372,7 @@ export default {
   },
   methods: {
     formatDatetime,
+    setUpDataCase2,
     async detailCase() {
       const response = await this.$store.dispatch('reports/detailReportCase', this.$route.params.id)
       if (response.data !== null) {
@@ -395,6 +398,9 @@ export default {
       this.$router.push('/laporan/list')
     },
     async handleUpdateCase() {
+      this.$store.dispatch('reports/resetFormPasienV2')
+      const data = this.setUpDataCase2(this.formPasienV2, this.detail)
+      Object.assign(this.formPasienV2, data)
       this.dialogUpdateCase = true
     },
     async handleUpdateHistoryCase() {

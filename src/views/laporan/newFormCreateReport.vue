@@ -98,7 +98,7 @@ export default {
     ])
   },
   async mounted() {
-    this.$store.dispatch('reports/resetFormPasien')
+    this.$store.dispatch('reports/resetFormPasienV2')
     this.formPasienV2.interviewers_name = this.fullName
     this.formPasienV2.interviewers_phone_number = this.phoneNumber
     this.formPasienV2.interview_date = this.$moment().format()
