@@ -134,7 +134,7 @@ export default {
   }, body) {
     const { idHistory, data } = body
     try {
-      const response = await requestServer(`/api/history_cases/${idHistory}`, 'POST', data)
+      const response = await requestServer(`/api/history_cases/${idHistory}`, 'PUT', data)
       return response
     } catch (error) {
       return error.response

@@ -154,10 +154,13 @@ export default {
       if (!this.isEdit) {
         response = await this.$store.dispatch('reports/createHistoryCase', this.formRiwayatPasien)
       } else {
-        const _id = this.formRiwayatPasien._id
+        const historyID = this.formRiwayatPasien._id
         delete this.formRiwayatPasien['_id']
+        delete this.formRiwayatPasien['case']
+        delete this.formRiwayatPasien['createdAt']
+        delete this.formRiwayatPasien['updatedAt']
         const body = {
-          idHistory: _id,
+          idHistory: historyID,
           data: this.formRiwayatPasien
         }
         response = await this.$store.dispatch('reports/updateHistoryCase', body)

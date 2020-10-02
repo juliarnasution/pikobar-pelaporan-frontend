@@ -13,11 +13,14 @@
           <tr>
             <td>{{ getTableRowNumbering(index) }}</td>
             <td><status :status="item.status" /></td>
+            <td>
+              {{ item.first_symptom_date ? formatDatetime(item.first_symptom_date, 'DD MMMM YYYY') : '-' }}
+            </td>
             <td>{{ item.diagnosis.toString() }}</td>
             <td>{{ item.diseases.toString() }}</td>
             <td><final-result :final-result="item.final_result" /></td>
             <td>
-              {{ item.updatedAt ? formatDatetime(item.updatedAt, 'DD MMMM YYYY') : '-' }}
+              {{ item.updatedAt ? formatDatetime(item.createdAt, 'DD MMMM YYYY') : '-' }}
             </td>
             <td>
               <v-btn
@@ -61,10 +64,11 @@ export default {
       headers: [
         { text: '#', value: '_id', sortable: false },
         { text: this.$t('label.criteria').toUpperCase(), value: 'status' },
+        { text: this.$t('label.date_symptoms').toUpperCase(), value: 'symptoms' },
         { text: this.$t('label.symptoms').toUpperCase(), value: 'diagnosis' },
         { text: this.$t('label.additional_condition').toUpperCase(), value: 'diseases' },
         { text: this.$t('label.patient_status').toUpperCase(), value: 'stage' },
-        { text: this.$t('label.last_updated_date').toUpperCase(), value: 'updatedAt' },
+        { text: this.$t('label.last_updated_date').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ]
     }

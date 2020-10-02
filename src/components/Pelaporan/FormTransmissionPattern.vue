@@ -8,7 +8,7 @@
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider v-slot="{ errors }">
             <v-select
-              v-model="formPasien.transmission_types"
+              v-model="formPasien.transmission_type"
               :items="transmissionTypes"
               :error-messages="errors"
               solo

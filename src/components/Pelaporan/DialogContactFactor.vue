@@ -104,7 +104,7 @@ export default {
         return
       }
       this.isLoading = true
-      this.formPasien._meta.status_exposurecontact = 1
+      this.formPasien.status_exposurecontact = 1
       const updateCase = {
         id: this.idCase,
         data: this.formPasien

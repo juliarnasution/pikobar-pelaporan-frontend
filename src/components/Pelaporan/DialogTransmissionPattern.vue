@@ -104,11 +104,11 @@ export default {
         return
       }
       this.isLoading = true
-      this.formPasien._meta.status_identity = 1
       const updateCase = {
         id: this.idCase,
         data: this.formPasien
       }
+      this.formPasien.status_transmission = 1
       const response = await this.$store.dispatch('reports/updateReportCase', updateCase)
       if (response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.data_success_edit'))
