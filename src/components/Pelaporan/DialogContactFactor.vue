@@ -107,7 +107,17 @@ export default {
       this.formPasien.status_exposurecontact = 1
       const updateCase = {
         id: this.idCase,
-        data: this.formPasien
+        data: {
+          close_contacted_before_sick_14_days: this.formPasien.close_contacted_before_sick_14_days,
+          close_contact_heavy_ispa_group: this.formPasien.close_contact_heavy_ispa_group,
+          close_contact_have_pets: this.formPasien.close_contact_have_pets,
+          close_contact_pets: this.formPasien.close_contact_pets,
+          close_contact_health_worker: this.formPasien.close_contact_health_worker,
+          health_workers: this.formPasien.health_workers,
+          apd_use: this.formPasien.apd_use,
+          close_contact_performing_aerosol_procedures: this.formPasien.close_contact_performing_aerosol_procedures,
+          close_contact_performing_aerosol: this.formPasien.close_contact_performing_aerosol
+        }
       }
       const response = await this.$store.dispatch('reports/updateReportCase', updateCase)
       if (response.status !== ResponseRequest.UNPROCESSABLE) {

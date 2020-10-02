@@ -30,34 +30,6 @@
 
             <v-tab-item>
               <v-card flat>
-                <v-form ref="form" lazy-validation>
-                  <v-row align="start" class="mb-2">
-                    <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-                      <label>{{ $t('label.travel_history_label_1') }}</label>
-                    </v-col>
-                    <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                      <ValidationProvider>
-                        <v-radio-group
-                          v-model="formPasien.travelling_history_before_sick_14_days"
-                          :disabled="!isEditHistoryTravel"
-                          row
-                        >
-                          <v-radio :label="$t('label.yes')" :value="true" />
-                          <v-radio :label="$t('label.no')" :value="false" />
-                        </v-radio-group>
-                      </ValidationProvider>
-                    </v-col>
-                    <v-col cols="12" md="3" sm="12">
-                      <v-btn
-                        :loading="isLoading"
-                        color="success"
-                        @click="handleChangeTrueFalse('history-travel')"
-                      >
-                        {{ isEditHistoryTravel ? $t('label.save'):$t('label.edit') }}
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
                 <table-history-travel
                   :list-history-travel="listHistoryTravel"
                   :handle-update-report="handleUpdateReportHistoryTravel"
@@ -89,34 +61,6 @@
             </v-tab-item>
             <v-tab-item>
               <v-card flat>
-                <v-form ref="form" lazy-validation>
-                  <v-row align="start" class="mb-2">
-                    <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-                      <label>{{ $t('label.travel_history_label_2') }}</label>
-                    </v-col>
-                    <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                      <ValidationProvider>
-                        <v-radio-group
-                          v-model="formPasien.visited_local_area_before_sick_14_days"
-                          :disabled="!isEditTransmissionAreaLokal"
-                          row
-                        >
-                          <v-radio :label="$t('label.yes')" :value="true" />
-                          <v-radio :label="$t('label.no')" :value="false" />
-                        </v-radio-group>
-                      </ValidationProvider>
-                    </v-col>
-                    <v-col cols="12" md="3" sm="12">
-                      <v-btn
-                        :loading="isLoading"
-                        color="success"
-                        @click="handleChangeTrueFalse('transmission-area')"
-                      >
-                        {{ isEditTransmissionAreaLokal ? $t('label.save'):$t('label.edit') }}
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
                 <table-transmission-area-local
                   :list-transmission-area="listTransmissionArea"
                   :handle-update-report="handleUpdateReportTransmission"
@@ -148,35 +92,6 @@
             </v-tab-item>
             <v-tab-item>
               <v-card flat>
-                <v-form ref="form" lazy-validation>
-                  <v-row align="start" class="mb-2">
-                    <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-                      <label class="required">{{ $t('label.travel_history_label_3') }}</label>
-                    </v-col>
-                    <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                      <ValidationProvider v-slot="{ errors }" rules="required">
-                        <v-radio-group
-                          v-model="formPasien.has_visited_public_place"
-                          :disabled="!isEditPublicPlace"
-                          :error-messages="errors"
-                          row
-                        >
-                          <v-radio :label="$t('label.yes')" :value="true" />
-                          <v-radio :label="$t('label.no')" :value="false" />
-                        </v-radio-group>
-                      </ValidationProvider>
-                    </v-col>
-                    <v-col cols="12" md="3" sm="12">
-                      <v-btn
-                        :loading="isLoading"
-                        color="success"
-                        @click="handleChangeTrueFalse('public-place')"
-                      >
-                        {{ isEditPublicPlace ? $t('label.save'):$t('label.edit') }}
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
                 <table-public-place
                   :list-public-place="listPublicPlace"
                   :handle-update-report="handleUpdateReportPublicPlace"
@@ -244,14 +159,10 @@
   </v-dialog>
 </template>
 <script>
-import { ValidationProvider } from 'vee-validate'
 import { ResponseRequest } from '@/utils/constantVariable'
 import { mapState } from 'vuex'
 export default {
   name: 'DialogTabHistoryTravel',
-  components: {
-    ValidationProvider
-  },
   props: {
     titleDetail: {
       type: String,
@@ -427,25 +338,25 @@ export default {
         this.isLoading = false
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))
       }
-    },
-    handleChangeTrueFalse(key) {
-      switch (key) {
-        case 'history-travel':
-          this.isEditHistoryTravel = !this.isEditHistoryTravel
-          if (!this.isEditHistoryTravel) return this.updateCase()
-          break
-        case 'transmission-area':
-          this.isEditTransmissionAreaLokal = !this.isEditTransmissionAreaLokal
-          if (!this.isEditTransmissionAreaLokal) return this.updateCase()
-          break
-        case 'public-place':
-          this.isEditPublicPlace = !this.isEditPublicPlace
-          if (!this.isEditPublicPlace) return this.updateCase()
-          break
-        default:
-          break
-      }
     }
+    // handleChangeTrueFalse(key) {
+    //   switch (key) {
+    //     case 'history-travel':
+    //       this.isEditHistoryTravel = !this.isEditHistoryTravel
+    //       if (!this.isEditHistoryTravel) return this.updateCase()
+    //       break
+    //     case 'transmission-area':
+    //       this.isEditTransmissionAreaLokal = !this.isEditTransmissionAreaLokal
+    //       if (!this.isEditTransmissionAreaLokal) return this.updateCase()
+    //       break
+    //     case 'public-place':
+    //       this.isEditPublicPlace = !this.isEditPublicPlace
+    //       if (!this.isEditPublicPlace) return this.updateCase()
+    //       break
+    //     default:
+    //       break
+    //   }
+    // }
   }
 }
 </script>
