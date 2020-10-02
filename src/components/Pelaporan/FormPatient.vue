@@ -1,41 +1,6 @@
 <template>
   <v-container fluid>
     <v-form ref="form" lazy-validation>
-      <v-row align="center">
-        <v-col
-          cols="12"
-          md="3"
-          sm="12"
-          :class="{'py-0': $vuetify.breakpoint. smAndDown}"
-        >
-          <label>{{ $t('label.place_origin') }}</label>
-        </v-col>
-        <v-col
-          cols="12"
-          md="9"
-          sm="12"
-          :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}"
-        >
-          <ValidationProvider
-            v-slot="{ errors }"
-          >
-            <v-radio-group
-              v-model="formPasien.is_west_java"
-              :error-messages="errors"
-              row
-            >
-              <v-radio
-                :label="$t('label.west_java')"
-                :value="true"
-              />
-              <v-radio
-                :label="$t('label.outside_west_java')"
-                :value="false"
-              />
-            </v-radio-group>
-          </ValidationProvider>
-        </v-col>
-      </v-row>
       <v-row align="start">
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label :class="!formPasien.is_nik_exists ? 'required' : ''">{{ $t('label.nik') }}</label>
