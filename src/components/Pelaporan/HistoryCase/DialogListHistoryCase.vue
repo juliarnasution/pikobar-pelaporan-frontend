@@ -15,6 +15,7 @@
           <table-history-case
             :list-history-case="listHistoryCase"
             :handle-update-report="handleUpdateReport"
+            :handle-delete="handleDelete"
           />
           <v-card
             min-height="100"
@@ -59,6 +60,13 @@
       :edit.sync="isEditHistoryCase"
       :form-riwayat-pasien="formRiwayatPasien"
       :form-pasien="detailCase"
+    />
+    <dialog-delete
+      :dialog="dialogDelete"
+      :dialog-delete.sync="dialogDelete"
+      :data-deleted="dataDelete"
+      :delete-date.sync="dataDelete"
+      :store-path-delete="`reports/deleteHistoryCase`"
     />
   </v-dialog>
 </template>
@@ -179,6 +187,14 @@ export default {
       if (this.formRiwayatPasien.case) {
         delete this.formRiwayatPasien['createdAt']
         delete this.formRiwayatPasien['updatedAt']
+      }
+    },
+    async handleDelete(item) {
+      if (item) {
+        this.dialogDelete = true
+        this.dataDelete = item
+      } else {
+        await this.$store.dispatch('toast/errorToast', this.$t('errors.contact_data_cannot_be_deleted'))
       }
     }
   }
