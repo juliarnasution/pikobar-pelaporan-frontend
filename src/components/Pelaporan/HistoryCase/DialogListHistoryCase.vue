@@ -33,7 +33,7 @@
                   <div>
                     <v-icon>mdi-plus-circle-outline</v-icon>
                   </div>
-                  <div>{{ $t('label.add_history') }}</div>
+                  <div>{{ $t('label.patient_condition_update') }}</div>
                 </div>
               </v-row>
             </v-container>

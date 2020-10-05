@@ -111,7 +111,10 @@
                   </ValidationProvider>
                 </v-col>
               </v-row>
-              <v-row align="center">
+              <v-row
+                v-if="inspectionType['inspectiontype1'].includes(formData.inspection_type)"
+                align="center"
+              >
                 <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
                   <label>{{ $t('label.test_results') }}</label>
                 </v-col>
@@ -119,36 +122,54 @@
                   <ValidationProvider v-slot="{ errors }">
                     <v-radio-group v-model="formData.inspection_result" :error-messages="errors" row>
                       <v-radio
-                        v-if="formData.inspection_type === 'other_checks'"
+                        v-if="testResults['testResults1'].includes(formData.inspection_type)"
                         :label="$t('label.reaktif')"
                         value="reactif"
                       />
                       <v-radio
-                        v-if="formData.inspection_type === 'other_checks'"
+                        v-if="testResults['testResults1'].includes(formData.inspection_type)"
                         :label="$t('label.non_reaktif')"
                         value="non_reactif"
                       />
                       <v-radio
+                        v-if="testResults['testResults2'].includes(formData.inspection_type)"
                         :label="$t('label.positif')"
                         value="positif"
                       />
                       <v-radio
+                        v-if="testResults['testResults2'].includes(formData.inspection_type)"
                         :label="$t('label.negatif')"
                         value="negatif"
                       />
                       <v-radio
-                        :label="$t('label.inkonklusif')"
-                        value="inkonklusif"
-                      />
-                      <v-radio
+                        v-if="testResults['testResults3'].includes(formData.inspection_type)"
                         :label="$t('label.invalid')"
                         value="invalid"
                       />
                       <v-radio
+                        v-if="testResults['testResults2'].includes(formData.inspection_type)"
                         :label="$t('label.in_process')"
                         value="on_progress"
                       />
                     </v-radio-group>
+                  </ValidationProvider>
+                </v-col>
+              </v-row>
+              <v-row
+                v-else
+                align="center"
+              >
+                <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+                  <label>{{ $t('label.test_results') }}</label>
+                </v-col>
+                <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+                  <ValidationProvider v-slot="{ errors }">
+                    <v-text-field
+                      v-model.number="formData.inspection_result"
+                      :label="$t('label.test_results')"
+                      :error-messages="errors"
+                      solo-inverted
+                    />
                   </ValidationProvider>
                 </v-col>
               </v-row>
@@ -222,6 +243,11 @@ export default {
       formatDate: 'YYYY/MM/DD',
       inspectionType: {
         'inspectiontype1': ['pcr', 'rapid', 'tcm_sars_cov_2']
+      },
+      testResults: {
+        'testResults1': ['rapid'],
+        'testResults2': ['pcr', 'tcm_sars_cov_2'],
+        'testResults3': ['pcr', 'rapid', 'tcm_sars_cov_2']
       },
       dataCloseContact: []
     }

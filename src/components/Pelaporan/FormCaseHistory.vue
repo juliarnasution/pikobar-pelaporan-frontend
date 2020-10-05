@@ -105,7 +105,12 @@
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider v-slot="{ errors }">
-            <v-radio-group v-model="formPasien.there_are_symptoms" :error-messages="errors" row>
+            <v-radio-group
+              v-model="formPasien.there_are_symptoms"
+              :error-messages="errors"
+              row
+              @change="checkSymptoms"
+            >
               <v-radio :label="$t('label.yes')" :value="true" />
               <v-radio :label="$t('label.no')" :value="false" />
             </v-radio-group>
@@ -392,13 +397,16 @@
       </v-col>
     </v-row>
     <v-row align="center">
-      <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
+      <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+        <label class="required">{{ $t('label.date_last_status') }}</label>
+      </v-col>
       <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
         <input-date-picker
           :format-date="formatDate"
           :date-value="formPasien.last_date_status_patient"
           :value-date.sync="formPasien.last_date_status_patient"
           :label="$t('label.select_date_last_status')"
+          :required="true"
           @changeDate="formPasien.last_date_status_patient = $event"
         />
       </v-col>
@@ -466,6 +474,9 @@ export default {
     }
   },
   methods: {
+    checkSymptoms() {
+      this.formPasien.first_symptom_date = ''
+    },
     onSelectHospital(value) {
       this.formPasien.current_hospital_id = value._id
       this.formPasien.current_location_address = value.name
