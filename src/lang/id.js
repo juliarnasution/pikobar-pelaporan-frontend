@@ -788,6 +788,8 @@ export default {
     latest_patient_status: 'Status Pasien Terakhir',
     last_updated_date: 'Tanggal Diperbaharui Terakhir',
     select_date_last_status: 'Pilih Tanggal Update Status Terakhir',
+    date_last_status: 'Tanggal Update Status Terakhir',
+    patient_condition_update: 'Update Kondisi Pasien',
     there_symptoms: 'Terdapat Gejala',
     comparison: 'Perbandingan',
     and: 'dan',

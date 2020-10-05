@@ -125,13 +125,12 @@
         </v-col>
       </v-row>
       <v-row
-        v-if="formPasien.close_contact_health_worker"
         align="center"
       >
-        <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
+        <v-col cols="12" md="6" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label>{{ $t('label.primary_contact_label_5') }}</label>
         </v-col>
-        <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+        <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider>
             <v-container>
               <v-row>
@@ -149,8 +148,8 @@
         v-if="formPasien.close_contact_performing_aerosol_procedures"
         align="center"
       >
-        <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
-        <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+        <v-col cols="12" md="6" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
+        <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider>
             <v-text-field
               v-model="formPasien.close_contact_performing_aerosol"

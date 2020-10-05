@@ -140,6 +140,16 @@ export default {
       return error.response
     }
   },
+  async deleteHistoryCase({
+    commit
+  }, id) {
+    try {
+      const response = await requestServer(`/api/history_cases/${id}`, 'DELETE')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async exportExcel({ commit }, params) {
     try {
       const response = await request({

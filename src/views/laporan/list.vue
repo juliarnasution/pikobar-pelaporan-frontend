@@ -231,19 +231,19 @@
                           {{ $t('label.view_detail') }}
                         </v-list-item>
                         <div v-if="rolesWidget['dinkesKotaAndFaskes'].includes(roles[0])">
-                          <v-list-item @click="handleEditCase(item._id)">
+                          <!-- <v-list-item @click="handleEditCase(item._id)">
                             {{ $t('label.change_patent_data') }}
-                          </v-list-item>
-                          <v-list-item @click="handleEditHistoryCase(item._id)">
+                          </v-list-item> -->
+                          <!-- <v-list-item @click="handleEditHistoryCase(item._id)">
                             {{ $t('label.update_patient_status') }}
                           </v-list-item>
                           <v-list-item @click="handleCloseContact(item._id, item.id_case)">
                             {{ $t('label.see_closely_contact') }}
-                          </v-list-item>
+                          </v-list-item> -->
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
-                          <v-list-item @click="handleInspectionSupport(item._id)">
+                          <!-- <v-list-item @click="handleInspectionSupport(item._id)">
                             {{ $t('label.view_inspection_support') }}
                           </v-list-item>
                           <v-list-item @click="handleHistoryTravel(item._id)">
@@ -254,7 +254,7 @@
                           </v-list-item>
                           <v-list-item @click="handlePublicPlace(item._id)">
                             {{ $t('label.view_public_place_history') }}
-                          </v-list-item>
+                          </v-list-item> -->
                           <v-divider class="mt-0 mb-0" />
                           <v-list-item
                             v-if="rolesWidget['dinkeskota'].includes(roles[0])"
@@ -521,15 +521,16 @@ export default {
   methods: {
     formatDatetime,
     async handleDetail(item, id) {
-      const detail = await this.$store.dispatch('reports/detailReportCase', id)
-      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-      const responseHistory = await this.$store.dispatch('reports/listHistoryCase', id)
-      const responseReferralHistory = await this.$store.dispatch('reports/caseHospitalReferralHistory', id)
-      this.detailCase = detail.data
-      this.closeContactCase = responseCloseContact.data
-      this.listHistoryCase = responseHistory
-      this.referralHistoryCase = responseReferralHistory.data
-      this.dialogDetailCase = true
+      this.$router.push(`/laporan/detail-report/${id}`)
+      // const detail = await this.$store.dispatch('reports/detailReportCase', id)
+      // const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      // const responseHistory = await this.$store.dispatch('reports/listHistoryCase', id)
+      // const responseReferralHistory = await this.$store.dispatch('reports/caseHospitalReferralHistory', id)
+      // this.detailCase = detail.data
+      // this.closeContactCase = responseCloseContact.data
+      // this.listHistoryCase = responseHistory
+      // this.referralHistoryCase = responseReferralHistory.data
+      // this.dialogDetailCase = true
     },
     handleNewDetail(item, id) {
       this.$router.push(`/laporan/detail-report/${id}`)
