@@ -128,6 +128,8 @@ export default {
         this.formPasien.input_source = 'form app'
         let response
         if (!this.isFixCase) {
+          this.formPasien.status_identity = 1
+          this.formPasien.status_clinical = 1
           response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasien)
         } else {
           const data = {
@@ -137,6 +139,8 @@ export default {
           response = await this.$store.dispatch('reports/correctCaseReport', data)
         }
         if (response.status !== ResponseRequest.UNPROCESSABLE) {
+          this.formPasien['status_identity']
+          this.formPasien['status_clinical']
           await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
           await this.$store.dispatch('reports/resetFormPasien')
           if ((this.roles[0] === rolesPerm.FASKES) || (this.isFixCase)) {
