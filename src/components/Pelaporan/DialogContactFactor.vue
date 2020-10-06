@@ -104,7 +104,6 @@ export default {
         return
       }
       this.isLoading = true
-      this.formPasien.status_exposurecontact = 1
       const updateCase = {
         id: this.idCase,
         data: {
@@ -115,6 +114,7 @@ export default {
           close_contact_health_worker: this.formPasien.close_contact_health_worker,
           health_workers: this.formPasien.health_workers,
           apd_use: this.formPasien.apd_use,
+          status_exposurecontact: 1,
           close_contact_performing_aerosol_procedures: this.formPasien.close_contact_performing_aerosol_procedures,
           close_contact_performing_aerosol: this.formPasien.close_contact_performing_aerosol
         }

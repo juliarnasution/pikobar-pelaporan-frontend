@@ -261,6 +261,16 @@ export const rolesCriteria = {
   'discarded': ['CLOSECONTACT', 'SUSPECT']
 }
 
+export const inspectionType = {
+  'inspectiontype1': ['pcr', 'rapid', 'tcm_sars_cov_2']
+}
+
+export const testResults = {
+  'testResults1': ['rapid'],
+  'testResults2': ['pcr', 'tcm_sars_cov_2'],
+  'testResults3': ['pcr', 'rapid', 'tcm_sars_cov_2']
+}
+
 export const apd = [
   i18n.t('label.apd_gown'),
   i18n.t('label.apd_surgical_mask'),

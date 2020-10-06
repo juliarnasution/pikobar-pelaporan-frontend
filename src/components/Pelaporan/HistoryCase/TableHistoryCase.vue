@@ -23,7 +23,17 @@
               {{ item.updatedAt ? formatDatetime(item.createdAt, 'DD MMMM YYYY') : '-' }}
             </td>
             <td>
-              <v-card-actions>
+              <v-btn
+                class="ma-1"
+                color="#828282"
+                style="text-transform: none;height: 30px;min-width: 80px;color: #EB5757 !important;"
+                tile
+                outlined
+                @click="handleDelete(item)"
+              >
+                {{ $t('label.delete_history') }}
+              </v-btn>
+              <!-- <v-card-actions>
                 <v-menu
                   :close-on-content-click="true"
                   :nudge-width="100"
@@ -59,7 +69,7 @@
                     </v-list-item>
                   </v-card>
                 </v-menu>
-              </v-card-actions>
+              </v-card-actions> -->
             </td>
           </tr>
         </template>
