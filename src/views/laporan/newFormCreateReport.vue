@@ -128,7 +128,7 @@ export default {
         this.formPasien.input_source = 'form app'
         let response
         if (!this.isFixCase) {
-          response = await this.$store.dispatch('reports/createReportCase', this.formPasien)
+          response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasien)
         } else {
           const data = {
             id: this.$route.params.id,
