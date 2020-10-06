@@ -13,25 +13,7 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-volunteer :form-pasien="formPasienV2" />
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col auto>
-          <v-expansion-panels
-            v-model="criteriaPatientPanel"
-            multiple
-          >
-            <v-expansion-panel>
-              <v-expansion-panel-header class="font-weight-bold text-lg">
-                {{ $t('label.patient_criteria') }}
-              </v-expansion-panel-header>
-              <v-divider />
-              <v-expansion-panel-content>
-                <form-criteria-patient :form-pasien="formPasienV2" />
+                <form-volunteer :form-pasien="formPasien" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -49,7 +31,25 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-patient :form-pasien="formPasienV2" />
+                <form-patient :form-pasien="formPasien" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col auto>
+          <v-expansion-panels
+            v-model="panelRiwayat"
+            multiple
+          >
+            <v-expansion-panel>
+              <v-expansion-panel-header class="font-weight-bold text-lg">
+                {{ $t('label.form_case_history_title') }}
+              </v-expansion-panel-header>
+              <v-divider />
+              <v-expansion-panel-content>
+                <form-case-history :form-pasien="formPasien" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -82,13 +82,13 @@ export default {
       loading: false,
       isFixCase: false,
       volunteerPanel: [0],
-      criteriaPatientPanel: [0],
+      panelRiwayat: [0],
       patientPanel: [0]
     }
   },
   computed: {
     ...mapGetters('reports', [
-      'formPasienV2'
+      'formPasien'
     ]),
     ...mapGetters('user', [
       'roles',
@@ -98,10 +98,10 @@ export default {
     ])
   },
   async mounted() {
-    this.$store.dispatch('reports/resetFormPasienV2')
-    this.formPasienV2.interviewers_name = this.fullName
-    this.formPasienV2.interviewers_phone_number = this.phoneNumber
-    this.formPasienV2.interview_date = this.$moment().format()
+    this.$store.dispatch('reports/resetFormPasien')
+    this.formPasien.interviewers_name = this.fullName
+    this.formPasien.interviewers_phone_number = this.phoneNumber
+    this.formPasien.interview_date = this.$moment().format()
   },
   methods: {
     validateScrollUp,
@@ -111,24 +111,26 @@ export default {
         this.validateScrollUp()
         return
       }
-      if ((!this.isFixCase) && (this.formPasienV2.nik)) {
+      if ((!this.isFixCase) && (this.formPasien.nik)) {
         this.loading = true
-        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasienV2.nik })
+        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
         if (response.data) {
           this.loading = false
-          this.nikNumber = this.formPasienV2.nik
-          this.nikName = this.formPasienV2.name
+          this.nikNumber = this.formPasien.nik
+          this.nikName = this.formPasien.name
           this.showDuplicatedNikDialog = true
           return
         }
       }
-      delete this.formPasienV2['_id']
-      delete this.formPasienV2['id_case']
+      delete this.formPasien['_id']
+      delete this.formPasien['id_case']
       try {
-        this.formPasienV2.input_source = 'form app'
+        this.formPasien.input_source = 'form app'
         let response
         if (!this.isFixCase) {
-          response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasienV2)
+          this.formPasien.status_identity = 1
+          this.formPasien.status_clinical = 1
+          response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasien)
         } else {
           const data = {
             id: this.$route.params.id,
@@ -137,6 +139,8 @@ export default {
           response = await this.$store.dispatch('reports/correctCaseReport', data)
         }
         if (response.status !== ResponseRequest.UNPROCESSABLE) {
+          this.formPasien['status_identity']
+          this.formPasien['status_clinical']
           await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
           await this.$store.dispatch('reports/resetFormPasien')
           if ((this.roles[0] === rolesPerm.FASKES) || (this.isFixCase)) {
