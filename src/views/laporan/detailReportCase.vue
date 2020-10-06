@@ -34,8 +34,12 @@
         >
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.form_patient_title') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.medical_personnel_data_patient_identity_patient_criteria') }}</v-list-item-subtitle>
+              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
+                {{ $t('label.form_patient_title') }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="text-wrap text-center">
+                {{ $t('label.medical_personnel_data_patient_identity_patient_criteria') }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-row class="justify-center pb-6">
@@ -60,8 +64,12 @@
         >
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.clinical_information') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.case_history_data_and_patient_clinical_info') }}</v-list-item-subtitle>
+              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
+                {{ $t('label.clinical_information') }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="text-wrap text-center">
+                {{ $t('label.case_history_data_and_patient_clinical_info') }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-row class="justify-center pb-6">
@@ -86,8 +94,12 @@
         >
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.supporting_information') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.supporting_information_data_and_patient_test_results') }}</v-list-item-subtitle>
+              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
+                {{ $t('label.supporting_information') }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="text-wrap text-center">
+                {{ $t('label.supporting_information_data_and_patient_test_results') }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-row class="justify-center pb-6">
@@ -112,16 +124,20 @@
         >
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.travel_history') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.history_of_patient_travel_abroad_out_of_town') }}</v-list-item-subtitle>
+              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
+                {{ $t('label.travel_history') }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="text-wrap text-center">
+                {{ $t('label.history_of_patient_travel_abroad_out_of_town') }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              :color="statusCase.status_travel_public === 1 ? '#6FCF97':'#E53935'"
+              :color="isStatusHistoryTravel ? '#6FCF97':'#E53935'"
             >
-              {{ statusCase.status_travel_public === 1 ? $t('label.complete'):$t('label.incomplete') }}
+              {{ isStatusHistoryTravel ? $t('label.complete'):$t('label.incomplete') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -140,8 +156,12 @@
         >
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.transmission_pattern') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-wrap text-center">Data jenis transmisi dan jenis klaster</v-list-item-subtitle>
+              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
+                {{ $t('label.transmission_pattern') }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="text-wrap text-center">
+                {{ $t('label.data_transmission_type_and_cluster_type') }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-row class="justify-center pb-6">
@@ -301,6 +321,7 @@ export default {
         status_travel_local: 0,
         status_travel_public: 0
       },
+      isStatusHistoryTravel: false,
       dialogUpdateCase: false,
       dialogHistoryCase: false,
       dialogCloseContact: false,
@@ -418,6 +439,17 @@ export default {
     async getStatusCase(id) {
       const response = await this.$store.dispatch('reports/statusCase', id)
       this.statusCase = response.data
+      this.checkStatusHistoryTravel(response.data)
+    },
+    checkStatusHistoryTravel(data) {
+      if (data.status_travel_public === 1 &&
+          data.status_travel_local === 1 && data.status_travel_import === 1) {
+        this.isStatusHistoryTravel = true
+      } else if (data.status_travel_public === 1 && data.status_travel_import === 1) {
+        this.isStatusHistoryTravel = true
+      } else {
+        this.isStatusHistoryTravel = false
+      }
     },
     handleHistoryTravel() {
       this.idCase = this.$route.params.id

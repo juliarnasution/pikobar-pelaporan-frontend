@@ -5,7 +5,7 @@
         <v-card-title>
           {{ titleDetail }}
           <v-spacer />
-          <v-icon @click="showFormAddHistoryTravel = false">mdi-close</v-icon>
+          <v-icon @click="showFormAddTransmissionAreaLokal = false">mdi-close</v-icon>
         </v-card-title>
         <v-divider />
         <ValidationObserver ref="observer">

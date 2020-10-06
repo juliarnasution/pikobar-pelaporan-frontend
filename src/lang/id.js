@@ -790,6 +790,7 @@ export default {
     select_date_last_status: 'Pilih Tanggal Update Status Terakhir',
     date_last_status: 'Tanggal Update Status Terakhir',
     patient_condition_update: 'Update Kondisi Pasien',
+    data_transmission_type_and_cluster_type: 'Data jenis transmisi dan jenis klaster',
     there_symptoms: 'Terdapat Gejala',
     comparison: 'Perbandingan',
     and: 'dan',

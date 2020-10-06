@@ -58,11 +58,6 @@
                         <v-radio :label="$t('label.swab_naso_orofaring')" value="swab_naso_orofaring" />
                       </v-row>
                     </v-radio-group>
-                    <!-- <v-select
-                      v-model="formData.specimens_type"
-                      :items="specimenType"
-                      solo
-                    /> -->
                   </ValidationProvider>
                 </v-col>
               </v-row>
@@ -206,7 +201,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { specimenType } from '@/utils/constantVariable'
+import { specimenType, inspectionType, testResults } from '@/utils/constantVariable'
 export default {
   name: 'DialogFormInspectionSupport',
   components: {
@@ -240,15 +235,9 @@ export default {
       showFormAddInspectionSupport: this.showFormAddInspectionSupport,
       loading: false,
       specimenType: specimenType,
+      inspectionType: inspectionType,
+      testResults: testResults,
       formatDate: 'YYYY/MM/DD',
-      inspectionType: {
-        'inspectiontype1': ['pcr', 'rapid', 'tcm_sars_cov_2']
-      },
-      testResults: {
-        'testResults1': ['rapid'],
-        'testResults2': ['pcr', 'tcm_sars_cov_2'],
-        'testResults3': ['pcr', 'rapid', 'tcm_sars_cov_2']
-      },
       dataCloseContact: []
     }
   },

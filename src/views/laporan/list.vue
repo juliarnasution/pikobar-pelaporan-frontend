@@ -231,30 +231,9 @@
                           {{ $t('label.view_detail') }}
                         </v-list-item>
                         <div v-if="rolesWidget['dinkesKotaAndFaskes'].includes(roles[0])">
-                          <!-- <v-list-item @click="handleEditCase(item._id)">
-                            {{ $t('label.change_patent_data') }}
-                          </v-list-item> -->
-                          <!-- <v-list-item @click="handleEditHistoryCase(item._id)">
-                            {{ $t('label.update_patient_status') }}
-                          </v-list-item>
-                          <v-list-item @click="handleCloseContact(item._id, item.id_case)">
-                            {{ $t('label.see_closely_contact') }}
-                          </v-list-item> -->
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
-                          <!-- <v-list-item @click="handleInspectionSupport(item._id)">
-                            {{ $t('label.view_inspection_support') }}
-                          </v-list-item>
-                          <v-list-item @click="handleHistoryTravel(item._id)">
-                            {{ $t('label.view_history_from_abroad_outside_the_city') }}
-                          </v-list-item>
-                          <v-list-item @click="handleTransmissionArea(item._id)">
-                            {{ $t('label.view_local_transmission_area_history') }}
-                          </v-list-item>
-                          <v-list-item @click="handlePublicPlace(item._id)">
-                            {{ $t('label.view_public_place_history') }}
-                          </v-list-item> -->
                           <v-divider class="mt-0 mb-0" />
                           <v-list-item
                             v-if="rolesWidget['dinkeskota'].includes(roles[0])"
@@ -341,44 +320,6 @@
         </v-row>
       </v-card>
     </v-dialog>
-    <dialog-close-contact
-      :show-dialog="dialogCloseContact"
-      :show.sync="dialogCloseContact"
-      :list-close-contact.sync="listCloseContact"
-      :id-case="idCase"
-      :case-id.sync="idCase"
-      :id-unique-case="idUniqueCase"
-      :unique-case-id.sync="idUniqueCase"
-      :title-detail="$t('label.close_contact_list')"
-    />
-    <dialog-transmission-area-local
-      :show-dialog="dialogTransmissionArea"
-      :show.sync="dialogTransmissionArea"
-      :id-case="idCase"
-      :case-id.sync="idCase"
-      :title-detail="$t('label.local_transmission_area_history_list')"
-    />
-    <dialog-history-travel
-      :show-dialog="dialogHistoryTravel"
-      :show.sync="dialogHistoryTravel"
-      :id-case="idCase"
-      :case-id.sync="idCase"
-      :title-detail="$t('label.list_history_from_abroad_outside_the_city')"
-    />
-    <dialog-public-place
-      :show-dialog="dialogPublicPlace"
-      :show.sync="dialogPublicPlace"
-      :id-case="idCase"
-      :case-id.sync="idCase"
-      :title-detail="$t('label.list_public_place_history')"
-    />
-    <dialog-inspection-support
-      :show-dialog="dialogInspectionSupport"
-      :show.sync="dialogInspectionSupport"
-      :id-case="idCase"
-      :case-id.sync="idCase"
-      :title-detail="$t('label.list_inspection_support')"
-    />
     <import-form
       :show-import-form="showImportForm"
       :refresh-page="handleSearch"
@@ -509,9 +450,6 @@ export default {
   async mounted() {
     EventBus.$on('refreshPageListReport', (value) => {
       this.handleSearch()
-      if (this.idCase !== null) {
-        this.getListCloseContactByCase(this.idCase)
-      }
     })
     if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) this.listQuery.address_district_code = this.district_user
     this.queryReportCase.address_district_code = this.district_user
@@ -522,63 +460,9 @@ export default {
     formatDatetime,
     async handleDetail(item, id) {
       this.$router.push(`/laporan/detail-report/${id}`)
-      // const detail = await this.$store.dispatch('reports/detailReportCase', id)
-      // const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-      // const responseHistory = await this.$store.dispatch('reports/listHistoryCase', id)
-      // const responseReferralHistory = await this.$store.dispatch('reports/caseHospitalReferralHistory', id)
-      // this.detailCase = detail.data
-      // this.closeContactCase = responseCloseContact.data
-      // this.listHistoryCase = responseHistory
-      // this.referralHistoryCase = responseReferralHistory.data
-      // this.dialogDetailCase = true
     },
     handleNewDetail(item, id) {
       this.$router.push(`/laporan/detail-report/${id}`)
-    },
-    async handleEditCase(id) {
-      const response = await this.$store.dispatch('reports/detailReportCase', id)
-      if (response.data !== null) {
-        Object.assign(this.formPasien, response.data)
-        if (response.data.birth_date !== null) {
-          this.formPasien.birth_date = await this.formatDatetime(response.data.birth_date, this.formatDate)
-        } else {
-          this.formPasien.birth_date = ''
-        }
-        if (response.data.age !== null) {
-          this.formPasien.yearsOld = Math.floor(response.data.age)
-          this.formPasien.monthsOld = Math.ceil((response.data.age - Math.floor(response.data.age)) * 12)
-        }
-        if (this.formPasien._id) {
-          delete this.formPasien['author']
-          delete this.formPasien['createdAt']
-          delete this.formPasien['updatedAt']
-          delete this.formPasien['last_history']
-        }
-      }
-      this.dialogUpdateCase = true
-    },
-    async handleEditHistoryCase(id) {
-      this.detail = await this.$store.dispatch('reports/detailHistoryCase', id)
-      const response = await this.$store.dispatch('reports/detailReportCase', id)
-      if (this.detail && response.data) {
-        this.detail.address_district_code = response.data.address_district_code
-        this.detail.address_subdistrict_code = response.data.address_subdistrict_code
-        this.detail.address_village_code = response.data.address_village_code
-        this.detail.address_village_name = response.data.address_village_name
-        this.detail.address_street = response.data.address_street
-      }
-      Object.assign(this.formRiwayatPasien, this.detail)
-      this.formRiwayatPasien.case = this.detail.case
-      if ((this.detail.first_symptom_date !== null) && (this.detail.first_symptom_date !== 'Invalid date')) {
-        this.formRiwayatPasien.first_symptom_date = await this.formatDatetime(this.detail.first_symptom_date, this.formatDate)
-      } else {
-        this.formRiwayatPasien.first_symptom_date = ''
-      }
-      if (this.formRiwayatPasien.case) {
-        delete this.formRiwayatPasien['createdAt']
-        delete this.formRiwayatPasien['updatedAt']
-      }
-      this.dialogHistoryCase = true
     },
     handleFilter() {
       this.showFilter = !this.showFilter
@@ -592,34 +476,12 @@ export default {
       this.dialog = true
       this.dataDelete = item
     },
-    async handleCloseContact(id, idUniqueCase) {
-      this.idCase = id
-      this.idUniqueCase = idUniqueCase
-      await this.getListCloseContactByCase(id)
-      this.dialogCloseContact = true
-    },
     async handleSearch() {
       this.listQuery.page = 1
       this.loadingTable = true
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
       await this.getStatistic()
       this.loadingTable = false
-    },
-    async handleTransmissionArea(id) {
-      this.idCase = id
-      this.dialogTransmissionArea = true
-    },
-    async handleHistoryTravel(id) {
-      this.idCase = id
-      this.dialogHistoryTravel = true
-    },
-    async handleInspectionSupport(id) {
-      this.idCase = id
-      this.dialogInspectionSupport = true
-    },
-    async handlePublicPlace(id) {
-      this.idCase = id
-      this.dialogPublicPlace = true
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)

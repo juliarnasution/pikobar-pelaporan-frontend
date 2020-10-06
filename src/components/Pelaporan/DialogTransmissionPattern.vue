@@ -109,10 +109,10 @@ export default {
         data: {
           transmission_type: this.formPasien.transmission_type,
           cluster_type: this.formPasien.cluster_type,
+          status_transmission: 1,
           cluster_other: this.formPasien.cluster_other
         }
       }
-      this.formPasien.status_transmission = 1
       const response = await this.$store.dispatch('reports/updateReportCase', updateCase)
       if (response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.data_success_edit'))

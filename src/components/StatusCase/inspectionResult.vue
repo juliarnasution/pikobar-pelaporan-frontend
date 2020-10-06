@@ -22,7 +22,7 @@
       {{ $t('label.in_process') }}
     </div>
     <div v-else>
-      -
+      {{ inspectionResult }}
     </div>
   </div>
 </template>

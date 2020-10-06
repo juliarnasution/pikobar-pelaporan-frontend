@@ -3,23 +3,6 @@
     <v-form ref="form" lazy-validation>
       <v-row align="center">
         <v-col cols="12" md="6" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-          <label class="required">{{ $t('label.primary_contact_label_1') }}</label>
-        </v-col>
-        <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-          <ValidationProvider v-slot="{ errors }" rules="required">
-            <v-radio-group
-              v-model="formPasien.close_contacted_before_sick_14_days"
-              :error-messages="errors"
-              row
-            >
-              <v-radio :label="$t('label.yes')" :value="true" />
-              <v-radio :label="$t('label.no')" :value="false" />
-            </v-radio-group>
-          </ValidationProvider>
-        </v-col>
-      </v-row>
-      <v-row align="center">
-        <v-col cols="12" md="6" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
           <label>{{ $t('label.primary_contact_label_2') }}</label>
         </v-col>
         <v-col cols="12" md="6" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
@@ -125,6 +108,7 @@
         </v-col>
       </v-row>
       <v-row
+        v-if="formPasien.close_contact_health_worker"
         align="center"
       >
         <v-col cols="12" md="6" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
@@ -145,7 +129,7 @@
         </v-col>
       </v-row>
       <v-row
-        v-if="formPasien.close_contact_performing_aerosol_procedures"
+        v-if="formPasien.close_contact_performing_aerosol_procedures && formPasien.close_contact_health_worker"
         align="center"
       >
         <v-col cols="12" md="6" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
