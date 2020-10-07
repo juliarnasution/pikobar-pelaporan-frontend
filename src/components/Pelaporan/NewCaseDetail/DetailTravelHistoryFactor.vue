@@ -24,7 +24,7 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.travelling_history.length > 0">
+              <div v-if="detail.last_history.travelling_history">
                 <div v-for="(data, index) in detail.last_history.travelling_history" :key="index">
                   <v-row class="row-detail">
                     <v-col
@@ -121,7 +121,7 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.visited_local_area.length > 0">
+              <div v-if="detail.last_history.visited_local_area">
                 <div v-for="(data, index) in detail.last_history.visited_local_area" :key="index">
                   <v-row class="row-detail">
                     <v-col
@@ -182,7 +182,7 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.visited_public_place.length > 0">
+              <div v-if="detail.last_history.visited_public_place">
                 <div v-for="(data, index) in detail.last_history.visited_public_place" :key="index">
                   <v-row class="row-detail">
                     <v-col

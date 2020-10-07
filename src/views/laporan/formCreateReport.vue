@@ -190,6 +190,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { validateScrollUp } from '@/utils/utilsFunction'
+import { formatDatetime } from '@/utils/parseDatetime'
 import { mapGetters } from 'vuex'
 import { rolesPerm, ResponseRequest } from '@/utils/constantVariable'
 
@@ -234,6 +235,7 @@ export default {
     const idData = this.$route.params.id
     if (idData !== undefined) {
       const response = await this.$store.dispatch('reports/detailReportCase', idData)
+      console.log(response)
       this.isFixCase = true
       await Object.assign(this.formPasien, response.data)
       await Object.assign(this.formPasien, response.data.last_history)
@@ -256,6 +258,7 @@ export default {
   },
   methods: {
     validateScrollUp,
+    formatDatetime,
     async saveData() {
       const valid = await this.$refs.observer.validate()
       if (!valid) {
