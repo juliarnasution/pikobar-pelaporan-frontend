@@ -190,6 +190,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { validateScrollUp } from '@/utils/utilsFunction'
+import { formatDatetime } from '@/utils/parseDatetime'
 import { mapGetters } from 'vuex'
 import { rolesPerm, ResponseRequest } from '@/utils/constantVariable'
 
@@ -256,6 +257,7 @@ export default {
   },
   methods: {
     validateScrollUp,
+    formatDatetime,
     async saveData() {
       const valid = await this.$refs.observer.validate()
       if (!valid) {

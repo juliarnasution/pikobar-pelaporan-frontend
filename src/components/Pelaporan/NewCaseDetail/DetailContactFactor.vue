@@ -24,7 +24,7 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.close_contact_premier.length > 0">
+              <div v-if="detail.last_history.close_contact_premier">
                 <div v-for="(data, index) in detail.last_history.close_contact_premier" :key="index">
                   <v-row class="row-detail">
                     <v-col
@@ -159,7 +159,7 @@
         <p>{{ $t('label.protective_equipment_used') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.last_history.apd_use.length > 0 ? splitArray(detail.last_history.apd_use):'-' }}</p>
+        <p>{{ detail.last_history.apd_use ? splitArray(detail.last_history.apd_use):'-' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">

@@ -9,7 +9,7 @@
         <p>{{ $t('label.physical_activity') }}</p>
       </v-col>
       <v-col>
-        <p>{{ listPhysicalActivity[detail.pysichal_activity].text }}</p>
+        <p>{{ detail.pysichal_activity ? listPhysicalActivity[detail.pysichal_activity].text:'-' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -45,7 +45,7 @@
         <p>{{ $t('label.income') }}</p>
       </v-col>
       <v-col>
-        <p>{{ incomeList[detail.income].text }}</p>
+        <p>{{ detail.income ? incomeList[detail.income].text:'-' }}</p>
       </v-col>
     </v-row>
   </div>

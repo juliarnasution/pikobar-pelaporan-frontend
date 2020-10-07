@@ -59,12 +59,19 @@
     <v-container fluid>
       <v-row class="survey-bottom-form">
         <v-col class="text-right">
-          <v-btn color="success" :loading="loading" bottom class="ml-2" @click="onSave">
+          <v-btn color="success" :loading="isLoading" bottom class="ml-2" @click="onSave">
             {{ isFixCase ? $t('label.fix_case'):$t('label.save') }}
           </v-btn>
         </v-col>
       </v-row>
     </v-container>
+    <dialog-duplicated-nik
+      :show-dialog="showDuplicatedNikDialog"
+      :show.sync="showDuplicatedNikDialog"
+      :nik-number="nikNumber"
+      :nik-name="nikName"
+      :nik-author="nikAuthor"
+    />
   </div>
 </template>
 <script>
@@ -79,7 +86,11 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      isLoading: false,
+      showDuplicatedNikDialog: false,
+      nikNumber: null,
+      nikName: null,
+      nikAuthor: null,
       isFixCase: false,
       volunteerPanel: [0],
       panelRiwayat: [0],
@@ -112,10 +123,10 @@ export default {
         return
       }
       if ((!this.isFixCase) && (this.formPasien.nik)) {
-        this.loading = true
+        this.isLoading = true
         const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
         if (response.data) {
-          this.loading = false
+          this.isLoading = false
           this.nikNumber = this.formPasien.nik
           this.nikName = this.formPasien.name
           this.showDuplicatedNikDialog = true
@@ -154,7 +165,7 @@ export default {
       } catch (error) {
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))
       } finally {
-        this.loading = false
+        this.isLoading = false
       }
     }
   }
