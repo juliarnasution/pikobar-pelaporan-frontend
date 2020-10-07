@@ -235,7 +235,6 @@ export default {
     const idData = this.$route.params.id
     if (idData !== undefined) {
       const response = await this.$store.dispatch('reports/detailReportCase', idData)
-      console.log(response)
       this.isFixCase = true
       await Object.assign(this.formPasien, response.data)
       await Object.assign(this.formPasien, response.data.last_history)
