@@ -175,7 +175,11 @@
         </v-col>
       </v-row>
     </ValidationObserver>
-    <dialog-duplicated-nik :show-dialog="showDuplicatedNikDialog" :nik-number="nikNumber" :nik-name="nikName" :nik-author="nikAuthor" :show.sync="showDuplicatedNikDialog" />
+    <dialog-duplicated-nik
+      :show-dialog="showDuplicatedNikDialog"
+      :show.sync="showDuplicatedNikDialog"
+      :content="nikDuplicateMessage"
+    />
     <v-container fluid>
       <v-row class="survey-bottom-form">
         <v-col class="text-right">
@@ -204,9 +208,7 @@ export default {
       showDuplicatedNikDialog: false,
       isFixCase: false,
       formatDate: 'YYYY/MM/DD',
-      nikNumber: null,
-      nikName: null,
-      nikAuthor: null,
+      nikDuplicateMessage: null,
       volunteerPanel: [0],
       patientPanel: [0],
       historyCasePanel: [0],
@@ -265,17 +267,6 @@ export default {
         this.validateScrollUp()
         return
       }
-      if ((!this.isFixCase) && (this.formPasien.nik)) {
-        this.loading = true
-        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
-        if (response.data) {
-          this.loading = false
-          this.nikNumber = this.formPasien.nik
-          this.nikName = this.formPasien.name
-          this.showDuplicatedNikDialog = true
-          return
-        }
-      }
       delete this.formPasien['_id']
       delete this.formPasien['id_case']
       try {
@@ -299,7 +290,13 @@ export default {
             await this.$router.push('/laporan/list')
           }
         } else {
-          await this.$store.dispatch('toast/errorToast', response.message)
+          if (response.data.data === 'nik_exists') {
+            this.isLoading = false
+            this.showDuplicatedNikDialog = true
+            this.nikDuplicateMessage = response.data.message
+          } else {
+            await this.$store.dispatch('toast/errorToast', response.data.message)
+          }
         }
       } catch (error) {
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))

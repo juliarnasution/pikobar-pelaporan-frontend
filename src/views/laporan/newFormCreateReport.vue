@@ -68,9 +68,7 @@
     <dialog-duplicated-nik
       :show-dialog="showDuplicatedNikDialog"
       :show.sync="showDuplicatedNikDialog"
-      :nik-number="nikNumber"
-      :nik-name="nikName"
-      :nik-author="nikAuthor"
+      :content="nikDuplicateMessage"
     />
   </div>
 </template>
@@ -88,9 +86,7 @@ export default {
     return {
       isLoading: false,
       showDuplicatedNikDialog: false,
-      nikNumber: null,
-      nikName: null,
-      nikAuthor: null,
+      nikDuplicateMessage: null,
       isFixCase: false,
       volunteerPanel: [0],
       panelRiwayat: [0],
@@ -123,17 +119,6 @@ export default {
         this.validateScrollUp()
         return
       }
-      if ((!this.isFixCase) && (this.formPasien.nik)) {
-        this.isLoading = true
-        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
-        if (response.data) {
-          this.isLoading = false
-          this.nikNumber = this.formPasien.nik
-          this.nikName = this.formPasien.name
-          this.showDuplicatedNikDialog = true
-          return
-        }
-      }
       delete this.formPasien['_id']
       delete this.formPasien['id_case']
       try {
@@ -161,7 +146,13 @@ export default {
             this.$router.push(`/laporan/detail-report/${response.data._id}`)
           }
         } else {
-          await this.$store.dispatch('toast/errorToast', response.message)
+          if (response.data.data === 'nik_exists') {
+            this.isLoading = false
+            this.showDuplicatedNikDialog = true
+            this.nikDuplicateMessage = response.data.message
+          } else {
+            await this.$store.dispatch('toast/errorToast', response.data.message)
+          }
         }
       } catch (error) {
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))
