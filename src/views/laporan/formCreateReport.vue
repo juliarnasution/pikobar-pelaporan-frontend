@@ -233,6 +233,7 @@ export default {
     this.formPasien.interviewers_phone_number = this.phoneNumber
     this.formPasien.interview_date = this.$moment().format()
     const idData = this.$route.params.id
+    this.showDuplicatedNikDialog = false
     if (idData !== undefined) {
       const response = await this.$store.dispatch('reports/detailReportCase', idData)
       this.isFixCase = true

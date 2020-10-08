@@ -113,6 +113,7 @@ export default {
     this.formPasien.interviewers_name = this.fullName
     this.formPasien.interviewers_phone_number = this.phoneNumber
     this.formPasien.interview_date = this.$moment().format()
+    this.showDuplicatedNikDialog = false
   },
   methods: {
     validateScrollUp,
