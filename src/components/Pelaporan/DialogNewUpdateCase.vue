@@ -57,7 +57,7 @@
               <v-row>
                 <v-col>
                   <v-btn
-                    :loading="loading"
+                    :loading="isLoading"
                     bottom
                     block
                     @click="handleCancel"
@@ -67,7 +67,7 @@
                 </v-col>
                 <v-col>
                   <v-btn
-                    :loading="loading"
+                    :loading="isLoading"
                     class="ml-2"
                     color="success"
                     bottom
@@ -83,6 +83,11 @@
         </ValidationObserver>
       </v-container>
     </v-card>
+    <dialog-duplicated-nik
+      :show-dialog="showDuplicatedNikDialog"
+      :show.sync="showDuplicatedNikDialog"
+      :content="nikDuplicateMessage"
+    />
   </v-dialog>
 </template>
 <script>
@@ -113,7 +118,9 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      isLoading: false,
+      showDuplicatedNikDialog: false,
+      nikDuplicateMessage: null,
       show: this.showDialog,
       formatDate: 'YYYY/MM/DD',
       volunteerPanel: [1],
@@ -183,18 +190,23 @@ export default {
         id: this.idCase,
         data: this.formPasien
       }
-      this.loading = true
+      this.isLoading = true
       const response = await this.$store.dispatch('reports/updateReportCase', updateCase)
       if (response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.data_success_edit'))
         await this.$store.dispatch('reports/resetFormPasien')
         await this.$store.dispatch('reports/resetRiwayatFormPasien')
-        this.loading = false
+        this.isLoading = false
         this.$emit('update:show', false)
         EventBus.$emit('refreshPageListReport', true)
       } else {
-        this.loading = false
-        await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))
+        this.isLoading = false
+        if (response.data.data === 'nik_exists') {
+          this.showDuplicatedNikDialog = true
+          this.nikDuplicateMessage = response.data.message
+        } else {
+          await this.$store.dispatch('toast/errorToast', response.data.message)
+        }
       }
     },
     async handleCancel() {
