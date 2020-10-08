@@ -14,6 +14,7 @@
       >
         <v-text-field
           v-model="setDate"
+          name="date"
           :placeholder="label"
           :error-messages="errors"
           prepend-inner-icon="event"

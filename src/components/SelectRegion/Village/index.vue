@@ -6,6 +6,7 @@
     <v-autocomplete
       v-if="disabledSelect !== true"
       v-model="nameVillage"
+      name="nameVillage"
       :items="listVillage"
       :label="$t('label.select_village')"
       :error-messages="errors"

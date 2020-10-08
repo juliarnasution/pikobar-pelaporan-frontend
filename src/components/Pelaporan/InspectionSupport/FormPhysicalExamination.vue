@@ -10,6 +10,7 @@
             <ValidationProvider v-slot="{ errors }" rules="noAlphabet">
               <v-text-field
                 v-model.number="formPasien.physical_check_temperature"
+                name="physical_check_temperature"
                 class="input-append-btn"
                 :disabled="!isEdit"
                 solo-inverted
@@ -28,6 +29,7 @@
             <ValidationProvider>
               <v-text-field
                 v-model="formPasien.physical_check_blood_pressure"
+                name="physical_check_blood_pressure"
                 class="input-append-btn"
                 type="number"
                 solo-inverted
@@ -46,6 +48,7 @@
             <ValidationProvider>
               <v-text-field
                 v-model="formPasien.physical_check_pulse"
+                name="physical_check_pulse"
                 class="input-append-btn"
                 type="number"
                 solo-inverted
@@ -66,6 +69,7 @@
             <ValidationProvider>
               <v-text-field
                 v-model="formPasien.physical_check_respiration"
+                name="physical_check_respiration"
                 class="input-append-btn"
                 type="number"
                 solo-inverted
@@ -84,6 +88,7 @@
             <ValidationProvider>
               <v-text-field
                 v-model="formPasien.physical_check_height"
+                name="physical_check_height"
                 class="input-append-btn"
                 type="text"
                 solo-inverted
@@ -102,6 +107,7 @@
             <ValidationProvider>
               <v-text-field
                 v-model="formPasien.physical_check_weight"
+                name="physical_check_weight"
                 class="input-append-btn"
                 type="text"
                 solo-inverted

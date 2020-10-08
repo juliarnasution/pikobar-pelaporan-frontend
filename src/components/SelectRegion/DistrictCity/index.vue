@@ -6,6 +6,7 @@
     <v-autocomplete
       v-if="disabledDistrict !== true"
       v-model="nameDistrict"
+      name="nameDistrict"
       :items="listDistrictCity"
       :label="$t('label.select_district')"
       :error-messages="errors"
