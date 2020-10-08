@@ -9,6 +9,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-radio-group
               v-model="formPasien.current_location_type"
+              name="current_location_type"
               :error-messages="errors"
               row
               @change="handleChangeLocationNow"
@@ -25,6 +26,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-radio-group
               v-model="formPasien.is_patient_address_same"
+              name="is_patient_address_same"
               :error-messages="errors"
               row
               @change="handleChangeAccordingAddress"
@@ -40,7 +42,19 @@
           <label class="grey--text font-italic">({{ $t('label.house_address') }})</label>
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-          <address-region :district-code="formPasien.current_location_district_code" :code-district.sync="formPasien.current_location_district_code" :sub-district-code="formPasien.current_location_subdistrict_code" :code-sub-district.sync="formPasien.current_location_subdistrict_code" :village-code="formPasien.current_location_village_code" :village-name="formPasien.current_location_village_name" :code-village.sync="formPasien.current_location_village_code" :name-village.sync="formPasien.current_location_village_name" :disabled-address="false" :required-address="true" />
+          <address-region
+            name="address-region"
+            :district-code="formPasien.current_location_district_code"
+            :code-district.sync="formPasien.current_location_district_code"
+            :sub-district-code="formPasien.current_location_subdistrict_code"
+            :code-sub-district.sync="formPasien.current_location_subdistrict_code"
+            :village-code="formPasien.current_location_village_code"
+            :village-name="formPasien.current_location_village_name"
+            :code-village.sync="formPasien.current_location_village_code"
+            :name-village.sync="formPasien.current_location_village_name"
+            :disabled-address="false"
+            :required-address="true"
+          />
         </v-col>
       </v-row>
       <v-row v-if="formPasien.current_location_type === 'RUMAH'" align="center">
@@ -49,7 +63,12 @@
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider v-slot="{ errors }" rules="required">
-            <v-text-field v-model="formPasien.current_location_address" :error-messages="errors" solo-inverted />
+            <v-text-field
+              v-model="formPasien.current_location_address"
+              name="current_location_address"
+              :error-messages="errors"
+              solo-inverted
+            />
           </ValidationProvider>
         </v-col>
       </v-row>
@@ -61,6 +80,7 @@
           <ValidationProvider v-slot="{ errors }" rules="required">
             <v-autocomplete
               v-model="formPasien.current_location_address"
+              name="current_location_address"
               :items="hospitalWestJavaList"
               :error-messages="errors"
               :return-object="true"
@@ -84,6 +104,7 @@
           <ValidationProvider v-if="formPasien.current_location_type === 'others'" v-slot="{ errors }" rules="required">
             <v-autocomplete
               v-model="formPasien.current_location_address"
+              name="current_location_address"
               :items="hospitalNonWestJavaList"
               :error-messages="errors"
               :return-object="true"
@@ -107,6 +128,7 @@
           <ValidationProvider v-slot="{ errors }">
             <v-radio-group
               v-model="formPasien.there_are_symptoms"
+              name="there_are_symptoms"
               :error-messages="errors"
               row
               @change="checkSymptoms"
@@ -126,6 +148,7 @@
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <input-date-picker
+            name="first_symptom_date"
             :format-date="formatDate"
             :required="formPasien.there_are_symptoms ? true:false"
             :date-value="formPasien.first_symptom_date"
@@ -146,7 +169,7 @@
             <v-row>
               <v-col v-for="item in symptomOptions" :key="item" cols="12" sm="6" md="4">
                 <label class="material-checkbox-custom">
-                  <input v-model="formPasien.diagnosis" :value="item" type="checkbox">
+                  <input v-model="formPasien.diagnosis" name="diagnosis" :value="item" type="checkbox">
                   <span v-if="errors.length" class="error--text">{{ item }}</span>
                   <span v-else>{{ item }}</span>
                 </label>
@@ -164,7 +187,7 @@
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <ValidationProvider>
-            <v-text-field v-model="formPasien.diagnosis_other" :placeholder="$t('label.mention_other_symptoms')" solo-inverted />
+            <v-text-field v-model="formPasien.diagnosis_other" name="diagnosis_other" :placeholder="$t('label.mention_other_symptoms')" solo-inverted />
           </ValidationProvider>
         </v-col>
       </v-row>
@@ -178,7 +201,7 @@
           <v-row>
             <v-col v-for="item in additionalConditionOptions" :key="item" cols="12" sm="6" md="4">
               <label class="material-checkbox-custom">
-                <input v-model="formPasien.diseases" :value="item" type="checkbox">
+                <input v-model="formPasien.diseases" name="diseases" :value="item" type="checkbox">
                 <span v-if="errors.length" class="error--text">{{ item }}</span>
                 <span v-else>{{ item }}</span>
               </label>
@@ -192,7 +215,7 @@
       <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
       <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
         <ValidationProvider>
-          <v-text-field v-model="formPasien.diseases_other" :placeholder="$t('label.mention_other_additional_condition')" solo-inverted />
+          <v-text-field v-model="formPasien.diseases_other" name="diseases_other" :placeholder="$t('label.mention_other_additional_condition')" solo-inverted />
         </ValidationProvider>
       </v-col>
     </v-row>
@@ -204,7 +227,7 @@
         <ValidationProvider>
           <v-container>
             <v-row>
-              <v-radio-group v-model="formPasien.diagnosis_ards" row>
+              <v-radio-group v-model="formPasien.diagnosis_ards" name="diagnosis_ards" row>
                 <span v-for="(item, index) in answerList" :key="index">
                   <v-radio :label="item.text" :value="item.value" />
                 </span>
@@ -222,7 +245,7 @@
         <ValidationProvider>
           <v-container>
             <v-row>
-              <v-radio-group v-model="formPasien.diagnosis_pneumonia" row>
+              <v-radio-group v-model="formPasien.diagnosis_pneumonia" name="diagnosis_pneumonia" row>
                 <span v-for="(item, index) in answerList" :key="index">
                   <v-radio :label="item.text" :value="item.value" />
                 </span>
@@ -241,6 +264,7 @@
         <ValidationProvider>
           <v-text-field
             v-model="formPasien.other_diagnosis"
+            name="other_diagnosis"
             :placeholder="$t('label.mention_other_additional_diagnosis')"
             solo-inverted
           />
@@ -255,7 +279,11 @@
         <ValidationProvider>
           <v-container>
             <v-row>
-              <v-radio-group v-model="formPasien.is_other_diagnosisr_respiratory_disease" row>
+              <v-radio-group
+                v-model="formPasien.is_other_diagnosisr_respiratory_disease"
+                name="is_other_diagnosisr_respiratory_disease"
+                row
+              >
                 <span v-for="(item, index) in yesOrNoAnswer" :key="index">
                   <v-radio :label="item.text" :value="item.value" />
                 </span>
@@ -275,6 +303,7 @@
         <ValidationProvider>
           <v-text-field
             v-model="formPasien.other_diagnosisr_respiratory_disease"
+            name="other_diagnosisr_respiratory_disease"
             :placeholder="$t('label.state_any_other_diagnosis_etiology')"
             solo-inverted
           />
@@ -290,7 +319,7 @@
       </v-col>
       <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
         <ValidationProvider>
-          <v-radio-group v-model="formPasien.pysichal_activity" row>
+          <v-radio-group v-model="formPasien.pysichal_activity" name="pysichal_activity" row>
             <v-row v-for="itemPhysicalActivity in listPhysicalActivity" :key="itemPhysicalActivity.value">
               <v-col cols="12" md="12" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
                 <v-radio :label="itemPhysicalActivity.text" :value="itemPhysicalActivity.value" />
@@ -308,7 +337,7 @@
         <ValidationProvider>
           <v-container>
             <v-row>
-              <v-radio-group v-model="formPasien.smoking" row>
+              <v-radio-group v-model="formPasien.smoking" name="smoking" row>
                 <span v-for="(item, index) in answerList" :key="index">
                   <v-radio :label="item.text" :value="item.value" />
                 </span>
@@ -326,7 +355,7 @@
         <ValidationProvider>
           <v-container>
             <v-row>
-              <v-radio-group v-model="formPasien.consume_alcohol" row>
+              <v-radio-group v-model="formPasien.consume_alcohol" name="consume_alcohol" row>
                 <span v-for="(item, index) in answerList" :key="index">
                   <v-radio :label="item.text" :value="item.value" />
                 </span>
@@ -344,6 +373,7 @@
         <ValidationProvider v-slot="{ errors }" rules="required">
           <v-radio-group
             v-model="formPasien.status"
+            name="status"
             :error-messages="errors"
             row
             @change="handleChangeCriteria"
@@ -362,7 +392,7 @@
       </v-col>
       <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
         <ValidationProvider v-slot="{ errors }" rules="required">
-          <v-radio-group v-model="formPasien.final_result" :error-messages="errors" row>
+          <v-radio-group v-model="formPasien.final_result" name="final_result" :error-messages="errors" row>
             <v-radio
               v-if="rolesCriteria['stillQuarantine'].includes(formPasien.status)"
               :label="$t('label.still_quarantine')"
@@ -402,6 +432,7 @@
       </v-col>
       <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
         <input-date-picker
+          name="last_date_status_patient"
           :format-date="formatDate"
           :date-value="formPasien.last_date_status_patient"
           :value-date.sync="formPasien.last_date_status_patient"

@@ -59,7 +59,7 @@ function initialState() {
       is_contact_with_positive: false,
       history_notes: '',
       current_location_type: '',
-      current_hospital_id: '',
+      current_hospital_id: null,
       is_patient_address_same: false,
       current_location_address: '',
       current_location_district_code: '',

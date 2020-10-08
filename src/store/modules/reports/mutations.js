@@ -113,6 +113,7 @@ export default {
     state.formPasien.public_place_other = ''
     state.formPasien.medical_facility_date = ''
     state.formPasien.medical_facility_other = ''
+    state.formPasien.last_date_status_patient = ''
     state.formPasien.health_workers = ''
     state.formPasien.yearsOld = ''
     state.formPasien.monthsOld = ''
