@@ -1,7 +1,7 @@
 const path = require('path')
 const pkg = require('./package.json')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const glob = require('glob-all')
+// const glob = require('glob-all')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const PurgecssPlugin = require('purgecss-webpack-plugin')
