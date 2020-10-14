@@ -232,7 +232,7 @@ export default {
   async printPEForm({ commit }, id) {
     try {
       const response = await request({
-        url: `/api/cases/${id}/export-to-pe-form`,
+        url: `/api/v2/cases/${id}/export-to-pe-form`,
         method: 'GET',
         responseType: 'blob'
       })
