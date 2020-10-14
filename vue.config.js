@@ -4,20 +4,20 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const glob = require('glob-all')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const PurgecssPlugin = require('purgecss-webpack-plugin')
+// const PurgecssPlugin = require('purgecss-webpack-plugin')
 
 let plugins = [
   new MiniCssExtractPlugin({
     filename: "[name].css",
   }),
-  new PurgecssPlugin({
-    paths: glob.sync([
-      path.join(__dirname, './src/index.html'),
-      path.join(__dirname, './src/**/*.vue'),
-      path.join(__dirname, './src/**/*.js')
-    ]),
-    minify: true
-  }),
+  // new PurgecssPlugin({
+  //   paths: glob.sync([
+  //     path.join(__dirname, './src/index.html'),
+  //     path.join(__dirname, './src/**/*.vue'),
+  //     path.join(__dirname, './src/**/*.js')
+  //   ]),
+  //   minify: true
+  // }),
   new webpack.IgnorePlugin(
     /^\.\/locale$/, /moment$/
   ),
