@@ -364,6 +364,8 @@ export default {
       this.formCloseContact.contact_date = value
     },
     async onSelectCase(value) {
+      await this.$store.dispatch('closeContactCase/resetStateCloseContactCase')
+      this.disabled = false
       if (value) {
         this.isSearchParticipant = true
         this.disabled = true
