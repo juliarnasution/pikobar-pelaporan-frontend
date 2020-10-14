@@ -1,5 +1,23 @@
 const path = require('path')
 const pkg = require('./package.json')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const glob = require('glob')
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const PurgeCSS = require('purgecss/lib')
+
+let plugins = [
+  new MiniCssExtractPlugin({
+    filename: "[name].css",
+  }),
+  new Purgecss().purge({
+    content: ["**/*.html"],
+    css: ["**/*.css"],
+  }),
+  new webpack.IgnorePlugin(
+    /^\.\/locale$/, /moment$/
+  ),
+]
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -41,7 +59,8 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    plugins,
   },
   pwa: {
     workboxOptions: {
