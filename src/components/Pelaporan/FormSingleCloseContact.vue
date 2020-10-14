@@ -170,7 +170,7 @@
               <v-row align="center" class="ma-0">
                 <v-col cols="12" sm="6" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formCloseContact.address_rt" :disabled="disabled" class="input-append-btn" type="number" min="0" max="120" solo-inverted>
+                    <v-text-field v-model="formCloseContact.rt" :disabled="disabled" class="input-append-btn" type="number" min="0" max="120" solo-inverted>
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           {{ $t('label.rt') }}
@@ -181,7 +181,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formCloseContact.address_rw" :disabled="disabled" class="input-append-btn" type="number" min="0" max="120" solo-inverted>
+                    <v-text-field v-model="formCloseContact.rw" :disabled="disabled" class="input-append-btn" type="number" min="0" max="120" solo-inverted>
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           {{ $t('label.rw') }}
@@ -214,7 +214,7 @@
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
               <ValidationProvider v-slot="{ errors }" rules="required">
                 <v-select
-                  v-model="formCloseContact.relationship"
+                  v-model="formCloseContact.relation"
                   :items="listRelationships"
                   :error-messages="errors"
                   solo
@@ -227,8 +227,8 @@
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
               <ValidationProvider>
                 <v-text-field
-                  v-if="formCloseContact.relationship === 'Lainnya'"
-                  v-model="formCloseContact.relationship_other"
+                  v-if="formCloseContact.relation === 'Lainnya'"
+                  v-model="formCloseContact.relation_other"
                   :label="$t('label.mention_it')"
                   solo-inverted
                 />
@@ -274,10 +274,10 @@
               <ValidationProvider>
                 <input-date-picker
                   :format-date="formatDate"
-                  :date-value="formCloseContact.start_contact_date"
-                  :value-date.sync="formCloseContact.start_contact_date"
+                  :date-value="formCloseContact.first_contact_date"
+                  :value-date.sync="formCloseContact.first_contact_date"
                   :label="$t('label.choose_date')"
-                  @changeDate="formCloseContact.start_contact_date = $event"
+                  @changeDate="formCloseContact.first_contact_date = $event"
                 />
               </ValidationProvider>
             </v-col>
@@ -290,10 +290,10 @@
               <ValidationProvider>
                 <input-date-picker
                   :format-date="formatDate"
-                  :date-value="formCloseContact.end_contact_date"
-                  :value-date.sync="formCloseContact.end_contact_date"
+                  :date-value="formCloseContact.last_contact_date"
+                  :value-date.sync="formCloseContact.last_contact_date"
                   :label="$t('label.choose_date')"
-                  @changeDate="formCloseContact.end_contact_date = $event"
+                  @changeDate="formCloseContact.last_contact_date = $event"
                 />
               </ValidationProvider>
             </v-col>
@@ -390,8 +390,8 @@ export default {
         this.formCloseContact.address_subdistrict_name = this.formPasien.address_subdistrict_name
         this.formCloseContact.address_village_code = this.formPasien.address_village_code
         this.formCloseContact.address_village_name = this.formPasien.address_village_name
-        this.formCloseContact.address_rt = this.formPasien.rt
-        this.formCloseContact.address_rw = this.formPasien.rw
+        this.formCloseContact.rt = this.formPasien.rt
+        this.formCloseContact.rw = this.formPasien.rw
         this.formCloseContact.address_street = this.formPasien.address_street
       } else {
         this.formCloseContact.address_district_code = ''
@@ -400,8 +400,8 @@ export default {
         this.formCloseContact.address_subdistrict_name = ''
         this.formCloseContact.address_village_code = ''
         this.formCloseContact.address_village_name = ''
-        this.formCloseContact.address_rt = ''
-        this.formCloseContact.address_rw = ''
+        this.formCloseContact.rt = ''
+        this.formCloseContact.rw = ''
         this.formCloseContact.address_street = ''
       }
     }

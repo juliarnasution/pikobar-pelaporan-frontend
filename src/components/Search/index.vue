@@ -4,6 +4,7 @@
       v-model="listQuery.search"
       v-debounce:500="handleSearch"
       :label="$t('label.search')"
+      name="search"
       solo-inverted
       prepend-inner-icon="search"
     />
