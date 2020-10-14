@@ -11,13 +11,12 @@ let plugins = [
     filename: "[name].css",
   }),
   new PurgecssPlugin({
-      paths: glob.sync([
-          path.join(__dirname, './src/index.html'),
-          path.join(__dirname, './src/**/*.vue'),
-          path.join(__dirname, './src/**/*.css'),
-          path.join(__dirname, './src/**/*.js')
-      ]),
-      minify: true
+    paths: glob.sync([
+      path.join(__dirname, './src/index.html'),
+      path.join(__dirname, './src/**/*.vue'),
+      path.join(__dirname, './src/**/*.js')
+    ]),
+    minify: true
   }),
   new webpack.IgnorePlugin(
     /^\.\/locale$/, /moment$/
