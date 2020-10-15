@@ -18,7 +18,9 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
-    <v-row>
+    <v-row
+      v-show="false"
+    >
       <v-col>
         <v-skeleton-loader
           :loading="loading"
