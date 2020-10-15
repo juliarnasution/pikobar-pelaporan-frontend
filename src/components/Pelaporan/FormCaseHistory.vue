@@ -397,30 +397,25 @@
               v-if="rolesCriteria['stillQuarantine'].includes(formPasien.status)"
               :label="$t('label.still_quarantine')"
               value="5"
-              @click.prevent="uncheck('5')"
             />
             <v-radio
               v-if="rolesCriteria['stillSick'].includes(formPasien.status)"
               :label="$t('label.still_sick')"
               value="4"
-              @click.prevent="uncheck('4')"
             />
             <v-radio
               v-if="rolesCriteria['recovery'].includes(formPasien.status)"
               :label="$t('label.recovery')"
               value="1"
-              @click.prevent="uncheck('1')"
             />
             <v-radio
               v-if="rolesCriteria['discarded'].includes(formPasien.status)"
               :label="$t('label.discarded')"
               value="3"
-              @click.prevent="uncheck('3')"
             />
             <v-radio
               :label="$t('label.dead')"
               value="2"
-              @click.prevent="uncheck('2')"
             />
           </v-radio-group>
         </ValidationProvider>
@@ -511,13 +506,6 @@ export default {
     onSelectHospital(value) {
       this.formPasien.current_hospital_id = value._id
       this.formPasien.current_location_address = value.name
-    },
-    uncheck(value) {
-      if (value === this.formPasien.final_result) {
-        this.formPasien.final_result = ''
-      } else {
-        this.formPasien.final_result = value
-      }
     },
     handleChangeCriteria() {
       this.formPasien.final_result = ''

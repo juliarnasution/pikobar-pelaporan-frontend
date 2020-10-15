@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="showFormAddCloseContact"
-    :fullscreen="$vuetify.breakpoint.xs"
+    :fullscreen="$vuetify.mobileBreakpoint"
     max-width="90%"
   >
     <v-card>

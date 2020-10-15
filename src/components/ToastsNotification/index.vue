@@ -11,14 +11,17 @@
     >
       mdi-bell-plus
     </v-icon>
-    <div>{{ message }}</div>
-    <v-icon
-      size="16"
-      class="icon-close-toast"
-      @click="closeToast"
-    >
-      mdi-close-circle
-    </v-icon>
+    {{ message }}
+    <template v-slot:action="{ attrs }">
+      <v-icon
+        size="16"
+        class="icon-close-toast"
+        v-bind="attrs"
+        @click="closeToast"
+      >
+        mdi-close-circle
+      </v-icon>
+    </template>
   </v-snackbar>
 </template>
 
