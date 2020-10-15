@@ -163,6 +163,19 @@ export default {
       return error.response
     }
   },
+  async exportExcelHistory({ commit }, params) {
+    try {
+      const response = await request({
+        url: `/api/history-export`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async exportExcelDailyReport({
     commit
   }, params) {
