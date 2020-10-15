@@ -11,17 +11,18 @@
           rules="required"
         >
           <v-autocomplete
-            v-model="formReferral.case_id"
             :items="caseList"
             :error-messages="errors"
             :loading="isCaseLoading"
             :search-input.sync="searchCase"
             menu-props="auto"
+            return-object
             item-text="name"
             item-value="_id"
             single-line
             solo
             autocomplete
+            @change="handleChangeCase"
           >
             <template v-slot:selection="data">
               {{ getNameCase(data.item.nik, data.item.name, data.item.phone_number) }}
@@ -96,8 +97,10 @@ export default {
     async searchCase(value) {
       this.isCaseLoading = true
       this.queryCase.search = value
-      const response = await this.$store.dispatch('reports/listReportCase', this.queryCase)
-      this.caseList = response.data.cases
+      if (value) {
+        const response = await this.$store.dispatch('reports/listReportCase', this.queryCase)
+        this.caseList = response.data.cases
+      }
       this.isCaseLoading = false
     },
     async searchUnit(value) {
@@ -124,6 +127,9 @@ export default {
       if (name) nameCase += name
       if (phone_number) nameCase += ' / ' + phone_number
       return nameCase
+    },
+    handleChangeCase(value) {
+      this.formReferral.case_id = value._id
     }
   }
 }
