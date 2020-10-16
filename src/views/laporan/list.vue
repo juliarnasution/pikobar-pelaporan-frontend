@@ -2,6 +2,7 @@
 <template>
   <div>
     <v-skeleton-loader
+      v-show="false"
       :loading="loading"
       type="article"
     >
