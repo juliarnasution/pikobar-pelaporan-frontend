@@ -170,6 +170,7 @@
         />
       </v-col>
     </v-row>
+    <recap-status />
   </v-container>
 </template>
 
