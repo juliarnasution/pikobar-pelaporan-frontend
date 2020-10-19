@@ -171,6 +171,7 @@
       </v-col>
     </v-row>
     <recap-status />
+    <recap-demographic />
   </v-container>
 </template>
 
