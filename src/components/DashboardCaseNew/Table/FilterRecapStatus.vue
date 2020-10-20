@@ -32,8 +32,26 @@
       </v-col>
       <v-col>
         <v-row>
-          <v-col><v-btn color="#27AE60" outlined block>Unduh .XLS</v-btn></v-col>
-          <v-col><v-btn color="#27AE60" outlined block>Unduh .PNG</v-btn></v-col>
+          <v-col>
+            <v-btn
+              color="#27AE60"
+              outlined
+              block
+            >
+              {{ $t('label.export_xls') }}
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn
+              color="#27AE60"
+              outlined
+              block
+              :loading="isLoading"
+              @click="handlePrint"
+            >
+              {{ $t('label.export_png') }}
+            </v-btn>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -44,7 +62,7 @@
           :class="params.criteria === 'CONFIRMATION' ? '':'primary--text'"
           @click="changeButtonStatus('CONFIRMATION')"
         >
-          Terkonfirmasi
+          {{ $t('label.confirmed') }}
         </v-btn>
       </v-col>
       <v-col>
@@ -53,7 +71,7 @@
           :class="params.criteria === 'PROBABLE' ? '':'primary--text'"
           @click="changeButtonStatus('PROBABLE')"
         >
-          Probable
+          {{ $t('label.probable') }}
         </v-btn>
       </v-col>
       <v-col>
@@ -62,7 +80,7 @@
           :class="params.criteria === 'SUSPECT' ? '':'primary--text'"
           @click="changeButtonStatus('SUSPECT')"
         >
-          Suspek
+          {{ $t('label.suspect') }}
         </v-btn>
       </v-col>
       <v-col>
@@ -71,7 +89,7 @@
           :class="params.criteria === 'CLOSECONTACT' ? '':'primary--text'"
           @click="changeButtonStatus('CLOSECONTACT')"
         >
-          Kontak Erat
+          {{ $t('label.tight_contact') }}
         </v-btn>
       </v-col>
       <v-col />
@@ -88,6 +106,14 @@ export default {
     params: {
       type: Object,
       default: null
+    },
+    handlePrint: {
+      type: Function,
+      default: null
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -103,7 +129,7 @@ export default {
       'district_name_user'
     ])
   },
-  mounted() {
+  created() {
     if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
       this.params.address_district_code = this.district_user
       this.disabledDistrict = true

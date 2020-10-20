@@ -4,7 +4,7 @@
     :items="listRecapCase"
     :mobile-breakpoint="NaN"
     :no-data-text="$t('label.data_empty')"
-    :items-per-page="10"
+    :items-per-page="100"
     hide-default-footer
   >
     <template v-slot:item="{ item, index }">

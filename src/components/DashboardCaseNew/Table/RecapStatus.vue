@@ -18,11 +18,15 @@
         <v-container>
           <v-card>
             <v-card-title>
-              <h3>Rekap Kontak Erat, Suspek, Probable & Terkonfirmasi</h3>
+              <h3>{{ $t('label.recap_close_suspect_possible_confirmed_contacts') }}</h3>
             </v-card-title>
             <v-divider class="ma-0" />
-            <filter-recap-status class="ma-4" :params="params" />
-            <v-row v-if="item === 'Ringkasan'">
+            <filter-recap-status
+              class="ma-4"
+              :params="params"
+              :is-loading="isLoading"
+            />
+            <v-row v-if="item === items[0]">
               <v-col>
                 <v-card class="ma-4">
                   <table-recap-case
@@ -33,22 +37,15 @@
             </v-row>
             <v-row v-else>
               <v-col>
-                <v-list class="ma-0" style="overflow-y: scroll;max-height: 500px;">
-                  <v-list-item-group class="ma-0">
-                    <v-list-item
-                      v-for="data in dataVisualization"
-                      :key="data._id"
-                    >
-                      <v-list-item-title style="max-width: 150px;" v-text=" data._id" />
-                      <v-list-item-title>
-                        <progress-bar-case
-                          :loading="false"
-                          :data="data"
-                        />
-                      </v-list-item-title>
-                    </v-list-item>
-                  </v-list-item-group>
-                </v-list>
+                <chart-status-case
+                  :tab-active="tabActive"
+                  :list-area="listArea"
+                  :list-confirmation="listConfirmation"
+                  :list-probable="listProbable"
+                  :list-suspect="listSuspect"
+                  :list-close-contact="listCloseContact"
+                  :is-loading="isLoading"
+                />
               </v-col>
             </v-row>
           </v-card>
@@ -64,15 +61,22 @@ export default {
   data() {
     return {
       tab: null,
+      isLoading: false,
       items: [
         'Ringkasan', 'Visualisasi Data'
       ],
+      tabActive: 'all',
       dataVisualization: {},
       params: {
         start_date: '',
         criteria: 'CONFIRMATION'
       },
-      listSummaryCase: []
+      listSummaryCase: [],
+      listArea: [],
+      listConfirmation: [],
+      listProbable: [],
+      listSuspect: [],
+      listCloseContact: []
     }
   },
   watch: {
@@ -93,10 +97,17 @@ export default {
   },
   methods: {
     async getVisualizationCase() {
+      this.isLoading = true
       const res = await this.$store.dispatch('statistic/agregateVisualizationCase', this.params)
       if (res.data) {
         this.dataVisualization = res.data[0].visualization
+        this.listArea = res.data[0].visualization.map(({ _id }) => _id)
+        this.listConfirmation = res.data[0].visualization.map(({ confirmed }) => confirmed)
+        this.listProbable = res.data[0].visualization.map(({ probable }) => probable)
+        this.listSuspect = res.data[0].visualization.map(({ suspect }) => suspect)
+        this.listCloseContact = res.data[0].visualization.map(({ closecontact }) => closecontact)
       }
+      this.isLoading = false
     },
     async getAgregateSummaryCase() {
       const res = await this.$store.dispatch('statistic/agregateSummaryCase', this.params)
