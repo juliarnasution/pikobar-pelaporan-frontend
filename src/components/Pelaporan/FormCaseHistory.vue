@@ -514,7 +514,7 @@ export default {
       if (value === 'RUMAH') {
         this.formPasien.current_location_address = ''
       } else {
-        this.formPasien.current_hospital_id = ''
+        this.formPasien.current_hospital_id = null
         this.formPasien.current_location_address = ''
         this.formPasien.current_location_district = ''
         this.formPasien.current_location_subdistrict = ''
