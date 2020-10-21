@@ -150,7 +150,7 @@ export default {
       return error.response
     }
   },
-  async exportExcel({ commit }, params) {
+  async exportExcelCase({ commit }, params) {
     try {
       const response = await request({
         url: `/api/cases-export`,
