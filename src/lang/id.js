@@ -326,6 +326,8 @@ export default {
     export_png: 'Unduh PNG',
     export_xls: 'Unduh Excel',
     export_data: 'Ekspor Data',
+    export_patient_data: 'Ekspor Data Pasien',
+    export_clinical_history: 'Ekspor Riwayat Klinis',
     minutes: 'Menit',
     hours: 'Jam',
     verification_info: 'Data akan otomatis terverifikasi jika dalam 24 jam tidak ada aksi',

@@ -123,16 +123,33 @@
             </v-icon>
             {{ $t('label.import') }}
           </v-btn> -->
-          <v-btn
-            class="btn-import-export mr-2 float-right"
-            color="#27AE60"
-            block
-            outlined
-            @click="onExport"
-          >
-            <v-icon left>mdi-upload</v-icon>
-            {{ $t('label.export') }}
-          </v-btn>
+          <v-card-actions class="ma-0 float-right">
+            <v-menu
+              :close-on-content-click="false"
+              offset-y
+            >
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  color="#27AE60"
+                  class="btn-import-export"
+                  tile
+                  outlined
+                  v-on="on"
+                >
+                  <v-icon left>mdi-upload</v-icon>
+                  {{ $t('label.export') }}
+                </v-btn>
+              </template>
+              <v-card>
+                <v-list-item @click="onExportCase">
+                  {{ $t('label.export_patient_data') }}
+                </v-list-item>
+                <v-list-item @click="onExportHistoryCase">
+                  {{ $t('label.export_clinical_history') }}
+                </v-list-item>
+              </v-card>
+            </v-menu>
+          </v-card-actions>
         </v-col>
         <v-col>
           <v-btn
@@ -518,10 +535,16 @@ export default {
         this.totalCloseCase = response.data.closeContact
       }
     },
-    async onExport() {
+    async onExportCase() {
+      const response = await this.$store.dispatch('reports/exportExcelCase', this.listQuery)
+      const dateNow = Date.now()
+      const fileName = `Data Pasien ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      FileSaver.saveAs(response, fileName)
+    },
+    async onExportHistoryCase() {
       const response = await this.$store.dispatch('reports/exportExcelHistory', this.listQuery)
       const dateNow = Date.now()
-      const fileName = `Data Kasus ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      const fileName = `Data Riwayat Klinis ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
     },
     getAge(value) {
