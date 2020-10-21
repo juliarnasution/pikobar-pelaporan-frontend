@@ -25,13 +25,16 @@
               class="ma-4"
               :params="params"
               :is-loading="isLoading"
+              :handle-print="handlePrintPNG"
             />
             <v-row v-if="item === items[0]">
               <v-col>
                 <v-card class="ma-4">
-                  <table-recap-case
-                    :list-recap-case="listSummaryCase"
-                  />
+                  <div id="printSummaryTable">
+                    <table-recap-case
+                      :list-recap-case="listSummaryCase"
+                    />
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
@@ -55,6 +58,8 @@
   </div>
 </template>
 <script>
+import FileSaver from 'file-saver'
+import { formatDatetime } from '@/utils/parseDatetime'
 
 export default {
   name: 'RecapStatus',
@@ -114,6 +119,23 @@ export default {
       if (res.data) {
         this.listSummaryCase = res.data[0].summary
       }
+    },
+    async handlePrintPNG() {
+      this.isLoading = true
+      let el
+      if (this.tab === 0) {
+        el = document.querySelector('#printSummaryTable')
+      } else {
+        el = document.querySelector('#horizontalbar-chart')
+      }
+      const dateNow = Date.now()
+      const filename = `${this.$t('label.recap_close_suspect_possible_confirmed_contacts')} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.png`
+      const options = {
+        type: 'dataURL'
+      }
+      const output = await this.$html2canvas(el, options)
+      await FileSaver.saveAs(output, filename)
+      this.isLoading = false
     }
   }
 }
