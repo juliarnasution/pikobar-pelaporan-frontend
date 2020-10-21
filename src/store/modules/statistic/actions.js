@@ -122,5 +122,25 @@ export default {
     } catch (error) {
       return error.response
     }
+  },
+  async agregateSummaryCase({
+    commit
+  }, params) {
+    try {
+      const response = await requestServer('/api/dashboard/v2/summary-case', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async agregateVisualizationCase({
+    commit
+  }, params) {
+    try {
+      const response = await requestServer('/api/dashboard/v2/visualization-case', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
   }
 }
