@@ -199,7 +199,7 @@ function initialState() {
       history_notes: '',
       report_source: '',
       current_location_type: '',
-      current_hospital_id: '',
+      current_hospital_id: null,
       current_location_address: '',
       current_location_district_code: '',
       current_location_subdistrict_code: '',
