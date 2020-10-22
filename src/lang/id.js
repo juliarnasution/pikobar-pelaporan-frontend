@@ -791,7 +791,7 @@ export default {
     date_last_status: 'Tanggal Update Status Terakhir',
     patient_condition_update: 'Update Kondisi Pasien',
     data_transmission_type_and_cluster_type: 'Data jenis transmisi dan jenis klaster',
-    recap_close_suspect_possible_confirmed_contacts: 'Rekap Kontak Erat, Suspek, Kemungkinan & Terkonfirmasi',
+    recap_close_suspect_possible_confirmed_contacts: 'Rekap Kontak Erat, Suspek, Probable & Terkonfirmasi',
     there_symptoms: 'Terdapat Gejala',
     comparison: 'Perbandingan',
     demographic_recap: 'Rekap Demografis',
