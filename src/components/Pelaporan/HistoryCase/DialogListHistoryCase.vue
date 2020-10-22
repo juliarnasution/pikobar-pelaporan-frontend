@@ -1,11 +1,15 @@
 <template>
-  <v-dialog v-model="show" :fullscreen="$vuetify.breakpoint.xs" max-width="90%">
-    <v-skeleton-loader
-      :loading="isLoading"
-      type="table-tbody"
+  <v-row justify="center">
+    <v-dialog
+      v-model="show"
+      :fullscreen="$vuetify.breakpoint.xs"
+      max-width="90%"
     >
-      <v-card>
-        <v-container>
+      <v-skeleton-loader
+        :loading="isLoading"
+        type="table-tbody"
+      >
+        <v-card>
           <v-card-title :class="{'subtitle-1': $vuetify.breakpoint.xs}">
             {{ titleDetail }}
             <v-spacer />
@@ -19,7 +23,7 @@
           />
           <v-card
             min-height="100"
-            class="mx-auto mt-2 border-card"
+            class="ml-6 mr-6 mt-2 border-card"
             @click="handleCreate"
           >
             <v-container
@@ -39,7 +43,7 @@
               </v-row>
             </v-container>
           </v-card>
-          <v-row class="mb-3">
+          <v-row class="ml-3 mr-3 mb-3">
             <v-col>
               <v-btn
                 color="#FFFFFF"
@@ -50,25 +54,25 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-container>
-      </v-card>
-    </v-skeleton-loader>
-    <dialog-update-history-case
-      :show-dialog="showFormHistoryCase"
-      :show.sync="showFormHistoryCase"
-      :is-edit="isEditHistoryCase"
-      :edit.sync="isEditHistoryCase"
-      :form-riwayat-pasien="formRiwayatPasien"
-      :form-pasien="detailCase"
-    />
-    <dialog-delete
-      :dialog="dialogDelete"
-      :dialog-delete.sync="dialogDelete"
-      :data-deleted="dataDelete"
-      :delete-date.sync="dataDelete"
-      :store-path-delete="`reports/deleteHistoryCase`"
-    />
-  </v-dialog>
+        </v-card>
+      </v-skeleton-loader>
+      <dialog-update-history-case
+        :show-dialog="showFormHistoryCase"
+        :show.sync="showFormHistoryCase"
+        :is-edit="isEditHistoryCase"
+        :edit.sync="isEditHistoryCase"
+        :form-riwayat-pasien="formRiwayatPasien"
+        :form-pasien="detailCase"
+      />
+      <dialog-delete
+        :dialog="dialogDelete"
+        :dialog-delete.sync="dialogDelete"
+        :data-deleted="dataDelete"
+        :delete-date.sync="dataDelete"
+        :store-path-delete="`reports/deleteHistoryCase`"
+      />
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'

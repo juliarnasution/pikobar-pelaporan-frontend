@@ -4,6 +4,23 @@
       <v-icon>mdi-arrow-left</v-icon>
       {{ $t('label.back') }}
     </v-row>
+    <v-row v-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="mx-0 mt-2 mb-2">
+      <div class="rejection py-2 px-7">
+        <v-row justify="start">
+          <v-col cols="12" sm="1">
+            <v-icon x-large color="#EB5757">mdi-alert-circle</v-icon>
+          </v-col>
+          <v-col cols="12" sm="11">
+            <v-row>
+              <span class="font-weight-bold">{{ $t('label.rejection_note') }}</span>
+            </v-row>
+            <v-row class="mt-1">
+              <span>"{{ detail.verified_comment }}"</span>
+            </v-row>
+          </v-col>
+        </v-row>
+      </div>
+    </v-row>
     <v-card class="pa-1 mt-2 mx-auto header-survey-list">
       <v-row justify="space-between">
         <v-col cols="12" md="8" sm="8">
@@ -17,7 +34,23 @@
           </v-card-text>
         </v-col>
         <v-col cols="12" md="4" sm="4">
-          <div class="background-card ml-12" />
+          <div
+            v-if="detail.verified_status === 'declined' & roles[0] === 'faskes'"
+            class="d-flex align-center justify-center pa-5 mx-auto"
+          >
+            <v-btn class="primary--text" @click="handleResendVerificationCase">
+              {{ $t('label.resend_data_case_fixed') }}
+            </v-btn>
+          </div>
+          <div v-else-if="detail.verified_status === 'pending' & roles[0] != 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
+            <v-btn class="primary--text" @click="handleVerificationCase">
+              {{ $t('label.case_report_verification') }}
+            </v-btn>
+          </div>
+          <div
+            v-else
+            class="background-card ml-12"
+          />
         </v-col>
       </v-row>
     </v-card>
@@ -294,18 +327,37 @@
       :case-id.sync="idCase"
       :title-detail="$t('label.list_inspection_support')"
     />
+    <verification-form
+      :show-form="showVerificationForm"
+      :show.sync="showVerificationForm"
+      :show-confirmation.sync="showConfirmation"
+      :case-data="detail"
+      :last-case-data="lastHistoryCase"
+      :close-contact-case="listCloseContact"
+      :query-data="verificationQuery"
+      :refresh-page.sync="isRefresh"
+    />
+    <verification-confirmation
+      :show-dialog="showConfirmation"
+      :show.sync="showConfirmation"
+      :query-data="verificationQuery"
+      :submit-data.sync="isSubmit"
+    />
   </div>
 </template>
 
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'
 import { setUpDataCase2 } from '@/utils/utilsFunction'
+import { ResponseRequest } from '@/utils/constantVariable'
+
 import { mapGetters } from 'vuex'
 export default {
   name: 'DetailReportCase',
   data() {
     return {
       detail: {},
+      lastHistoryCase: {},
       idCase: '',
       idUniqueCase: '',
       formatDate: 'YYYY/MM/DD',
@@ -321,6 +373,15 @@ export default {
         status_travel_local: 0,
         status_travel_public: 0
       },
+      verificationQuery: {
+        'id': '',
+        'data': {
+          'verified_status': '',
+          'verified_comment': ''
+        }
+      },
+      showVerificationForm: false,
+      showConfirmation: false,
       isStatusHistoryTravel: false,
       dialogUpdateCase: false,
       dialogHistoryCase: false,
@@ -330,7 +391,9 @@ export default {
       dialogInspectionSupport: false,
       dialogContactFactor: false,
       dialogPublicPlace: false,
-      dialogTransmissionPattern: false
+      dialogTransmissionPattern: false,
+      isRefresh: false,
+      isSubmit: false
     }
   },
   computed: {
@@ -351,8 +414,25 @@ export default {
         this.getStatusCase(this.$route.params.id)
       }
     },
+    async isSubmit(value) {
+      if (value) {
+        const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
+        if (response.status === 200 || response.status === 201) {
+          this.detailCase()
+          await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
+        }
+        this.isSubmit = false
+      }
+    },
+    isRefresh(value) {
+      if (value) {
+        this.detailCase()
+        this.isRefresh = false
+      }
+    },
     'dialogUpdateCase': function(value) {
       if (!value) {
+        this.detailCase()
         this.getStatusCase(this.$route.params.id)
       }
     },
@@ -407,6 +487,7 @@ export default {
           this.detail.yearsOld = Math.floor(response.data.age)
           this.detail.monthsOld = Math.ceil((response.data.age - Math.floor(response.data.age)) * 12)
         }
+        this.lastHistoryCase = this.detail['last_history']
         if (this.detail._id) {
           delete this.detail['author']
           delete this.detail['createdAt']
@@ -449,6 +530,24 @@ export default {
         this.isStatusHistoryTravel = true
       } else {
         this.isStatusHistoryTravel = false
+      }
+    },
+    handleVerificationCase() {
+      this.getListCloseContactByCase(this.$route.params.id)
+      this.showVerificationForm = true
+    },
+    async handleResendVerificationCase() {
+      const data = {
+        id: this.$route.params.id,
+        data: this.detail
+      }
+      const response = await this.$store.dispatch('reports/correctCaseReport', data)
+      if (response.status !== ResponseRequest.UNPROCESSABLE) {
+        await this.$store.dispatch('toast/successToast', this.$t('success.send_data_success'))
+        await this.$store.dispatch('reports/resetFormPasien')
+        await this.$router.push('/laporan/verification')
+      } else {
+        await this.$store.dispatch('toast/errorToast', response.data.message)
       }
     },
     handleHistoryTravel() {

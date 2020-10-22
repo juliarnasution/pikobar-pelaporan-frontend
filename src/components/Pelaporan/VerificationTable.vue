@@ -99,16 +99,7 @@
                       v-else
                       @click="handleDetail(item._id)"
                     >
-                      {{ $t('label.view_case_detail') }}
-                    </v-list-item>
-                    <v-list-item v-if="item.verified_status !== 'declined'" @click="handleEditCase(item._id)">
-                      {{ $t('label.change_patent_data') }}
-                    </v-list-item>
-                    <v-list-item @click="handleCloseContact(item._id, item.id_case)">
-                      {{ $t('label.see_closely_contact') }}
-                    </v-list-item>
-                    <v-list-item v-if="item.verified_status !== 'declined'" @click="handleEditHistoryCase(item._id)">
-                      {{ $t('label.update_history') }}
+                      {{ $t('label.view_detail') }}
                     </v-list-item>
                     <v-list-item @click="handleDeleteCase(item)">
                       <span class="delete">{{ $t('label.delete_case') }}</span>
@@ -116,7 +107,7 @@
                   </div>
                   <div v-else>
                     <v-list-item @click="handleDetail(item._id)">
-                      {{ $t('label.verification_process') }}
+                      {{ $t('label.view_detail') }}
                     </v-list-item>
                   </div>
                 </v-card>
@@ -249,18 +240,18 @@ export default {
       // output otomatis mengeluarkan kalimat waktu. Contoh: dalam 3 jam
       return (maxVerifiedDate > now) ? now.to(maxVerifiedDate) : '-'
     },
-    async handleDetail(id) {
-      this.$emit('update:verificationQuery', this.verificationQuery)
-      const response = await this.$store.dispatch('reports/detailReportCase', id)
-      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-      if (response.data.verified_status === 'verified') {
-        this.$emit('update:showFailedDialog', true)
-      } else {
-        this.$emit('update:caseDetail', response.data)
-        this.$emit('update:closeContactDetail', responseCloseContact.data)
-        this.$emit('update:showVerificationForm', true)
-      }
-    },
+    // async handleDetail(id) {
+    //   this.$emit('update:verificationQuery', this.verificationQuery)
+    //   const response = await this.$store.dispatch('reports/detailReportCase', id)
+    //   const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+    //   if (response.data.verified_status === 'verified') {
+    //     this.$emit('update:showFailedDialog', true)
+    //   } else {
+    //     this.$emit('update:caseDetail', response.data)
+    //     this.$emit('update:closeContactDetail', responseCloseContact.data)
+    //     this.$emit('update:showVerificationForm', true)
+    //   }
+    // },
     async handleCorrectCaseReport(id) {
       await this.$router.push(`/laporan/correct-case-report/${id}`)
     },
@@ -315,6 +306,9 @@ export default {
       } else {
         return true
       }
+    },
+    handleDetail(id) {
+      this.$router.push(`/laporan/detail-report/${id}`)
     },
     getAge(value) {
       const yearsOld = Math.floor(value)

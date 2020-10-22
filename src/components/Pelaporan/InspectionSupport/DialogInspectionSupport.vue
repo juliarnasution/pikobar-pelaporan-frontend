@@ -1,15 +1,15 @@
 <template>
-  <v-dialog
-    v-model="show"
-    :fullscreen="$vuetify.breakpoint.xs"
-    max-width="90%"
-  >
-    <v-skeleton-loader
-      :loading="isLoading"
-      type="table-tbody"
+  <v-row justify="center">
+    <v-dialog
+      v-model="show"
+      :fullscreen="$vuetify.breakpoint.xs"
+      max-width="90%"
     >
-      <v-card>
-        <v-container>
+      <v-skeleton-loader
+        :loading="isLoading"
+        type="table-tbody"
+      >
+        <v-card>
           <v-card-title :class="{'subtitle-1': $vuetify.breakpoint.xs}">
             {{ titleDetail }}
             <v-spacer />
@@ -23,7 +23,7 @@
           />
           <v-card
             min-height="100"
-            class="mx-auto mt-2 border-card"
+            class="mx-auto ml-6 mr-6 mt-2 border-card"
             @click="handleCreate"
           >
             <v-container
@@ -43,7 +43,7 @@
               </v-row>
             </v-container>
           </v-card>
-          <v-row class="mb-3">
+          <v-row class="ml-3 mr-3 mb-3">
             <v-col>
               <v-btn
                 color="#FFFFFF"
@@ -54,25 +54,25 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-container>
-      </v-card>
-    </v-skeleton-loader>
-    <dialog-form-inspection-support
-      :show-dialog-add-inspection-support="showFormInspectionSupport"
-      :show-form-add-inspection-support.sync="showFormInspectionSupport"
-      :title-detail="isEditInspectionSupport ? $t('label.edit_inspection_support'):$t('label.input_inspection_support')"
-      :form-data.sync="formBody"
-      :is-edit.sync="isEditInspectionSupport"
-      :id-case="idCase"
-    />
-    <dialog-delete
-      :dialog="dialogDelete"
-      :dialog-delete.sync="dialogDelete"
-      :data-deleted="dataDelete"
-      :delete-date.sync="dataDelete"
-      :store-path-delete="`inspectionSupport/deleteInspectionSupport`"
-    />
-  </v-dialog>
+        </v-card>
+      </v-skeleton-loader>
+      <dialog-form-inspection-support
+        :show-dialog-add-inspection-support="showFormInspectionSupport"
+        :show-form-add-inspection-support.sync="showFormInspectionSupport"
+        :title-detail="isEditInspectionSupport ? $t('label.edit_inspection_support'):$t('label.input_inspection_support')"
+        :form-data.sync="formBody"
+        :is-edit.sync="isEditInspectionSupport"
+        :id-case="idCase"
+      />
+      <dialog-delete
+        :dialog="dialogDelete"
+        :dialog-delete.sync="dialogDelete"
+        :data-deleted="dataDelete"
+        :delete-date.sync="dataDelete"
+        :store-path-delete="`inspectionSupport/deleteInspectionSupport`"
+      />
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
