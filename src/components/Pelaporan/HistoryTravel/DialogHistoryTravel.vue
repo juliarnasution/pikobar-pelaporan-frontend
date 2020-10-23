@@ -1,11 +1,11 @@
 <template>
-  <v-dialog v-model="show" max-width="90%">
-    <v-skeleton-loader
-      :loading="isLoading"
-      type="table-tbody"
-    >
-      <v-card>
-        <v-container>
+  <v-row justify="center">
+    <v-dialog v-model="show" max-width="90%">
+      <v-skeleton-loader
+        :loading="isLoading"
+        type="table-tbody"
+      >
+        <v-card>
           <v-card-title :class="{'subtitle-1': $vuetify.breakpoint.xs}">
             {{ titleDetail }}
             <v-spacer />
@@ -50,25 +50,25 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-container>
-      </v-card>
-    </v-skeleton-loader>
-    <dialog-form-history-travel
-      :show-dialog-add-history-travel="showFormHistoryTravel"
-      :show-form-add-history-travel.sync="showFormHistoryTravel"
-      :title-detail="isEditHistoryTravel ? $t('label.edit_history'):$t('label.input_history')"
-      :form-data.sync="formBody"
-      :is-edit.sync="isEditHistoryTravel"
-      :id-case="idCase"
-    />
-    <dialog-delete
-      :dialog="dialogDelete"
-      :dialog-delete.sync="dialogDelete"
-      :data-deleted="dataDelete"
-      :delete-date.sync="dataDelete"
-      :store-path-delete="`historyTravel/deleteHistoryTravel`"
-    />
-  </v-dialog>
+        </v-card>
+      </v-skeleton-loader>
+      <dialog-form-history-travel
+        :show-dialog-add-history-travel="showFormHistoryTravel"
+        :show-form-add-history-travel.sync="showFormHistoryTravel"
+        :title-detail="isEditHistoryTravel ? $t('label.edit_history'):$t('label.input_history')"
+        :form-data.sync="formBody"
+        :is-edit.sync="isEditHistoryTravel"
+        :id-case="idCase"
+      />
+      <dialog-delete
+        :dialog="dialogDelete"
+        :dialog-delete.sync="dialogDelete"
+        :data-deleted="dataDelete"
+        :delete-date.sync="dataDelete"
+        :store-path-delete="`historyTravel/deleteHistoryTravel`"
+      />
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'

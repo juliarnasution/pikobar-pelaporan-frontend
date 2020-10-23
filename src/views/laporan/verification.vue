@@ -19,7 +19,7 @@
       </v-row>
     </v-card>
     <v-card outlined>
-      <v-container>
+      <div class="ma-4">
         <v-row class="filter-row mt-5" justify="center">
           <v-col cols="12">
             <v-text-field
@@ -103,7 +103,7 @@
             </v-row>
           </v-col>
         </v-row>
-      </v-container>
+      </div>
       <v-row class="mx-0 mt-5">
         <v-tabs
           v-model="tab"
@@ -135,6 +135,7 @@
       </v-row>
     </v-card>
     <pagination
+      class="mt-10"
       :total="totalList"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"

@@ -1,23 +1,23 @@
 <template>
-  <v-dialog
-    v-model="show"
-    :fullscreen="$vuetify.breakpoint.xs"
-    max-width="90%"
-  >
-    <v-card>
-      <v-card-title>
-        {{ $t('label.identity') }}
-        <v-spacer />
-        <v-icon @click="show = false">mdi-close</v-icon>
-      </v-card-title>
-      <v-divider />
-      <v-container>
+  <v-row justify="center">
+    <v-dialog
+      v-model="show"
+      :fullscreen="$vuetify.breakpoint.xs"
+      max-width="90%"
+    >
+      <v-card>
+        <v-card-title>
+          {{ $t('label.identity') }}
+          <v-spacer />
+          <v-icon @click="show = false">mdi-close</v-icon>
+        </v-card-title>
+        <v-divider />
         <ValidationObserver ref="observer">
           <v-form
             ref="form"
             lazy-validation
           >
-            <v-row>
+            <v-row class="ml-2 mr-2">
               <v-col auto>
                 <v-expansion-panels
                   v-model="volunteerPanel"
@@ -35,7 +35,7 @@
                 </v-expansion-panels>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="ml-2 mr-2">
               <v-col auto>
                 <v-expansion-panels
                   v-model="patientPanel"
@@ -81,14 +81,14 @@
             </v-container>
           </v-form>
         </ValidationObserver>
-      </v-container>
-    </v-card>
-    <dialog-duplicated-nik
-      :show-dialog="showDuplicatedNikDialog"
-      :show.sync="showDuplicatedNikDialog"
-      :content="nikDuplicateMessage"
-    />
-  </v-dialog>
+      </v-card>
+      <dialog-duplicated-nik
+        :show-dialog="showDuplicatedNikDialog"
+        :show.sync="showDuplicatedNikDialog"
+        :content="nikDuplicateMessage"
+      />
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'

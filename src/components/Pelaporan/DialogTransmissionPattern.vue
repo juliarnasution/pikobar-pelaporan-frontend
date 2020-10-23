@@ -1,49 +1,51 @@
 <template>
-  <v-dialog
-    v-model="show"
-    :fullscreen="$vuetify.breakpoint.xs"
-    max-width="90%"
-  >
-    <v-card>
-      <v-card-title>
-        {{ $t('label.transmission_pattern') }}
-        <v-spacer />
-        <v-icon @click="show = false">mdi-close</v-icon>
-      </v-card-title>
-      <v-divider />
-      <v-container>
-        <ValidationObserver ref="observer">
-          <form-transmission-pattern :form-pasien="formPasien" />
-        </ValidationObserver>
-        <v-container fluid>
-          <v-row>
-            <v-col>
-              <v-btn
-                :loading="isLoading"
-                bottom
-                block
-                @click="handleCancel"
-              >
-                {{ $t('label.close') }}
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn
-                :loading="isLoading"
-                class="ml-2"
-                color="success"
-                bottom
-                block
-                @click="handleUpdate"
-              >
-                {{ $t('label.save') }}
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-container>
-    </v-card>
-  </v-dialog>
+  <v-row justify="center">
+    <v-dialog
+      v-model="show"
+      :fullscreen="$vuetify.breakpoint.xs"
+      max-width="90%"
+    >
+      <v-card>
+        <v-card-title>
+          {{ $t('label.transmission_pattern') }}
+          <v-spacer />
+          <v-icon @click="show = false">mdi-close</v-icon>
+        </v-card-title>
+        <v-divider />
+        <v-row class="ma-3">
+          <ValidationObserver ref="observer">
+            <form-transmission-pattern :form-pasien="formPasien" />
+          </ValidationObserver>
+          <v-container fluid>
+            <v-row>
+              <v-col>
+                <v-btn
+                  :loading="isLoading"
+                  bottom
+                  block
+                  @click="handleCancel"
+                >
+                  {{ $t('label.close') }}
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn
+                  :loading="isLoading"
+                  class="ml-2"
+                  color="success"
+                  bottom
+                  block
+                  @click="handleUpdate"
+                >
+                  {{ $t('label.save') }}
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-row>
+      </v-card>
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'

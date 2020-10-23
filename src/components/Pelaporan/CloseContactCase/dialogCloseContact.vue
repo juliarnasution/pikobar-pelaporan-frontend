@@ -1,22 +1,22 @@
 <template>
-  <v-dialog
-    v-model="show"
-    :fullscreen="$vuetify.breakpoint.xs"
-    max-width="90%"
-  >
-    <v-skeleton-loader
-      :loading="isLoading"
-      type="table-tbody"
+  <v-row justify="center">
+    <v-dialog
+      v-model="show"
+      :fullscreen="$vuetify.breakpoint.xs"
+      max-width="90%"
     >
-      <v-card>
-        <v-card-title>
-          {{ titleDetail }}
-          <v-spacer />
-          <v-icon @click="show = false">mdi-close</v-icon>
-        </v-card-title>
-        <v-divider />
-        <v-container>
-          <v-row class="mb-6">
+      <v-skeleton-loader
+        :loading="isLoading"
+        type="table-tbody"
+      >
+        <v-card>
+          <v-card-title>
+            {{ titleDetail }}
+            <v-spacer />
+            <v-icon @click="show = false">mdi-close</v-icon>
+          </v-card-title>
+          <v-divider />
+          <v-row class="ml-4 mr-4 mb-6">
             <v-col>
               <v-data-table
                 :headers="headers"
@@ -64,7 +64,7 @@
           </v-row>
           <v-card
             min-height="100"
-            class="mx-auto mt-2 border-card"
+            class="ml-6 mr-6 mt-2 border-card"
             @click="handleCreate"
           >
             <v-container
@@ -84,7 +84,7 @@
               </v-row>
             </v-container>
           </v-card>
-          <v-row class="mb-3">
+          <v-row class="ma-3">
             <v-col>
               <v-btn
                 color="#FFFFFF"
@@ -95,26 +95,25 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-container>
-      </v-card>
-    </v-skeleton-loader>
-    <dialog-close-contact-case
-      :show-dialog-add-close-contact="showCloseContact"
-      :show-form-add-close-contact.sync="showCloseContact"
-      :title-detail="isEditCloseContact ? $t('label.edit_contact_data'):$t('label.add_contact_data')"
-      :form-close-contact="formCloseContact"
-      :parent-case="parentCase"
-      :is-edit.sync="isEditCloseContact"
-      :id-case="idCase"
-    />
-    <dialog-report-close-contact
-      :show-dialog="showReportCloseContact"
-      :show-form.sync="showReportCloseContact"
-      :title-detail="$t('label.create_closely_contact_reports')"
-      :is-edit.sync="isEdit"
-      :id-case.sync="idCase"
-      :form-body.sync="formBody"
-    />
+        </v-card>
+      </v-skeleton-loader>
+      <dialog-close-contact-case
+        :show-dialog-add-close-contact="showCloseContact"
+        :show-form-add-close-contact.sync="showCloseContact"
+        :title-detail="isEditCloseContact ? $t('label.edit_contact_data'):$t('label.add_contact_data')"
+        :form-close-contact="formCloseContact"
+        :parent-case="parentCase"
+        :is-edit.sync="isEditCloseContact"
+        :id-case="idCase"
+      />
+      <dialog-report-close-contact
+        :show-dialog="showReportCloseContact"
+        :show-form.sync="showReportCloseContact"
+        :title-detail="$t('label.create_closely_contact_reports')"
+        :is-edit.sync="isEdit"
+        :id-case.sync="idCase"
+        :form-body.sync="formBody"
+      />
     <!-- <dialog-delete
       :dialog="dialogDelete"
       :dialog-delete.sync="dialogDelete"
@@ -122,7 +121,8 @@
       :delete-date.sync="dataDelete"
       :store-path-delete="`closeContactCase/deleteCloseContact`"
     /> -->
-  </v-dialog>
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'

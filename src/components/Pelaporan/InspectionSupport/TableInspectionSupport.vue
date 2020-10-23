@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mb-6">
+  <v-row class="ml-4 mr-4 mb-6">
     <v-col>
       <v-data-table
         :headers="headers"

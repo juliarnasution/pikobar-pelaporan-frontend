@@ -56,6 +56,10 @@ export default {
       type: Object,
       default: null
     },
+    lastCaseData: {
+      type: Object,
+      default: null
+    },
     closeContactCase: {
       type: Array,
       default: null
@@ -99,9 +103,13 @@ export default {
   },
   watch: {
     async showForm(value) {
+      this.query = this.queryData
       this.show = value
       if (value) {
         this.caseDetail = this.caseData
+        if (this.lastCaseData) {
+          Object.assign(this.caseDetail, { 'last_history': this.lastCaseData })
+        }
         this.caseDetail.yearsOld = Math.floor(this.caseDetail.age)
         this.caseDetail.monthsOld = Math.ceil((this.caseDetail.age - Math.floor(this.caseDetail.age)) * 12)
         if (this.caseDetail.birth_date) {
@@ -170,7 +178,6 @@ export default {
           const responseNonWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalNonWestJava)
           this.hospitalNonWestJavaList = responseNonWestJava.data
         }
-        this.query = this.queryData
       }
     },
     show(value) {
@@ -256,7 +263,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .subtitle {
   font-size: 1.2rem !important;
   font-family: "Roboto", sans-serif !important;

@@ -1,67 +1,69 @@
 <template>
-  <v-dialog v-model="show" :fullscreen="$vuetify.breakpoint.xs" max-width="90%">
-    <v-card>
-      <v-card-title class="title">
-        {{ $t('label.update_case_history') }}
-        <v-spacer />
-        <v-icon @click="show = false">mdi-close</v-icon>
-      </v-card-title>
-      <v-divider />
-      <v-container>
-        <ValidationObserver ref="observer">
-          <v-form
-            ref="form"
-            lazy-validation
-          >
-            <v-row>
-              <v-col auto>
-                <v-expansion-panels
-                  v-model="panelRiwayat"
-                  multiple
-                >
-                  <v-expansion-panel>
-                    <v-expansion-panel-header class="font-weight-bold text-lg">
-                      {{ $t('label.form_case_history_title') }}
-                    </v-expansion-panel-header>
-                    <v-divider />
-                    <v-expansion-panel-content>
-                      <form-case-history :form-pasien.sync="formRiwayatPasien" />
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-col>
-            </v-row>
-            <v-container fluid>
+  <v-row justify="center">
+    <v-dialog v-model="show" :fullscreen="$vuetify.breakpoint.xs" max-width="90%">
+      <v-card>
+        <v-card-title class="title">
+          {{ $t('label.update_case_history') }}
+          <v-spacer />
+          <v-icon @click="show = false">mdi-close</v-icon>
+        </v-card-title>
+        <v-divider />
+        <v-row class="ma-3">
+          <ValidationObserver ref="observer">
+            <v-form
+              ref="form"
+              lazy-validation
+            >
               <v-row>
-                <v-col>
-                  <v-btn
-                    :loading="loading"
-                    bottom
-                    block
-                    @click="handleCancel"
+                <v-col auto>
+                  <v-expansion-panels
+                    v-model="panelRiwayat"
+                    multiple
                   >
-                    {{ $t('label.cancel') }}
-                  </v-btn>
-                </v-col>
-                <v-col>
-                  <v-btn
-                    :loading="loading"
-                    class="ml-2"
-                    color="success"
-                    bottom
-                    block
-                    @click="handleSaveHistory"
-                  >
-                    {{ $t('label.update_history') }}
-                  </v-btn>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header class="font-weight-bold text-lg">
+                        {{ $t('label.form_case_history_title') }}
+                      </v-expansion-panel-header>
+                      <v-divider />
+                      <v-expansion-panel-content>
+                        <form-case-history :form-pasien.sync="formRiwayatPasien" />
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
                 </v-col>
               </v-row>
-            </v-container>
-          </v-form>
-        </ValidationObserver>
-      </v-container>
-    </v-card>
-  </v-dialog>
+              <v-container fluid>
+                <v-row>
+                  <v-col>
+                    <v-btn
+                      :loading="loading"
+                      bottom
+                      block
+                      @click="handleCancel"
+                    >
+                      {{ $t('label.cancel') }}
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <v-btn
+                      :loading="loading"
+                      class="ml-2"
+                      color="success"
+                      bottom
+                      block
+                      @click="handleSaveHistory"
+                    >
+                      {{ $t('label.update_history') }}
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </ValidationObserver>
+        </v-row>
+      </v-card>
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'

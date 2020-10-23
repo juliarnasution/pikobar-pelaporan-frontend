@@ -1,22 +1,22 @@
 <template>
-  <v-dialog v-model="show" :fullscreen="$vuetify.breakpoint.xs" max-width="90%">
-    <v-card>
-      <v-toolbar
-        flat
-        color="primary"
-        dark
-      >
-        <v-toolbar-title>{{ titleDetail }}</v-toolbar-title>
-        <v-spacer />
-        <v-icon @click="show = false">mdi-close</v-icon>
-      </v-toolbar>
-      <v-container>
-        <v-row class="mb-6">
+  <v-row justify="center">
+    <v-dialog v-model="show" :fullscreen="$vuetify.breakpoint.xs" max-width="90%">
+      <v-card>
+        <v-toolbar
+          flat
+          color="primary"
+          dark
+        >
+          <v-toolbar-title>{{ titleDetail }}</v-toolbar-title>
+          <v-spacer />
+          <v-icon @click="show = false">mdi-close</v-icon>
+        </v-toolbar>
+        <v-row class="ma-2">
           <v-tabs
             centered
             hide-slider
             background-color="#F5F5F5"
-            class="ml-13 mr-13 rounded-pill"
+            class="ml-6 mr-6 rounded-pill"
           >
             <v-tab class="text-left">
               {{ $t('label.travel_history') }}
@@ -27,7 +27,6 @@
             <v-tab class="text-left">
               {{ $t('label.travel_history_2') }}
             </v-tab>
-
             <v-tab-item>
               <v-card flat>
                 <table-history-travel
@@ -68,7 +67,7 @@
                 />
                 <v-card
                   min-height="100"
-                  class="mx-auto mt-2 border-card"
+                  class="mx-auto ml-6 mr-6 mt-2 border-card"
                   @click="handleCreateTransmission"
                 >
                   <v-container
@@ -123,40 +122,51 @@
             </v-tab-item>
           </v-tabs>
         </v-row>
-      </v-container>
-    </v-card>
-    <dialog-form-history-travel
-      :show-dialog-add-history-travel="showFormHistoryTravel"
-      :show-form-add-history-travel.sync="showFormHistoryTravel"
-      :title-detail="isEditHistoryTravel ? $t('label.edit_history'):$t('label.input_history')"
-      :form-data.sync="formBody"
-      :is-edit.sync="isEditHistoryTravel"
-      :id-case="idCase"
-    />
-    <dialog-form-public-place
-      :show-dialog-add-public-place="showFormPublicPlace"
-      :show-form-add-public-place.sync="showFormPublicPlace"
-      :title-detail="isEditPublicPlace ? $t('label.edit_history'):$t('label.input_history')"
-      :form-data.sync="formBody"
-      :is-edit.sync="isEditPublicPlace"
-      :id-case="idCase"
-    />
-    <dialog-form-transmission-area-local
-      :show-dialog-add-transmission-area-lokal="showTransmissionAreaLokal"
-      :show-form-add-transmission-area-lokal.sync="showTransmissionAreaLokal"
-      :title-detail="isEditTransmissionAreaLokal ? $t('label.edit_history'):$t('label.input_history')"
-      :form-data.sync="formBody"
-      :is-edit.sync="isEditTransmissionAreaLokal"
-      :id-case="idCase"
-    />
-    <dialog-delete
-      :dialog="dialogDelete"
-      :dialog-delete.sync="dialogDelete"
-      :data-deleted="dataDelete"
-      :delete-date.sync="dataDelete"
-      :store-path-delete="storePathDelete"
-    />
-  </v-dialog>
+        <v-row class="ml-3 mr-3 mb-3">
+          <v-col>
+            <v-btn
+              color="#FFFFFF"
+              block
+              @click="show = false"
+            >
+              {{ $t('label.back') }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+      <dialog-form-history-travel
+        :show-dialog-add-history-travel="showFormHistoryTravel"
+        :show-form-add-history-travel.sync="showFormHistoryTravel"
+        :title-detail="isEditHistoryTravel ? $t('label.edit_history'):$t('label.input_history')"
+        :form-data.sync="formBody"
+        :is-edit.sync="isEditHistoryTravel"
+        :id-case="idCase"
+      />
+      <dialog-form-public-place
+        :show-dialog-add-public-place="showFormPublicPlace"
+        :show-form-add-public-place.sync="showFormPublicPlace"
+        :title-detail="isEditPublicPlace ? $t('label.edit_history'):$t('label.input_history')"
+        :form-data.sync="formBody"
+        :is-edit.sync="isEditPublicPlace"
+        :id-case="idCase"
+      />
+      <dialog-form-transmission-area-local
+        :show-dialog-add-transmission-area-lokal="showTransmissionAreaLokal"
+        :show-form-add-transmission-area-lokal.sync="showTransmissionAreaLokal"
+        :title-detail="isEditTransmissionAreaLokal ? $t('label.edit_history'):$t('label.input_history')"
+        :form-data.sync="formBody"
+        :is-edit.sync="isEditTransmissionAreaLokal"
+        :id-case="idCase"
+      />
+      <dialog-delete
+        :dialog="dialogDelete"
+        :dialog-delete.sync="dialogDelete"
+        :data-deleted="dataDelete"
+        :delete-date.sync="dataDelete"
+        :store-path-delete="storePathDelete"
+      />
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { ResponseRequest } from '@/utils/constantVariable'
@@ -339,30 +349,13 @@ export default {
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))
       }
     }
-    // handleChangeTrueFalse(key) {
-    //   switch (key) {
-    //     case 'history-travel':
-    //       this.isEditHistoryTravel = !this.isEditHistoryTravel
-    //       if (!this.isEditHistoryTravel) return this.updateCase()
-    //       break
-    //     case 'transmission-area':
-    //       this.isEditTransmissionAreaLokal = !this.isEditTransmissionAreaLokal
-    //       if (!this.isEditTransmissionAreaLokal) return this.updateCase()
-    //       break
-    //     case 'public-place':
-    //       this.isEditPublicPlace = !this.isEditPublicPlace
-    //       if (!this.isEditPublicPlace) return this.updateCase()
-    //       break
-    //     default:
-    //       break
-    //   }
-    // }
   }
 }
 </script>
 <style scoped>
     .v-tab {
-        width: 50% !important;
+        width: 80% !important;
+        max-width: 100% !important;
         color: #828282 !important;
     }
     .v-tab--active {
