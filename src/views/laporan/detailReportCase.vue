@@ -4,23 +4,6 @@
       <v-icon>mdi-arrow-left</v-icon>
       {{ $t('label.back') }}
     </v-row>
-    <v-row v-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="mx-0 mt-2 mb-2">
-      <div class="rejection py-2 px-7">
-        <v-row justify="start">
-          <v-col cols="12" sm="1">
-            <v-icon x-large color="#EB5757">mdi-alert-circle</v-icon>
-          </v-col>
-          <v-col cols="12" sm="11">
-            <v-row>
-              <span class="font-weight-bold">{{ $t('label.rejection_note') }}</span>
-            </v-row>
-            <v-row class="mt-1">
-              <span>"{{ detail.verified_comment }}"</span>
-            </v-row>
-          </v-col>
-        </v-row>
-      </div>
-    </v-row>
     <v-card class="pa-1 mt-2 mx-auto header-survey-list">
       <v-row justify="space-between">
         <v-col cols="12" md="8" sm="8">
@@ -34,15 +17,7 @@
           </v-card-text>
         </v-col>
         <v-col cols="12" md="4" sm="4">
-          <div
-            v-if="detail.verified_status === 'declined' & roles[0] === 'faskes'"
-            class="d-flex align-center justify-center pa-5 mx-auto"
-          >
-            <v-btn class="primary--text" @click="handleResendVerificationCase">
-              {{ $t('label.resend_data_case_fixed') }}
-            </v-btn>
-          </div>
-          <div v-else-if="detail.verified_status === 'pending' & roles[0] != 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
+          <div v-if="detail.verified_status === 'pending' & roles[0] != 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
             <v-btn class="primary--text" @click="handleVerificationCase">
               {{ $t('label.case_report_verification') }}
             </v-btn>
@@ -54,6 +29,28 @@
         </v-col>
       </v-row>
     </v-card>
+    <v-row v-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="mx-0 mt-2 mb-2">
+      <div class="rejection py-4 px-7">
+        <v-row justify="space-between">
+          <v-col cols="12" sm="1">
+            <v-icon x-large color="#FFFF">mdi-alert-circle</v-icon>
+          </v-col>
+          <v-col cols="12" sm="8" class="white--text">
+            <v-row>
+              <span class="font-weight-bold">{{ $t('label.rejection_note') }}</span>
+            </v-row>
+            <v-row class="mt-1">
+              <span>"{{ detail.verified_comment }}"</span>
+            </v-row>
+          </v-col>
+          <v-col cols="12" sm="3">
+            <v-btn class="primary--text" @click="handleResendVerificationCase">
+              Perbaharui Data Pasien
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
+    </v-row>
     <v-row>
       <v-col
         cols="12"
@@ -343,6 +340,11 @@
       :query-data="verificationQuery"
       :submit-data.sync="isSubmit"
     />
+    <resend-confirmation
+      :show-dialog="resendConfirmation"
+      :show.sync="resendConfirmation"
+      :submit-data.sync="isResend"
+    />
   </div>
 </template>
 
@@ -392,7 +394,9 @@ export default {
       dialogContactFactor: false,
       dialogPublicPlace: false,
       dialogTransmissionPattern: false,
+      resendConfirmation: false,
       isRefresh: false,
+      isResend: false,
       isSubmit: false
     }
   },
@@ -422,6 +426,13 @@ export default {
           await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
         }
         this.isSubmit = false
+      }
+    },
+    async isResend(value) {
+      if (value) {
+        this.resendVerificationCase()
+        this.isResend = false
+        this.resendConfirmation = false
       }
     },
     isRefresh(value) {
@@ -537,6 +548,9 @@ export default {
       this.showVerificationForm = true
     },
     async handleResendVerificationCase() {
+      this.resendConfirmation = true
+    },
+    async resendVerificationCase() {
       const data = {
         id: this.$route.params.id,
         data: this.detail
@@ -589,5 +603,11 @@ export default {
   .background-card {
       background-image: url('../../static/survey-list-icon.svg');
       min-height: 100%;
+  }
+  .rejection {
+    background-image: linear-gradient(to right, #EB5757 , #fdeded);
+    width: 100%;
+    border-radius: 10px;
+    color: #EB5757;
   }
 </style>

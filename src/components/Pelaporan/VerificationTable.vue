@@ -91,7 +91,7 @@
                   <div v-if="roles[0] === 'faskes'">
                     <v-list-item
                       v-if="item.verified_status === 'declined'"
-                      @click="handleCorrectCaseReport(item._id)"
+                      @click="handleDetail(item._id)"
                     >
                       {{ $t('label.fix_case') }}
                     </v-list-item>
@@ -252,9 +252,9 @@ export default {
     //     this.$emit('update:showVerificationForm', true)
     //   }
     // },
-    async handleCorrectCaseReport(id) {
-      await this.$router.push(`/laporan/correct-case-report/${id}`)
-    },
+    // async handleCorrectCaseReport(id) {
+    //   await this.$router.push(`/laporan/correct-case-report/${id}`)
+    // },
     async handleEditCase(id) {
       this.detail = await this.$store.dispatch('reports/detailReportCase', id)
       await Object.assign(this.formPasien, this.detail.data)

@@ -135,6 +135,7 @@
       </v-row>
     </v-card>
     <pagination
+      class="mt-10"
       :total="totalList"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"

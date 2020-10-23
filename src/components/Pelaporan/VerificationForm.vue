@@ -266,7 +266,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .subtitle {
   font-size: 1.2rem !important;
   font-family: "Roboto", sans-serif !important;
