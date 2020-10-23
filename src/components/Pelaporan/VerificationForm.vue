@@ -182,9 +182,6 @@ export default {
     },
     show(value) {
       this.$emit('update:show', value)
-    },
-    queryData(val) {
-      console.log(val)
     }
   },
   methods: {
