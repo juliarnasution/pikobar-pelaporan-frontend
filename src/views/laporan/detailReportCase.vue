@@ -242,7 +242,7 @@
         >
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.related_ontacts') }}</v-list-item-title>
+              <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.related_contacts') }}</v-list-item-title>
               <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.patient_related_contact_information_data') }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>

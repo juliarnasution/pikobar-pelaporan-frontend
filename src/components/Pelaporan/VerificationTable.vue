@@ -240,18 +240,18 @@ export default {
       // output otomatis mengeluarkan kalimat waktu. Contoh: dalam 3 jam
       return (maxVerifiedDate > now) ? now.to(maxVerifiedDate) : '-'
     },
-    // async handleDetail(id) {
-    //   this.$emit('update:verificationQuery', this.verificationQuery)
-    //   const response = await this.$store.dispatch('reports/detailReportCase', id)
-    //   const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-    //   if (response.data.verified_status === 'verified') {
-    //     this.$emit('update:showFailedDialog', true)
-    //   } else {
-    //     this.$emit('update:caseDetail', response.data)
-    //     this.$emit('update:closeContactDetail', responseCloseContact.data)
-    //     this.$emit('update:showVerificationForm', true)
-    //   }
-    // },
+    async handleDetail(id) {
+      this.$emit('update:verificationQuery', this.verificationQuery)
+      const response = await this.$store.dispatch('reports/detailReportCase', id)
+      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      if (response.data.verified_status === 'verified') {
+        this.$emit('update:showFailedDialog', true)
+      } else {
+        this.$emit('update:caseDetail', response.data)
+        this.$emit('update:closeContactDetail', responseCloseContact.data)
+        this.$emit('update:showVerificationForm', true)
+      }
+    },
     // async handleCorrectCaseReport(id) {
     //   await this.$router.push(`/laporan/correct-case-report/${id}`)
     // },
@@ -307,9 +307,9 @@ export default {
         return true
       }
     },
-    handleDetail(id) {
-      this.$router.push(`/laporan/detail-report/${id}`)
-    },
+    // handleDetail(id) {
+    //   this.$router.push(`/laporan/detail-report/${id}`)
+    // },
     getAge(value) {
       const yearsOld = Math.floor(value)
       const age = `${yearsOld} ${this.$t('label.year')}`
