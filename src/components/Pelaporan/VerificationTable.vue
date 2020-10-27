@@ -107,7 +107,7 @@
                   </div>
                   <div v-else>
                     <v-list-item @click="handleDetail(item._id)">
-                      {{ $t('label.view_detail') }}
+                      {{ $t('label.verification_process') }}
                     </v-list-item>
                   </div>
                 </v-card>
