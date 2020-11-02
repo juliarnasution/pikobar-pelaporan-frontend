@@ -110,7 +110,7 @@
             :handle-search="handleSearch"
           />
         </v-col>
-        <v-col class="pb-4">
+        <v-col class="px-0">
           <!-- <v-btn
             v-if="roles[0] !== 'faskes'"
             color="#27AE60"
@@ -123,7 +123,7 @@
             </v-icon>
             {{ $t('label.import') }}
           </v-btn> -->
-          <v-card-actions class="ma-0 float-right">
+          <v-card-actions class="ma-0 py-0 float-right">
             <v-menu
               :close-on-content-click="false"
               offset-y
@@ -168,14 +168,12 @@
         v-if="showFilter"
         class="ma-2"
       >
-        <v-container>
-          <case-filter
-            :list-query="listQuery"
-            :query-list.sync="listQuery"
-            :reset-statistic.sync="resetStatistic"
-            :on-search="handleSearch"
-          />
-        </v-container>
+        <case-filter
+          :list-query="listQuery"
+          :query-list.sync="listQuery"
+          :reset-statistic.sync="resetStatistic"
+          :on-search="handleSearch"
+        />
       </div>
       <hr>
       <v-row align="center" justify="space-between">

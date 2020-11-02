@@ -101,8 +101,8 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.inspection_support">
-                <div v-for="(data, index) in detail.last_history.inspection_support" :key="index">
+              <div v-if="detail.inspection_support">
+                <div v-for="(data, index) in detail.inspection_support" :key="index">
                   <v-row class="row-detail">
                     <v-col
                       cols="12"

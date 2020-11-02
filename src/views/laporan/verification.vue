@@ -21,7 +21,7 @@
     <v-card outlined>
       <div class="ma-4">
         <v-row class="filter-row mt-5" justify="center">
-          <v-col cols="12">
+          <v-col cols="12" md="6" sm="6">
             <v-text-field
               v-model="listQuery.search"
               solo
@@ -29,113 +29,107 @@
               prepend-inner-icon="search"
             />
           </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="12" class="reduce-padding-top">
-            <address-region
-              :disabled-district="disabledDistrict"
-              :district-code="listQuery.address_district_code"
-              :district-name="district_name_user"
-              :code-district.sync="listQuery.address_district_code"
-              :sub-district-code="listQuery.address_subdistrict_code"
-              :code-sub-district.sync="listQuery.address_subdistrict_code"
-              :village-code="listQuery.address_village_code"
-              :code-village.sync="listQuery.address_village_code"
-              :village-name="villageName"
-              :name-village.sync="villageName"
-              :disabled-address="false"
-              :required-address="false"
-              :is-label="true"
-            />
+          <v-col cols="12" md="6" sm="6">
+            <v-btn
+              color="primary"
+              class="mr-4 float-right"
+              @click="handleFilter"
+            >
+              {{ $t('label.filter') }}
+              <v-icon v-if="!showFilter">mdi-chevron-right</v-icon>
+              <v-icon v-else>mdi-chevron-down</v-icon>
+            </v-btn>
           </v-col>
         </v-row>
-        <v-row class="filter-row" justify="center">
-          <v-col cols="12" sm="4">
-            <v-label class="title">{{ $t('label.reporting_sources') }}:</v-label>
-            <v-text-field
-              v-if="roles[0] === 'faskes'"
-              v-model="listQuery.author"
-              solo-inverted
-              disabled
-            />
-            <v-autocomplete
-              v-else
-              v-model="listQuery.author"
-              :items="listMedicalFacility"
-              solo
-              item-text="fullname"
-              item-value="_id"
-            />
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-label class="title">{{ $t('label.criteria') }}:</v-label>
-            <v-select
-              v-model="listQuery.status"
-              :items="statusList"
-              solo
-              item-text="label"
-              item-value="value"
-            />
-          </v-col>
-          <v-col cols="12" sm="4">
-            <br>
-            <v-row>
-              <v-col class="reduce-padding-top">
-                <v-btn
-                  block
-                  color="#4f4f4f"
-                  class="btn-reset"
-                  @click="onReset"
-                >
-                  {{ $t('label.reset') }}
-                </v-btn>
-              </v-col>
-              <v-col class="reduce-padding-top">
-                <v-btn
-                  block
-                  color="success"
-                  class="btn-cari"
-                  @click="handleSearch"
-                >
-                  {{ $t('label.look_for_it') }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </div>
-      <v-row class="mx-0 mt-5">
-        <v-tabs
-          v-model="tab"
-          class="elevation-2"
-          background-color="white"
-          active-class="active-class"
-          color="red"
-          hide-slider
-        >
-          <v-tab @click="onTabChanges('pending,declined')">{{ tabLabel[0] }}</v-tab>
-          <v-tab @click="onTabChanges('pending')">{{ tabLabel[1] }}</v-tab>
-          <v-tab @click="onTabChanges('declined')">{{ tabLabel[2] }}</v-tab>
-          <v-tab-item v-for="(tabItem, index) in tabLabel" :key="index">
-            <v-row>
-              <verification-table
-                :table-headers="headers"
-                :list-kasus="listKasus"
-                :query="listQuery"
-                :show-failed-dialog.sync="showFailedDialog"
-                :show-verification-form.sync="showVerificationForm"
-                :case-detail.sync="caseDetail"
-                :close-contact-detail.sync="closeContactCase"
-                :refresh-page.sync="isRefresh"
-                :verification-query="verificationQuery"
+        <div v-if="showFilter">
+          <v-row justify="center">
+            <v-col cols="12" class="reduce-padding-top">
+              <address-region
+                :disabled-district="disabledDistrict"
+                :district-code="listQuery.address_district_code"
+                :district-name="district_name_user"
+                :code-district.sync="listQuery.address_district_code"
+                :sub-district-code="listQuery.address_subdistrict_code"
+                :code-sub-district.sync="listQuery.address_subdistrict_code"
+                :village-code="listQuery.address_village_code"
+                :code-village.sync="listQuery.address_village_code"
+                :village-name="villageName"
+                :name-village.sync="villageName"
+                :disabled-address="false"
+                :required-address="false"
+                :is-label="true"
               />
-            </v-row>
-          </v-tab-item>
-        </v-tabs>
-      </v-row>
+            </v-col>
+          </v-row>
+          <v-row class="filter-row" justify="center">
+            <v-col cols="12" sm="4">
+              <v-label class="title">{{ $t('label.reporting_sources') }}:</v-label>
+              <v-text-field
+                v-if="roles[0] === 'faskes'"
+                v-model="listQuery.author"
+                solo-inverted
+                disabled
+              />
+              <v-autocomplete
+                v-else
+                v-model="listQuery.author"
+                :items="listMedicalFacility"
+                solo
+                item-text="fullname"
+                item-value="_id"
+              />
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-label class="title">{{ $t('label.criteria') }}:</v-label>
+              <v-select
+                v-model="listQuery.status"
+                :items="statusList"
+                solo
+                item-text="label"
+                item-value="value"
+              />
+            </v-col>
+            <v-col cols="12" sm="4">
+              <br>
+              <v-row>
+                <v-col class="reduce-padding-top">
+                  <v-btn
+                    block
+                    color="#4f4f4f"
+                    class="btn-reset"
+                    @click="onReset"
+                  >
+                    {{ $t('label.reset') }}
+                  </v-btn>
+                </v-col>
+                <v-col class="reduce-padding-top">
+                  <v-btn
+                    block
+                    color="success"
+                    class="btn-cari"
+                    @click="handleSearch"
+                  >
+                    {{ $t('label.look_for_it') }}
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </div>
+      </div>
+      <verification-table
+        :table-headers="headers"
+        :list-kasus="listKasus"
+        :query="listQuery"
+        :show-failed-dialog.sync="showFailedDialog"
+        :show-verification-form.sync="showVerificationForm"
+        :case-detail.sync="caseDetail"
+        :close-contact-detail.sync="closeContactCase"
+        :refresh-page.sync="isRefresh"
+        :verification-query="verificationQuery"
+      />
     </v-card>
     <pagination
-      class="mt-10"
       :total="totalList"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
@@ -218,6 +212,7 @@ export default {
         }
       ],
       failedDialog: false,
+      showFilter: false,
       disabledDistrict: true,
       listMedicalFacility: [],
       villageName: '',
@@ -229,8 +224,6 @@ export default {
       showFailedDialog: false,
       isSubmit: false,
       isRefresh: false,
-      tab: null,
-      tabLabel: [this.$t('label.all'), this.$t('label.waiting_for_verification'), this.$t('label.case_rejected')],
       totalItem: null,
       verificationQuery: {
         'id': '',
@@ -313,6 +306,9 @@ export default {
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
     },
+    handleFilter() {
+      this.showFilter = !this.showFilter
+    },
     onReset() {
       this.listQuery.search = ''
       this.listQuery.final_result = ''
@@ -327,19 +323,6 @@ export default {
         this.listQuery.address_district_code = ''
       }
       this.$store.dispatch('reports/listReportCase', this.listQuery)
-    },
-    onTabChanges(value) {
-      const ids = this.headers.length
-      if (this.roles[0] === 'dinkeskota' && value === 'declined') {
-        this.headers.splice(7, 2)
-      } else if (ids === 7) {
-        this.headers.push(
-          { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
-          { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
-        )
-      }
-      this.listQuery.verified_status = value
-      this.handleSearch()
     }
   }
 }

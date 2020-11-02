@@ -1,17 +1,5 @@
 <template>
   <div>
-    <v-row class="row-detail">
-      <v-col
-        cols="12"
-        md="3"
-        sm="12"
-      >
-        <p>{{ $t('label.travel_history_label_1') }}</p>
-      </v-col>
-      <v-col>
-        <p>{{ detail.last_history.travelling_history_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
-      </v-col>
-    </v-row>
     <v-row>
       <v-col auto>
         <v-expansion-panels
@@ -24,8 +12,8 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.travelling_history">
-                <div v-for="(data, index) in detail.last_history.travelling_history" :key="index">
+              <div v-if="detail.travelling_history">
+                <div v-for="(data, index) in detail.travelling_history" :key="index">
                   <v-row class="row-detail">
                     <v-col
                       cols="12"
@@ -97,18 +85,6 @@
         </v-expansion-panels>
       </v-col>
     </v-row>
-    <v-row class="row-detail">
-      <v-col
-        cols="12"
-        md="3"
-        sm="12"
-      >
-        <p>{{ $t('label.travel_history_label_2') }}</p>
-      </v-col>
-      <v-col>
-        <p>{{ detail.last_history.visited_local_area_before_sick_14_days ? $t('label.yes'):$t('label.no') }}</p>
-      </v-col>
-    </v-row>
     <v-row>
       <v-col auto>
         <v-expansion-panels
@@ -121,8 +97,8 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.visited_local_area">
-                <div v-for="(data, index) in detail.last_history.visited_local_area" :key="index">
+              <div v-if="detail.visited_local_area">
+                <div v-for="(data, index) in detail.visited_local_area" :key="index">
                   <v-row class="row-detail">
                     <v-col
                       cols="12"
@@ -158,18 +134,6 @@
         </v-expansion-panels>
       </v-col>
     </v-row>
-    <v-row class="row-detail">
-      <v-col
-        cols="12"
-        md="3"
-        sm="12"
-      >
-        <p>{{ $t('label.travel_history_label_3') }}</p>
-      </v-col>
-      <v-col>
-        <p>{{ detail.last_history.has_visited_public_place ? $t('label.yes'):$t('label.no') }}</p>
-      </v-col>
-    </v-row>
     <v-row>
       <v-col auto>
         <v-expansion-panels
@@ -182,8 +146,8 @@
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
-              <div v-if="detail.last_history.visited_public_place">
-                <div v-for="(data, index) in detail.last_history.visited_public_place" :key="index">
+              <div v-if="detail.visited_public_place">
+                <div v-for="(data, index) in detail.visited_public_place" :key="index">
                   <v-row class="row-detail">
                     <v-col
                       cols="12"

@@ -1,152 +1,158 @@
 <template>
-  <v-col auto>
-    <v-data-table
-      :key="list.length"
-      :headers="headers"
-      :items="list"
-      :mobile-breakpoint="NaN"
-      :no-data-text="$t('label.data_empty')"
-      :items-per-page="listQuery.limit"
-      hide-default-footer
-    >
-      <template v-slot:item="{ item, index }">
-        <tr>
-          <td>{{ getTableRowNumbering(index) }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ getAge(item.age) }}</td>
-          <td>
-            <div v-if="item.gender === 'P'">
-              {{ $t('label.female_initials') }}
-            </div>
-            <div v-else>
-              {{ $t('label.male_initials') }}
-            </div>
-          </td>
-          <td><status :status="item.status" /> </td>
-          <td>
-            <div v-if=" item.last_history.final_result ==='0'">
-              {{ $t('label.negatif') }}
-            </div>
-            <div v-else-if=" item.last_history.final_result ==='1'">
-              {{ $t('label.recovery') }}
-            </div>
-            <div v-else-if=" item.last_history.final_result ==='2'">
-              {{ $t('label.dead') }}
-            </div>
-            <div v-else-if=" item.last_history.final_result ==='3'">
-              {{ $t('label.discarded') }}
-            </div>
-            <div v-else-if=" item.last_history.final_result ==='4'">
-              {{ $t('label.still_sick') }}
-            </div>
-            <div v-else-if=" item.last_history.final_result ==='5'">
-              {{ $t('label.still_quarantine') }}
-            </div>
-            <div v-else>
-              -
-            </div>
-          </td>
-          <td>{{ item.author.username }}</td>
-          <td v-if="roles[0] === 'faskes'">
-            {{ formatDatetime(item.createdAt, 'DD MMMM YYYY') }}
-          </td>
-          <td v-if="roles[0] === 'faskes'" class="adjust-width">
-            <span
-              :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
-              class="pa-2 font-weight-bold"
-            >
-              {{ item.verified_status === 'pending' ? $t('label.waiting_for_verification') : $t('label.case_rejected') }}
-            </span>
-          </td>
-          <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
-          <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
-          <td v-if="tableHeaders.length > 8">
-            <v-card-actions>
-              <v-menu
-                :close-on-content-click="false"
-                :nudge-width="100"
-                :nudge-left="220"
-                :nudge-top="40"
-                offset-y
+  <v-row>
+    <v-col auto>
+      <v-data-table
+        :key="list.length"
+        :headers="headers"
+        :items="list"
+        :mobile-breakpoint="NaN"
+        :no-data-text="$t('label.data_empty')"
+        :items-per-page="listQuery.limit"
+        hide-default-footer
+      >
+        <template v-slot:item="{ item, index }">
+          <tr>
+            <td>{{ getTableRowNumbering(index) }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ getAge(item.age) }}</td>
+            <td>
+              <div v-if="item.gender === 'P'">
+                {{ $t('label.female_initials') }}
+              </div>
+              <div v-else>
+                {{ $t('label.male_initials') }}
+              </div>
+            </td>
+            <td><status :status="item.status" /> </td>
+            <td>
+              <div v-if=" item.last_history.final_result ==='0'">
+                {{ $t('label.negatif') }}
+              </div>
+              <div v-else-if=" item.last_history.final_result ==='1'">
+                {{ $t('label.recovery') }}
+              </div>
+              <div v-else-if=" item.last_history.final_result ==='2'">
+                {{ $t('label.dead') }}
+              </div>
+              <div v-else-if=" item.last_history.final_result ==='3'">
+                {{ $t('label.discarded') }}
+              </div>
+              <div v-else-if=" item.last_history.final_result ==='4'">
+                {{ $t('label.still_sick') }}
+              </div>
+              <div v-else-if=" item.last_history.final_result ==='5'">
+                {{ $t('label.still_quarantine') }}
+              </div>
+              <div v-else>
+                -
+              </div>
+            </td>
+            <td>{{ item.author.username }}</td>
+            <td v-if="roles[0] === 'faskes'">
+              {{ formatDatetime(item.createdAt, 'DD MMMM YYYY') }}
+            </td>
+            <td v-if="roles[0] === 'faskes'" class="adjust-width">
+              <span
+                :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
+                class="pa-2 font-weight-bold"
               >
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    v-if="showActionButton(item.verified_status)"
-                    class="ma-1 action-btn"
-                    color="#828282"
-                    tile
-                    outlined
-                    v-on="on"
-                  >
-                    {{ $t('label.choose_action') }}
-                    <v-icon class="action-icon" right>
-                      mdi-menu-down
-                    </v-icon>
-                  </v-btn>
-                  <div v-else>
+                {{ item.verified_status === 'pending' ? $t('label.waiting_for_verification') : $t('label.case_rejected') }}
+              </span>
+            </td>
+            <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
+            <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
+            <td v-if="tableHeaders.length > 8">
+              <v-card-actions>
+                <v-menu
+                  :close-on-content-click="false"
+                  :nudge-width="100"
+                  :nudge-left="220"
+                  :nudge-top="40"
+                  offset-y
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      v-if="showActionButton(item.verified_status)"
+                      class="ma-1 action-btn"
+                      color="#828282"
+                      tile
+                      outlined
+                      v-on="on"
+                    >
+                      {{ $t('label.choose_action') }}
+                      <v-icon class="action-icon" right>
+                        mdi-menu-down
+                      </v-icon>
+                    </v-btn>
+                    <div v-else>
                     &nbsp;
-                  </div>
-                </template>
-                <v-card>
-                  <div v-if="roles[0] === 'faskes'">
-                    <v-list-item
-                      v-if="item.verified_status === 'declined'"
-                      @click="handleDetail(item._id)"
-                    >
-                      {{ $t('label.fix_case') }}
-                    </v-list-item>
-                    <v-list-item
-                      v-else
-                      @click="handleDetail(item._id)"
-                    >
-                      {{ $t('label.view_detail') }}
-                    </v-list-item>
-                    <v-list-item @click="handleDeleteCase(item)">
-                      <span class="delete">{{ $t('label.delete_case') }}</span>
-                    </v-list-item>
-                  </div>
-                  <div v-else>
-                    <v-list-item @click="handleDetail(item._id)">
-                      {{ $t('label.view_detail') }}
-                    </v-list-item>
-                  </div>
-                </v-card>
-              </v-menu>
-            </v-card-actions>
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
-    <dialog-delete
-      :dialog="dialog"
-      :data-deleted="dataDelete"
-      :dialog-delete.sync="dialog"
-      :delete-date.sync="dataDelete"
-      :store-path-delete="`reports/deleteReportCase`"
-      :store-path-get-list="`reports/listReportCase`"
-      :list-query="listQuery"
-    />
-    <dialog-close-contact
-      :show-dialog="dialogCloseContact"
-      :show.sync="dialogCloseContact"
-      :list-close-contact.sync="listCloseContact"
-      :id-case="idCase"
-      :case-id.sync="idCase"
-      :id-unique-case="idUniqueCase"
-      :unique-case-id.sync="idUniqueCase"
-      :title-detail="$t('label.close_contact_list')"
-    />
-    <dialog-update-case
-      :show-dialog="dialogUpdateCase"
-      :show.sync="dialogUpdateCase"
-      :form-pasien="formPasien"
-    />
-    <dialog-update-history-case
-      :show-dialog="dialogHistoryCase"
-      :show.sync="dialogHistoryCase"
-      :form-riwayat-pasien="formRiwayatPasien"
-    />
-  </v-col>
+                    </div>
+                  </template>
+                  <v-card>
+                    <div v-if="roles[0] === 'faskes'">
+                      <v-list-item
+                        v-if="item.verified_status === 'declined'"
+                        @click="handleDetailFixCase(item._id)"
+                      >
+                        {{ $t('label.fix_case') }}
+                      </v-list-item>
+                      <v-list-item
+                        v-else
+                        @click="handleDetail(item._id)"
+                      >
+                        {{ $t('label.view_detail') }}
+                      </v-list-item>
+                      <v-list-item @click="handleDeleteCase(item)">
+                        <span class="delete">{{ $t('label.delete_case') }}</span>
+                      </v-list-item>
+                    </div>
+                    <div v-else>
+                      <v-list-item @click="handleDetail(item._id)">
+                        {{ $t('label.verification_process') }}
+                      </v-list-item>
+                    </div>
+                  </v-card>
+                </v-menu>
+              </v-card-actions>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
+      <dialog-delete
+        class="ma-0"
+        :dialog="dialog"
+        :data-deleted="dataDelete"
+        :dialog-delete.sync="dialog"
+        :delete-date.sync="dataDelete"
+        :store-path-delete="`reports/deleteReportCase`"
+        :store-path-get-list="`reports/listReportCase`"
+        :list-query="listQuery"
+      />
+      <dialog-close-contact
+        class="ma-0"
+        :show-dialog="dialogCloseContact"
+        :show.sync="dialogCloseContact"
+        :list-close-contact.sync="listCloseContact"
+        :id-case="idCase"
+        :case-id.sync="idCase"
+        :id-unique-case="idUniqueCase"
+        :unique-case-id.sync="idUniqueCase"
+        :title-detail="$t('label.close_contact_list')"
+      />
+      <dialog-update-case
+        class="ma-0"
+        :show-dialog="dialogUpdateCase"
+        :show.sync="dialogUpdateCase"
+        :form-pasien="formPasien"
+      />
+      <dialog-update-history-case
+        class="ma-0"
+        :show-dialog="dialogHistoryCase"
+        :show.sync="dialogHistoryCase"
+        :form-riwayat-pasien="formRiwayatPasien"
+      />
+    </v-col>
+  </v-row>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -240,18 +246,18 @@ export default {
       // output otomatis mengeluarkan kalimat waktu. Contoh: dalam 3 jam
       return (maxVerifiedDate > now) ? now.to(maxVerifiedDate) : '-'
     },
-    // async handleDetail(id) {
-    //   this.$emit('update:verificationQuery', this.verificationQuery)
-    //   const response = await this.$store.dispatch('reports/detailReportCase', id)
-    //   const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-    //   if (response.data.verified_status === 'verified') {
-    //     this.$emit('update:showFailedDialog', true)
-    //   } else {
-    //     this.$emit('update:caseDetail', response.data)
-    //     this.$emit('update:closeContactDetail', responseCloseContact.data)
-    //     this.$emit('update:showVerificationForm', true)
-    //   }
-    // },
+    async handleDetail(id) {
+      this.$emit('update:verificationQuery', this.verificationQuery)
+      const response = await this.$store.dispatch('reports/detailReportCase', id)
+      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      if (response.data.verified_status === 'verified') {
+        this.$emit('update:showFailedDialog', true)
+      } else {
+        this.$emit('update:caseDetail', response.data)
+        this.$emit('update:closeContactDetail', responseCloseContact.data)
+        this.$emit('update:showVerificationForm', true)
+      }
+    },
     // async handleCorrectCaseReport(id) {
     //   await this.$router.push(`/laporan/correct-case-report/${id}`)
     // },
@@ -307,7 +313,7 @@ export default {
         return true
       }
     },
-    handleDetail(id) {
+    handleDetailFixCase(id) {
       this.$router.push(`/laporan/detail-report/${id}`)
     },
     getAge(value) {
