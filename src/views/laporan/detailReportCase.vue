@@ -22,6 +22,12 @@
               {{ $t('label.case_report_verification') }}
             </v-btn>
           </div>
+          <div v-else-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
+            <v-btn class="primary--text" @click="handleResendVerificationCase">
+              <v-icon class="primary--text">mdi-check-circle-outline</v-icon>&nbsp;
+              {{ $t('label.fix_done') }}
+            </v-btn>
+          </div>
           <div
             v-else
             class="background-card ml-12"
@@ -35,18 +41,13 @@
           <v-col cols="12" sm="1">
             <v-icon x-large color="#FFFF">mdi-alert-circle</v-icon>
           </v-col>
-          <v-col cols="12" sm="8" class="white--text">
+          <v-col cols="12" sm="11" class="float-left white--text">
             <v-row>
               <span class="font-weight-bold">{{ $t('label.rejection_note') }}</span>
             </v-row>
             <v-row class="mt-1">
               <span>"{{ detail.verified_comment }}"</span>
             </v-row>
-          </v-col>
-          <v-col cols="12" sm="3">
-            <v-btn class="primary--text" @click="handleResendVerificationCase">
-              Perbaharui Data Pasien
-            </v-btn>
           </v-col>
         </v-row>
       </div>

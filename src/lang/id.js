@@ -464,6 +464,7 @@ export default {
     fix_case: 'Perbaiki Data Kasus',
     fix_data: 'Perbaiki Data',
     verification_process: 'Proses Verifikasi',
+    fix_done: 'Selesai Perbaiki',
     total_case: 'Jumlah Kasus',
     label: 'Label',
     map_description_step_1: 'Klik pada salah satu titik untuk melihat detail kasus.',
