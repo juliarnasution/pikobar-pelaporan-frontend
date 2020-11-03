@@ -70,6 +70,12 @@
       :show.sync="showDuplicatedNikDialog"
       :content="nikDuplicateMessage"
     />
+    <faskes-verification
+      :show-dialog="showFaskesVerificationDialog"
+      :show.sync="showFaskesVerificationDialog"
+      :submit-data.sync="faskesSubmitData"
+      :content="$t('label.label_verification_faskes')"
+    />
   </div>
 </template>
 <script>
@@ -86,7 +92,11 @@ export default {
     return {
       isLoading: false,
       showDuplicatedNikDialog: false,
+      showFaskesVerificationDialog: false,
+      faskesSubmitData: false,
       nikDuplicateMessage: null,
+      rolesPerm: rolesPerm,
+      idCase: '',
       isFixCase: false,
       volunteerPanel: [0],
       panelRiwayat: [0],
@@ -103,6 +113,13 @@ export default {
       'phoneNumber',
       'district_user'
     ])
+  },
+  watch: {
+    'faskesSubmitData'(value) {
+      if (value) {
+        this.$router.push(`/laporan/detail-report/${this.idCase}`)
+      }
+    }
   },
   async mounted() {
     this.$store.dispatch('reports/resetFormPasien')
@@ -141,7 +158,8 @@ export default {
           await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
           await this.$store.dispatch('reports/resetFormPasien')
           if ((this.roles[0] === rolesPerm.FASKES) || (this.isFixCase)) {
-            await this.$router.push('/laporan/verification')
+            this.idCase = response.data._id
+            this.showFaskesVerificationDialog = true
           } else {
             this.$router.push(`/laporan/detail-report/${response.data._id}`)
           }

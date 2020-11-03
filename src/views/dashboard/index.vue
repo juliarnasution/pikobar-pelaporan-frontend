@@ -661,7 +661,6 @@ export default {
         dead,
         total: active + recovery + dead
       }
-      // console.log(this.statistic.confirmed)
     },
     async getStatisticNotConfirmed() {
       this.loadingNotConfirmed = true
@@ -703,9 +702,6 @@ export default {
         donePercent: (pdpDone / pdpTotal) * 100,
         total: pdpTotal
       }
-      // console.log(this.statistic.otg)
-      // console.log(this.statistic.odp)
-      // console.log(this.statistic.pdp)
     },
     async getStatisticOTG() {
       this.loadingOTG = true
@@ -745,8 +741,6 @@ export default {
         process: processCumulative,
         done: doneCumulative
       }
-      // console.log(this.statistic.otgDaily)
-      // console.log(this.statistic.otgCumulative)
     },
     async getStatisticODP() {
       this.loadingODP = true
@@ -786,8 +780,6 @@ export default {
         process: processCumulative,
         done: doneCumulative
       }
-      // console.log(this.statistic.odpDaily)
-      // console.log(this.statistic.odpCumulative)
     },
     async getStatisticPDP() {
       this.loadingPDP = true
@@ -827,8 +819,6 @@ export default {
         process: processCumulative,
         done: doneCumulative
       }
-      // console.log(this.statistic.pdpDaily)
-      // console.log(this.statistic.pdpCumulative)
     },
     async getStatisticPositive() {
       this.loadingPositive = true
@@ -874,8 +864,6 @@ export default {
         recovery: recoveryCumulative,
         dead: deadCumulative
       }
-      // console.log(this.statistic.positiveDaily)
-      // console.log(this.statistic.positiveCumulative)
     },
     async onSelectTimeSeries(value) {
       this.selectedTimeSeries = value

@@ -224,7 +224,7 @@ export default {
       showFailedDialog: false,
       isSubmit: false,
       isRefresh: false,
-      totalItem: null,
+      totalItem: 0,
       verificationQuery: {
         'id': '',
         'data': {
@@ -279,20 +279,18 @@ export default {
         { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined'
+      this.listQuery.verified_status = 'pending,declined,hold'
     } else {
       this.headers.push(
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined'
+      this.listQuery.verified_status = 'pending'
     }
-    const response = await this.$store.dispatch('reports/countVerificationCase')
-    this.totalItem = response.data.PENDING + response.data.DECLINED
     if (this.roles[0] !== 'faskes') {
       this.listQuery.sort = 'updatedAt:asc'
     }
-    await this.$store.dispatch('reports/listReportCase', this.listQuery)
+    await this.handleSearch()
     this.listQuery.address_district_code = this.district_user
     this.medicalFacilityListQuery.code_district_city = this.district_user
     const responseMedList = await this.$store.dispatch('reports/listMedicalFacility', this.medicalFacilityListQuery)
@@ -300,8 +298,8 @@ export default {
   },
   methods: {
     async handleSearch() {
-      await this.$store.dispatch('reports/countVerificationCase')
-      await this.$store.dispatch('reports/listReportCase', this.listQuery)
+      const response = await this.$store.dispatch('reports/listReportCase', this.listQuery)
+      this.totalItem = response.data._meta.itemCount || 0
     },
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
@@ -392,6 +390,11 @@ export default {
     color: white;
     border-radius: 10px;
     background-color: #f91717;
+  }
+  .hold {
+    color: white;
+    border-radius: 10px;
+    background-color: #FFC62B;
   }
   .disclaimer {
     background: linear-gradient(78.54deg, #27AE60 0%, #6FCF97 100%) !important;
