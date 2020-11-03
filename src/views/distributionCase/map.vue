@@ -648,7 +648,6 @@ export default {
     zoomLayer(value = null) {
       if (this.zoomOld !== this.zoomNew) {
         if (this.zoomNew === 1) {
-          console.log('create layer city')
           this.removeLayer()
           this.createLayerCity()
           this.removeMarker()
@@ -658,7 +657,6 @@ export default {
             this.createMarker(this.district_user)
           }
         } else if (this.zoomNew === 2) {
-          console.log('create layer district')
           this.removeLayer()
           this.createLayerDistrict(value)
           this.removeMarker()
@@ -668,7 +666,6 @@ export default {
             this.createMarker(this.district_user)
           }
         } else if (this.zoomNew === 3) {
-          console.log('create layer village')
           this.removeLayer()
           this.createLayerVillage(value)
           this.removeMarker()
