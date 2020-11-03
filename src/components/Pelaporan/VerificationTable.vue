@@ -53,10 +53,18 @@
             </td>
             <td v-if="roles[0] === 'faskes'" class="adjust-width">
               <span
+                v-if="item.verified_status === 'pending'"
                 :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
                 class="pa-2 font-weight-bold"
               >
                 {{ item.verified_status === 'pending' ? $t('label.waiting_for_verification') : $t('label.case_rejected') }}
+              </span>
+              <span
+                v-else
+                :class="{'hold': item.verified_status === 'hold', 'declined': item.verified_status === 'declined'}"
+                class="pa-2 font-weight-bold"
+              >
+                {{ item.verified_status === 'hold' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
               </span>
             </td>
             <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
@@ -91,10 +99,10 @@
                   <v-card>
                     <div v-if="roles[0] === 'faskes'">
                       <v-list-item
-                        v-if="item.verified_status === 'declined'"
+                        v-if="item.verified_status === 'declined' || item.verified_status === 'hold'"
                         @click="handleDetailFixCase(item._id)"
                       >
-                        {{ $t('label.fix_case') }}
+                        {{ item.verified_status === 'declined'? $t('label.fix_case'):$t('label.edit_and_detail') }}
                       </v-list-item>
                       <v-list-item
                         v-else

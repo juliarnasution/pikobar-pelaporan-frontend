@@ -6,7 +6,7 @@
     </v-row>
     <v-card class="pa-1 mt-2 mx-auto header-survey-list">
       <v-row justify="space-between">
-        <v-col cols="12" md="8" sm="8">
+        <v-col cols="12" md="7" sm="7">
           <v-card-text class="font-weight-bold">
             <v-card-title class="text-header-close-contact">
               {{ detail.id_case ? detail.id_case.toUpperCase() +' • '+ detail.name+' • '+detail.nik:'' }}
@@ -16,7 +16,7 @@
             </v-card-subtitle>
           </v-card-text>
         </v-col>
-        <v-col cols="12" md="4" sm="4">
+        <v-col cols="12" md="5" sm="4">
           <div v-if="detail.verified_status === 'pending' & roles[0] != 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
             <v-btn class="primary--text" @click="handleVerificationCase">
               {{ $t('label.case_report_verification') }}
@@ -25,7 +25,17 @@
           <div v-else-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
             <v-btn class="primary--text" @click="handleResendVerificationCase">
               <v-icon class="primary--text">mdi-check-circle-outline</v-icon>&nbsp;
-              {{ $t('label.fix_done') }}
+              {{ $t('label.finish_and_submit') }}
+            </v-btn>
+          </div>
+          <div v-else-if="detail.verified_status === 'hold' & roles[0] === 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
+            <v-btn class="warning--text mr-2" @click="handleSendCase('hold')">
+              <v-icon class="warning--text">mdi-content-save</v-icon>&nbsp;
+              {{ $t('label.save_as_draft') }}
+            </v-btn>
+            <v-btn class="primary--text" @click="handleSendCase('pending')">
+              <v-icon class="primary--text">mdi-check-circle-outline</v-icon>&nbsp;
+              {{ $t('label.finish_and_submit') }}
             </v-btn>
           </div>
           <div
@@ -550,6 +560,18 @@ export default {
     },
     async handleResendVerificationCase() {
       this.resendConfirmation = true
+    },
+    async handleSendCase(value) {
+      const data = {
+        'id': this.detail._id,
+        'data': {
+          'verified_status': value
+        }
+      }
+      const response = await this.$store.dispatch('reports/verifyCase', data)
+      if (response.status === 200 || response.status === 201) {
+        await this.$router.push('/laporan/verification')
+      }
     },
     async resendVerificationCase() {
       const data = {

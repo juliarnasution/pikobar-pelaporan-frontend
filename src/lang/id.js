@@ -876,6 +876,10 @@ export default {
     case_report_verification: 'Verifikasi Laporan Kasus',
     resend_data_case_fixed: 'Kirim Kembali Perbaikan Data Kasus',
     still_quarantined: 'Masih Dikarantina',
+    finish_and_submit: 'Selesai & Ajukan',
+    save_as_draft: 'Simpan Sebagai Draft ',
+    has_not_been_submitted: 'Belum Diajukan',
+    edit_and_detail: 'Edit & Detail',
     submit: 'Kirimkan',
     take_survey: 'Ikuti Survei',
     survei_label: 'Kami tim pikobar ingin mengetahui persepsi para pengguna Aplikasi Pelaporan Pikobar. Partisipasi anda sangat penting karena hasil survei ini akan menjadi bahan masukkan/evaluasi bagi kami untuk meningkatkan layanan saat ini. Yuk, bantu isi survei berikut!',
@@ -889,7 +893,8 @@ export default {
     supporting_information_data_and_patient_test_results: 'Data informasi penunjang dan hasil test pasien',
     history_of_patient_travel_abroad_out_of_town: 'Riwayat perjalanan pasien ke luar negeri / luar kota',
     patient_external_exposure_factor_information_data: 'Data informasi faktor paparan eksternal pasien',
-    patient_related_contact_information_data: 'Data informasi kontak yang berkaitan dengan pasien'
+    patient_related_contact_information_data: 'Data informasi kontak yang berkaitan dengan pasien',
+    label_verification_faskes: 'Data berhasil tersimpan, silahkan klik lanjutkan untuk masuk ke langkah 2'
   },
   success: {
     login_success: 'Login Berhasil',
