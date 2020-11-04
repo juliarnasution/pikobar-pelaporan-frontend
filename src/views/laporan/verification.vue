@@ -129,7 +129,7 @@
           <v-tab @click="onTabChanges('pending,declined')">{{ tabLabel[0] }}</v-tab>
           <v-tab @click="onTabChanges('pending')">{{ tabLabel[1] }}</v-tab>
           <v-tab @click="onTabChanges('declined')">{{ tabLabel[2] }}</v-tab>
-          <v-tab v-if="roles[0] === 'faskes'" @click="onTabChanges('hold')">{{ tabLabel[3] }}</v-tab>
+          <v-tab v-if="roles[0] === 'faskes'" @click="onTabChanges('draft')">{{ tabLabel[3] }}</v-tab>
           <v-tab-item v-for="(tabItem, index) in tabLabel" :key="index">
             <v-row>
               <verification-table
@@ -311,7 +311,7 @@ export default {
         { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined,hold'
+      this.listQuery.verified_status = 'pending,declined,draft'
     } else {
       this.headers.push(
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
@@ -437,7 +437,7 @@ export default {
     border-radius: 10px;
     background-color: #f91717;
   }
-  .hold {
+  .draft {
     color: white;
     border-radius: 10px;
     background-color: #FFC62B;

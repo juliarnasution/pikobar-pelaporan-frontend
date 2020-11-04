@@ -25,6 +25,7 @@
             :params="params"
             :is-loading="isLoading"
             :handle-print="handlePrintPNG"
+            :handle-export-excel="onExportExcelCriteria"
           />
           <v-row v-if="item === items[0]">
             <v-col>
@@ -58,6 +59,7 @@
 <script>
 import FileSaver from 'file-saver'
 import { formatDatetime } from '@/utils/parseDatetime'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'RecapStatus',
@@ -81,6 +83,11 @@ export default {
       listSuspect: [],
       listCloseContact: []
     }
+  },
+  computed: {
+    ...mapGetters('user', [
+      'fullName'
+    ])
   },
   watch: {
     params: {
@@ -133,6 +140,14 @@ export default {
       }
       const output = await this.$html2canvas(el, options)
       await FileSaver.saveAs(output, filename)
+      this.isLoading = false
+    },
+    async onExportExcelCriteria() {
+      this.isLoading = true
+      const response = await this.$store.dispatch('statistic/exportCriteria', this.listQuery)
+      const dateNow = Date.now()
+      const fileName = `${this.$t('label.recap_close_suspect_possible_confirmed_contacts')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      FileSaver.saveAs(response, fileName)
       this.isLoading = false
     }
   }

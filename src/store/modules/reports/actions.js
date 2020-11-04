@@ -72,6 +72,14 @@ export default {
       return error.response
     }
   },
+  async summaryReportCase({ commit }, id) {
+    try {
+      const response = await requestServer(`/api/v2/cases/${id}/summary`, 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async deleteReportCase({ commit }, id) {
     try {
       const response = await requestServer(`/api/cases/${id}`, 'DELETE')

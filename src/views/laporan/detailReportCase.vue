@@ -23,8 +23,8 @@
               {{ $t('label.case_report_verification') }}
             </v-btn>
           </div>
-          <div v-else-if="roles[0] === 'faskes' & detail.verified_status === 'hold' || detail.verified_status === 'declined' " class="d-flex align-center justify-center pa-5 mx-auto">
-            <v-btn class="warning--text mr-2" @click="handleSendCase('hold')">
+          <div v-else-if="roles[0] === 'faskes' & detail.verified_status === 'draft' || detail.verified_status === 'declined' " class="d-flex align-center justify-center pa-5 mx-auto">
+            <v-btn class="warning--text mr-2" @click="handleSendCase('draft')">
               <v-icon class="warning--text">mdi-content-save</v-icon>&nbsp;
               {{ $t('label.save_as_draft') }}
             </v-btn>
@@ -141,9 +141,17 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              :color="statusCase.status_inspection_support === 1 ? '#6FCF97':'#E53935'"
+              color="#6FCF97"
             >
-              {{ statusCase.status_inspection_support === 1 ? $t('label.complete'):$t('label.incomplete') }}
+              {{ summaryReportCase.pcrTotal || 0 }}
+              {{ $t('label.pcr') }}
+            </v-chip>
+            <v-chip
+              class="ma-2"
+              color="#6FCF97"
+            >
+              {{ summaryReportCase.rapidTotal || 0 }}
+              {{ $t('label.rapid') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -255,9 +263,10 @@
           <v-row class="justify-center pb-6">
             <v-chip
               class="ma-2"
-              :color="statusCase.status_closecontact === 1 ? '#6FCF97':'#E53935'"
+              color="#6FCF97"
             >
-              {{ statusCase.status_closecontact === 1 ? $t('label.complete'):$t('label.incomplete') }}
+              {{ summaryReportCase.relatedCasesTotal || 0 }}
+              {{ $t('label.related_contacts') }}
             </v-chip>
           </v-row>
         </v-card>
@@ -372,6 +381,7 @@ export default {
       idUniqueCase: '',
       formatDate: 'YYYY/MM/DD',
       listCloseContact: [],
+      summaryReportCase: 0,
       statusCase: {
         status_clinical: 0,
         status_closecontact: 0,
@@ -426,6 +436,7 @@ export default {
       if (!value) {
         this.getListCloseContactByCase(this.$route.params.id)
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     async isSubmit(value) {
@@ -485,12 +496,14 @@ export default {
     'dialogInspectionSupport': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     }
   },
   async mounted() {
     await this.detailCase()
     await this.getStatusCase(this.$route.params.id)
+    await this.getSummaryCase(this.$route.params.id)
   },
   methods: {
     formatDatetime,
@@ -543,6 +556,10 @@ export default {
       this.statusCase = response.data
       this.checkStatusHistoryTravel(response.data)
     },
+    async getSummaryCase(id) {
+      const response = await this.$store.dispatch('reports/summaryReportCase', id)
+      this.summaryReportCase = response.data
+    },
     checkStatusHistoryTravel(data) {
       if (data.status_travel_public === 1 &&
           data.status_travel_local === 1 && data.status_travel_import === 1) {
@@ -563,8 +580,8 @@ export default {
     async handleSendCase(value) {
       this.verificationQuery.id = this.$route.params.id
       this.verificationQuery.data.verified_status = value
-      this.resendText = value === 'hold' ? this.$t('label.save_as_draft') : this.$t('label.finish_and_submit')
-      this.resendTextContent = value === 'hold' ? this.$t('label.resend_case_redaction_2') : this.$t('label.resend_case_redaction_3')
+      this.resendText = value === 'draft' ? this.$t('label.save_as_draft') : this.$t('label.finish_and_submit')
+      this.resendTextContent = value === 'draft' ? this.$t('label.resend_case_redaction_2') : this.$t('label.resend_case_redaction_3')
       this.resendConfirmation = true
     },
     async resendVerificationCase() {
