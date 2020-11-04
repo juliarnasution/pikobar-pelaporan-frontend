@@ -13,6 +13,7 @@
             </v-card-title>
             <v-card-subtitle class="text-sub-header-close-contact">
               {{ $t('label.complete_history_and_patient_information_below') }}
+              {{ roles[0] === 'faskes' ? $t('label.redaction_detail_faskes'):'' }}
             </v-card-subtitle>
           </v-card-text>
         </v-col>
@@ -22,13 +23,7 @@
               {{ $t('label.case_report_verification') }}
             </v-btn>
           </div>
-          <div v-else-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
-            <v-btn class="primary--text" @click="handleResendVerificationCase">
-              <v-icon class="primary--text">mdi-check-circle-outline</v-icon>&nbsp;
-              {{ $t('label.finish_and_submit') }}
-            </v-btn>
-          </div>
-          <div v-else-if="detail.verified_status === 'hold' & roles[0] === 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
+          <div v-else-if="roles[0] === 'faskes' & detail.verified_status === 'hold' || detail.verified_status === 'declined' " class="d-flex align-center justify-center pa-5 mx-auto">
             <v-btn class="warning--text mr-2" @click="handleSendCase('hold')">
               <v-icon class="warning--text">mdi-content-save</v-icon>&nbsp;
               {{ $t('label.save_as_draft') }}
@@ -354,6 +349,8 @@
     <resend-confirmation
       :show-dialog="resendConfirmation"
       :show.sync="resendConfirmation"
+      :label-text="resendText"
+      :label-content="resendTextContent"
       :submit-data.sync="isResend"
     />
   </div>
@@ -393,6 +390,8 @@ export default {
           'verified_comment': ''
         }
       },
+      resendText: '',
+      resendTextContent: '',
       showVerificationForm: false,
       showConfirmation: false,
       isStatusHistoryTravel: false,
@@ -562,23 +561,14 @@ export default {
       this.resendConfirmation = true
     },
     async handleSendCase(value) {
-      const data = {
-        'id': this.detail._id,
-        'data': {
-          'verified_status': value
-        }
-      }
-      const response = await this.$store.dispatch('reports/verifyCase', data)
-      if (response.status === 200 || response.status === 201) {
-        await this.$router.push('/laporan/verification')
-      }
+      this.verificationQuery.id = this.$route.params.id
+      this.verificationQuery.data.verified_status = value
+      this.resendText = value === 'hold' ? this.$t('label.save_as_draft') : this.$t('label.finish_and_submit')
+      this.resendTextContent = value === 'hold' ? this.$t('label.resend_case_redaction_2') : this.$t('label.resend_case_redaction_3')
+      this.resendConfirmation = true
     },
     async resendVerificationCase() {
-      const data = {
-        id: this.$route.params.id,
-        data: this.detail
-      }
-      const response = await this.$store.dispatch('reports/correctCaseReport', data)
+      const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
       if (response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.send_data_success'))
         await this.$store.dispatch('reports/resetFormPasien')

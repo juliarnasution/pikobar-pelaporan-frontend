@@ -5,7 +5,8 @@
         <img src="@/static/confirmation-logo.svg">
       </v-row>
       <v-row class="mx-0 mb-6 text-center" justify="center">
-        {{ $t('label.resend_case_redaction') }}
+        <p class="font-weight-bold mb-2">{{ labelText }}</p>
+        <p class="mb-0">{{ labelContent }}</p>
       </v-row>
       <v-row class="mx-0">
         <v-col class="pa-0 mr-6">
@@ -26,7 +27,7 @@
             min-width="0px"
             @click="onSubmit(true)"
           >
-            <span class="text-capitalize verify">{{ $t('label.submit') }}</span>
+            <span class="text-capitalize verify">{{ labelText }}</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -40,6 +41,14 @@ export default {
     showDialog: {
       type: Boolean,
       default: false
+    },
+    labelText: {
+      type: String,
+      default: ''
+    },
+    labelContent: {
+      type: String,
+      default: ''
     }
   },
   data() {

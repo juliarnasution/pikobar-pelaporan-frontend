@@ -342,7 +342,9 @@ export default {
     dashboard_disclaimer: 'Data yang ditampilkan pada Dashboard ini berdasarkan data yang telah dilaporkan melalui fitur “Laporan Kasus”. Perbedaan jumlah data dengan Aplikasi Pikobar (http://pikobar.jabarprov.go.id/) dapat terjadi karena saat ini masih menggunakan sumber data manual yang dilaporkan harian dari masing-masing Dinkes Kab/kota kepada Dinkes Provinsi.',
     disclaimer_help: 'Pelajari lebih lanjut.',
     total_positive_case_death: 'Jumlah kasus positif yang meninggal',
-    resend_case_redaction :'Data yang anda perbaharui akan di verifikasi oleh Dinas Kesehatan. Pastikan data sudah terisi dengan benar',
+    resend_case_redaction_1: 'Data yang anda perbaharui akan di verifikasi oleh Dinas Kesehatan. Pastikan data sudah terisi dengan benar',
+    resend_case_redaction_2: 'Data akan disimpan tanpa diajukan kepada Dinas Kesehatan dan dapat update kembali',
+    resend_case_redaction_3: 'Data akan diajukan kepada Dinas Kesehatan dan tidak dapat diubah',
     other_places: 'Tempat Lainnya',
     others: 'Lainnya',
     additional_condition: 'Kondisi Penyerta',
@@ -384,6 +386,7 @@ export default {
     waiting_for_verification: 'Menunggu Diverifikasi',
     patient_recap: 'Rekap Pasien ',
     case_rejected: 'Data Kasus Ditolak',
+    case_draft: 'Data Kasus Draft',
     update_case: 'Perbarui Kasus',
     rejection_note: 'Catatan Penolakan',
     tutorial: 'Panduan',
@@ -880,6 +883,8 @@ export default {
     save_as_draft: 'Simpan Sebagai Draft ',
     has_not_been_submitted: 'Belum Diajukan',
     edit_and_detail: 'Edit & Detail',
+    view_and_complete_case_data: 'Lihat & Selesaikan data kasus',
+    view_and_fix_case_data: 'Lihat & Perbaiki data kasus',
     submit: 'Kirimkan',
     take_survey: 'Ikuti Survei',
     survei_label: 'Kami tim pikobar ingin mengetahui persepsi para pengguna Aplikasi Pelaporan Pikobar. Partisipasi anda sangat penting karena hasil survei ini akan menjadi bahan masukkan/evaluasi bagi kami untuk meningkatkan layanan saat ini. Yuk, bantu isi survei berikut!',
@@ -894,7 +899,8 @@ export default {
     history_of_patient_travel_abroad_out_of_town: 'Riwayat perjalanan pasien ke luar negeri / luar kota',
     patient_external_exposure_factor_information_data: 'Data informasi faktor paparan eksternal pasien',
     patient_related_contact_information_data: 'Data informasi kontak yang berkaitan dengan pasien',
-    label_verification_faskes: 'Data berhasil tersimpan, silahkan klik lanjutkan untuk masuk ke langkah 2'
+    label_verification_faskes: 'Data berhasil tersimpan, silahkan klik lanjutkan untuk masuk ke langkah 2',
+    redaction_detail_faskes: 'Lengkapi data riwayat dan informasi pasien di bawah ini, Klik “Simpan Sebagai Draft” atau “Selesai & Ajukan” jika data sudah lengkap'
   },
   success: {
     login_success: 'Login Berhasil',
