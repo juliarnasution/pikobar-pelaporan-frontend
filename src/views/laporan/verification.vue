@@ -117,7 +117,37 @@
           </v-row>
         </div>
       </div>
-      <verification-table
+      <v-row class="mx-0 my-4">
+        <v-tabs
+          v-model="tab"
+          class="elevation-2"
+          background-color="white"
+          active-class="active-class"
+          color="red"
+          hide-slider
+        >
+          <v-tab @click="onTabChanges('pending,declined')">{{ tabLabel[0] }}</v-tab>
+          <v-tab @click="onTabChanges('pending')">{{ tabLabel[1] }}</v-tab>
+          <v-tab @click="onTabChanges('declined')">{{ tabLabel[2] }}</v-tab>
+          <v-tab v-if="roles[0] === 'faskes'" @click="onTabChanges('hold')">{{ tabLabel[3] }}</v-tab>
+          <v-tab-item v-for="(tabItem, index) in tabLabel" :key="index">
+            <v-row>
+              <verification-table
+                :table-headers="headers"
+                :list-kasus="listKasus"
+                :query="listQuery"
+                :show-failed-dialog.sync="showFailedDialog"
+                :show-verification-form.sync="showVerificationForm"
+                :case-detail.sync="caseDetail"
+                :close-contact-detail.sync="closeContactCase"
+                :refresh-page.sync="isRefresh"
+                :verification-query="verificationQuery"
+              />
+            </v-row>
+          </v-tab-item>
+        </v-tabs>
+      </v-row>
+      <!-- <verification-table
         :table-headers="headers"
         :list-kasus="listKasus"
         :query="listQuery"
@@ -127,7 +157,7 @@
         :close-contact-detail.sync="closeContactCase"
         :refresh-page.sync="isRefresh"
         :verification-query="verificationQuery"
-      />
+      /> -->
     </v-card>
     <pagination
       :total="totalList"
@@ -219,6 +249,8 @@ export default {
       dialogForm: true,
       caseDetail: null,
       closeContactCase: [],
+      tab: null,
+      tabLabel: [this.$t('label.all'), this.$t('label.waiting_for_verification'), this.$t('label.case_rejected'), this.$t('label.case_draft')],
       showVerificationForm: false,
       showConfirmation: false,
       showFailedDialog: false,
@@ -321,6 +353,20 @@ export default {
         this.listQuery.address_district_code = ''
       }
       this.$store.dispatch('reports/listReportCase', this.listQuery)
+    },
+    onTabChanges(value) {
+      const ids = this.headers.length
+      this.listQuery.page = 1
+      if (this.roles[0] === 'dinkeskota' && value === 'declined') {
+        this.headers.splice(7, 2)
+      } else if (ids === 7) {
+        this.headers.push(
+          { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
+          { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
+        )
+      }
+      this.listQuery.verified_status = value
+      this.handleSearch()
     }
   }
 }
