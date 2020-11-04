@@ -11,6 +11,7 @@
           :params="params"
           :is-loading="isLoading"
           :handle-print="handlePrintPNG"
+          :handle-export-excel="onExportExcelDemographic"
         />
         <v-card class="ma-4">
           <div ref="printRecapDemographic">
@@ -26,6 +27,7 @@
 <script>
 import FileSaver from 'file-saver'
 import { formatDatetime } from '@/utils/parseDatetime'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'RecapDemographic',
@@ -38,6 +40,11 @@ export default {
       listDemographicCase: [],
       isLoading: false
     }
+  },
+  computed: {
+    ...mapGetters('user', [
+      'fullName'
+    ])
   },
   watch: {
     params: {
@@ -67,6 +74,14 @@ export default {
       }
       const output = await this.$html2canvas(el, options)
       await FileSaver.saveAs(output, filename)
+      this.isLoading = false
+    },
+    async onExportExcelDemographic() {
+      this.isLoading = true
+      const response = await this.$store.dispatch('statistic/exportDemographic', this.listQuery)
+      const dateNow = Date.now()
+      const fileName = `${this.$t('label.demographic_data_recap')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      FileSaver.saveAs(response, fileName)
       this.isLoading = false
     }
   }

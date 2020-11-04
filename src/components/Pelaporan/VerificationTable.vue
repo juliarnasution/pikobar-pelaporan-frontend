@@ -60,10 +60,10 @@
             </span>
             <span
               v-else
-              :class="{'hold': item.verified_status === 'hold', 'declined': item.verified_status === 'declined'}"
+              :class="{'draft': item.verified_status === 'draft', 'declined': item.verified_status === 'declined'}"
               class="pa-2 font-weight-bold"
             >
-              {{ item.verified_status === 'hold' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
+              {{ item.verified_status === 'draft' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
             </span>
           </td>
           <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
@@ -98,7 +98,7 @@
                 <v-card>
                   <div v-if="roles[0] === 'faskes'">
                     <v-list-item
-                      v-if="item.verified_status === 'declined' || item.verified_status === 'hold'"
+                      v-if="item.verified_status === 'declined' || item.verified_status === 'draft'"
                       @click="handleDetailFixCase(item._id)"
                     >
                       {{ item.verified_status === 'declined'? $t('label.fix_case'):$t('label.view_and_complete_case_data') }}

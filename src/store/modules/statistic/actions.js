@@ -142,5 +142,35 @@ export default {
     } catch (error) {
       return error.response
     }
+  },
+  async exportDemographic({
+    commit
+  }, params) {
+    try {
+      const response = await request({
+        url: `/api/dashboard/v2/export-demographic`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async exportCriteria({
+    commit
+  }, params) {
+    try {
+      const response = await request({
+        url: `/api/dashboard/v2/export-criteria`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
   }
 }

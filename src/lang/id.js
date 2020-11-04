@@ -802,6 +802,7 @@ export default {
     there_symptoms: 'Terdapat Gejala',
     comparison: 'Perbandingan',
     demographic_recap: 'Rekap Demografis',
+    demographic_data_recap: 'Rekap Data Demografis',
     and: 'dan',
     area: 'Wilayah',
     west_java: 'Jawa Barat',

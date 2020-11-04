@@ -37,6 +37,8 @@
               color="#27AE60"
               outlined
               block
+              :loading="isLoading"
+              @click="handleExportExcel"
             >
               {{ $t('label.export_xls') }}
             </v-btn>
@@ -108,6 +110,10 @@ export default {
       default: null
     },
     handlePrint: {
+      type: Function,
+      default: null
+    },
+    handleExportExcel: {
       type: Function,
       default: null
     },
