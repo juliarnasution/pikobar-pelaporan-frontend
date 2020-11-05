@@ -239,7 +239,7 @@ export default {
   },
   methods: {
     handlerDate(date) {
-      date = this.$moment(date).format('DD MMMM YYYY')
+      date = date ? this.$moment(date).format('DD MMMM YYYY') : '-'
       return date
     }
   }

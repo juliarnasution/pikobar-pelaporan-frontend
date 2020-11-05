@@ -33,7 +33,7 @@
         <p>{{ $t('label.interview_date') }}</p>
       </v-col>
       <v-col>
-        <p>{{ this.$moment(detail.interview_date).format('DD MMMM YYYY') }}</p>
+        <p>{{ this.$moment(detail.interview_date).format('DD MMMM YYYY')||'-' }}</p>
       </v-col>
     </v-row>
   </div>
