@@ -883,7 +883,7 @@ export default {
     finish_and_submit: 'Selesai & Ajukan',
     save_as_draft: 'Simpan Sebagai Draft ',
     has_not_been_submitted: 'Belum Diajukan',
-    edit_and_detail: 'Edit & Detail',
+    edit_and_detail: 'Edit & Lihat Detail',
     view_and_complete_case_data: 'Lihat & Selesaikan data kasus',
     view_and_fix_case_data: 'Lihat & Perbaiki data kasus',
     submit: 'Kirimkan',
