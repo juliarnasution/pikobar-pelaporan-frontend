@@ -124,7 +124,7 @@
                       <p>{{ $t('label.specimen_type') }}</p>
                     </v-col>
                     <v-col>
-                      <p>{{ data.specimens_type }}</p>
+                      <p>{{ $t(`label.${data.specimens_type}`) }}</p>
                     </v-col>
                   </v-row>
                   <v-row class="row-detail">
@@ -205,7 +205,7 @@ export default {
   },
   methods: {
     handlerDate(date) {
-      date = this.$moment(date).format('DD MMMM YYYY')
+      date = date ? this.$moment(date).format('DD MMMM YYYY') : '-'
       return date
     }
   }

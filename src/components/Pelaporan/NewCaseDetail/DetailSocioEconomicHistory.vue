@@ -9,7 +9,7 @@
         <p>{{ $t('label.physical_activity') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.pysichal_activity ? listPhysicalActivity[detail.pysichal_activity].text:'-' }}</p>
+        <p>{{ detail.last_history.pysichal_activity ? listPhysicalActivity[detail.last_history.pysichal_activity].text:'-' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -21,7 +21,7 @@
         <p>{{ $t('label.smoking') }}</p>
       </v-col>
       <v-col>
-        <p><answer-list :answer="detail.smoking" /></p>
+        <p><answer-list :answer="detail.last_history.smoking" /></p>
       </v-col>
     </v-row>
     <v-row class="row-detail">
@@ -33,7 +33,7 @@
         <p>{{ $t('label.consume_alcohol') }}</p>
       </v-col>
       <v-col>
-        <p><answer-list :answer="detail.consume_alcohol" /></p>
+        <p><answer-list :answer="detail.last_history.consume_alcohol" /></p>
       </v-col>
     </v-row>
     <v-row class="row-detail">

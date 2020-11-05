@@ -94,6 +94,7 @@ export function setUpDataCase2(caseV2, detail) {
   caseV2.address_street = detail.address_street
   caseV2.rt = detail.rt
   caseV2.rw = detail.rw
+  caseV2.income = detail.income
   caseV2.nationality = detail.nationality
   caseV2.nationality_name = detail.nationality_name
   caseV2.occupation = detail.occupation

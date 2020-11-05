@@ -134,7 +134,7 @@ export default {
   methods: {
     completeAddress,
     handlerDate(date) {
-      date = this.$moment(date).format('DD MMMM YYYY')
+      date = date ? this.$moment(date).format('DD MMMM YYYY') : '-'
       return date
     },
     splitArray(array) {

@@ -169,6 +169,7 @@ function initialState() {
       address_street: '',
       rt: '',
       rw: '',
+      income: '',
       nationality: '',
       nationality_name: '',
       occupation: '',

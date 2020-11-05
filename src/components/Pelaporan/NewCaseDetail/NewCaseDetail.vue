@@ -31,6 +31,7 @@
             <v-divider />
             <v-expansion-panel-content>
               <detail-patient :detail="detail" />
+              <detail-socio-economic-history :detail="detail" />
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
