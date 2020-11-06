@@ -78,7 +78,7 @@ export default {
     },
     async onExportExcelDemographic() {
       this.isLoading = true
-      const response = await this.$store.dispatch('statistic/exportDemographic', this.listQuery)
+      const response = await this.$store.dispatch('statistic/exportDemographic', this.params)
       const dateNow = Date.now()
       const fileName = `${this.$t('label.demographic_data_recap')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)

@@ -144,7 +144,7 @@ export default {
     },
     async onExportExcelCriteria() {
       this.isLoading = true
-      const response = await this.$store.dispatch('statistic/exportCriteria', this.listQuery)
+      const response = await this.$store.dispatch('statistic/exportCriteria', this.params)
       const dateNow = Date.now()
       const fileName = `${this.$t('label.recap_criteria_data')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
