@@ -79,7 +79,7 @@
   </div>
 </template>
 <script>
-import { rolesPerm, ResponseRequest } from '@/utils/constantVariable'
+import { rolesPerm } from '@/utils/constantVariable'
 import { validateScrollUp } from '@/utils/utilsFunction'
 import { ValidationObserver } from 'vee-validate'
 import { mapGetters } from 'vuex'
@@ -140,38 +140,39 @@ export default {
       delete this.formPasien['id_case']
       try {
         this.formPasien.input_source = 'form app'
-        let response
-        if (!this.isFixCase) {
-          this.formPasien.status_identity = 1
-          this.formPasien.status_clinical = 1
-          response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasien)
-        } else {
-          const data = {
-            id: this.$route.params.id,
-            data: this.formPasienV2
-          }
-          response = await this.$store.dispatch('reports/correctCaseReport', data)
-        }
-        if (response.status !== ResponseRequest.UNPROCESSABLE) {
-          this.formPasien['status_identity']
-          this.formPasien['status_clinical']
-          await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
-          await this.$store.dispatch('reports/resetFormPasien')
-          if ((this.roles[0] === rolesPerm.FASKES) || (this.isFixCase)) {
-            this.idCase = response.data._id
-            this.showFaskesVerificationDialog = true
-          } else {
-            this.$router.push(`/laporan/detail-report/${response.data._id}`)
-          }
-        } else {
-          if (response.data.data === 'nik_exists') {
-            this.isLoading = false
-            this.showDuplicatedNikDialog = true
-            this.nikDuplicateMessage = response.data.message
-          } else {
-            await this.$store.dispatch('toast/errorToast', response.data.message)
-          }
-        }
+        console.log(this.formPasien)
+        // let response
+        // if (!this.isFixCase) {
+        //   this.formPasien.status_identity = 1
+        //   this.formPasien.status_clinical = 1
+        //   response = await this.$store.dispatch('reports/createReportCaseV2', this.formPasien)
+        // } else {
+        //   const data = {
+        //     id: this.$route.params.id,
+        //     data: this.formPasien
+        //   }
+        //   response = await this.$store.dispatch('reports/correctCaseReport', data)
+        // }
+        // if (response.status !== ResponseRequest.UNPROCESSABLE) {
+        //   this.formPasien['status_identity']
+        //   this.formPasien['status_clinical']
+        //   await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
+        //   await this.$store.dispatch('reports/resetFormPasien')
+        //   if ((this.roles[0] === rolesPerm.FASKES) || (this.isFixCase)) {
+        //     this.idCase = response.data._id
+        //     this.showFaskesVerificationDialog = true
+        //   } else {
+        //     this.$router.push(`/laporan/detail-report/${response.data._id}`)
+        //   }
+        // } else {
+        //   if (response.data.data === 'nik_exists') {
+        //     this.isLoading = false
+        //     this.showDuplicatedNikDialog = true
+        //     this.nikDuplicateMessage = response.data.message
+        //   } else {
+        //     await this.$store.dispatch('toast/errorToast', response.data.message)
+        //   }
+        // }
       } catch (error) {
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))
       } finally {

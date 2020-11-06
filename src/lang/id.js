@@ -94,6 +94,7 @@ export default {
     autocomplete_instance_placeholder: 'Masukkan jenis instansi',
     example_instance_name: 'Contoh: Rumah Sakit Umum Daerah Kota Bandung',
     recap_case: 'Rekap Kasus',
+    recap_criteria_data: 'Rekap Data Kriteria',
     total_case_recorded: 'Jumlah kasus terdata',
     positif_covid19: 'Positif Covid-19',
     positif_active: 'Positif Aktif',

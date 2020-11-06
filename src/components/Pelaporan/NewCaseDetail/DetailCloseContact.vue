@@ -75,7 +75,7 @@
           <p>{{ $t('label.relationship_with_primary_cases') }}</p>
         </v-col>
         <v-col>
-          <p>{{ data.relationship }}</p>
+          <p>{{ data.relation }}</p>
         </v-col>
       </v-row>
       <v-row class="row-detail">
@@ -99,7 +99,7 @@
           <p>{{ $t('label.first_contact_date') }}</p>
         </v-col>
         <v-col>
-          <p>{{ handlerDate(data.start_contact_date) }}</p>
+          <p>{{ handlerDate(data.first_contact_date) }}</p>
         </v-col>
       </v-row>
       <v-row class="row-detail">
@@ -111,7 +111,7 @@
           <p>{{ $t('label.last_contact_date') }}</p>
         </v-col>
         <v-col>
-          <p>{{ handlerDate(data.end_contact_date) }}</p>
+          <p>{{ handlerDate(data.last_contact_date) }}</p>
         </v-col>
       </v-row>
       <v-divider />

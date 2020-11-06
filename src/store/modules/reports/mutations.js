@@ -18,8 +18,8 @@ export default {
     state.formPasien.nik = ''
     state.formPasien.name = ''
     state.formPasien.birth_date = ''
-    state.formPasien.is_nik_exists = false
-    state.formPasien.is_phone_number_exists = false
+    state.formPasien.is_nik_exists = true
+    state.formPasien.is_phone_number_exists = true
     state.formPasien.is_went_abroad = false
     state.formPasien.is_went_other_city = false
     state.formPasien.is_contact_with_positive = false
@@ -139,10 +139,10 @@ export default {
     state.formPasienV2.status = ''
     state.formPasienV2.final_result = ''
     state.formPasienV2.nik = ''
-    state.formPasienV2.is_nik_exists = false
+    state.formPasienV2.is_nik_exists = true
     state.formPasienV2.note_nik = ''
-    state.formPasienV2.is_phone_number_exists = false
     state.formPasienV2.phone_number = ''
+    state.formPasienV2.is_phone_number_exists = true
     state.formPasienV2.note_phone_number = ''
     state.formPasienV2.name = ''
     state.formPasienV2.gender = ''

@@ -3,10 +3,10 @@
     <v-form ref="form" lazy-validation>
       <v-row align="start">
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-          <label :class="!formPasien.is_nik_exists ? 'required' : ''">{{ $t('label.nik') }}</label>
+          <label :class="formPasien.is_nik_exists ? 'required' : ''">{{ $t('label.nik') }}</label>
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-          <ValidationProvider v-slot="{ errors }" :rules="formPasien.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits|provinceCode'">
+          <ValidationProvider v-slot="{ errors }" :rules="!formPasien.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits|provinceCode'">
             <v-text-field
               v-model="formPasien.nik"
               name="nik"
@@ -15,8 +15,15 @@
               solo-inverted
             />
           </ValidationProvider>
-          <v-checkbox v-model="formPasien.is_nik_exists" name="is_nik_exists" :label="$t('label.do_not_have_nik')" class="mt-0 pt-0" />
-          <ValidationProvider v-if="formPasien.is_nik_exists" v-slot="{ errors }" rules="required">
+          <v-checkbox
+            v-model="formPasien.is_nik_exists"
+            :true-value="false"
+            :false-value="true"
+            :label="$t('label.do_not_have_nik')"
+            name="is_nik_exists"
+            class="mt-0 pt-0"
+          />
+          <ValidationProvider v-if="!formPasien.is_nik_exists" v-slot="{ errors }" rules="required">
             <label class="required">{{ $t('label.reason_do_not_have_nik') }}</label>
             <v-text-field
               v-model="formPasien.note_nik"
@@ -29,10 +36,10 @@
       </v-row>
       <v-row align="start">
         <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
-          <label :class="!formPasien.is_phone_number_exists ? 'required' : ''">{{ $t('label.phone_number') }}</label>
+          <label :class="formPasien.is_phone_number_exists ? 'required' : ''">{{ $t('label.phone_number') }}</label>
         </v-col>
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-          <ValidationProvider v-slot="{ errors }" :rules="formPasien.is_phone_number_exists ? 'isPhoneNumber' : 'required|isPhoneNumber'">
+          <ValidationProvider v-slot="{ errors }" :rules="!formPasien.is_phone_number_exists ? 'isPhoneNumber' : 'required|isPhoneNumber'">
             <v-text-field
               v-model="formPasien.phone_number"
               name="phone_number"
@@ -44,11 +51,13 @@
           </ValidationProvider>
           <v-checkbox
             v-model="formPasien.is_phone_number_exists"
+            :true-value="false"
+            :false-value="true"
             name="is_phone_number_exists"
             :label="$t('label.do_not_have_phone_number')"
             class="mt-0 pt-0"
           />
-          <ValidationProvider v-if="formPasien.is_phone_number_exists" v-slot="{ errors }" rules="required">
+          <ValidationProvider v-if="!formPasien.is_phone_number_exists" v-slot="{ errors }" rules="required">
             <label class="required">{{ $t('label.reason_do_not_have_phone_number') }}</label>
             <v-text-field
               v-model="formPasien.note_phone_number"
@@ -385,6 +394,7 @@ export default {
       incomeList: incomeList,
       formatDate: 'YYYY/MM/DD',
       date: '',
+      nik: true,
       listCountry: [],
       listNameCases: [],
       listQuery: {
@@ -406,7 +416,10 @@ export default {
     ]),
     ...mapGetters('occupation', [
       'occupationList'
-    ])
+    ]),
+    is_nik() {
+      return !!this.nik
+    }
   },
   watch: {
     'formPasien.birth_date': function(value) {
@@ -417,6 +430,9 @@ export default {
         this.formPasien.monthsOld = age.month
         this.formPasien.age = Number((this.formPasien.yearsOld + (this.formPasien.monthsOld / 12)).toFixed(2))
       }
+    },
+    nik(value) {
+      return !!value
     },
     'formPasien.yearsOld'(value) {
       if (this.formPasien.monthsOld !== '') {

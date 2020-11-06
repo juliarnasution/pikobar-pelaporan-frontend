@@ -162,7 +162,6 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import { formatDatetime } from '@/utils/parseDatetime'
 import EventBus from '@/utils/eventBus'
 export default {
@@ -246,8 +245,8 @@ export default {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
     timeRemain(value) {
-      const now = moment()
-      const maxVerifiedDate = moment(value).add(1, 'days')
+      const now = this.$moment()
+      const maxVerifiedDate = this.$moment(value).add(1, 'days')
 
       // output otomatis mengeluarkan kalimat waktu. Contoh: dalam 3 jam
       return (maxVerifiedDate > now) ? now.to(maxVerifiedDate) : '-'

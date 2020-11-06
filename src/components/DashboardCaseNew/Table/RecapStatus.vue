@@ -146,7 +146,7 @@ export default {
       this.isLoading = true
       const response = await this.$store.dispatch('statistic/exportCriteria', this.listQuery)
       const dateNow = Date.now()
-      const fileName = `${this.$t('label.recap_close_suspect_possible_confirmed_contacts')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      const fileName = `${this.$t('label.recap_criteria_data')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
       this.isLoading = false
     }
