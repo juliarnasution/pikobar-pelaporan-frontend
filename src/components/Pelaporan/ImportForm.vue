@@ -12,7 +12,7 @@
           {{ $t('label.import_you_must_use_an_existing_excel_template') }}
           <a
             class="headline font-weight-medium"
-            href="https://drive.google.com/drive/folders/1AzS8INObyQ8bW0FpIjU9LdYD4jDGR0ly"
+            :href="importTemplateExcel"
             target="_blank"
           >{{ $t('label.download_excel_template_here') }}</a>
         </v-card-text>
@@ -181,6 +181,7 @@ export default {
       tab: null,
       selectedFile: null,
       show: this.showImportForm,
+      importTemplateExcel: process.env.VUE_APP_IMPORT_TEMPLATE,
       successMessage: null,
       errorMessage: null,
       failedDialog: false,
