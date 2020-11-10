@@ -111,18 +111,6 @@
           />
         </v-col>
         <v-col class="px-0">
-          <!-- <v-btn
-            v-if="roles[0] !== 'faskes'"
-            color="#27AE60"
-            class="btn-import-export margin-right"
-            depressed
-            @click="showImportForm = true"
-          >
-            <v-icon left>
-              mdi-download
-            </v-icon>
-            {{ $t('label.import') }}
-          </v-btn> -->
           <v-card-actions class="ma-0 py-0 float-right">
             <v-menu
               :close-on-content-click="false"
@@ -150,6 +138,18 @@
               </v-card>
             </v-menu>
           </v-card-actions>
+          <v-btn
+            v-if="roles[0] !== 'faskes'"
+            color="#27AE60"
+            class="btn-import-export float-right"
+            outlined
+            @click="showImportForm = true"
+          >
+            <v-icon left>
+              mdi-download
+            </v-icon>
+            {{ $t('label.import') }}
+          </v-btn>
         </v-col>
         <v-col>
           <v-btn
@@ -314,8 +314,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="successDialog" max-width="20%">
-      <v-card>
+    <v-dialog v-model="successDialog" max-width="40%">
+      <v-card class="container">
         <v-row class="mx-0" align="center" justify="center">
           <v-card-title><v-icon size="80px" color="success">mdi-checkbox-marked-circle</v-icon></v-card-title>
         </v-row>

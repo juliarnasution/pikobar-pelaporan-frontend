@@ -12,8 +12,7 @@
               {{ detail.id_case ? detail.id_case.toUpperCase() +' • '+ detail.name+' • '+detail.nik:'' }}
             </v-card-title>
             <v-card-subtitle class="text-sub-header-close-contact">
-              {{ $t('label.complete_history_and_patient_information_below') }}
-              {{ roles[0] === 'faskes' ? $t('label.redaction_detail_faskes'):'' }}
+              {{ roles[0] === 'faskes' && detail.verified_status !== 'verified' ? $t('label.redaction_detail_faskes'):$t('label.complete_history_and_patient_information_below') }}
             </v-card-subtitle>
           </v-card-text>
         </v-col>
