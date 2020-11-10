@@ -200,8 +200,12 @@ export default {
     }
   },
   async importExcel({ commit }, data) {
+    const {
+      formData,
+      onProgress
+    } = data
     try {
-      const response = await requestServer('/api/cases-import', 'POST', data)
+      const response = await requestServer('/api/v2/cases-import', 'UPLOAD', formData, onProgress)
       return response
     } catch (error) {
       return error.response
