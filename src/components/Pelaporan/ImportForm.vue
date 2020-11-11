@@ -140,9 +140,7 @@
               </v-row>
             </div>
             <div v-else-if="errorType === 'message' && !isLoading">
-              <v-row v-for="(error, index) in errorList" :key="index">
-                <v-row class="my-2 mx-1 pa-3 error-message">{{ error }}</v-row>
-              </v-row>
+              <v-row class="my-2 mx-1 pa-3 error-message">{{ errorList }}</v-row>
             </div>
             <div v-else-if="successMessage" class="d-flex align-center pa-4 ma-5 import-container">
               <v-alert
