@@ -26,7 +26,7 @@
         >
           <v-expansion-panel>
             <v-expansion-panel-header class="font-weight-bold text-lg">
-              {{ $t('label.form_volunteer_title') }}
+              {{ $t('label.form_patient_title') }}
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>
@@ -45,7 +45,7 @@
         >
           <v-expansion-panel>
             <v-expansion-panel-header class="font-weight-bold text-lg">
-              {{ $t('label.form_volunteer_title') }}
+              {{ $t('label.form_case_history_title') }}
             </v-expansion-panel-header>
             <v-divider />
             <v-expansion-panel-content>

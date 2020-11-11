@@ -291,8 +291,8 @@ export default {
       if (value) {
         const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
         if (response.status === 200 || response.status === 201) {
-          this.handleSearch()
           await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
+          this.$router.push(`/laporan/list`)
         }
         this.isSubmit = false
       }
