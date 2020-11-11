@@ -567,7 +567,7 @@ export default {
   .btn-import-export {
     width: 25%;
     height: 50px !important;
-    min-width: 100px !important;
+    min-width: 98px !important;
   }
   .margin-right {
     margin-right: 8px;
