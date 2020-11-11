@@ -144,9 +144,16 @@ export default {
     },
     async onExportExcelCriteria() {
       this.isLoading = true
+      const criteria = this.params.criteria
+      let criteriaText = this.$t(`label.${criteria.toLowerCase()}`)
+      if (criteria === 'CONFIRMATION') {
+        criteriaText = this.$t('label.confirmed')
+      } else if (criteria === 'CLOSECONTACT') {
+        criteriaText = this.$t('label.tight_contact')
+      }
       const response = await this.$store.dispatch('statistic/exportCriteria', this.params)
       const dateNow = Date.now()
-      const fileName = `${this.$t('label.recap_criteria_data')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      const fileName = `${this.$t('label.recap_criteria_data')} ${criteriaText} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
       this.isLoading = false
     }

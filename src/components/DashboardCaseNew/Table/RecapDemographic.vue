@@ -78,9 +78,16 @@ export default {
     },
     async onExportExcelDemographic() {
       this.isLoading = true
+      const criteria = this.params.criteria
+      let criteriaText = this.$t(`label.${criteria.toLowerCase()}`)
+      if (criteria === 'CONFIRMATION') {
+        criteriaText = this.$t('label.confirmed')
+      } else if (criteria === 'CLOSECONTACT') {
+        criteriaText = this.$t('label.tight_contact')
+      }
       const response = await this.$store.dispatch('statistic/exportDemographic', this.params)
       const dateNow = Date.now()
-      const fileName = `${this.$t('label.demographic_data_recap')} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
+      const fileName = `${this.$t('label.demographic_data_recap')} ${criteriaText} - ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
       this.isLoading = false
     }
