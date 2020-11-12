@@ -13,20 +13,17 @@
           </div>
         </v-col>
         <v-col
+          v-if="roles[0] === 'dinkesprov' || roles[0] === 'superadmin'"
           class="select"
           cols="12"
           lg="4"
           md="12"
         >
-          <!-- <v-select
-            v-model="selected"
-            :items="listStatus"
-            item-value="id"
-            item-text="name"
-            :label="$t('label.status')"
-            solo
-            @change="onSelectStatus"
-          /> -->
+          <select-area-district-city
+            :district-city="districtCity"
+            :city-district.sync="districtCity"
+            :on-select-district="onSelectDistrict"
+          />
         </v-col>
       </v-row>
     </div>
@@ -89,17 +86,6 @@
               </strong>
             </div>
           </div>
-          <!-- <div class="flex-shrink-0 pa-5 border-top">
-            <v-btn
-              height="41px"
-              block
-              color="success"
-              class="button"
-              @click="onDetail(detail._id)"
-            >
-              {{ $t('label.view_detail') }}
-            </v-btn>
-          </div> -->
         </div>
       </div>
       <div class="content">
@@ -111,6 +97,7 @@
           :nodes="network.nodes"
           :edges="network.edges"
           :options="network.options"
+          :events="['selectNode', 'hoverNode']"
           @start-stabilizing="onStabilizationProgress()"
           @stabilized="onStabilizationDone()"
           @select-node="onNodeSelected($event)"
@@ -136,6 +123,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { Network } from 'vue-vis-network'
+import { rolesWidget } from '@/utils/constantVariable'
 
 export default {
   name: 'DistributionCaseNetworkV2',
@@ -153,6 +141,9 @@ export default {
           name: `${this.$t('label.all')} ${this.$t('label.status')}`
         }
       ],
+      districtCity: {
+        kota_kode: '32.73'
+      },
       sidebarActive: false,
       sidebarTransform: 0,
       networkEvents: '',
@@ -203,6 +194,9 @@ export default {
         gender: null,
         first_symptom_date: null,
         current_location_address: null
+      },
+      listQuery: {
+        address_district_code: '32.73'
       }
     }
   },
@@ -219,10 +213,10 @@ export default {
   },
   methods: {
     async getData() {
-      const params = {}
+      if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) this.listQuery.address_district_code = this.district_user
       const res = await this.$store.dispatch(
         'statistic/listCaseRelated',
-        params
+        this.listQuery
       )
 
       const nodes = res.data.edges
@@ -272,6 +266,10 @@ export default {
       this.sidebarActive = true
       this.sidebarTransform = 155
     },
+    async onSelectDistrict(value) {
+      this.listQuery.address_district_code = value.kota_kode
+      this.getData()
+    },
     onSelectStatus() {},
     onNodeDeselected() {
       this.sidebarActive = false
@@ -292,7 +290,7 @@ export default {
     },
     onStabilizationDone() {
       this.loadingNetwork = false
-      const scaleOption = { scale: 0.1 }
+      const scaleOption = { scale: 1 }
       this.$refs.network.moveTo(scaleOption)
       this.$refs.network.setOptions({ physics: false })
     },
