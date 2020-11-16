@@ -28,7 +28,12 @@
                 </v-col>
                 <v-col cols="12" sm="4" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formPasien.physical_check_blood_pressure" class="input-append-btn" type="number" solo-inverted :placeholder="$t('label.blood_pressure')">
+                    <v-text-field
+                      v-model.number="formPasien.physical_check_blood_pressure"
+                      class="input-append-btn"
+                      solo-inverted
+                      :placeholder="$t('label.blood_pressure')"
+                    >
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           mmHg
@@ -39,7 +44,12 @@
                 </v-col>
                 <v-col cols="12" sm="4" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formPasien.physical_check_pulse" class="input-append-btn" type="number" solo-inverted :placeholder="$t('label.pulse')">
+                    <v-text-field
+                      v-model.number="formPasien.physical_check_pulse"
+                      class="input-append-btn"
+                      solo-inverted
+                      :placeholder="$t('label.pulse')"
+                    >
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           {{ $t('label.x_minute') }}
@@ -52,7 +62,12 @@
               <v-row align="center" class="ma-0">
                 <v-col cols="12" sm="4" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formPasien.physical_check_respiration" class="input-append-btn" type="number" solo-inverted :placeholder="$t('label.respiration')">
+                    <v-text-field
+                      v-model.number="formPasien.physical_check_respiration"
+                      class="input-append-btn"
+                      solo-inverted
+                      :placeholder="$t('label.respiration')"
+                    >
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           {{ $t('label.x_minute') }}
@@ -63,7 +78,12 @@
                 </v-col>
                 <v-col cols="12" sm="4" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formPasien.physical_check_height" class="input-append-btn" type="text" solo-inverted :placeholder="$t('label.height')">
+                    <v-text-field
+                      v-model.number="formPasien.physical_check_height"
+                      class="input-append-btn"
+                      solo-inverted
+                      :placeholder="$t('label.height')"
+                    >
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           Cm
@@ -74,7 +94,12 @@
                 </v-col>
                 <v-col cols="12" sm="4" class="pa-1">
                   <ValidationProvider>
-                    <v-text-field v-model="formPasien.physical_check_weight" class="input-append-btn" type="text" solo-inverted :placeholder="$t('label.weight')">
+                    <v-text-field
+                      v-model.number="formPasien.physical_check_weight"
+                      class="input-append-btn"
+                      solo-inverted
+                      :placeholder="$t('label.weight')"
+                    >
                       <template v-slot:append>
                         <v-btn depressed tile min-width="20">
                           Kg
