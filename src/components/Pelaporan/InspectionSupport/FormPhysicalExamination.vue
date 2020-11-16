@@ -28,10 +28,9 @@
           <v-col cols="12" sm="4" class="pa-1">
             <ValidationProvider>
               <v-text-field
-                v-model="formPasien.physical_check_blood_pressure"
+                v-model.number="formPasien.physical_check_blood_pressure"
                 name="physical_check_blood_pressure"
                 class="input-append-btn"
-                type="number"
                 solo-inverted
                 :disabled="!isEdit"
                 :placeholder="$t('label.blood_pressure')"
@@ -47,10 +46,9 @@
           <v-col cols="12" sm="4" class="pa-1">
             <ValidationProvider>
               <v-text-field
-                v-model="formPasien.physical_check_pulse"
+                v-model.number="formPasien.physical_check_pulse"
                 name="physical_check_pulse"
                 class="input-append-btn"
-                type="number"
                 solo-inverted
                 :disabled="!isEdit"
                 :placeholder="$t('label.pulse')"
@@ -68,10 +66,9 @@
           <v-col cols="12" sm="4" class="pa-1">
             <ValidationProvider>
               <v-text-field
-                v-model="formPasien.physical_check_respiration"
+                v-model.number="formPasien.physical_check_respiration"
                 name="physical_check_respiration"
                 class="input-append-btn"
-                type="number"
                 solo-inverted
                 :disabled="!isEdit"
                 :placeholder="$t('label.respiration')"
@@ -87,10 +84,9 @@
           <v-col cols="12" sm="4" class="pa-1">
             <ValidationProvider>
               <v-text-field
-                v-model="formPasien.physical_check_height"
+                v-model.number="formPasien.physical_check_height"
                 name="physical_check_height"
                 class="input-append-btn"
-                type="text"
                 solo-inverted
                 :disabled="!isEdit"
                 :placeholder="$t('label.height')"
@@ -106,10 +102,9 @@
           <v-col cols="12" sm="4" class="pa-1">
             <ValidationProvider>
               <v-text-field
-                v-model="formPasien.physical_check_weight"
+                v-model.number="formPasien.physical_check_weight"
                 name="physical_check_weight"
                 class="input-append-btn"
-                type="text"
                 solo-inverted
                 :disabled="!isEdit"
                 :placeholder="$t('label.weight')"
