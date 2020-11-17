@@ -74,7 +74,7 @@
             </div>
             <div class="mb-3">
               <span class="c-label">Tanggal Muncul Gejala</span> <br>
-              <strong>{{ $moment(detail.first_symptom_date).locale('id').format('DD MMMM YYYY') }}</strong>
+              <strong>{{ detail.first_symptom_date ? $moment(detail.first_symptom_date).locale('id').format('DD MMMM YYYY'):'-' }}</strong>
             </div>
             <div class="mb-3">
               <span class="c-label">Lokasi Saat Ini</span> <br>
@@ -257,7 +257,7 @@ export default {
         id_case: res.data[0].id,
         status: res.data[0].status,
         final_result: res.data[0].final_result,
-        age: res.data[0].age,
+        age: Math.floor(res.data[0].age),
         gender: res.data[0].gender,
         first_symptom_date: res.data[0].first_symptom_date,
         current_location_address: res.data[0].current_location_address
@@ -327,6 +327,8 @@ export default {
             status = 'positive_recovery'
           } else if (res.final_result === 'Meninggal') {
             status = 'positive_dead'
+          } else if (res.final_result === 'Negatif') {
+            status = 'positive_recovery'
           }
         } else {
           status = 'normal'
