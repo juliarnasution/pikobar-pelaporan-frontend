@@ -344,7 +344,6 @@ export default {
     checkImg(from, data) {
       let img
       let image
-      console.log(data.image)
       if (from === 'object') {
         if (!('image' in data)) {
           image = 'avatar/undefined.svg'
