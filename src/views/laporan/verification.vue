@@ -317,7 +317,11 @@ export default {
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending'
+      if (this.tab === 0) {
+        this.listQuery.verified_status = 'pending,declined,draft'
+      } else {
+        this.listQuery.verified_status = 'pending'
+      }
     }
     if (this.roles[0] !== 'faskes') {
       this.listQuery.sort = 'updatedAt:asc'

@@ -66,9 +66,11 @@
               {{ item.verified_status === 'draft' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
             </span>
           </td>
-          <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
+          <td v-else-if="item.verified_status !== 'declined'">{{ item.updatedAt ? timeRemain(item.updatedAt) : '-' }}</td>
           <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
-          <td v-if="tableHeaders.length > 8">
+          <td
+            v-if="item.verified_status === 'pending' || roles[0] === 'faskes' && item.verified_status === 'declined' || item.verified_status === 'draft'"
+          >
             <v-card-actions>
               <v-menu
                 :close-on-content-click="false"
@@ -79,7 +81,6 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    v-if="showActionButton(item.verified_status)"
                     class="ma-1 action-btn"
                     color="#828282"
                     tile
@@ -91,9 +92,6 @@
                       mdi-menu-down
                     </v-icon>
                   </v-btn>
-                  <div v-else>
-                  &nbsp;
-                  </div>
                 </template>
                 <v-card>
                   <div v-if="roles[0] === 'faskes'">
@@ -122,6 +120,7 @@
               </v-menu>
             </v-card-actions>
           </td>
+          <td v-else>&nbsp;</td>
         </tr>
       </template>
     </v-data-table>
