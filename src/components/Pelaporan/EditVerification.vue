@@ -783,7 +783,7 @@ export default {
     },
     handleChangeLocationNow(value) {
       if (value !== 'RUMAH') {
-        this.caseDetail.last_history.current_hospital_id = ''
+        this.caseDetail.last_history.current_hospital_id = null
         this.caseDetail.last_history.current_location_address = ''
         this.caseDetail.last_history.current_location_district_code = ''
         this.caseDetail.last_history.current_location_subdistrict_code = ''

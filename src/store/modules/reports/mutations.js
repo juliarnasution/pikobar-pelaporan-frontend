@@ -8,6 +8,9 @@ export default {
   SET_TOTAL_LIST_PASIEN: (state, data) => {
     state.totalList = data
   },
+  SET_TOTAL_DATA_PASIEN: (state, data) => {
+    state.totalData = data
+  },
   SET_TOTAL_PENDING: (state, data) => {
     state.totalPending = data
   },
@@ -15,8 +18,8 @@ export default {
     state.formPasien.nik = ''
     state.formPasien.name = ''
     state.formPasien.birth_date = ''
-    state.formPasien.is_nik_exists = false
-    state.formPasien.is_phone_number_exists = false
+    state.formPasien.is_nik_exists = true
+    state.formPasien.is_phone_number_exists = true
     state.formPasien.is_went_abroad = false
     state.formPasien.is_went_other_city = false
     state.formPasien.is_contact_with_positive = false
@@ -78,9 +81,20 @@ export default {
     state.formPasien.close_contact_animal_market = 2
     state.formPasien.close_contact_public_place = 2
     state.formPasien.close_contact_medical_facility = 2
-    state.formPasien.close_contact_heavy_ispa_group = 2
-    state.formPasien.close_contact_health_worker = 2
+    state.formPasien.close_contact_heavy_ispa_group = false
+    state.formPasien.close_contact_have_pets = false
+    state.formPasien.close_contact_health_worker = false
+    state.formPasien.close_contact_performing_aerosol_procedures = false
     state.formPasien.apd_use = []
+    state.formPasien.close_contact_premier = []
+    state.formPasien.inspection_support = []
+    state.formPasien.is_other_diagnosisr_respiratory_disease = false
+    state.formPasien.travelling_history = []
+    state.formPasien.has_visited_public_place = false
+    state.formPasien.visited_public_place = []
+    state.formPasien.visited_local_area_before_sick_14_days = false
+    state.formPasien.visited_local_area = []
+    state.formPasien.other_diagnosisr_respiratory_disease = ''
     state.formPasien.name_close_contact = ''
     state.formPasien.id_close_contact = ''
     state.formPasien.name_close_contact_confirm = ''
@@ -99,6 +113,7 @@ export default {
     state.formPasien.public_place_other = ''
     state.formPasien.medical_facility_date = ''
     state.formPasien.medical_facility_other = ''
+    state.formPasien.last_date_status_patient = ''
     state.formPasien.health_workers = ''
     state.formPasien.yearsOld = ''
     state.formPasien.monthsOld = ''
@@ -116,5 +131,44 @@ export default {
     state.formRiwayatPasien.current_location_district_code = ''
     state.formRiwayatPasien.current_location_subdistrict_code = ''
     state.formRiwayatPasien.current_location_village_code = ''
+  },
+  RESET_FORM_PASIEN_V2: (state) => {
+    state.formPasienV2.interviewers_name = ''
+    state.formPasienV2.interviewers_phone_number = ''
+    state.formPasienV2.interview_date = ''
+    state.formPasienV2.status = ''
+    state.formPasienV2.final_result = ''
+    state.formPasienV2.nik = ''
+    state.formPasienV2.is_nik_exists = true
+    state.formPasienV2.note_nik = ''
+    state.formPasienV2.phone_number = ''
+    state.formPasienV2.is_phone_number_exists = true
+    state.formPasienV2.note_phone_number = ''
+    state.formPasienV2.name = ''
+    state.formPasienV2.gender = ''
+    state.formPasienV2.place_of_birth = ''
+    state.formPasienV2.birth_date = ''
+    state.formPasienV2.age = ''
+    state.formPasienV2.month = ''
+    state.formPasienV2.yearsOld = ''
+    state.formPasienV2.monthsOld = ''
+    state.formPasienV2.address_province_code = '32'
+    state.formPasienV2.address_province_name = 'Jawa Barat'
+    state.formPasienV2.last_date_status_patient = ''
+    state.formPasienV2.address_district_code = ''
+    state.formPasienV2.address_district_name = ''
+    state.formPasienV2.address_subdistrict_code = ''
+    state.formPasienV2.address_subdistrict_name = ''
+    state.formPasienV2.address_village_code = ''
+    state.formPasienV2.address_village_name = ''
+    state.formPasienV2.address_street = ''
+    state.formPasienV2.rt = ''
+    state.formPasienV2.rw = ''
+    state.formPasienV2.nationality = ''
+    state.formPasienV2.nationality_name = ''
+    state.formPasienV2.occupation = ''
+    state.formPasienV2.office_address = ''
+    state.formPasienV2.report_source = ''
+    state.formPasienV2.name_parents = ''
   }
 }

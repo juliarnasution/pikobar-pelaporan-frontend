@@ -7,12 +7,15 @@ import VueBreadcrumbs from 'vue2-breadcrumbs'
 import VueMoment from 'vue-moment'
 import * as VeeValidate from 'vee-validate'
 import moment from 'moment'
+import 'moment/locale/id'
 import infiniteScroll from 'vue-infinite-scroll'
 import FlagIcon from 'vue-flag-icon'
 import VueAnalytics from 'vue-analytics'
+import vueDebounce from 'vue-debounce'
 
 moment.locale('id')
 
+import './plugins/firebase'
 import vuetify from './plugins/vuetify'
 Vue.config.performance = process.env.NODE_ENV === 'development'
 
@@ -53,6 +56,10 @@ import i18n from './lang' // Internationalization
 import '@/helpers/filters' // include all filters
 import VueHtml2Canvas from 'vue-html2canvas'
 // import './registerServiceWorker'
+
+Vue.use(vueDebounce, {
+  listenTo: 'input'
+})
 
 Vue.use(VueHtml2Canvas)
 Vue.use(FlagIcon)

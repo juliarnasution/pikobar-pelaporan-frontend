@@ -104,5 +104,73 @@ export default {
     } catch (error) {
       return error.response
     }
+  },
+  async listCaseRelated({
+    commit
+  }, params) {
+    try {
+      const response = await requestServer('/api/case-related', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async detailCaseRelated({ commit }, id) {
+    try {
+      const response = await requestServer(`/api/case-related/${id}`, 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async agregateSummaryCase({
+    commit
+  }, params) {
+    try {
+      const response = await requestServer('/api/dashboard/v2/summary-case', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async agregateVisualizationCase({
+    commit
+  }, params) {
+    try {
+      const response = await requestServer('/api/dashboard/v2/visualization-case', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async exportDemographic({
+    commit
+  }, params) {
+    try {
+      const response = await request({
+        url: `/api/dashboard/v2/export-demographic`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async exportCriteria({
+    commit
+  }, params) {
+    try {
+      const response = await request({
+        url: `/api/dashboard/v2/export-criteria`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
   }
 }

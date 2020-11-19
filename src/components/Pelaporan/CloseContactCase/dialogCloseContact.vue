@@ -1,22 +1,26 @@
 <template>
-  <v-dialog v-model="show" max-width="70%">
-    <v-skeleton-loader
-      :loading="isLoading"
-      type="table-tbody"
+  <v-row justify="center">
+    <v-dialog
+      v-model="show"
+      :fullscreen="$vuetify.breakpoint.xs"
+      max-width="90%"
     >
-      <v-card>
-        <v-card-title>
-          {{ titleDetail }}
-          <v-spacer />
-          <v-icon @click="show = false">mdi-close</v-icon>
-        </v-card-title>
-        <v-divider />
-        <v-container>
-          <v-row class="mb-6">
+      <v-skeleton-loader
+        :loading="isLoading"
+        type="table-tbody"
+      >
+        <v-card>
+          <v-card-title>
+            {{ titleDetail }}
+            <v-spacer />
+            <v-icon @click="show = false">mdi-close</v-icon>
+          </v-card-title>
+          <v-divider />
+          <v-row class="ml-4 mr-4 mb-6">
             <v-col>
               <v-data-table
                 :headers="headers"
-                :items="listCloseContact"
+                :items="closeContactList"
                 :mobile-breakpoint="NaN"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="10"
@@ -34,7 +38,7 @@
                         {{ $t('label.male') }}
                       </div>
                     </td>
-                    <td>{{ item.age }} Th</td>
+                    <td>{{ item.age ? `${Math.floor(item.age)} Th`:'-' }} </td>
                     <td>{{ completeAddress(
                       item.address_district_name,
                       item.address_subdistrict_name,
@@ -42,46 +46,16 @@
                       item.address_street
                     ) }}</td>
                     <td>
-                      <v-card-actions>
-                        <v-menu
-                          :close-on-content-click="true"
-                          :nudge-width="100"
-                          :nudge-left="220"
-                          :nudge-top="40"
-                          offset-y
-                        >
-                          <template v-slot:activator="{ on }">
-                            <v-btn
-                              class="ma-1"
-                              color="#828282"
-                              style="text-transform: none;height: 30px;min-width: 80px;"
-                              tile
-                              outlined
-                              v-on="on"
-                            >
-                              {{ $t('label.choose_action') }}
-                              <v-icon style="color: #009D57;font-size: 2rem;" right>
-                                mdi-menu-down
-                              </v-icon>
-                            </v-btn>
-                          </template>
-                          <v-card>
-                            <!-- <v-list-item @click="handleUpdateReport(item._id)">
-                              {{ $t('route.make_report') }}
-                            </v-list-item> -->
-                            <v-list-item @click="handleUpdateCloseContact(item._id)">
-                              {{ $t('label.edit_contact_data') }}
-                            </v-list-item>
-                            <v-divider class="mt-0 mb-0" />
-                            <v-list-item
-                              style="color: #EB5757 !important;"
-                              @click="handleDeleteCloseContact(item)"
-                            >
-                              {{ $t('label.deleted_contact') }}
-                            </v-list-item>
-                          </v-card>
-                        </v-menu>
-                      </v-card-actions>
+                      <v-btn
+                        class="ma-1"
+                        color="#828282"
+                        style="text-transform: none;height: 30px;min-width: 80px;color: #EB5757 !important;"
+                        tile
+                        outlined
+                        @click="handleDeleteCloseContact(item)"
+                      >
+                        {{ $t('label.deleted_contact') }}
+                      </v-btn>
                     </td>
                   </tr>
                 </template>
@@ -90,7 +64,7 @@
           </v-row>
           <v-card
             min-height="100"
-            class="mx-auto mt-2 border-card"
+            class="ml-6 mr-6 mt-2 border-card"
             @click="handleCreate"
           >
             <v-container
@@ -110,7 +84,7 @@
               </v-row>
             </v-container>
           </v-card>
-          <v-row class="mb-3">
+          <v-row class="ma-3">
             <v-col>
               <v-btn
                 color="#FFFFFF"
@@ -121,34 +95,34 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-container>
-      </v-card>
-    </v-skeleton-loader>
-    <dialog-close-contact-case
-      :show-dialog-add-close-contact="showCloseContact"
-      :show-form-add-close-contact.sync="showCloseContact"
-      :title-detail="isEditCloseContact ? $t('label.edit_contact_data'):$t('label.add_contact_data')"
-      :form-close-contact="formCloseContact"
-      :parent-case="parentCase"
-      :is-edit.sync="isEditCloseContact"
-      :id-case="idCase"
-    />
-    <dialog-report-close-contact
-      :show-dialog="showReportCloseContact"
-      :show-form.sync="showReportCloseContact"
-      :title-detail="$t('label.create_closely_contact_reports')"
-      :is-edit.sync="isEdit"
-      :id-case.sync="idCase"
-      :form-body.sync="formBody"
-    />
-    <dialog-delete
+        </v-card>
+      </v-skeleton-loader>
+      <dialog-close-contact-case
+        :show-dialog-add-close-contact="showCloseContact"
+        :show-form-add-close-contact.sync="showCloseContact"
+        :title-detail="isEditCloseContact ? $t('label.edit_contact_data'):$t('label.add_contact_data')"
+        :form-close-contact="formCloseContact"
+        :parent-case="parentCase"
+        :is-edit.sync="isEditCloseContact"
+        :id-case="idCase"
+      />
+      <dialog-report-close-contact
+        :show-dialog="showReportCloseContact"
+        :show-form.sync="showReportCloseContact"
+        :title-detail="$t('label.create_closely_contact_reports')"
+        :is-edit.sync="isEdit"
+        :id-case.sync="idCase"
+        :form-body.sync="formBody"
+      />
+    <!-- <dialog-delete
       :dialog="dialogDelete"
       :dialog-delete.sync="dialogDelete"
       :data-deleted="dataDelete"
       :delete-date.sync="dataDelete"
       :store-path-delete="`closeContactCase/deleteCloseContact`"
-    />
-  </v-dialog>
+    /> -->
+    </v-dialog>
+  </v-row>
 </template>
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'
@@ -186,6 +160,7 @@ export default {
       show: this.showDialog,
       showReportCloseContact: false,
       isEdit: false,
+      closeContactList: [],
       isEditCloseContact: false,
       isLoading: false,
       formBody: {},
@@ -210,6 +185,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', [
+      'roles',
       'fullName',
       'district_user',
       'district_name_user'
@@ -229,11 +205,19 @@ export default {
         this.$emit('update:uniqueCaseId', '')
       }
     },
+    showCloseContact(value) {
+      if (!value) {
+        this.getListCloseContactByCase(this.idCase)
+      }
+    },
     dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
         EventBus.$emit('refreshPageListReport', true)
       }
+    },
+    listCloseContact(value) {
+      this.closeContactList = value
     }
   },
   methods: {
@@ -284,23 +268,30 @@ export default {
       return (index + 1)
     },
     async handleUpdateCloseContact(id) {
-      const responseReportCase = await this.$store.dispatch('reports/detailReportCase', this.idCase)
-      this.parentCase = responseReportCase.data
-      const data = {
-        idCloseContact: id
-      }
-      const response = await this.$store.dispatch('closeContactCase/getDetailCloseContactByCase', data)
+      const response = await this.$store.dispatch('reports/detailReportCase', id)
       Object.assign(this.formCloseContact, response.data)
       this.isEditCloseContact = true
       this.showCloseContact = true
     },
     async handleDeleteCloseContact(item) {
-      if (!item.is_reported) {
-        this.dialogDelete = true
-        this.dataDelete = item
-      } else {
-        await this.$store.dispatch('toast/errorToast', this.$t('errors.contact_data_cannot_be_deleted'))
+      this.isLoading = true
+      const data = {
+        idCase: this.idCase,
+        idCloseContact: item._id
       }
+      const response = await this.$store.dispatch('closeContactCase/deleteCloseContact', data)
+      if (response.status === 200) {
+        this.$store.dispatch('toast/successToast', this.$t('success.data_success_delete'))
+        this.isLoading = false
+      } else {
+        this.$store.dispatch('toast/errorToast', response.message)
+        this.isLoading = false
+      }
+      this.getListCloseContactByCase(this.idCase)
+    },
+    async getListCloseContactByCase(id) {
+      const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      this.closeContactList = response.data
     }
   }
 }

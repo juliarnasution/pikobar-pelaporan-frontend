@@ -1,49 +1,57 @@
 <template>
-  <v-dialog v-model="showFormAddCloseContact" max-width="70%">
-    <v-card>
-      <v-container>
+  <v-row justify="center">
+    <v-dialog
+      v-model="showFormAddCloseContact"
+      :fullscreen="$vuetify.mobileBreakpoint"
+      max-width="90%"
+    >
+      <v-card>
         <v-card-title>
           {{ titleDetail }}
           <v-spacer />
           <v-icon @click="showFormAddCloseContact = false">mdi-close</v-icon>
         </v-card-title>
         <v-divider />
-        <ValidationObserver ref="observer">
-          <v-form ref="form" lazy-validation>
-            <form-single-close-contact
-              :form-close-contact="formCloseContact"
-              :form-pasien.sync="parentCase"
-              :is-edit="isEdit"
-            />
-          </v-form>
-        </ValidationObserver>
-        <v-row>
+        <v-row class="ma-3">
           <v-container fluid>
+            <ValidationObserver ref="observer">
+              <v-form ref="form" lazy-validation>
+                <form-single-close-contact
+                  :form-close-contact="formCloseContact"
+                  :form-pasien.sync="parentCase"
+                  :is-edit="isEdit"
+                />
+              </v-form>
+            </ValidationObserver>
             <v-row>
-              <v-col class="text-right">
-                <v-btn
-                  :loading="loading"
-                  bottom
-                  @click="handleBack"
-                >
-                  {{ $t('label.cancel') }}
-                </v-btn>
-                <v-btn
-                  :loading="loading"
-                  class="ml-2"
-                  color="success"
-                  bottom
-                  @click="handleSave"
-                >
-                  {{ isEdit ? $t('label.edit'):$t('label.save') }}
-                </v-btn>
-              </v-col>
+              <v-container fluid>
+                <v-row>
+                  <v-col class="text-right">
+                    <v-btn
+                      :loading="loading"
+                      bottom
+                      @click="handleBack"
+                    >
+                      {{ $t('label.cancel') }}
+                    </v-btn>
+                    <v-btn
+                      :loading="loading"
+                      class="ml-2"
+                      color="success"
+                      bottom
+                      @click="handleSave"
+                    >
+                      {{ isEdit ? $t('label.edit'):$t('label.save') }}
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-row>
           </v-container>
         </v-row>
-      </v-container>
-    </v-card>
-  </v-dialog>
+      </v-card>
+    </v-dialog>
+  </v-row>
 </template>
 
 <script>
@@ -93,6 +101,9 @@ export default {
       this.showFormAddCloseContact = value
     },
     showFormAddCloseContact(value) {
+      if (!value) {
+        this.$store.dispatch('closeContactCase/resetStateCloseContactCase')
+      }
       this.$emit('update:showFormAddCloseContact', value)
     }
   },

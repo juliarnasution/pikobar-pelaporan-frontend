@@ -55,7 +55,6 @@ export default {
       this.show = value
     },
     show(value) {
-      console.log(value)
       this.$emit('update:show', value)
     }
   },

@@ -1,10 +1,21 @@
 import requestServer from '@/api'
+import axios from 'axios'
 
 export default {
-  async getListDistrictCity({ commit }) {
+  async getListProvince({ commit }) {
     try {
-      const response = await requestServer('/api/areas/district-city', 'GET')
-      commit('SET_DISTRICT_CITY', response.data)
+      const response = await requestServer('/api/areas/province', 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async getListDistrictCity({ commit }, params) {
+    try {
+      const response = await requestServer('/api/areas/district-city', 'GET', params)
+      if (!params) {
+        commit('SET_DISTRICT_CITY', response.data)
+      }
       return response
     } catch (error) {
       return error.response
@@ -78,6 +89,22 @@ export default {
   async detailUnit({ commit }, id) {
     try {
       const response = await requestServer(`/api/unit/${id}`, 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async getLatitudeLongitude({ commit }, params) {
+    try {
+      let response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          ...params,
+          key: process.env.VUE_APP_GOOGLE_MAP_API
+        }
+      })
+      if (response.data.results) {
+        response = response.data.results[0]['geometry'].location
+      }
       return response
     } catch (error) {
       return error.response

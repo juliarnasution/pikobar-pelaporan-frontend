@@ -2,11 +2,11 @@
   <form>
     <v-text-field
       v-model="listQuery.search"
+      v-debounce:500="handleSearch"
       :label="$t('label.search')"
+      name="search"
       solo-inverted
-      clearable
       prepend-inner-icon="search"
-      @keyup.enter.native="handleSearch"
     />
   </form>
 </template>

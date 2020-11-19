@@ -87,16 +87,34 @@
       <v-row>
         <v-col auto>
           <v-expansion-panels
-            v-model="historySocioeconomicPanel"
+            v-model="multipleSupportingInvestigationPanel"
             multiple
           >
             <v-expansion-panel>
               <v-expansion-panel-header class="font-weight-bold text-lg">
-                {{ $t('label.form_socioeconomic_title') }}
+                {{ $t('label.supporting_investigation') }}
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-socioeconomic-history :form-pasien="formPasien" />
+                <form-multiple-supporting-investigation :form-pasien="formPasien" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col auto>
+          <v-expansion-panels
+            v-model="travelHistoryFactorPanel"
+            multiple
+          >
+            <v-expansion-panel>
+              <v-expansion-panel-header class="font-weight-bold text-lg">
+                {{ $t('label.travel_history_factor') }}
+              </v-expansion-panel-header>
+              <v-divider />
+              <v-expansion-panel-content>
+                <form-multiple-travel-history-factor :form-pasien="formPasien" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -114,7 +132,25 @@
               </v-expansion-panel-header>
               <v-divider />
               <v-expansion-panel-content>
-                <form-contact-factor :form-pasien="formPasien" />
+                <form-multiple-contact-factor :form-pasien="formPasien" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col auto>
+          <v-expansion-panels
+            v-model="historySocioeconomicPanel"
+            multiple
+          >
+            <v-expansion-panel>
+              <v-expansion-panel-header class="font-weight-bold text-lg">
+                {{ $t('label.form_socioeconomic_title') }}
+              </v-expansion-panel-header>
+              <v-divider />
+              <v-expansion-panel-content>
+                <form-socioeconomic-history :form-pasien="formPasien" />
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -139,7 +175,11 @@
         </v-col>
       </v-row>
     </ValidationObserver>
-    <dialog-duplicated-nik :show-dialog="showDuplicatedNikDialog" :nik-number="nikNumber" :nik-name="nikName" :nik-author="nikAuthor" :show.sync="showDuplicatedNikDialog" />
+    <dialog-duplicated-nik
+      :show-dialog="showDuplicatedNikDialog"
+      :show.sync="showDuplicatedNikDialog"
+      :content="nikDuplicateMessage"
+    />
     <v-container fluid>
       <v-row class="survey-bottom-form">
         <v-col class="text-right">
@@ -153,6 +193,8 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { validateScrollUp } from '@/utils/utilsFunction'
+import { formatDatetime } from '@/utils/parseDatetime'
 import { mapGetters } from 'vuex'
 import { rolesPerm, ResponseRequest } from '@/utils/constantVariable'
 
@@ -166,13 +208,13 @@ export default {
       showDuplicatedNikDialog: false,
       isFixCase: false,
       formatDate: 'YYYY/MM/DD',
-      nikNumber: null,
-      nikName: null,
-      nikAuthor: null,
+      nikDuplicateMessage: null,
       volunteerPanel: [0],
       patientPanel: [0],
       historyCasePanel: [0],
       historySocioeconomicPanel: [0],
+      travelHistoryFactorPanel: [0],
+      multipleSupportingInvestigationPanel: [0],
       contactFactorPanel: [0],
       multipleCloseContactPanel: [0]
     }
@@ -193,6 +235,7 @@ export default {
     this.formPasien.interviewers_phone_number = this.phoneNumber
     this.formPasien.interview_date = this.$moment().format()
     const idData = this.$route.params.id
+    this.showDuplicatedNikDialog = false
     if (idData !== undefined) {
       const response = await this.$store.dispatch('reports/detailReportCase', idData)
       this.isFixCase = true
@@ -216,21 +259,13 @@ export default {
     }
   },
   methods: {
+    validateScrollUp,
+    formatDatetime,
     async saveData() {
       const valid = await this.$refs.observer.validate()
       if (!valid) {
+        this.validateScrollUp()
         return
-      }
-      if ((!this.isFixCase) && (this.formPasien.nik)) {
-        this.loading = true
-        const response = await this.$store.dispatch('reports/revampGetNik', { params: this.formPasien.nik })
-        if (response.data) {
-          this.loading = false
-          this.nikNumber = this.formPasien.nik
-          this.nikName = this.formPasien.name
-          this.showDuplicatedNikDialog = true
-          return
-        }
       }
       delete this.formPasien['_id']
       delete this.formPasien['id_case']
@@ -255,7 +290,13 @@ export default {
             await this.$router.push('/laporan/list')
           }
         } else {
-          await this.$store.dispatch('toast/errorToast', response.message)
+          if (response.data.data === 'nik_exists') {
+            this.isLoading = false
+            this.showDuplicatedNikDialog = true
+            this.nikDuplicateMessage = response.data.message
+          } else {
+            await this.$store.dispatch('toast/errorToast', response.data.message)
+          }
         }
       } catch (error) {
         await this.$store.dispatch('toast/errorToast', this.$t('errors.data_failed_to_save'))

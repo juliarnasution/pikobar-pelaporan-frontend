@@ -71,8 +71,7 @@ export function listDays() {
 }
 
 export const symptomOptions = [
-  i18n.t('label.body_temperature_greater_than_38C'),
-  i18n.t('label.body_temperature_less_than_38C'),
+  i18n.t('label.fever'),
   i18n.t('label.cough'),
   i18n.t('label.cold'),
   i18n.t('label.sore_throat'),
@@ -96,6 +95,56 @@ export const transportOptions = [
   i18n.t('label.taxi')
 ]
 
+export const clusterType = [
+  {
+    value: 2,
+    text: 'Nakes'
+  }, {
+    value: 3,
+    text: 'Pasar/Pusat Perbelanjaan/Toko'
+  }, {
+    value: 4,
+    text: 'Pabrik'
+  }, {
+    value: 5,
+    text: 'Perkantoran'
+  }, {
+    value: 6,
+    text: 'Tempat Wisata'
+  }, {
+    value: 7,
+    text: 'Tempat Ibadah'
+  }, {
+    value: 8,
+    text: 'Rumah Tangga'
+  }, {
+    value: 9,
+    text: 'Rumah Makan'
+  }, {
+    value: 1,
+    text: 'Lainnya'
+  }
+]
+
+export const transmissionTypes = [
+  {
+    value: 1,
+    text: 'Kasus Impor'
+  },
+  {
+    value: 2,
+    text: 'Kasus kontak dengan kasus impor'
+  },
+  {
+    value: 3,
+    text: 'Kasus lokal tanpa diketahui sumber penuralannya'
+  },
+  {
+    value: 4,
+    text: 'Kasus lokal dengan kaitan epidemiologis'
+  }
+]
+
 export const activityContactOptions = [
   'Berpelukan',
   'Berjabat Tangan',
@@ -115,6 +164,18 @@ export const protectionToolOptions = [
   'Masker Medis',
   'FFP3',
   'Masker NIOSH-N95, AN EU STANDARD FFP2'
+]
+
+export const specimenType = [
+  'Swab Nasofaring',
+  'Swab Orofaring',
+  'Swab Naso - Orofaring',
+  'Sputum',
+  'Bal Fluid',
+  'Cairan Spirasi Trakhea',
+  'Serum',
+  'Darah',
+  'Lainnya'
 ]
 
 export const listMonthName = [
@@ -188,6 +249,7 @@ export const rolesPerm = {
 }
 
 export const rolesWidget = {
+  'superadmin': [rolesPerm.ADMIN, rolesPerm.DINKESPROV],
   'dinkeskota': [rolesPerm.DINKESKOTA],
   'dinkesKotaAndFaskes': [rolesPerm.DINKESKOTA, rolesPerm.FASKES]
 }
@@ -197,6 +259,16 @@ export const rolesCriteria = {
   'stillSick': ['PROBABLE', 'SUSPECT', 'CONFIRMATION'],
   'recovery': ['PROBABLE', 'CONFIRMATION'],
   'discarded': ['CLOSECONTACT', 'SUSPECT']
+}
+
+export const inspectionType = {
+  'inspectiontype1': ['pcr', 'rapid', 'tcm_sars_cov_2']
+}
+
+export const testResults = {
+  'testResults1': ['rapid'],
+  'testResults2': ['pcr', 'tcm_sars_cov_2'],
+  'testResults3': ['pcr', 'rapid', 'tcm_sars_cov_2']
 }
 
 export const apd = [
@@ -248,6 +320,30 @@ export const listPhysicalActivity = [
     value: 2,
     text: i18n.t('label.physical_exercise_more_than_150_minutes')
   }
+]
+
+export const listActivitiesUndertaken = [
+  'Kontak fisik langsung (contoh: salaman, pelukan, dll)',
+  'Kontak langsung dengan sekresi menular (contoh: batuk atau bersin di depannya, menyentuh tisu bekas pakai dengan tangan telanjang, dll)',
+  'Berada dalam ruang tertutup bersama dalam waktu lebih dari 15 menit',
+  'Berada dalam ruang yang sama dengan jarak kurang dari 1 meter'
+]
+
+export const listPlaceCategory = [
+  'Pasar Modern / Tradisional',
+  'Pasar Hewan',
+  'Fasilitas Kesehatan',
+  'Tempat Wisata',
+  'Tempat Ibadah',
+  'Restoran',
+  'Tempat Publik Lainnya'
+]
+
+export const listRelationships = [
+  'Keluarga serumah',
+  'Teman Kerja',
+  'Jamaah ditempat ibadah',
+  'Lainnya'
 ]
 
 export const incomeList = [

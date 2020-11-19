@@ -10,9 +10,11 @@ export default {
       const response = await requestServer('/api/cases', 'GET', params)
       if (response.data === null) {
         commit('SET_TOTAL_LIST_PASIEN', 1)
+        commit('SET_TOTAL_DATA_PASIEN', 0)
         commit('SET_LIST_PASIEN', [])
       } else {
         commit('SET_TOTAL_LIST_PASIEN', response.data._meta.totalPages)
+        commit('SET_TOTAL_DATA_PASIEN', response.data._meta.itemCount)
         commit('SET_LIST_PASIEN', response.data.cases)
       }
       return response
@@ -23,6 +25,30 @@ export default {
   async createReportCase({ commit }, data) {
     try {
       const response = await requestServer('/api/cases', 'POST', data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async createReportCaseV2({ commit }, data) {
+    try {
+      const response = await requestServer('/api/v2/cases', 'POST', data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async searchCase({ commit }, params) {
+    try {
+      const response = await requestServer('/api/search', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async statusCase({ commit }, id) {
+    try {
+      const response = await requestServer(`/api/v2/cases/${id}/status`, 'GET')
       return response
     } catch (error) {
       return error.response
@@ -41,6 +67,14 @@ export default {
   async detailReportCase({ commit }, id) {
     try {
       const response = await requestServer(`/api/cases/${id}`, 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async summaryReportCase({ commit }, id) {
+    try {
+      const response = await requestServer(`/api/v2/cases/${id}/summary`, 'GET')
       return response
     } catch (error) {
       return error.response
@@ -103,7 +137,28 @@ export default {
       return error.response
     }
   },
-  async exportExcel({ commit }, params) {
+  async updateHistoryCase({
+    commit
+  }, body) {
+    const { idHistory, data } = body
+    try {
+      const response = await requestServer(`/api/history_cases/${idHistory}`, 'PUT', data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async deleteHistoryCase({
+    commit
+  }, id) {
+    try {
+      const response = await requestServer(`/api/history_cases/${id}`, 'DELETE')
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async exportExcelCase({ commit }, params) {
     try {
       const response = await request({
         url: `/api/cases-export`,
@@ -116,9 +171,41 @@ export default {
       return error.response
     }
   },
-  async importExcel({ commit }, data) {
+  async exportExcelHistory({ commit }, params) {
     try {
-      const response = await requestServer('/api/cases-import', 'POST', data)
+      const response = await request({
+        url: `/api/history-export`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async exportExcelDailyReport({
+    commit
+  }, params) {
+    try {
+      const response = await request({
+        url: `/api/reports/daily-report-xls`,
+        method: 'GET',
+        params: params,
+        responseType: 'blob'
+      })
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async importExcel({ commit }, data) {
+    const {
+      formData,
+      onProgress
+    } = data
+    try {
+      const response = await requestServer('/api/v2/cases-import', 'UPLOAD', formData, onProgress)
       return response
     } catch (error) {
       return error.response
@@ -170,7 +257,7 @@ export default {
   async printPEForm({ commit }, id) {
     try {
       const response = await request({
-        url: `/api/cases/${id}/export-to-pe-form`,
+        url: `/api/v2/cases/${id}/export-to-pe-form`,
         method: 'GET',
         responseType: 'blob'
       })
@@ -293,7 +380,7 @@ export default {
     const id_case = await data.id
     await delete data['id']
     try {
-      const response = await requestServer(`/api/cases-revamp/${id_case}/contact`, 'POST', data.data)
+      const response = await requestServer(`/api/cases/${id_case}/closecontact`, 'POST', data.data)
       return response
     } catch (error) {
       return error.response
@@ -309,6 +396,14 @@ export default {
       return error.response
     }
   },
+  async getDailyReport({ commit }, params) {
+    try {
+      const response = await requestServer(`/api/reports/daily-report`, 'GET', params)
+      return response.data
+    } catch (error) {
+      return error.response
+    }
+  },
   resetListCase({ commit }) {
     commit('RESET_LIST_CASE')
   },
@@ -317,5 +412,8 @@ export default {
   },
   resetRiwayatFormPasien({ commit }) {
     commit('RESET_RIWAYAT_FORM_PASIEN')
+  },
+  resetFormPasienV2({ commit }) {
+    commit('RESET_FORM_PASIEN_V2')
   }
 }

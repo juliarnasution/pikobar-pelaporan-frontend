@@ -1,9 +1,10 @@
 <template>
   <v-dialog v-model="show" :max-width="maxWidthDialog">
     <v-card class="pa-7">
-      <view-verification
+      <new-case-detail
         v-if="caseDetail && caseDetail.verified_status !== 'declined'"
-        :case-data="caseDetail"
+        :detail="caseDetail"
+        :close-contact-case="closeContactCase"
       />
       <edit-verification
         v-else
@@ -17,7 +18,7 @@
         :update-case="updateCase"
         :show.sync="show"
       />
-      <v-row v-if="showActionButton && caseDetail && caseDetail.verified_status !== 'declined'" class="mx-0">
+      <v-row v-if="showActionButton && caseDetail && caseDetail.verified_status !== 'declined'" class="mt-2">
         <v-col class="pa-0 mr-6">
           <v-btn
             color="grey"
@@ -53,6 +54,14 @@ export default {
     },
     caseData: {
       type: Object,
+      default: null
+    },
+    lastCaseData: {
+      type: Object,
+      default: null
+    },
+    closeContactCase: {
+      type: Array,
       default: null
     },
     queryData: {
@@ -94,9 +103,13 @@ export default {
   },
   watch: {
     async showForm(value) {
+      this.query = this.queryData
       this.show = value
       if (value) {
         this.caseDetail = this.caseData
+        if (this.lastCaseData) {
+          Object.assign(this.caseDetail, { 'last_history': this.lastCaseData })
+        }
         this.caseDetail.yearsOld = Math.floor(this.caseDetail.age)
         this.caseDetail.monthsOld = Math.ceil((this.caseDetail.age - Math.floor(this.caseDetail.age)) * 12)
         if (this.caseDetail.birth_date) {
@@ -165,7 +178,6 @@ export default {
           const responseNonWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalNonWestJava)
           this.hospitalNonWestJavaList = responseNonWestJava.data
         }
-        this.query = this.queryData
       }
     },
     show(value) {
@@ -251,7 +263,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .subtitle {
   font-size: 1.2rem !important;
   font-family: "Roboto", sans-serif !important;

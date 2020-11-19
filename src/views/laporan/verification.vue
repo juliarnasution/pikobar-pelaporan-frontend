@@ -19,9 +19,9 @@
       </v-row>
     </v-card>
     <v-card outlined>
-      <v-container>
+      <div class="ma-4">
         <v-row class="filter-row mt-5" justify="center">
-          <v-col cols="12">
+          <v-col cols="12" md="6" sm="6">
             <v-text-field
               v-model="listQuery.search"
               solo
@@ -29,82 +29,95 @@
               prepend-inner-icon="search"
             />
           </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="12" class="reduce-padding-top">
-            <address-region
-              :disabled-district="disabledDistrict"
-              :district-code="listQuery.address_district_code"
-              :district-name="district_name_user"
-              :code-district.sync="listQuery.address_district_code"
-              :sub-district-code="listQuery.address_subdistrict_code"
-              :code-sub-district.sync="listQuery.address_subdistrict_code"
-              :village-code="listQuery.address_village_code"
-              :code-village.sync="listQuery.address_village_code"
-              :village-name="villageName"
-              :name-village.sync="villageName"
-              :disabled-address="false"
-              :required-address="false"
-              :is-label="true"
-            />
+          <v-col cols="12" md="6" sm="6">
+            <v-btn
+              color="primary"
+              class="mr-4 float-right"
+              @click="handleFilter"
+            >
+              {{ $t('label.filter') }}
+              <v-icon v-if="!showFilter">mdi-chevron-right</v-icon>
+              <v-icon v-else>mdi-chevron-down</v-icon>
+            </v-btn>
           </v-col>
         </v-row>
-        <v-row class="filter-row" justify="center">
-          <v-col cols="12" sm="4">
-            <v-label class="title">{{ $t('label.reporting_sources') }}:</v-label>
-            <v-text-field
-              v-if="roles[0] === 'faskes'"
-              v-model="listQuery.author"
-              solo-inverted
-              disabled
-            />
-            <v-autocomplete
-              v-else
-              v-model="listQuery.author"
-              :items="listMedicalFacility"
-              solo
-              item-text="fullname"
-              item-value="_id"
-            />
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-label class="title">{{ $t('label.criteria') }}:</v-label>
-            <v-select
-              v-model="listQuery.status"
-              :items="statusList"
-              solo
-              item-text="label"
-              item-value="value"
-            />
-          </v-col>
-          <v-col cols="12" sm="4">
-            <br>
-            <v-row>
-              <v-col class="reduce-padding-top">
-                <v-btn
-                  block
-                  color="#4f4f4f"
-                  class="btn-reset"
-                  @click="onReset"
-                >
-                  {{ $t('label.reset') }}
-                </v-btn>
-              </v-col>
-              <v-col class="reduce-padding-top">
-                <v-btn
-                  block
-                  color="success"
-                  class="btn-cari"
-                  @click="handleSearch"
-                >
-                  {{ $t('label.look_for_it') }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-row class="mx-0 mt-5">
+        <div v-if="showFilter">
+          <v-row justify="center">
+            <v-col cols="12" class="reduce-padding-top">
+              <address-region
+                :disabled-district="disabledDistrict"
+                :district-code="listQuery.address_district_code"
+                :district-name="district_name_user"
+                :code-district.sync="listQuery.address_district_code"
+                :sub-district-code="listQuery.address_subdistrict_code"
+                :code-sub-district.sync="listQuery.address_subdistrict_code"
+                :village-code="listQuery.address_village_code"
+                :code-village.sync="listQuery.address_village_code"
+                :village-name="villageName"
+                :name-village.sync="villageName"
+                :disabled-address="false"
+                :required-address="false"
+                :is-label="true"
+              />
+            </v-col>
+          </v-row>
+          <v-row class="filter-row" justify="center">
+            <v-col cols="12" sm="4">
+              <v-label class="title">{{ $t('label.reporting_sources') }}:</v-label>
+              <v-text-field
+                v-if="roles[0] === 'faskes'"
+                v-model="listQuery.author"
+                solo-inverted
+                disabled
+              />
+              <v-autocomplete
+                v-else
+                v-model="listQuery.author"
+                :items="listMedicalFacility"
+                solo
+                item-text="fullname"
+                item-value="_id"
+              />
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-label class="title">{{ $t('label.criteria') }}:</v-label>
+              <v-select
+                v-model="listQuery.status"
+                :items="statusList"
+                solo
+                item-text="label"
+                item-value="value"
+              />
+            </v-col>
+            <v-col cols="12" sm="4">
+              <br>
+              <v-row>
+                <v-col class="reduce-padding-top">
+                  <v-btn
+                    block
+                    color="#4f4f4f"
+                    class="btn-reset"
+                    @click="onReset"
+                  >
+                    {{ $t('label.reset') }}
+                  </v-btn>
+                </v-col>
+                <v-col class="reduce-padding-top">
+                  <v-btn
+                    block
+                    color="success"
+                    class="btn-cari"
+                    @click="handleSearch"
+                  >
+                    {{ $t('label.look_for_it') }}
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </div>
+      </div>
+      <v-row class="mx-0 my-4">
         <v-tabs
           v-model="tab"
           class="elevation-2"
@@ -116,6 +129,7 @@
           <v-tab @click="onTabChanges('pending,declined')">{{ tabLabel[0] }}</v-tab>
           <v-tab @click="onTabChanges('pending')">{{ tabLabel[1] }}</v-tab>
           <v-tab @click="onTabChanges('declined')">{{ tabLabel[2] }}</v-tab>
+          <v-tab v-if="roles[0] === 'faskes'" @click="onTabChanges('draft')">{{ tabLabel[3] }}</v-tab>
           <v-tab-item v-for="(tabItem, index) in tabLabel" :key="index">
             <v-row>
               <verification-table
@@ -125,6 +139,7 @@
                 :show-failed-dialog.sync="showFailedDialog"
                 :show-verification-form.sync="showVerificationForm"
                 :case-detail.sync="caseDetail"
+                :close-contact-detail.sync="closeContactCase"
                 :refresh-page.sync="isRefresh"
                 :verification-query="verificationQuery"
               />
@@ -132,6 +147,17 @@
           </v-tab-item>
         </v-tabs>
       </v-row>
+      <!-- <verification-table
+        :table-headers="headers"
+        :list-kasus="listKasus"
+        :query="listQuery"
+        :show-failed-dialog.sync="showFailedDialog"
+        :show-verification-form.sync="showVerificationForm"
+        :case-detail.sync="caseDetail"
+        :close-contact-detail.sync="closeContactCase"
+        :refresh-page.sync="isRefresh"
+        :verification-query="verificationQuery"
+      /> -->
     </v-card>
     <pagination
       :total="totalList"
@@ -144,6 +170,7 @@
       :show.sync="showVerificationForm"
       :show-confirmation.sync="showConfirmation"
       :case-data="caseDetail"
+      :close-contact-case="closeContactCase"
       :query-data="verificationQuery"
       :query.sync="verificationQuery"
       :refresh-page.sync="isRefresh"
@@ -198,18 +225,6 @@ export default {
       },
       statusList: [
         {
-          label: 'OTG',
-          value: 'OTG'
-        },
-        {
-          label: 'ODP',
-          value: 'ODP'
-        },
-        {
-          label: 'PDP',
-          value: 'PDP'
-        },
-        {
           label: this.$t('label.confirmation').toUpperCase(),
           value: 'CONFIRMATION'
         },
@@ -227,19 +242,21 @@ export default {
         }
       ],
       failedDialog: false,
+      showFilter: false,
       disabledDistrict: true,
       listMedicalFacility: [],
       villageName: '',
       dialogForm: true,
       caseDetail: null,
+      closeContactCase: [],
+      tab: null,
+      tabLabel: [this.$t('label.all'), this.$t('label.waiting_for_verification'), this.$t('label.case_rejected'), this.$t('label.case_draft')],
       showVerificationForm: false,
       showConfirmation: false,
       showFailedDialog: false,
       isSubmit: false,
       isRefresh: false,
-      tab: null,
-      tabLabel: [this.$t('label.all'), this.$t('label.waiting_for_verification'), this.$t('label.case_rejected')],
-      totalItem: null,
+      totalItem: 0,
       verificationQuery: {
         'id': '',
         'data': {
@@ -274,8 +291,8 @@ export default {
       if (value) {
         const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
         if (response.status === 200 || response.status === 201) {
-          this.handleSearch()
           await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
+          this.$router.push(`/laporan/list`)
         }
         this.isSubmit = false
       }
@@ -294,20 +311,22 @@ export default {
         { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined'
+      this.listQuery.verified_status = 'pending,declined,draft'
     } else {
       this.headers.push(
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined'
+      if (this.tab === 0) {
+        this.listQuery.verified_status = 'pending,declined,draft'
+      } else {
+        this.listQuery.verified_status = 'pending'
+      }
     }
-    const response = await this.$store.dispatch('reports/countVerificationCase')
-    this.totalItem = response.data.PENDING + response.data.DECLINED
     if (this.roles[0] !== 'faskes') {
       this.listQuery.sort = 'updatedAt:asc'
     }
-    await this.$store.dispatch('reports/listReportCase', this.listQuery)
+    await this.handleSearch()
     this.listQuery.address_district_code = this.district_user
     this.medicalFacilityListQuery.code_district_city = this.district_user
     const responseMedList = await this.$store.dispatch('reports/listMedicalFacility', this.medicalFacilityListQuery)
@@ -315,11 +334,14 @@ export default {
   },
   methods: {
     async handleSearch() {
-      await this.$store.dispatch('reports/countVerificationCase')
-      await this.$store.dispatch('reports/listReportCase', this.listQuery)
+      const response = await this.$store.dispatch('reports/listReportCase', this.listQuery)
+      this.totalItem = response.data._meta.itemCount || 0
     },
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
+    },
+    handleFilter() {
+      this.showFilter = !this.showFilter
     },
     onReset() {
       this.listQuery.search = ''
@@ -338,6 +360,7 @@ export default {
     },
     onTabChanges(value) {
       const ids = this.headers.length
+      this.listQuery.page = 1
       if (this.roles[0] === 'dinkeskota' && value === 'declined') {
         this.headers.splice(7, 2)
       } else if (ids === 7) {
@@ -417,6 +440,11 @@ export default {
     color: white;
     border-radius: 10px;
     background-color: #f91717;
+  }
+  .draft {
+    color: white;
+    border-radius: 10px;
+    background-color: #FFC62B;
   }
   .disclaimer {
     background: linear-gradient(78.54deg, #27AE60 0%, #6FCF97 100%) !important;

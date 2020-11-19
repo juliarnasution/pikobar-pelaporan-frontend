@@ -14,20 +14,7 @@
         <tr v-for="(item, index) in listHistoryCase" :key="index">
           <td>{{ getTableRowNumbering(index) }}</td>
           <td><status :status="item.status" /></td>
-          <td>
-            <div v-if=" item.final_result =='0'">
-              {{ $t('label.negatif') }}
-            </div>
-            <div v-else-if=" item.final_result =='1'">
-              {{ $t('label.recovery') }}
-            </div>
-            <div v-else-if=" item.final_result =='2'">
-              {{ $t('label.dead') }}
-            </div>
-            <div v-else>
-              -
-            </div>
-          </td>
+          <td><final-result :final-result="item.final_result" /></td>
           <td>
             <div v-if="item.current_location_type === 'RUMAH'">
               {{ item.homeAddress }}

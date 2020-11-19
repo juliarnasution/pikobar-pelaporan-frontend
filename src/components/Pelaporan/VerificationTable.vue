@@ -52,15 +52,25 @@
           </td>
           <td v-if="roles[0] === 'faskes'" class="adjust-width">
             <span
+              v-if="item.verified_status === 'pending'"
               :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
               class="pa-2 font-weight-bold"
             >
               {{ item.verified_status === 'pending' ? $t('label.waiting_for_verification') : $t('label.case_rejected') }}
             </span>
+            <span
+              v-else
+              :class="{'draft': item.verified_status === 'draft', 'declined': item.verified_status === 'declined'}"
+              class="pa-2 font-weight-bold"
+            >
+              {{ item.verified_status === 'draft' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
+            </span>
           </td>
-          <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
+          <td v-else-if="item.verified_status !== 'declined'">{{ item.updatedAt ? timeRemain(item.updatedAt) : '-' }}</td>
           <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
-          <td v-if="tableHeaders.length > 8">
+          <td
+            v-if="item.verified_status === 'pending' || roles[0] === 'faskes' && item.verified_status === 'declined' || item.verified_status === 'draft'"
+          >
             <v-card-actions>
               <v-menu
                 :close-on-content-click="false"
@@ -71,7 +81,6 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    v-if="showActionButton(item.verified_status)"
                     class="ma-1 action-btn"
                     color="#828282"
                     tile
@@ -83,20 +92,20 @@
                       mdi-menu-down
                     </v-icon>
                   </v-btn>
-                  <div v-else>
-                    &nbsp;
-                  </div>
                 </template>
                 <v-card>
                   <div v-if="roles[0] === 'faskes'">
-                    <v-list-item @click="handleCorrectCaseReport(item._id)">
-                      {{ item.verified_status === 'declined' ? $t('label.fix_case') : $t('label.view_case_detail') }}
+                    <v-list-item
+                      v-if="item.verified_status === 'declined' || item.verified_status === 'draft'"
+                      @click="handleDetailFixCase(item._id)"
+                    >
+                      {{ item.verified_status === 'declined'? $t('label.fix_case'):$t('label.view_and_complete_case_data') }}
                     </v-list-item>
-                    <v-list-item v-if="item.verified_status !== 'declined'" @click="handleEditCase(item._id)">
-                      {{ $t('label.change_patent_data') }}
-                    </v-list-item>
-                    <v-list-item v-if="item.verified_status !== 'declined'" @click="handleEditHistoryCase(item._id)">
-                      {{ $t('label.update_history') }}
+                    <v-list-item
+                      v-else
+                      @click="handleDetail(item._id)"
+                    >
+                      {{ $t('label.view_detail') }}
                     </v-list-item>
                     <v-list-item @click="handleDeleteCase(item)">
                       <span class="delete">{{ $t('label.delete_case') }}</span>
@@ -111,10 +120,12 @@
               </v-menu>
             </v-card-actions>
           </td>
+          <td v-else>&nbsp;</td>
         </tr>
       </template>
     </v-data-table>
     <dialog-delete
+      class="ma-0"
       :dialog="dialog"
       :data-deleted="dataDelete"
       :dialog-delete.sync="dialog"
@@ -123,12 +134,25 @@
       :store-path-get-list="`reports/listReportCase`"
       :list-query="listQuery"
     />
+    <dialog-close-contact
+      class="ma-0"
+      :show-dialog="dialogCloseContact"
+      :show.sync="dialogCloseContact"
+      :list-close-contact.sync="listCloseContact"
+      :id-case="idCase"
+      :case-id.sync="idCase"
+      :id-unique-case="idUniqueCase"
+      :unique-case-id.sync="idUniqueCase"
+      :title-detail="$t('label.close_contact_list')"
+    />
     <dialog-update-case
+      class="ma-0"
       :show-dialog="dialogUpdateCase"
       :show.sync="dialogUpdateCase"
       :form-pasien="formPasien"
     />
     <dialog-update-history-case
+      class="ma-0"
       :show-dialog="dialogHistoryCase"
       :show.sync="dialogHistoryCase"
       :form-riwayat-pasien="formRiwayatPasien"
@@ -137,8 +161,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import { formatDatetime } from '@/utils/parseDatetime'
+import EventBus from '@/utils/eventBus'
 export default {
   name: 'VerificationTable',
   props: {
@@ -161,6 +185,10 @@ export default {
       headers: this.tableHeaders,
       listQuery: this.query,
       dialog: false,
+      idCase: null,
+      idUniqueCase: null,
+      dialogCloseContact: false,
+      listCloseContact: [],
       dataDelete: null,
       verificationQuery: {
         'id': '',
@@ -203,14 +231,21 @@ export default {
       }
     }
   },
+  async mounted() {
+    EventBus.$on('refreshPageListReport', (value) => {
+      if (this.idCase !== null) {
+        this.getListCloseContactByCase(this.idCase)
+      }
+    })
+  },
   methods: {
     formatDatetime,
     getTableRowNumbering(index) {
       return ((this.listQuery.page - 1) * this.listQuery.limit) + (index + 1)
     },
     timeRemain(value) {
-      const now = moment()
-      const maxVerifiedDate = moment(value).add(1, 'days')
+      const now = this.$moment()
+      const maxVerifiedDate = this.$moment(value).add(1, 'days')
 
       // output otomatis mengeluarkan kalimat waktu. Contoh: dalam 3 jam
       return (maxVerifiedDate > now) ? now.to(maxVerifiedDate) : '-'
@@ -218,16 +253,18 @@ export default {
     async handleDetail(id) {
       this.$emit('update:verificationQuery', this.verificationQuery)
       const response = await this.$store.dispatch('reports/detailReportCase', id)
+      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       if (response.data.verified_status === 'verified') {
         this.$emit('update:showFailedDialog', true)
       } else {
         this.$emit('update:caseDetail', response.data)
+        this.$emit('update:closeContactDetail', responseCloseContact.data)
         this.$emit('update:showVerificationForm', true)
       }
     },
-    async handleCorrectCaseReport(id) {
-      await this.$router.push(`/laporan/correct-case-report/${id}`)
-    },
+    // async handleCorrectCaseReport(id) {
+    //   await this.$router.push(`/laporan/correct-case-report/${id}`)
+    // },
     async handleEditCase(id) {
       this.detail = await this.$store.dispatch('reports/detailReportCase', id)
       await Object.assign(this.formPasien, this.detail.data)
@@ -259,6 +296,16 @@ export default {
       }
       this.dialogHistoryCase = true
     },
+    async handleCloseContact(id, idUniqueCase) {
+      this.idCase = id
+      this.idUniqueCase = idUniqueCase
+      await this.getListCloseContactByCase(id)
+      this.dialogCloseContact = true
+    },
+    async getListCloseContactByCase(id) {
+      const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+      this.listCloseContact = response.data
+    },
     async handleDeleteCase(item) {
       this.dialog = true
       this.dataDelete = await item
@@ -269,6 +316,9 @@ export default {
       } else {
         return true
       }
+    },
+    handleDetailFixCase(id) {
+      this.$router.push(`/laporan/detail-report/${id}`)
     },
     getAge(value) {
       const yearsOld = Math.floor(value)
