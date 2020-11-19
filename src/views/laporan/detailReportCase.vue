@@ -67,7 +67,7 @@
           outlined
           @click="handleUpdateCase"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
                 {{ $t('label.form_patient_title') }}
@@ -77,7 +77,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               :color="statusCase.status_identity === 1 ? '#6FCF97':'#E53935'"
@@ -97,17 +97,17 @@
           outlined
           @click="handleUpdateHistoryCase"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
                 {{ $t('label.clinical_information') }}
               </v-list-item-title>
-              <v-list-item-subtitle class="text-wrap text-center">
+              <v-list-item-subtitle width="100" class="text-wrap text-center">
                 {{ $t('label.case_history_data_and_patient_clinical_info') }}
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               :color="statusCase.status_clinical === 1 ? '#6FCF97':'#E53935'"
@@ -127,7 +127,7 @@
           outlined
           @click="handleInspectionSupport"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
                 {{ $t('label.supporting_information') }}
@@ -137,7 +137,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               color="#6FCF97"
@@ -165,7 +165,7 @@
           outlined
           @click="handleHistoryTravel"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
                 {{ $t('label.travel_history') }}
@@ -175,7 +175,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               :color="isStatusHistoryTravel ? '#6FCF97':'#E53935'"
@@ -197,7 +197,7 @@
           outlined
           @click="handleTransmissionPattern"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">
                 {{ $t('label.transmission_pattern') }}
@@ -207,7 +207,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               :color="statusCase.status_transmission === 1 ? '#6FCF97':'#E53935'"
@@ -227,13 +227,13 @@
           outlined
           @click="handleContactFactor"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.exposure_factor') }}</v-list-item-title>
               <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.patient_external_exposure_factor_information_data') }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               :color="statusCase.status_exposurecontact === 1 ? '#6FCF97':'#E53935'"
@@ -253,13 +253,13 @@
           outlined
           @click="handleCloseContact"
         >
-          <v-list-item two-line>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title class="h6 font-weight-bold mb-1 d-flex justify-center">{{ $t('label.related_contacts') }}</v-list-item-title>
               <v-list-item-subtitle class="text-wrap text-center">{{ $t('label.patient_related_contact_information_data') }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-row class="justify-center pb-6">
+          <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
               color="#6FCF97"
