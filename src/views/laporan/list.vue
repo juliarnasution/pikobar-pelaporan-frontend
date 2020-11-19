@@ -2,6 +2,7 @@
 <template>
   <div>
     <v-skeleton-loader
+      v-show="false"
       :loading="loading"
       type="article"
     >
@@ -18,7 +19,9 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
-    <v-row>
+    <v-row
+      v-show="false"
+    >
       <v-col>
         <v-skeleton-loader
           :loading="loading"
