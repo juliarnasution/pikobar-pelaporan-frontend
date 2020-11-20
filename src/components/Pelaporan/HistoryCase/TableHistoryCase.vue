@@ -23,7 +23,7 @@
               {{ item.updatedAt ? formatDatetime(item.createdAt, 'DD MMMM YYYY') : '-' }}
             </td>
             <td>
-              <v-btn
+              <!-- <v-btn
                 class="ma-1"
                 color="#828282"
                 style="text-transform: none;height: 30px;min-width: 80px;color: #EB5757 !important;"
@@ -32,7 +32,7 @@
                 @click="handleDelete(item)"
               >
                 {{ $t('label.delete_history') }}
-              </v-btn>
+              </v-btn> -->
               <!-- <v-card-actions>
                 <v-menu
                   :close-on-content-click="true"
@@ -105,8 +105,8 @@ export default {
         { text: this.$t('label.symptoms').toUpperCase(), value: 'diagnosis' },
         { text: this.$t('label.additional_condition').toUpperCase(), value: 'diseases' },
         { text: this.$t('label.patient_status').toUpperCase(), value: 'stage' },
-        { text: this.$t('label.last_updated_date').toUpperCase(), value: 'createdAt' },
-        { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
+        { text: this.$t('label.last_updated_date').toUpperCase(), value: 'createdAt' }
+        // { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ]
     }
   },
