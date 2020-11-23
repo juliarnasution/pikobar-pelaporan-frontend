@@ -24,6 +24,7 @@
             </td>
             <td>
               <v-btn
+                v-if="listHistoryCase.length > 1"
                 class="ma-1"
                 color="#828282"
                 style="text-transform: none;height: 30px;min-width: 80px;color: #EB5757 !important;"

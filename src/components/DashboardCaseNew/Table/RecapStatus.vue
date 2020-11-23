@@ -26,6 +26,7 @@
             :is-loading="isLoading"
             :handle-print="handlePrintPNG"
             :handle-export-excel="onExportExcelCriteria"
+            :on-reset="onReset"
           />
           <v-row v-if="item === items[0]">
             <v-col>
@@ -124,6 +125,14 @@ export default {
       if (res.data) {
         this.listSummaryCase = res.data[0].summary
       }
+    },
+    onReset() {
+      this.params.start_date = ''
+      this.params.criteria = 'CONFIRMATION'
+      this.params.address_subdistrict_code = ''
+      this.params.address_village_code = ''
+      this.getVisualizationCase()
+      this.getAgregateSummaryCase()
     },
     async handlePrintPNG() {
       this.isLoading = true
