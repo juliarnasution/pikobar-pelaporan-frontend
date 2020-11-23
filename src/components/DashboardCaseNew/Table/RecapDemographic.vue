@@ -10,6 +10,7 @@
           class="ma-4"
           :params="params"
           :is-loading="isLoading"
+          :on-reset="onReset"
           :handle-print="handlePrintPNG"
           :handle-export-excel="onExportExcelDemographic"
         />
@@ -63,6 +64,13 @@ export default {
       if (res.data) {
         this.listDemographicCase = res.data[0].demographic
       }
+    },
+    onReset() {
+      this.params.start_date = ''
+      this.params.criteria = 'CONFIRMATION'
+      this.params.address_subdistrict_code = ''
+      this.params.address_village_code = ''
+      this.getAgregateSummaryCase()
     },
     async handlePrintPNG() {
       this.isLoading = true

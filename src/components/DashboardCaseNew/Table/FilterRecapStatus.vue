@@ -34,25 +34,44 @@
         <v-row>
           <v-col>
             <v-btn
-              color="#27AE60"
-              outlined
               block
-              :loading="isLoading"
-              @click="handleExportExcel"
+              color="grey darken-3"
+              class="button white--text"
+              @click="onReset"
             >
-              {{ $t('label.export_xls') }}
+              {{ $t('label.reset') }}
             </v-btn>
           </v-col>
           <v-col>
-            <v-btn
-              color="#27AE60"
-              outlined
-              block
-              :loading="isLoading"
-              @click="handlePrint"
-            >
-              {{ $t('label.export_png') }}
-            </v-btn>
+            <v-card-actions class="pt-0">
+              <v-menu
+                :close-on-content-click="false"
+                offset-y
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    color="#27AE60"
+                    outlined
+                    block
+                    :loading="isLoading"
+                    v-on="on"
+                  >
+                    {{ $t('label.export_recap') }}
+                    <v-icon style="color: #009D57;font-size: 2rem;" right>
+                      mdi-menu-down
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-list-item class="text-uppercase" @click="handleExportExcel">
+                    <span class="green--text">{{ $t('label.export_xls') }}</span>
+                  </v-list-item>
+                  <v-list-item class="green--text text-uppercase" @click="handlePrint">
+                    <span class="green--text">{{ $t('label.export_png') }}</span>
+                  </v-list-item>
+                </v-card>
+              </v-menu>
+            </v-card-actions>
           </v-col>
         </v-row>
       </v-col>
@@ -120,6 +139,10 @@ export default {
     isLoading: {
       type: Boolean,
       default: false
+    },
+    onReset: {
+      type: Function,
+      default: null
     }
   },
   data() {
