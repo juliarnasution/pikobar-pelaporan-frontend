@@ -344,4 +344,7 @@ export default {
 .adjust-width {
   width: 20%;
 }
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-size: 0.8rem !important;
+}
 </style>

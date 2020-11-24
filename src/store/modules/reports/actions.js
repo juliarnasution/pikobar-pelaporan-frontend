@@ -115,13 +115,15 @@ export default {
   async listHistoryCase({ commit }, id) {
     try {
       const response = await requestServer(`/api/cases/${id}/history`, 'GET')
-      const afterResponse = response.data.filter(async(item) => {
+      const afterResponse = await response.data.filter(async(item) => {
         if (item.current_location_type === 'RUMAH') {
           const address = await getRequestDetailHomeAdress(
             item.current_location_village_code,
             item.current_location_address
           )
           item['homeAddress'] = address
+        } else {
+          item['homeAddress'] = null
         }
       })
       return afterResponse

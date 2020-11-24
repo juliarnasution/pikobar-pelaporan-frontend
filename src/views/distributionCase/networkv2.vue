@@ -196,7 +196,7 @@ export default {
         current_location_address: null
       },
       listQuery: {
-        address_district_code: '32.73'
+        address_district_code: ''
       }
     }
   },
@@ -213,7 +213,7 @@ export default {
   },
   methods: {
     async getData() {
-      if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) this.listQuery.address_district_code = this.district_user
+      if (rolesWidget['superadmin'].includes(this.roles[0])) this.listQuery.address_district_code = '32.73'
       const res = await this.$store.dispatch(
         'statistic/listCaseRelated',
         this.listQuery
