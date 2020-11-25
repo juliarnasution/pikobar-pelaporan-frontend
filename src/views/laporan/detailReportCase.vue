@@ -523,6 +523,7 @@ export default {
     refreshListHistoryCase(value) {
       if (this.idCase) {
         this.getListHistoryCase(this.idCase)
+        this.getSummaryCase(this.$route.params.id)
         this.refreshListHistoryCase = false
       }
     },
@@ -530,31 +531,37 @@ export default {
       if (!value) {
         this.detailCase()
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     'dialogHistoryCase': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     'dialogTransmissionPattern': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     'dialogHistoryTravel': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     'dialogPublicPlace': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     'dialogContactFactor': function(value) {
       if (!value) {
         this.getStatusCase(this.$route.params.id)
+        this.getSummaryCase(this.$route.params.id)
       }
     },
     'dialogInspectionSupport': function(value) {
