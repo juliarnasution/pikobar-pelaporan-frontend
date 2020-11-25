@@ -120,6 +120,12 @@
   margin: 12px;
   background: linear-gradient(82.33deg, #27AE60 0%, #58DA8F 100%);
 }
+
+.header-detail-case {
+  margin: 12px;
+  background: linear-gradient(82.33deg, #27AE60 0%, #58DA8F 100%);
+}
+
 .header-survey-text {
   font-size: 18px;
   color: #FFFFFF;
@@ -314,4 +320,20 @@
 .material-checkbox-custom > input:indeterminate:disabled + span::before {
   border-color: transparent;
   background-color: currentColor;
+}
+
+.background-card-survey-list-icon {
+  background-image: url('../../static/survey-list-icon.svg');
+  min-height: 100%;
+  position: relative;
+  left: calc(100% - 150px);
+}
+.text-header-detail-case {
+  color: #FFFF !important;
+  font-size: 1.4rem;
+}
+
+.text-sub-header-detail-case {
+  color: #FFFF !important;
+  font-size: 1rem;
 }

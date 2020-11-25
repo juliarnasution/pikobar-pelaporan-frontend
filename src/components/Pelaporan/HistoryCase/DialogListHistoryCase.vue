@@ -136,9 +136,7 @@ export default {
       }
     },
     async showFormHistoryCase(value) {
-      if (!value) {
-        this.$emit('update:refreshListHistoryCase', true)
-      }
+      this.$emit('update:refreshListHistoryCase', true)
     },
     async dialogDelete(value) {
       if (!value) {

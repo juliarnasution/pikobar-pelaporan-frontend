@@ -213,7 +213,7 @@ export default {
   },
   methods: {
     async getData() {
-      if (rolesWidget['superadmin'].includes(this.roles[0])) this.listQuery.address_district_code = '32.73'
+      if (rolesWidget['superadmin'].includes(this.roles[0])) this.listQuery.address_district_code = '32.73  '
       const res = await this.$store.dispatch(
         'statistic/listCaseRelated',
         this.listQuery

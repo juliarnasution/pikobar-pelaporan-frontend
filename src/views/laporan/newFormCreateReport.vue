@@ -1,5 +1,24 @@
 <template>
   <div>
+    <v-card class="pa-1 mt-1 mx-auto header-detail-case">
+      <v-row justify="space-between">
+        <v-col cols="12" md="8" sm="8">
+          <v-card-text class="font-weight-bold">
+            <v-card-title class="pt-0 text-header-detail-case">
+              {{ $t('label.part_one_of_two') }}
+            </v-card-title>
+            <v-card-subtitle class="text-sub-header-detail-case">
+              {{ $t('label.fill_in_identity_criteria_and_clinical_information') }}
+            </v-card-subtitle>
+          </v-card-text>
+        </v-col>
+        <v-col cols="12" md="4" sm="4">
+          <div
+            class="background-card-survey-list-icon ml-12 ml-10"
+          />
+        </v-col>
+      </v-row>
+    </v-card>
     <ValidationObserver ref="observer">
       <v-row>
         <v-col auto>
@@ -181,3 +200,14 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .background-card-survey-list-icon {
+    left: calc(100% - 250px);
+  }
+  .text-header-detail-case {
+    font-size: 1.2em;
+  }
+  .text-sub-header-detail-case {
+    font-size: 2em;
+  }
+</style>
