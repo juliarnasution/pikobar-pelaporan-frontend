@@ -6,10 +6,10 @@
         md="3"
         sm="12"
       >
-        <p>{{ $t('label.physical_activity') }}</p>
+        <p>{{ $t('label.physical_activity') }} </p>
       </v-col>
       <v-col>
-        <p>{{ detail.last_history.pysichal_activity !== undefined ? listPhysicalActivity[detail.last_history.pysichal_activity].text:'-' }}</p>
+        <p>{{ detail.last_history.pysichal_activity !== null ? listPhysicalActivity[detail.last_history.pysichal_activity].text:'-' }}</p>
       </v-col>
     </v-row>
     <v-row class="row-detail">

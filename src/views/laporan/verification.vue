@@ -292,7 +292,7 @@ export default {
         const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
         if (response.status === 200 || response.status === 201) {
           await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
-          this.$router.push(`/laporan/list`)
+          this.handleSearch()
         }
         this.isSubmit = false
       }
@@ -335,7 +335,7 @@ export default {
   methods: {
     async handleSearch() {
       const response = await this.$store.dispatch('reports/listReportCase', this.listQuery)
-      this.totalItem = response.data._meta.itemCount || 0
+      this.totalItem = response.data ? response.data._meta.itemCount : 0
     },
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)

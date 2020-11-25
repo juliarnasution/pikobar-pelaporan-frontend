@@ -793,6 +793,7 @@ export default {
     total_test_result: 'Jumlah Hasil Tes',
     sample_taken: 'Sample yang diambil',
     latest_patient_status: 'Status Pasien Terakhir',
+    last_updated_date_patient_status: 'Tanggal Diperbaharui Status Pasien Terakhir',
     last_updated_date: 'Tanggal Diperbaharui Terakhir',
     select_date_last_status: 'Pilih Tanggal Update Status Terakhir',
     date_last_status: 'Tanggal Update Status Terakhir',

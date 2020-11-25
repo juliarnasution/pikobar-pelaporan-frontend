@@ -16,7 +16,7 @@
             </v-card-subtitle>
           </v-card-text>
         </v-col>
-        <v-col cols="12" md="5" sm="4">
+        <v-col cols="12" md="4" sm="4">
           <div v-if="detail.verified_status === 'pending' & roles[0] != 'faskes'" class="d-flex align-center justify-center pa-5 mx-auto">
             <v-btn class="primary--text" @click="handleVerificationCase">
               {{ $t('label.case_report_verification') }}
@@ -37,6 +37,7 @@
             class="background-card ml-12"
           />
         </v-col>
+        <v-col />
       </v-row>
     </v-card>
     <v-row v-if="detail.verified_status === 'declined' & roles[0] === 'faskes'" class="mx-0 mt-2 mb-2">
@@ -281,6 +282,8 @@
     <dialog-list-history-case
       :show-dialog="dialogHistoryCase"
       :show.sync="dialogHistoryCase"
+      :list-history-case="listHistoryCase"
+      :refresh-list-history-case.sync="refreshListHistoryCase"
       :id-case="this.$route.params.id"
       :detail-case="detail"
       :title-detail="$t('label.case_history') +' & '+ $t('label.clinical_information')"
@@ -416,6 +419,8 @@ export default {
       resendConfirmation: false,
       isRefresh: false,
       isResend: false,
+      listHistoryCase: [],
+      refreshListHistoryCase: false,
       isSubmit: false
     }
   },
@@ -459,6 +464,11 @@ export default {
       if (value) {
         this.detailCase()
         this.isRefresh = false
+      }
+    },
+    refreshListHistoryCase(value) {
+      if (value && this.idCase) {
+        this.getListHistoryCase(this.idCase)
       }
     },
     'dialogUpdateCase': function(value) {
@@ -540,11 +550,18 @@ export default {
     },
     async handleUpdateHistoryCase() {
       this.idCase = this.$route.params.id
-      this.dialogHistoryCase = true
+      this.getListHistoryCase(this.idCase)
     },
     async handleCloseContact() {
       await this.getListCloseContactByCase(this.$route.params.id)
       this.dialogCloseContact = true
+    },
+    async getListHistoryCase(id) {
+      const response = await this.$store.dispatch('reports/listHistoryCase', id)
+      if (response !== undefined) {
+        this.listHistoryCase = await response
+        this.dialogHistoryCase = true
+      }
     },
     async getListCloseContactByCase(id) {
       const response = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
