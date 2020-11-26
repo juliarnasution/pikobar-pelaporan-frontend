@@ -123,11 +123,17 @@
           <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
+              :color="statusCase.status_clinical === 1 ? '#6FCF97':'#E53935'"
+            >
+              {{ statusCase.status_clinical === 1 ? $t('label.complete'):$t('label.incomplete') }}
+            </v-chip>
+            <!-- <v-chip
+              class="ma-2"
               color="#6FCF97"
             >
               {{ summaryReportCase.relatedCasesTotal || 0 }}
               {{ $t('label.clinical_info') }}
-            </v-chip>
+            </v-chip> -->
           </v-row>
         </v-card>
       </v-col>
@@ -202,6 +208,14 @@
               color="#6FCF97"
             >
               {{ summaryReportCase.travelAbroadTotal || 0 }}
+              {{ $t('label.abroad') }}
+            </v-chip>
+            <v-chip
+              class="ma-2"
+              style="font-size: 0.75em;"
+              color="#6FCF97"
+            >
+              {{ summaryReportCase.travelDomesticTotal || 0 }}
               {{ $t('label.out_of_city') }}
             </v-chip>
             <v-chip

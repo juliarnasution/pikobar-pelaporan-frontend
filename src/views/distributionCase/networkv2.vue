@@ -12,18 +12,54 @@
             <div class="c-title">{{ $t('label.distribution_case_network') }}</div>
           </div>
         </v-col>
+      </v-row>
+      <v-row class="filter-layer mx-2">
         <v-col
-          v-if="roles[0] === 'dinkesprov' || roles[0] === 'superadmin'"
-          class="select"
           cols="12"
-          lg="4"
-          md="12"
+          md="8"
+          class="pt-0"
         >
-          <select-area-district-city
-            :district-city="districtCity"
-            :city-district.sync="districtCity"
-            :on-select-district="onSelectDistrict"
+          <address-region
+            :district-code="listQuery.address_district_code"
+            :district-name="district_name_user"
+            :code-district.sync="listQuery.address_district_code"
+            :sub-district-code="listQuery.address_subdistrict_code"
+            :code-sub-district.sync="listQuery.address_subdistrict_code"
+            :village-code="listQuery.address_village_code"
+            :code-village.sync="listQuery.address_village_code"
+            :village-name="nameVillage"
+            :name-village.sync="nameVillage"
+            :disabled-district="disabledDistrict"
+            :disabled-address="false"
+            :required-address="false"
+            :is-label="false"
           />
+        </v-col>
+        <v-col
+          cols="12"
+          md="2"
+          sm="12"
+        >
+          <v-btn
+            block
+            color="grey darken-3"
+            class="button button-action white--text"
+            @click="onReset"
+          >
+            {{ $t('label.reset') }}
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            block
+            outlined
+            :loading="isLoading"
+            color="primary"
+            class="button button-action white--text"
+            @click="onPrintPNG"
+          >
+            <span class="green--text">{{ $t('label.export_png') }}</span>
+          </v-btn>
         </v-col>
       </v-row>
     </div>
@@ -88,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div class="content">
+      <div ref="printNetworkCase" class="content">
         <network
           id="network"
           ref="network"
@@ -121,9 +157,11 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
 import { mapGetters } from 'vuex'
 import { Network } from 'vue-vis-network'
 import { rolesWidget } from '@/utils/constantVariable'
+import { formatDatetime } from '@/utils/parseDatetime'
 
 export default {
   name: 'DistributionCaseNetworkV2',
@@ -134,6 +172,8 @@ export default {
     return {
       loadingNetwork: false,
       loadingDetail: false,
+      isLoading: false,
+      nameVillage: '',
       selected: 'all',
       listStatus: [
         {
@@ -145,6 +185,7 @@ export default {
         kota_kode: '32.73'
       },
       sidebarActive: false,
+      disabledDistrict: false,
       sidebarTransform: 0,
       networkEvents: '',
       network: {
@@ -208,12 +249,25 @@ export default {
       'district_name_user'
     ])
   },
+  watch: {
+    'listQuery': {
+      handler: function(value) {
+        this.getData()
+      },
+      deep: true
+    }
+  },
   async beforeMount() {
+    this.disabledDistrict = rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])
+    if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
+      this.listQuery.address_district_code = this.district_user
+    } else {
+      this.listQuery.address_district_code = '32.73'
+    }
     this.getData()
   },
   methods: {
     async getData() {
-      if (rolesWidget['superadmin'].includes(this.roles[0])) this.listQuery.address_district_code = '32.73  '
       const res = await this.$store.dispatch(
         'statistic/listCaseRelated',
         this.listQuery
@@ -373,6 +427,28 @@ export default {
       }
 
       return image
+    },
+    async onPrintPNG() {
+      this.isLoading = true
+      const el = this.$refs.printNetworkCase
+      const dateNow = Date.now()
+      const filename = `Kasus Keterkaitan - ${this.district_name_user} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.png`
+      const options = {
+        type: 'dataURL'
+      }
+      const output = await this.$html2canvas(el, options)
+      await FileSaver.saveAs(output, filename)
+      this.isLoading = false
+    },
+    onReset() {
+      this.listQuery.address_district_code = ''
+      this.listQuery.address_subdistrict_code = ''
+      this.listQuery.address_village_code = ''
+      if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
+        this.listQuery.address_district_code = this.district_user
+      } else {
+        this.listQuery.address_district_code = '32.73'
+      }
     }
   }
 }
