@@ -200,6 +200,7 @@ export default {
     history: 'Riwayat',
     trip_type: 'Jenis Perjalanan',
     from_abroad: 'Dari Luar Negeri',
+    abroad: 'Luar Negeri',
     from_outside_city: 'Dari Luar Kota',
     country_visited: 'Negara Yang Dikunjungi',
     trip_outside_the_city: 'Perjalanan ke luar kota',

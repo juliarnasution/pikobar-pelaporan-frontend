@@ -19,6 +19,11 @@
         <td>{{ item.six_nine }}</td>
         <td>{{ item.twenty_twenty_nine }}</td>
         <td>{{ item.thirty_thirty_nine }}</td>
+        <td>{{ item.forty_forty_nine }}</td>
+        <td>{{ item.fifty_fifty_nine }}</td>
+        <td>{{ item.sixty_sixty_nine }}</td>
+        <td>{{ item.seventy_seventy_nine }}</td>
+        <td>{{ item.greater_eighty }}</td>
       </tr>
     </template>
   </v-data-table>
@@ -45,7 +50,12 @@ export default {
         { text: '<5TH', value: 'under_five' },
         { text: '6-9TH', value: 'six_nine' },
         { text: '20-29TH', value: 'twenty_twenty_nine' },
-        { text: '30-39TH', value: 'thirty_thirty_nine' }
+        { text: '30-39TH', value: 'thirty_thirty_nine' },
+        { text: '40-49TH', value: 'forty_forty_nine' },
+        { text: '50-59TH', value: 'fifty_fifty_nine' },
+        { text: '60-69TH', value: 'sixty_sixty_nine' },
+        { text: '70-79TH', value: 'seventy_seventy_nine' },
+        { text: '≥80 TH', value: 'greater_eighty' }
       ]
     }
   },
