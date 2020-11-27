@@ -50,11 +50,12 @@
           <td v-if="roles[0] === 'faskes'">
             {{ formatDatetime(item.createdAt, 'DD MMMM YYYY') }}
           </td>
-          <td v-if="roles[0] === 'faskes'" class="adjust-width">
+          <td class="adjust-width">
             <span
               v-if="item.verified_status === 'pending'"
               :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
               class="pa-2 font-weight-bold"
+              style="font-size: 0.8em;"
             >
               {{ item.verified_status === 'pending' ? $t('label.waiting_for_verification') : $t('label.case_rejected') }}
             </span>
@@ -62,12 +63,12 @@
               v-else
               :class="{'draft': item.verified_status === 'draft', 'declined': item.verified_status === 'declined'}"
               class="pa-2 font-weight-bold"
+              style="font-size: 0.8em;"
             >
               {{ item.verified_status === 'draft' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
             </span>
           </td>
-          <td v-else-if="item.verified_status !== 'declined'">{{ item.updatedAt ? timeRemain(item.updatedAt) : '-' }}</td>
-          <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
+          <td v-if="roles[0] !== 'faskes'">{{ item.updatedAt ? timeRemain(item.updatedAt) : '-' }}</td>
           <td
             v-if="item.verified_status === 'pending' || roles[0] === 'faskes' && item.verified_status === 'declined' || item.verified_status === 'draft'"
           >
