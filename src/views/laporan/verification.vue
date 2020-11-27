@@ -117,7 +117,7 @@
           </v-row>
         </div>
       </div>
-      <v-row class="mx-0 my-4">
+      <!-- <v-row class="mx-0 my-4">
         <v-tabs
           v-model="tab"
           class="elevation-2"
@@ -146,8 +146,8 @@
             </v-row>
           </v-tab-item>
         </v-tabs>
-      </v-row>
-      <!-- <verification-table
+      </v-row> -->
+      <verification-table
         :table-headers="headers"
         :list-kasus="listKasus"
         :query="listQuery"
@@ -157,7 +157,7 @@
         :close-contact-detail.sync="closeContactCase"
         :refresh-page.sync="isRefresh"
         :verification-query="verificationQuery"
-      /> -->
+      />
     </v-card>
     <pagination
       :total="totalList"
@@ -314,14 +314,11 @@ export default {
       this.listQuery.verified_status = 'pending,declined,draft'
     } else {
       this.headers.push(
+        { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      if (this.tab === 0) {
-        this.listQuery.verified_status = 'pending,declined,draft'
-      } else {
-        this.listQuery.verified_status = 'pending'
-      }
+      this.listQuery.verified_status = 'pending,declined'
     }
     if (this.roles[0] !== 'faskes') {
       this.listQuery.sort = 'updatedAt:asc'

@@ -123,17 +123,11 @@
           <v-row class="justify-center ma-1">
             <v-chip
               class="ma-2"
-              :color="statusCase.status_clinical === 1 ? '#6FCF97':'#E53935'"
-            >
-              {{ statusCase.status_clinical === 1 ? $t('label.complete'):$t('label.incomplete') }}
-            </v-chip>
-            <!-- <v-chip
-              class="ma-2"
               color="#6FCF97"
             >
-              {{ summaryReportCase.relatedCasesTotal || 0 }}
+              {{ summaryReportCase.clinicalInformationTotal || 0 }}
               {{ $t('label.clinical_info') }}
-            </v-chip> -->
+            </v-chip>
           </v-row>
         </v-card>
       </v-col>
