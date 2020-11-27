@@ -12,7 +12,7 @@
               {{ $t('label.part_two_of_two') }}
             </v-card-title>
             <v-card-title class="py-0 text-header-detail-case">
-              {{ detail.id_case.toUpperCase() }}
+              {{ detail.id_case ? detail.id_case.toUpperCase() : '' }}
             </v-card-title>
             <v-card-title class="pt-0 text-header-detail-case">
               {{ detailNameCase(detail.name, detail.nik) }}

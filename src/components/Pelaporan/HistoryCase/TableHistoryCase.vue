@@ -14,7 +14,9 @@
             <td>{{ getTableRowNumbering(index) }}</td>
             <td><status :status="item.status" /></td>
             <td><final-result :final-result="item.final_result" /></td>
-            <td>{{ item.homeAddress ? item.homeAddress : item.current_location_address }}</td>
+            <td>{{ item.current_location_type === 'RUMAH' ?
+              completeAddress(item.current_location_district, item.current_location_subdistrict, item.current_location_village, item.current_location_address)
+              : item.current_location_address }}</td>
             <td>
               {{ item.first_symptom_date ? formatDatetime(item.first_symptom_date, 'DD MMMM YYYY') : '-' }}
             </td>
@@ -83,6 +85,8 @@
 
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'
+import { completeAddress } from '@/utils/utilsFunction'
+
 export default {
   name: 'TableHistoryCase',
   props: {
@@ -105,7 +109,7 @@ export default {
         { text: '#', value: '_id', sortable: false },
         { text: this.$t('label.criteria').toUpperCase(), value: 'status' },
         { text: this.$t('label.latest_patient_status').toUpperCase(), value: 'final_result' },
-        { text: this.$t('label.location').toUpperCase(), value: 'location' },
+        { text: this.$t('label.current_location_address').toUpperCase(), value: 'current_location_address' },
         { text: this.$t('label.date_symptoms').toUpperCase(), value: 'symptoms' },
         { text: this.$t('label.symptoms').toUpperCase(), value: 'diagnosis' },
         { text: this.$t('label.additional_condition').toUpperCase(), value: 'diseases' },
@@ -117,6 +121,7 @@ export default {
   },
   methods: {
     formatDatetime,
+    completeAddress,
     getTableRowNumbering(index) {
       return (index + 1)
     }
