@@ -45,9 +45,13 @@
           <address-region
             name="address-region"
             :district-code="formPasien.current_location_district_code"
+            :district-name="formPasien.current_location_district_name"
             :code-district.sync="formPasien.current_location_district_code"
+            :name-district.sync="formPasien.current_location_district_name"
             :sub-district-code="formPasien.current_location_subdistrict_code"
+            :sub-district-name="formPasien.current_location_subdistrict_name"
             :code-sub-district.sync="formPasien.current_location_subdistrict_code"
+            :name-sub-district.sync="formPasien.current_location_subdistrict_name"
             :village-code="formPasien.current_location_village_code"
             :village-name="formPasien.current_location_village_name"
             :code-village.sync="formPasien.current_location_village_code"

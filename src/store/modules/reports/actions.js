@@ -1,8 +1,5 @@
 import requestServer from '@/api'
 import request from '@/utils/request'
-import {
-  getRequestDetailHomeAdress
-} from '@/utils/utilsFunction'
 
 export default {
   async listReportCase({ commit }, params) {
@@ -115,18 +112,7 @@ export default {
   async listHistoryCase({ commit }, id) {
     try {
       const response = await requestServer(`/api/cases/${id}/history`, 'GET')
-      const afterResponse = await response.data.filter(async(item) => {
-        if (item.current_location_type === 'RUMAH') {
-          const address = await getRequestDetailHomeAdress(
-            item.current_location_village_code,
-            item.current_location_address
-          )
-          item['homeAddress'] = address
-        } else {
-          item['homeAddress'] = null
-        }
-      })
-      return afterResponse
+      return response.data
     } catch (error) {
       return error.response
     }
