@@ -474,6 +474,8 @@ export default {
     verification_process: 'Proses Verifikasi',
     fix_done: 'Selesai Perbaiki',
     total_case: 'Jumlah Kasus',
+    show_captions: 'Tampilkan Keterangan',
+    hide_captions: 'Sembunyikan Keterangan',
     label: 'Label',
     map_description_step_1: 'Klik pada salah satu titik untuk melihat detail kasus.',
     map_description_step_2: 'Gunakan filter di atas peta untuk mencari kasus berdasarkan Desa/Kelurahan atau Kecamatan tertentu.',

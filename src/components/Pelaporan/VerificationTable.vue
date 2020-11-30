@@ -50,7 +50,7 @@
           <td v-if="roles[0] === 'faskes'">
             {{ formatDatetime(item.createdAt, 'DD MMMM YYYY') }}
           </td>
-          <td class="adjust-width">
+          <td v-if="roles[0] === 'faskes'" class="adjust-width">
             <span
               v-if="item.verified_status === 'pending'"
               :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
@@ -68,10 +68,9 @@
               {{ item.verified_status === 'draft' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
             </span>
           </td>
-          <td v-if="roles[0] !== 'faskes'">{{ item.updatedAt ? timeRemain(item.updatedAt) : '-' }}</td>
-          <td
-            v-if="item.verified_status === 'pending' || roles[0] === 'faskes' && item.verified_status === 'declined' || item.verified_status === 'draft'"
-          >
+          <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
+          <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
+          <td v-if="tableHeaders.length > 8">
             <v-card-actions>
               <v-menu
                 :close-on-content-click="false"
