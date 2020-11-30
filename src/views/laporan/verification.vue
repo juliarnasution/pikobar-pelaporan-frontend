@@ -117,7 +117,7 @@
           </v-row>
         </div>
       </div>
-      <!-- <v-row class="mx-0 my-4">
+      <v-row class="mx-0 my-4">
         <v-tabs
           v-model="tab"
           class="elevation-2"
@@ -126,7 +126,6 @@
           color="red"
           hide-slider
         >
-          <v-tab @click="onTabChanges('pending,declined')">{{ tabLabel[0] }}</v-tab>
           <v-tab @click="onTabChanges('pending')">{{ tabLabel[1] }}</v-tab>
           <v-tab @click="onTabChanges('declined')">{{ tabLabel[2] }}</v-tab>
           <v-tab v-if="roles[0] === 'faskes'" @click="onTabChanges('draft')">{{ tabLabel[3] }}</v-tab>
@@ -146,8 +145,8 @@
             </v-row>
           </v-tab-item>
         </v-tabs>
-      </v-row> -->
-      <verification-table
+      </v-row>
+      <!-- <verification-table
         :table-headers="headers"
         :list-kasus="listKasus"
         :query="listQuery"
@@ -157,7 +156,7 @@
         :close-contact-detail.sync="closeContactCase"
         :refresh-page.sync="isRefresh"
         :verification-query="verificationQuery"
-      />
+      /> -->
     </v-card>
     <pagination
       :total="totalList"
@@ -311,14 +310,13 @@ export default {
         { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined,draft'
+      this.listQuery.verified_status = 'pending'
     } else {
       this.headers.push(
-        { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined'
+      this.listQuery.verified_status = 'pending'
     }
     if (this.roles[0] !== 'faskes') {
       this.listQuery.sort = 'updatedAt:asc'
