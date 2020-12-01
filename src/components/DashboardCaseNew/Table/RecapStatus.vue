@@ -34,6 +34,7 @@
                 <div id="printSummaryTable">
                   <table-recap-case
                     :list-recap-case="listSummaryCase"
+                    :headers-table="headersStatus"
                   />
                 </div>
               </v-card>
@@ -60,6 +61,7 @@
 <script>
 import FileSaver from 'file-saver'
 import { formatDatetime } from '@/utils/parseDatetime'
+import { rolesWidget } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -82,11 +84,20 @@ export default {
       listConfirmation: [],
       listProbable: [],
       listSuspect: [],
-      listCloseContact: []
+      listCloseContact: [],
+      headersStatus: [
+        { text: 'Total', value: 'active' },
+        { text: 'Masih Sakit', value: 'active' },
+        { text: 'Isolasi Mandiri', value: 'sick_home' },
+        { text: 'Isolasi RS', value: 'sick_hospital' },
+        { text: 'Sembuh', value: 'recovered' },
+        { text: 'Meninggal', value: 'decease' }
+      ]
     }
   },
   computed: {
     ...mapGetters('user', [
+      'roles',
       'fullName'
     ])
   },
@@ -103,6 +114,11 @@ export default {
     }
   },
   mounted() {
+    const nameDistrict = rolesWidget['superadmin'].includes(this.roles[0]) ? 'KOTA/KAB' : 'Kecamatan'
+    this.headersStatus.unshift(
+      { text: '#', value: '_id', sortable: false },
+      { text: nameDistrict, value: '_id' }
+    )
     this.getVisualizationCase()
     this.getAgregateSummaryCase()
   },

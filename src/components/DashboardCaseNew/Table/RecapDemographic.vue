@@ -18,6 +18,7 @@
           <div ref="printRecapDemographic">
             <table-recap-demographic
               :list-recap-demographic="listDemographicCase"
+              :headers-table="headersStatus"
             />
           </div>
         </v-card>
@@ -29,6 +30,7 @@
 import FileSaver from 'file-saver'
 import { formatDatetime } from '@/utils/parseDatetime'
 import { mapGetters } from 'vuex'
+import { rolesWidget } from '@/utils/constantVariable'
 
 export default {
   name: 'RecapDemographic',
@@ -39,11 +41,27 @@ export default {
         criteria: 'CONFIRMATION'
       },
       listDemographicCase: [],
-      isLoading: false
+      isLoading: false,
+      headersStatus: [
+        { text: 'WNI', value: 'wni' },
+        { text: 'WNA', value: 'wna' },
+        { text: 'LAKI-LAKI', value: 'male' },
+        { text: 'PEREMPUAN', value: 'female' },
+        { text: '<5TH', value: 'under_five' },
+        { text: '6-9TH', value: 'six_nine' },
+        { text: '20-29TH', value: 'twenty_twenty_nine' },
+        { text: '30-39TH', value: 'thirty_thirty_nine' },
+        { text: '40-49TH', value: 'forty_forty_nine' },
+        { text: '50-59TH', value: 'fifty_fifty_nine' },
+        { text: '60-69TH', value: 'sixty_sixty_nine' },
+        { text: '70-79TH', value: 'seventy_seventy_nine' },
+        { text: '≥80 TH', value: 'greater_eighty' }
+      ]
     }
   },
   computed: {
     ...mapGetters('user', [
+      'roles',
       'fullName'
     ])
   },
@@ -56,6 +74,11 @@ export default {
     }
   },
   mounted() {
+    const nameDistrict = rolesWidget['superadmin'].includes(this.roles[0]) ? 'KOTA/KAB' : 'Kecamatan'
+    this.headersStatus.unshift(
+      { text: '#', value: '_id', sortable: false },
+      { text: nameDistrict, value: '_id' }
+    )
     this.getAgregateSummaryCase()
   },
   methods: {
