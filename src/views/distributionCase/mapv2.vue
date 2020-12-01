@@ -13,7 +13,7 @@
         </v-col>
       </v-row>
       <v-row class="filter-layer mx-2 mb-1">
-        <v-col cols="10">
+        <v-col cols="8">
           <v-row>
             <v-col
               cols="12"
@@ -69,6 +69,18 @@
             {{ $t('label.reset') }}
           </v-btn>
         </v-col>
+        <v-col>
+          <v-btn
+            block
+            outlined
+            :loading="isLoading"
+            color="primary"
+            class="button button-action white--text"
+            @click="onPrintPNG"
+          >
+            <span class="green--text">{{ $t('label.export_png') }}</span>
+          </v-btn>
+        </v-col>
       </v-row>
     </div>
     <div class="container-map relative">
@@ -78,10 +90,12 @@
           v-html="sidebarContent"
         />
       </div>
-      <div
-        id="map"
-        class="map-wrapper bg-aqua"
-      />
+      <div ref="printMap">
+        <div
+          id="map"
+          class="map-wrapper bg-aqua"
+        />
+      </div>
       <div
         v-if="isFilter"
         class="filter"
@@ -327,7 +341,10 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
+import { formatDatetime } from '@/utils/parseDatetime'
 import { mapGetters } from 'vuex'
+import { rolesWidget } from '@/utils/constantVariable'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import 'leaflet-easybutton'
@@ -389,6 +406,7 @@ export default {
         desa_nama: this.villageName
       },
       isFilterLayer: false,
+      isLoading: false,
       filterLayer: {
         isCity: false,
         isDistrict: false,
@@ -522,7 +540,7 @@ export default {
     }
   },
   async beforeMount() {
-    if (this.roles[0] === 'dinkeskota') {
+    if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
       this.disabledDistrict = true
       this.filterLayer.isCity = true
       this.filterLayer.city = this.district_user
@@ -615,7 +633,7 @@ export default {
       try {
         let paramCity = null
         if (this.filterLayer.isCity) {
-          if (this.roles[0] === 'dinkeskota') {
+          if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
             paramCity = this.district_user
           } else {
             paramCity = this.filterLayer.city
@@ -645,15 +663,12 @@ export default {
         this.stage[this.filterActive].data = res.data
 
         if (type === 'init') {
-          if (
-            this.roles[0] === 'dinkesprov' ||
-            this.roles[0] === 'superadmin'
-          ) {
+          if (rolesWidget['superadmin'].includes(this.roles[0])) {
             this.zoomOld = 1
             this.zoomNew = 1
             this.createLayerCity()
             this.createMarker()
-          } else if (this.roles[0] === 'dinkeskota') {
+          } else if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
             this.zoomOld = 2
             this.zoomNew = 2
             this.createLayerDistrict(this.district_user)
@@ -1319,7 +1334,7 @@ export default {
       this.removeMarker()
       this.removeLayer()
 
-      if (this.roles[0] === 'dinkesprov' || this.roles[0] === 'superadmin') {
+      if (rolesWidget['superadmin'].includes(this.roles[0])) {
         this.clearVillage()
         this.clearDistrict()
         this.clearCity()
@@ -1371,6 +1386,18 @@ export default {
     },
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    async onPrintPNG() {
+      this.isLoading = true
+      const el = document.querySelector('#map')
+      const dateNow = Date.now()
+      const filename = `Peta Penyebaran - ${this.district_name_user} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.png`
+      const options = {
+        type: 'dataURL'
+      }
+      const output = await this.$html2canvas(el, options)
+      await FileSaver.saveAs(output, filename)
+      this.isLoading = false
     }
   }
 }
