@@ -4,16 +4,16 @@
       v-slot="{ errors }"
     >
       <v-autocomplete
-        v-debounce:500="handleSearch"
         :no-data-text="$t('label.internal_and_external_data_not_found')"
         :placeholder="$t('label.no_data_autocomplete_case')"
+        :search-input.sync="search"
         :disabled="disabledCase"
         :error-messages="errors"
         :loading="isLoading"
         :items="listKasus"
         menu-props="auto"
         item-value="_id"
-        item-text="name"
+        item-text="id_case"
         autocomplete
         single-line
         solo
@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      search: null,
       listKasus: [],
       listQuery: {
         keyword: null
@@ -68,6 +69,11 @@ export default {
     ...mapGetters('user', [
       'roles'
     ])
+  },
+  watch: {
+    async search(value) {
+      this.handleSearch(value)
+    }
   },
   methods: {
     async handleSearch(value) {
