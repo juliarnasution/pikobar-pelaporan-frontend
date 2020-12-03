@@ -13,7 +13,7 @@
         :items="listKasus"
         menu-props="auto"
         item-value="_id"
-        item-text="id_case"
+        item-text="label"
         autocomplete
         single-line
         solo
