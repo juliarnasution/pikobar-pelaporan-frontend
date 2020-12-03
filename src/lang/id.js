@@ -89,7 +89,7 @@ export default {
     dark_mode: 'Dark Mode',
     summary: 'Ringkasan',
     delete_dialog: 'Apakah Anda yakin akan menghapus data',
-    no_data_autocomplete_case: 'Masukan berdasarkan nama peserta/NIK/No telepon',
+    no_data_autocomplete_case: 'Masukan berdasarkan Kode Kasus/Nama Peserta/NIK/No Telepon',
     no_data_autocomplete_related_case: 'Masukan nama pasien terkait',
     autocomplete_instance_placeholder: 'Masukkan jenis instansi',
     example_instance_name: 'Contoh: Rumah Sakit Umum Daerah Kota Bandung',
