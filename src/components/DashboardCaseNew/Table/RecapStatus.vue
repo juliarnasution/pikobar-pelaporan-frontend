@@ -114,7 +114,7 @@ export default {
     }
   },
   mounted() {
-    const nameDistrict = rolesWidget['superadmin'].includes(this.roles[0]) ? 'KOTA/KAB' : 'Kecamatan/Kelurahan'
+    const nameDistrict = rolesWidget['superadmin'].includes(this.roles[0]) ? 'KOTA/KAB' : 'Kecamatan'
     this.headersStatus.unshift(
       { text: '#', value: '_id', sortable: false },
       { text: nameDistrict, value: '_id' }
