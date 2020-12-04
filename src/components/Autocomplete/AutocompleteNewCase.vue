@@ -4,9 +4,9 @@
       v-slot="{ errors }"
     >
       <v-autocomplete
+        v-debounce:500="handleSearch"
         :no-data-text="$t('label.internal_and_external_data_not_found')"
         :placeholder="$t('label.no_data_autocomplete_case')"
-        :search-input.sync="search"
         :disabled="disabledCase"
         :error-messages="errors"
         :loading="isLoading"
@@ -35,7 +35,6 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'AutocompleteNewCase',
   components: {
@@ -58,7 +57,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      search: null,
       listKasus: [],
       listQuery: {
         keyword: null
@@ -69,11 +67,6 @@ export default {
     ...mapGetters('user', [
       'roles'
     ])
-  },
-  watch: {
-    async search(value) {
-      this.handleSearch(value)
-    }
   },
   methods: {
     async handleSearch(value) {
