@@ -67,13 +67,13 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { ResponseRequest } from '@/utils/constantVariable'
 import {
-  ResponseRequest,
   symptomOptions,
-  additionalConditionOptions,
   answerList,
-  yesOrNoAnswer
-} from '@/utils/constantVariable'
+  yesOrNoAnswer,
+  additionalConditionOptions
+} from '@/utils/constantOption'
 import { validateScrollUp } from '@/utils/utilsFunction'
 import { mapGetters } from 'vuex'
 import EventBus from '@/utils/eventBus'
@@ -155,6 +155,9 @@ export default {
       let response
       const historyID = this.formRiwayatPasien._id
       delete this.formRiwayatPasien['_id']
+      delete this.formRiwayatPasien['delete_status']
+      delete this.formRiwayatPasien['deletedAt']
+      delete this.formRiwayatPasien['deletedBy']
       if (!this.isEdit) {
         this.formRiwayatPasien.case = this.formRiwayatPasien.case._id
         response = await this.$store.dispatch('reports/createHistoryCase', this.formRiwayatPasien)

@@ -8,7 +8,7 @@ const dashboardRouter = {
   meta: {
     title: 'dashboard',
     icon: 'dashboard',
-    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
   },
   active: false,
   children: [
@@ -31,7 +31,7 @@ const dashboardRouter = {
         icon: 'dashboard',
         child: true,
         noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     },
     {
@@ -42,7 +42,7 @@ const dashboardRouter = {
         icon: 'dashboard',
         child: true,
         noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     }
   ]

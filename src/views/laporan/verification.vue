@@ -126,7 +126,6 @@
           color="red"
           hide-slider
         >
-          <v-tab @click="onTabChanges('pending,declined')">{{ tabLabel[0] }}</v-tab>
           <v-tab @click="onTabChanges('pending')">{{ tabLabel[1] }}</v-tab>
           <v-tab @click="onTabChanges('declined')">{{ tabLabel[2] }}</v-tab>
           <v-tab v-if="roles[0] === 'faskes'" @click="onTabChanges('draft')">{{ tabLabel[3] }}</v-tab>
@@ -292,7 +291,7 @@ export default {
         const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
         if (response.status === 200 || response.status === 201) {
           await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
-          this.$router.push(`/laporan/list`)
+          this.handleSearch()
         }
         this.isSubmit = false
       }
@@ -311,17 +310,13 @@ export default {
         { text: this.$t('label.status').toUpperCase(), value: 'status' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      this.listQuery.verified_status = 'pending,declined,draft'
+      this.listQuery.verified_status = 'pending'
     } else {
       this.headers.push(
         { text: this.$t('label.auto_verification_deadline').toUpperCase(), value: 'createdAt' },
         { text: this.$t('label.action').toUpperCase(), value: 'action', sortable: false }
       )
-      if (this.tab === 0) {
-        this.listQuery.verified_status = 'pending,declined,draft'
-      } else {
-        this.listQuery.verified_status = 'pending'
-      }
+      this.listQuery.verified_status = 'pending'
     }
     if (this.roles[0] !== 'faskes') {
       this.listQuery.sort = 'updatedAt:asc'
@@ -329,13 +324,13 @@ export default {
     await this.handleSearch()
     this.listQuery.address_district_code = this.district_user
     this.medicalFacilityListQuery.code_district_city = this.district_user
-    const responseMedList = await this.$store.dispatch('reports/listMedicalFacility', this.medicalFacilityListQuery)
+    const responseMedList = await this.$store.dispatch('occupation/listMedicalFacility', this.medicalFacilityListQuery)
     this.listMedicalFacility = responseMedList.data
   },
   methods: {
     async handleSearch() {
       const response = await this.$store.dispatch('reports/listReportCase', this.listQuery)
-      this.totalItem = response.data._meta.itemCount || 0
+      this.totalItem = response.data ? response.data._meta.itemCount : 0
     },
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)

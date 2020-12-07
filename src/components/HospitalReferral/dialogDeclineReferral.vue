@@ -123,7 +123,7 @@ export default {
         actions: 'decline',
         body: this.formReferral
       }
-      const response = await this.$store.dispatch('reports/actionHospitalReferral', data)
+      const response = await this.$store.dispatch('hospitalRefferal/actionHospitalReferral', data)
       if (response) {
         this.$emit('update:showDecline', false)
         EventBus.$emit('refreshPageListReferral', true)

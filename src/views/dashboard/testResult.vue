@@ -346,6 +346,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { rolesWidget } from '@/utils/constantVariable'
 
 export default {
   name: 'DashboardTestResult',
@@ -448,11 +449,11 @@ export default {
     }
   },
   async beforeMount() {
-    if (this.roles[0] === 'faskes') {
-      this.display = false
-    }
+    // if (this.roles[0] === 'faskes') {
+    //   this.display = false
+    // }
 
-    if (this.roles[0] === 'dinkeskota') {
+    if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
       this.disabledDistrict = true
       this.filterActive.address_district_code = this.district_user
     }
@@ -519,7 +520,7 @@ export default {
       this.getStatisticTestResult()
     },
     async onReset() {
-      if (this.roles[0] === 'dinkesprov' || this.roles[0] === 'superadmin') {
+      if (rolesWidget['superadmin'].includes(this.roles[0])) {
         this.clearCity()
         this.filterActive.address_district_code = null
       }

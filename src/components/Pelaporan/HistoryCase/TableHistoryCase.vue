@@ -13,6 +13,10 @@
           <tr>
             <td>{{ getTableRowNumbering(index) }}</td>
             <td><status :status="item.status" /></td>
+            <td><final-result :final-result="item.final_result" /></td>
+            <td>{{ item.current_location_type === 'RUMAH' ?
+              completeAddress(item.current_location_district, item.current_location_subdistrict, item.current_location_village, item.current_location_address)
+              : item.current_location_address }}</td>
             <td>
               {{ item.first_symptom_date ? formatDatetime(item.first_symptom_date, 'DD MMMM YYYY') : '-' }}
             </td>
@@ -20,10 +24,11 @@
             <td>{{ item.diseases.toString() }}</td>
             <td><final-result :final-result="item.final_result" /></td>
             <td>
-              {{ item.updatedAt ? formatDatetime(item.createdAt, 'DD MMMM YYYY') : '-' }}
+              {{ item.last_date_status_patient ? formatDatetime(item.last_date_status_patient, 'DD MMMM YYYY') : '-' }}
             </td>
             <td>
-              <!-- <v-btn
+              <v-btn
+                v-if="listHistoryCase.length > 1"
                 class="ma-1"
                 color="#828282"
                 style="text-transform: none;height: 30px;min-width: 80px;color: #EB5757 !important;"
@@ -32,7 +37,7 @@
                 @click="handleDelete(item)"
               >
                 {{ $t('label.delete_history') }}
-              </v-btn> -->
+              </v-btn>
               <!-- <v-card-actions>
                 <v-menu
                   :close-on-content-click="true"
@@ -80,6 +85,8 @@
 
 <script>
 import { formatDatetime } from '@/utils/parseDatetime'
+import { completeAddress } from '@/utils/utilsFunction'
+
 export default {
   name: 'TableHistoryCase',
   props: {
@@ -101,17 +108,20 @@ export default {
       headers: [
         { text: '#', value: '_id', sortable: false },
         { text: this.$t('label.criteria').toUpperCase(), value: 'status' },
+        { text: this.$t('label.latest_patient_status').toUpperCase(), value: 'final_result' },
+        { text: this.$t('label.current_location_address').toUpperCase(), value: 'current_location_address' },
         { text: this.$t('label.date_symptoms').toUpperCase(), value: 'symptoms' },
         { text: this.$t('label.symptoms').toUpperCase(), value: 'diagnosis' },
         { text: this.$t('label.additional_condition').toUpperCase(), value: 'diseases' },
         { text: this.$t('label.patient_status').toUpperCase(), value: 'stage' },
-        { text: this.$t('label.last_updated_date').toUpperCase(), value: 'createdAt' }
-        // { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
+        { text: this.$t('label.last_updated_date_patient_status').toUpperCase(), value: 'createdAt' },
+        { text: this.$t('label.action').toUpperCase(), width: '10%', value: 'actions' }
       ]
     }
   },
   methods: {
     formatDatetime,
+    completeAddress,
     getTableRowNumbering(index) {
       return (index + 1)
     }

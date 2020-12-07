@@ -19,13 +19,13 @@
             class="ml-6 mr-6 rounded-pill"
           >
             <v-tab class="text-left">
-              {{ $t('label.travel_history') }}
+              {{ $t('label.from_abroad_or_out_town') }}
             </v-tab>
             <v-tab class="text-left">
-              {{ $t('label.transmission_area') }}
+              {{ $t('label.to_local_transmission') }}
             </v-tab>
             <v-tab class="text-left">
-              {{ $t('label.travel_history_2') }}
+              {{ $t('label.to_public_place') }}
             </v-tab>
             <v-tab-item>
               <v-card flat>

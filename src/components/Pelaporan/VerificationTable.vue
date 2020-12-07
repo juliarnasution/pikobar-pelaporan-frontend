@@ -55,6 +55,7 @@
               v-if="item.verified_status === 'pending'"
               :class="{'pending': item.verified_status === 'pending', 'declined': item.verified_status === 'declined'}"
               class="pa-2 font-weight-bold"
+              style="font-size: 0.8em;"
             >
               {{ item.verified_status === 'pending' ? $t('label.waiting_for_verification') : $t('label.case_rejected') }}
             </span>
@@ -62,15 +63,14 @@
               v-else
               :class="{'draft': item.verified_status === 'draft', 'declined': item.verified_status === 'declined'}"
               class="pa-2 font-weight-bold"
+              style="font-size: 0.8em;"
             >
               {{ item.verified_status === 'draft' ? $t('label.has_not_been_submitted') : $t('label.case_rejected') }}
             </span>
           </td>
-          <td v-else-if="item.verified_status !== 'declined'">{{ item.updatedAt ? timeRemain(item.updatedAt) : '-' }}</td>
+          <td v-else-if="item.verified_status !== 'declined'">{{ item.last_history.createdAt ? timeRemain(item.updatedAt) : '-' }}</td>
           <td v-else-if="tableHeaders.length > 8">&nbsp;</td>
-          <td
-            v-if="item.verified_status === 'pending' || roles[0] === 'faskes' && item.verified_status === 'declined' || item.verified_status === 'draft'"
-          >
+          <td v-if="tableHeaders.length > 8">
             <v-card-actions>
               <v-menu
                 :close-on-content-click="false"
@@ -343,5 +343,8 @@ export default {
 }
 .adjust-width {
   width: 20%;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-size: 0.8rem !important;
 }
 </style>

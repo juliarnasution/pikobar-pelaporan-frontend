@@ -135,7 +135,7 @@
   </div>
 </template>
 <script>
-import { transportOptions } from '@/utils/constantVariable'
+import { transportOptions } from '@/utils/constantOption'
 import { ValidationProvider } from 'vee-validate'
 
 export default {

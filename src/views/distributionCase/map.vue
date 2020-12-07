@@ -549,35 +549,6 @@ export default {
         })
         .addTo(this.map)
 
-      // this.map.on('zoomend', () => {
-      //   this.isZoom = true
-      //   if (this.roles[0] === 'dinkesprov' || this.roles[0] === 'superadmin') {
-      //     if (this.map.getZoom() <= 10) {
-      //       this.zoomOld = this.zoomNew
-      //       this.zoomNew = 1
-      //       this.zoomLayer()
-      //     } else if (this.map.getZoom() > 10 && this.map.getZoom() <= 13) {
-      //       this.zoomOld = this.zoomNew
-      //       this.zoomNew = 2
-      //       this.zoomLayer()
-      //     } else if (this.map.getZoom() > 13) {
-      //       this.zoomOld = this.zoomNew
-      //       this.zoomNew = 3
-      //       this.zoomLayer()
-      //     }
-      //   } else if (this.roles[0] === 'dinkeskota') {
-      //     if (this.map.getZoom() <= 13) {
-      //       this.zoomOld = this.zoomNew
-      //       this.zoomNew = 2
-      //       this.zoomLayer(this.district_user)
-      //     } else if (this.map.getZoom() > 13) {
-      //       this.zoomOld = this.zoomNew
-      //       this.zoomNew = 3
-      //       this.zoomLayer(this.district_user)
-      //     }
-      //   }
-      // })
-
       // Home
       L.easyButton({
         position: 'topright',

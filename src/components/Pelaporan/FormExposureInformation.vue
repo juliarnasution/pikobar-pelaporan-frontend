@@ -159,7 +159,7 @@
   </div>
 </template>
 <script>
-import { protectionToolOptions } from '@/utils/constantVariable'
+import { protectionToolOptions } from '@/utils/constantOption'
 import { ValidationProvider } from 'vee-validate'
 
 export default {

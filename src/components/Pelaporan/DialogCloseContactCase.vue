@@ -125,7 +125,7 @@ export default {
           id: this.idCase,
           data: [this.formCloseContact]
         }
-        const response = await this.$store.dispatch('reports/addCloseContact', updateFinalCloseContact)
+        const response = await this.$store.dispatch('closeContactCase/addCloseContact', updateFinalCloseContact)
         this.loading = false
         if (response && (response.status === 200 || response.status === 201)) {
           await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
@@ -142,7 +142,7 @@ export default {
           id: this.formCloseContact._id,
           data: this.formCloseContact
         }
-        const response = await this.$store.dispatch('reports/updateCloseContact', updateFinalCloseContact)
+        const response = await this.$store.dispatch('closeContactCase/updateCloseContact', updateFinalCloseContact)
         this.loading = false
         if (response.status === 200 || response.status === 201) {
           await this.$store.dispatch('toast/successToast', this.$t('success.data_success_edit'))

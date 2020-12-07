@@ -248,7 +248,7 @@
                         <v-list-item @click="handleDetail(item, item._id)">
                           {{ $t('label.edit_and_detail') }}
                         </v-list-item>
-                        <div v-if="rolesWidget['dinkesKotaAndFaskes'].includes(roles[0])">
+                        <div v-if="rolesWidget['all'].includes(roles[0])">
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>
@@ -486,7 +486,7 @@ export default {
       this.showFilter = !this.showFilter
     },
     async handlePrintPEForm(id, caseCode) {
-      const response = await this.$store.dispatch('reports/printPEForm', id)
+      const response = await this.$store.dispatch('exportReports/printPEForm', id)
       const fileName = `${this.$t('label.pe_report')} - ${caseCode}.pdf`
       FileSaver.saveAs(response, fileName)
     },
@@ -537,13 +537,13 @@ export default {
       }
     },
     async onExportCase() {
-      const response = await this.$store.dispatch('reports/exportExcelCase', this.listQuery)
+      const response = await this.$store.dispatch('exportReports/exportExcelCase', this.listQuery)
       const dateNow = Date.now()
       const fileName = `Data Pasien ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
     },
     async onExportHistoryCase() {
-      const response = await this.$store.dispatch('reports/exportExcelHistory', this.listQuery)
+      const response = await this.$store.dispatch('exportReports/exportExcelHistory', this.listQuery)
       const dateNow = Date.now()
       const fileName = `Data Riwayat Klinis ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)

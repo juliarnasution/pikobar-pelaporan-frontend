@@ -187,7 +187,7 @@ export default {
           transfer_comment: null
         }
       }
-      const response = await this.$store.dispatch('reports/actionHospitalReferral', data)
+      const response = await this.$store.dispatch('hospitalRefferal/actionHospitalReferral', data)
       if (response) {
         this.$emit('update:caseDetail', {})
         this.$emit('update:transferDetail', {})

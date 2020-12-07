@@ -50,7 +50,7 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { clusterType, transmissionTypes } from '@/utils/constantVariable'
+import { clusterType, transmissionTypes } from '@/utils/constantOption'
 export default {
   name: 'FormTransmissionPattern',
   components: {

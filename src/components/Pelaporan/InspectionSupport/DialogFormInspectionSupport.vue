@@ -84,11 +84,20 @@
                       <label>{{ $t('label.place_testing') }}</label>
                     </v-col>
                     <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                      <ValidationProvider>
-                        <v-text-field
+                      <ValidationProvider v-slot="{ errors }" rules="required">
+                        <v-autocomplete
                           v-model="formData.inspection_location"
-                          :label="$t('label.enter_place')"
-                          solo-inverted
+                          name="current_location_address"
+                          :items="hospitalWestJavaList"
+                          :error-messages="errors"
+                          :return-object="false"
+                          :label="$t('label.choose_place')"
+                          menu-props="auto"
+                          item-text="name"
+                          item-value="name"
+                          single-line
+                          solo
+                          autocomplete
                         />
                       </ValidationProvider>
                     </v-col>
@@ -205,7 +214,8 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { specimenType, inspectionType, testResults } from '@/utils/constantVariable'
+import { inspectionType, testResults } from '@/utils/constantVariable'
+import { specimenType } from '@/utils/constantOption'
 export default {
   name: 'DialogFormInspectionSupport',
   components: {
@@ -242,6 +252,7 @@ export default {
       inspectionType: inspectionType,
       testResults: testResults,
       formatDate: 'YYYY/MM/DD',
+      hospitalWestJavaList: [],
       dataCloseContact: []
     }
   },
@@ -253,6 +264,9 @@ export default {
       this.$emit('update:showFormAddInspectionSupport', value)
     }
   },
+  mounted() {
+    this.getListHospital()
+  },
   methods: {
     onChangeInspectionType() {
       this.formData.specimens_type = ''
@@ -262,6 +276,11 @@ export default {
         this.$emit('update:showFormAddInspectionSupport', false)
       }
       this.$emit('update:formData', {})
+    },
+    async getListHospital() {
+      const paramHospitalWestJava = { 'rs_jabar': true }
+      const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
+      this.hospitalWestJavaList = responseWestJava.data
     },
     async handleSave() {
       const valid = await this.$refs.observer.validate()

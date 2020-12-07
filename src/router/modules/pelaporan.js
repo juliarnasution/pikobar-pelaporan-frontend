@@ -79,7 +79,7 @@ const reportRouter = {
         icon: 'library_books',
         child: true,
         noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.FASKES]
+        roles: [rolesPerm.FASKES]
       }
     },
     {

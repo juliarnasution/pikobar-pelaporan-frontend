@@ -286,7 +286,7 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { listActivitiesUndertaken, listRelationships } from '@/utils/constantVariable'
+import { listActivitiesUndertaken, listRelationships } from '@/utils/constantOption'
 import { scrollUp } from '@/utils/utilsFunction'
 export default {
   name: 'FormMultipleCloseContact',
