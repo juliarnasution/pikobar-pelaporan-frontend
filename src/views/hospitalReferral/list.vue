@@ -170,7 +170,7 @@ export default {
           params: this.listQuery
         }
       }
-      const response = await this.$store.dispatch('reports/caseHospitalReferralInOut', data)
+      const response = await this.$store.dispatch('hospitalRefferal/caseHospitalReferralInOut', data)
       this.listReferral = response.data.cases
       this.totalList = response.data._meta.totalPages
     },
@@ -185,7 +185,7 @@ export default {
           type: this.typeReferral
         }
       }
-      const response = await this.$store.dispatch('reports/caseHospitalReferralSummary', data)
+      const response = await this.$store.dispatch('hospitalRefferal/caseHospitalReferralSummary', data)
       if (response) {
         this.summaryReferral = response.data.PENDING + response.data.DECLINED + response.data.APPROVED
       }

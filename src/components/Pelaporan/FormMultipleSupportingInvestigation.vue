@@ -261,7 +261,7 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { specimenType } from '@/utils/constantVariable'
+import { specimenType } from '@/utils/constantOption'
 import { scrollUp } from '@/utils/utilsFunction'
 export default {
   name: 'FormMultipleSupportingInvestigation',

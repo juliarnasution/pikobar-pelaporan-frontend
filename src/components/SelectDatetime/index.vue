@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import { listYear, listMonthName, listDays } from '@/utils/constantVariable'
+import { listYear, listDays } from '@/utils/constantVariable'
+import { listMonthName } from '@/utils/constantOption'
 
 export default {
   name: 'SelectDatetime',

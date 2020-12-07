@@ -170,7 +170,7 @@ export default {
       this.detailTransfer = {}
       this.detailTransfer = tranferDetail
       const responseHistory = await this.$store.dispatch('reports/listHistoryCase', idCase)
-      const responseReferralHistory = await this.$store.dispatch('reports/caseHospitalReferralHistory', idCase)
+      const responseReferralHistory = await this.$store.dispatch('hospitalRefferal/caseHospitalReferralHistory', idCase)
       this.listHistoryCase = responseHistory
       this.referralHistoryCase = responseReferralHistory.data
       this.dialogDetailCase = true
@@ -199,7 +199,7 @@ export default {
           transfer_comment: null
         }
       }
-      const response = await this.$store.dispatch('reports/actionHospitalReferral', data)
+      const response = await this.$store.dispatch('hospitalRefferal/actionHospitalReferral', data)
       if (response) {
         EventBus.$emit('refreshPageListReferral', true)
         await this.$store.dispatch('toast/successToast', this.$t('success.reference_successfully_deleted'))

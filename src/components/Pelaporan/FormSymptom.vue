@@ -149,7 +149,7 @@
   </div>
 </template>
 <script>
-import { symptomOptions, additionalConditionOptions } from '@/utils/constantVariable'
+import { symptomOptions, additionalConditionOptions } from '@/utils/constantOption'
 import { ValidationProvider } from 'vee-validate'
 
 export default {

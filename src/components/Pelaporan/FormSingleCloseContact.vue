@@ -306,7 +306,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { listActivitiesUndertaken, listRelationships } from '@/utils/constantVariable'
+import { listActivitiesUndertaken, listRelationships } from '@/utils/constantOption'
 export default {
   name: 'FormSingleCloseContact',
   components: {

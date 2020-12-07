@@ -205,7 +205,8 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { specimenType, inspectionType, testResults } from '@/utils/constantVariable'
+import { inspectionType, testResults } from '@/utils/constantVariable'
+import { specimenType } from '@/utils/constantOption'
 export default {
   name: 'DialogFormInspectionSupport',
   components: {

@@ -552,14 +552,14 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
+import { rolesCriteria } from '@/utils/constantVariable'
 import {
   symptomOptions,
-  rolesCriteria,
-  additionalConditionOptions,
-  listPhysicalActivity,
   answerList,
-  yesOrNoAnswer
-} from '@/utils/constantVariable'
+  yesOrNoAnswer,
+  listPhysicalActivity,
+  additionalConditionOptions
+} from '@/utils/constantOption'
 import { mapGetters } from 'vuex'
 export default {
   name: 'FormCaseHistory',

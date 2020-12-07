@@ -9,5 +9,13 @@ export default {
     } catch (error) {
       return error.response
     }
+  },
+  async listMedicalFacility({ commit }, params) {
+    try {
+      const response = await requestServer('/api/users-listid', 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
   }
 }

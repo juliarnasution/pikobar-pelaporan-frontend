@@ -390,7 +390,13 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { answerList, yesOrNoAnswer, healthWorkerList, listRelationships, apd } from '@/utils/constantVariable'
+import {
+  yesOrNoAnswer,
+  healthWorkerList,
+  listRelationships,
+  answerList,
+  apd
+} from '@/utils/constantOption'
 import { scrollUp } from '@/utils/utilsFunction'
 
 export default {

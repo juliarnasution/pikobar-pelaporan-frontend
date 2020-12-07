@@ -74,7 +74,7 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { answerList, listPhysicalActivity, incomeList } from '@/utils/constantVariable'
+import { answerList, incomeList, listPhysicalActivity } from '@/utils/constantOption'
 export default {
   name: 'FormSocioeconomicHistory',
   components: {

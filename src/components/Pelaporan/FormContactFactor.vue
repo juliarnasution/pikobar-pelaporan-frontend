@@ -149,7 +149,7 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { answerList, yesOrNoAnswer, healthWorkerList, apd } from '@/utils/constantVariable'
+import { yesOrNoAnswer, healthWorkerList, answerList, apd } from '@/utils/constantOption'
 
 export default {
   name: 'FormContactFactor',
