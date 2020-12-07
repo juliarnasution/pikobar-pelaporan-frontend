@@ -324,7 +324,7 @@ export default {
     await this.handleSearch()
     this.listQuery.address_district_code = this.district_user
     this.medicalFacilityListQuery.code_district_city = this.district_user
-    const responseMedList = await this.$store.dispatch('reports/listMedicalFacility', this.medicalFacilityListQuery)
+    const responseMedList = await this.$store.dispatch('occupation/listMedicalFacility', this.medicalFacilityListQuery)
     this.listMedicalFacility = responseMedList.data
   },
   methods: {

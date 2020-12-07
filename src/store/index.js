@@ -16,6 +16,8 @@ import localTransmissionArea from './modules/localTransmissionArea'
 import historyTravel from './modules/historyTravel'
 import inspectionSupport from './modules/inspectionSupport'
 import publicPlace from './modules/publicPlace'
+import hospitalReferral from './modules/hospitalReferral'
+import exportReports from './modules/exportReports'
 
 Vue.use(Vuex)
 
@@ -32,8 +34,10 @@ const store = new Vuex.Store({
     statistic,
     logistic,
     closeContactCase,
+    hospitalReferral,
     primaryDrawer,
     historyTravel,
+    exportReports,
     localTransmissionArea,
     inspectionSupport,
     publicPlace

@@ -1,6 +1,26 @@
 import requestServer from '@/api'
 
 export default {
+  async updateCloseContact({ commit }, data) {
+    const id_close_contact = await data.id
+    await delete data['id']
+    try {
+      const response = await requestServer(`/api/cases-revamp/${id_close_contact}/contact`, 'PUT', data.data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async addCloseContact({ commit }, data) {
+    const id_case = await data.id
+    await delete data['id']
+    try {
+      const response = await requestServer(`/api/cases/${id_case}/closecontact`, 'POST', data.data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async getListCloseContactByCase({ commit }, idCase) {
     try {
       const response = await requestServer(`/api/cases/${idCase}/closecontact`, 'GET')

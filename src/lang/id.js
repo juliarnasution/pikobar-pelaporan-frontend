@@ -190,6 +190,7 @@ export default {
     hand_prix: 'Hand Prix',
     flebotomy: 'Flebotomy',
     current_location: 'Lokasi Saat Ini',
+    current_location_address: 'Alamat lokasi saat ini',
     home: 'Rumah',
     hospital: 'Rumah Sakit',
     transfer_status: 'Status Transfer',

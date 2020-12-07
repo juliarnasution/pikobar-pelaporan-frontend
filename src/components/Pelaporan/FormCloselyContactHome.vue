@@ -110,7 +110,7 @@
   </div>
 </template>
 <script>
-import { activityContactOptions } from '@/utils/constantVariable'
+import { activityContactOptions } from '@/utils/constantOption'
 import { ValidationProvider } from 'vee-validate'
 
 export default {

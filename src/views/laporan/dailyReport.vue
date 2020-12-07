@@ -157,7 +157,7 @@ export default {
     },
     async handleExport() {
       this.loading = true
-      const response = await this.$store.dispatch('reports/exportExcelDailyReport', this.listQuery)
+      const response = await this.$store.dispatch('exportReports/exportExcelDailyReport', this.listQuery)
       let reportingDate
       if (this.listQuery.date.length > 1) {
         reportingDate = this.$moment(this.listQuery.date).format('YYYY/MM/DD')

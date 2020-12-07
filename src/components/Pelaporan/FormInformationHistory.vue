@@ -614,7 +614,7 @@
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import EventBus from '@/utils/eventBus'
-import { symptomOptions, additionalConditionOptions } from '@/utils/constantVariable'
+import { symptomOptions, additionalConditionOptions } from '@/utils/constantOption'
 import { mapGetters } from 'vuex'
 export default {
   name: 'FormInformationHistory',

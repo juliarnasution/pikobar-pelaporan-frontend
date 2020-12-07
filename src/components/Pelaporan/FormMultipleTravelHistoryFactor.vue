@@ -307,7 +307,7 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { specimenType, listPlaceCategory } from '@/utils/constantVariable'
+import { specimenType, listPlaceCategory } from '@/utils/constantOption'
 import { scrollUp } from '@/utils/utilsFunction'
 export default {
   name: 'FormMultipleTravelHistoryFactor',

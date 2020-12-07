@@ -657,8 +657,8 @@
 import { formatDatetime } from '@/utils/parseDatetime'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { mapGetters } from 'vuex'
+import { symptomOptions, additionalConditionOptions } from '@/utils/constantOption'
 import { getAgeWithMonth } from '@/utils/constantVariable'
-import { symptomOptions, additionalConditionOptions } from '@/utils/constantVariable'
 export default {
   name: 'EditVerification',
   components: {

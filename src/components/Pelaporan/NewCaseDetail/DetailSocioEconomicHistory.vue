@@ -51,7 +51,7 @@
   </div>
 </template>
 <script>
-import { incomeList, listPhysicalActivity } from '@/utils/constantVariable'
+import { incomeList, listPhysicalActivity } from '@/utils/constantOption'
 export default {
   name: 'DetailSocioEconomicHistory',
   props: {

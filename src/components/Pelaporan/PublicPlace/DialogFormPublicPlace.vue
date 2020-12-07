@@ -130,7 +130,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import { listPlaceCategory } from '@/utils/constantVariable'
+import { listPlaceCategory } from '@/utils/constantOption'
 export default {
   name: 'DialogFormPublicPlace',
   components: {

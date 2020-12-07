@@ -387,7 +387,8 @@
 </template>
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { getAgeWithMonth, incomeList } from '@/utils/constantVariable'
+import { incomeList } from '@/utils/constantOption'
+import { getAgeWithMonth } from '@/utils/constantVariable'
 import { mapGetters } from 'vuex'
 export default {
   name: 'FormPatient',

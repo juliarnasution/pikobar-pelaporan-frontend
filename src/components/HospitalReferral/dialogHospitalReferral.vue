@@ -157,7 +157,7 @@ export default {
             transfer_to_unit_name: this.formReferral.transfer_to_unit.name
           }
         }
-        const response = await this.$store.dispatch('reports/caseHospitalRefferal', rowData)
+        const response = await this.$store.dispatch('hospitalRefferal/caseHospitalRefferal', rowData)
         if (response.response.data.status === ResponseRequest.UNPROCESSABLE) {
           await this.$emit('update:dialogPopup', false)
           await this.$emit('update:referralForm', {})
@@ -177,7 +177,7 @@ export default {
         }
         await delete rowData['transfer_to_unit']
         if (!this.isEdit) {
-          response = await this.$store.dispatch('reports/hospitalRefferalNewCase', rowData)
+          response = await this.$store.dispatch('hospitalRefferal/hospitalRefferalNewCase', rowData)
         } else {
           rowData = {
             idCase: rowData.case,
@@ -186,7 +186,7 @@ export default {
           }
           await delete rowData.data['case']
           await delete rowData.data['_id']
-          response = await this.$store.dispatch('reports/caseHospitalRefferalRevise', rowData)
+          response = await this.$store.dispatch('hospitalRefferal/caseHospitalRefferalRevise', rowData)
         }
         if (response.response.data.status === ResponseRequest.UNPROCESSABLE) {
           EventBus.$emit('refreshPageListReferral', true)

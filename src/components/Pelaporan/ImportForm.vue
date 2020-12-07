@@ -251,7 +251,7 @@ export default {
         formData,
         onProgress: this.onProgress
       }
-      const response = await this.$store.dispatch('reports/importExcel', data)
+      const response = await this.$store.dispatch('exportReports/importExcel', data)
       if (!response) {
         this.isLoading = false
         return
