@@ -952,7 +952,7 @@ export default {
         }
 
         const stage = status + ' - ' + elPasien.final_result
-
+        const age = elPasien.umur ? Math.floor(elPasien.umur) : 0
         this.sidebarContent = `
           <div class="d-flex mb-4">
             <div class="legend-color-title legend-description margin-top-3"></div>
@@ -968,7 +968,7 @@ export default {
             <strong>L/P</strong>: ${elPasien.gender} <br>
           </div>
           <div class="mb-2">
-            <strong>Umur</strong>: ${elPasien.umur} <br>
+            <strong>Umur</strong>: ${age} <br>
           </div>
           <div class="mb-2">
             <strong>Wilayah</strong>: <br>
