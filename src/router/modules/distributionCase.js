@@ -6,11 +6,11 @@ import {
 const distributionCaseRouter = {
   path: '/distribution-case',
   component: Layout,
-  redirect: '/distribution-case/map',
+  redirect: '/distribution-case/network',
   meta: {
     title: 'distribution_case',
     icon: 'mdi-map-marker-radius',
-    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
   },
   active: false,
   children: [
@@ -22,7 +22,7 @@ const distributionCaseRouter = {
         icon: 'mdi-map-marker-radius',
         child: true,
         noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     },
     {
@@ -33,7 +33,7 @@ const distributionCaseRouter = {
         icon: 'location_on',
         child: true,
         noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     },
     {
@@ -44,7 +44,7 @@ const distributionCaseRouter = {
         title: 'distribution_case_network',
         icon: 'location_on',
         noCache: true,
-        roles: ['superadmin', 'dinkesprov', 'dinkeskota']
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
       }
     }
   ]

@@ -76,8 +76,9 @@ export const rolesPerm = {
 }
 
 export const rolesWidget = {
+  'all': [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES],
   'superadmin': [rolesPerm.ADMIN, rolesPerm.DINKESPROV],
-  'dinkeskota': [rolesPerm.DINKESKOTA],
+  'dinkeskota': [rolesPerm.ADMIN, rolesPerm.DINKESKOTA],
   'dinkesKotaAndFaskes': [rolesPerm.DINKESKOTA, rolesPerm.FASKES]
 }
 

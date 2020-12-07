@@ -13,7 +13,7 @@
         :items="listKasus"
         menu-props="auto"
         item-value="_id"
-        item-text="name"
+        item-text="label"
         autocomplete
         single-line
         solo
@@ -35,7 +35,6 @@
 <script>
 import { ValidationProvider } from 'vee-validate'
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'AutocompleteNewCase',
   components: {

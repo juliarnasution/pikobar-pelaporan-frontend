@@ -4,6 +4,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // const glob = require('glob-all')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
 // const PurgecssPlugin = require('purgecss-webpack-plugin')
 
 let plugins = [
@@ -21,6 +22,10 @@ let plugins = [
   new webpack.IgnorePlugin(
     /^\.\/locale$/, /moment$/
   ),
+  new PreloadWebpackPlugin({
+    rel: 'preload',
+    as: 'script'
+  }),
 ]
 
 function resolve(dir) {

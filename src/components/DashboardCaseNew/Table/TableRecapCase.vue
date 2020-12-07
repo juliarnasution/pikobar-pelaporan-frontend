@@ -1,6 +1,6 @@
 <template>
   <v-data-table
-    :headers="headers"
+    :headers="headersTable"
     :items="listRecapCase"
     :mobile-breakpoint="NaN"
     :no-data-text="$t('label.data_empty')"
@@ -29,20 +29,10 @@ export default {
     listRecapCase: {
       type: Array,
       default: function() { return [] }
-    }
-  },
-  data() {
-    return {
-      headers: [
-        { text: '#', value: '_id', sortable: false },
-        { text: 'KOTA/KAB', value: '_id' },
-        { text: 'Total', value: 'active' },
-        { text: 'Masih Sakit', value: 'active' },
-        { text: 'Isolasi Mandiri', value: 'sick_home' },
-        { text: 'Isolasi RS', value: 'sick_hospital' },
-        { text: 'Sembuh', value: 'recovered' },
-        { text: 'Meninggal', value: 'decease' }
-      ]
+    },
+    headersTable: {
+      type: Array,
+      default: function() { return [] }
     }
   },
   methods: {

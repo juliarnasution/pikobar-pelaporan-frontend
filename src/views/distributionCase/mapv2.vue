@@ -13,7 +13,7 @@
         </v-col>
       </v-row>
       <v-row class="filter-layer mx-2 mb-1">
-        <v-col cols="10">
+        <v-col cols="8">
           <v-row>
             <v-col
               cols="12"
@@ -69,6 +69,18 @@
             {{ $t('label.reset') }}
           </v-btn>
         </v-col>
+        <v-col>
+          <v-btn
+            block
+            outlined
+            :loading="isLoading"
+            color="primary"
+            class="button button-action white--text"
+            @click="onPrintPNG"
+          >
+            <span class="green--text">{{ $t('label.export_png') }}</span>
+          </v-btn>
+        </v-col>
       </v-row>
     </div>
     <div class="container-map relative">
@@ -78,10 +90,12 @@
           v-html="sidebarContent"
         />
       </div>
-      <div
-        id="map"
-        class="map-wrapper bg-aqua"
-      />
+      <div ref="printMap">
+        <div
+          id="map"
+          class="map-wrapper bg-aqua"
+        />
+      </div>
       <div
         v-if="isFilter"
         class="filter"
@@ -184,99 +198,111 @@
     </div>
     <div class="border-top">
       <v-row class="mx-2 mt-1 mb-2">
-        <v-col
-          cols="12"
-          md="12"
+        <v-expansion-panels
+          v-model="dashboardMapPanel"
+          multiple
         >
-          <v-row>
-            <v-col
-              cols="12"
-              class="py-0"
-            >
-              <div class="d-flex mb-1">
-                <div class="legend-color-title legend-description margin-top-3" />
-                <div class="legend-text-title">{{ `${$t('label.information')} ${$t('label.label')}` }}</div>
-              </div>
-            </v-col>
-            <v-col
-              cols="12"
-              md="3"
-              class="py-0"
-            >
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-positive-active margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.isolation_still_sick')}` }}</div>
-              </div>
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-positive-recovery margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.finished_isolation_recovery')}` }}</div>
-              </div>
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-positive-dead margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.dead')}` }}</div>
-              </div>
-            </v-col>
-            <v-col
-              cols="12"
-              md="3"
-              class="py-0"
-            >
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-probable-sick margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.still_sick')}` }}</div>
-              </div>
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-probable-recovery margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.finished_isolation_recovery')}` }}</div>
-              </div>
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-probable-dead margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.discarded')}` }}</div>
-              </div>
-            </v-col>
-            <v-col
-              cols="12"
-              md="3"
-              class="py-0"
-            >
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-suspect-sick margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.suspect')} - ${$t('label.still_sick')}` }}</div>
-              </div>
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-suspect-discarded margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.suspect')} - ${$t('label.discarded')}` }}</div>
-              </div>
-            </v-col>
-            <v-col
-              cols="12"
-              md="3"
-              class="py-0"
-            >
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-close-contact-quarantine margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.tight_contact')} - ${$t('label.still_quarantine')}` }}</div>
-              </div>
-              <div class="d-flex mb-1 align-top">
-                <div class="legend-color cluster-close-contact-discarded margin-top-3" />
-                <div class="legend-text">{{ `${$t('label.tight_contact')} - ${$t('label.discarded')}` }}</div>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col
-          cols="12"
-          md="12"
-        >
-          <div class="d-flex mb-1">
-            <div class="legend-color-title legend-description margin-top-3" />
-            <div class="legend-text-title">{{ $t('label.information') }}</div>
-          </div>
-          <ol class="text-description">
-            <li>{{ $t('label.map_description_step_1') }}</li>
-            <li>{{ $t('label.map_description_step_2') }}</li>
-          </ol>
-        </v-col>
+          <v-expansion-panel>
+            <v-expansion-panel-header class="font-weight-bold text-lg">
+              {{ dashboardMapPanel ? this.$t('label.show_captions'):this.$t('label.hide_captions') }}
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-col
+                cols="12"
+                md="12"
+              >
+                <v-row>
+                  <v-col
+                    cols="12"
+                    class="py-0"
+                  >
+                    <div class="d-flex mb-1">
+                      <div class="legend-color-title legend-description margin-top-3" />
+                      <div class="legend-text-title">{{ `${$t('label.information')} ${$t('label.label')}` }}</div>
+                    </div>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="3"
+                    class="py-0"
+                  >
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-positive-active margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.isolation_still_sick')}` }}</div>
+                    </div>
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-positive-recovery margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.finished_isolation_recovery')}` }}</div>
+                    </div>
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-positive-dead margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.confirmation')} - ${$t('label.dead')}` }}</div>
+                    </div>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="3"
+                    class="py-0"
+                  >
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-probable-sick margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.still_sick')}` }}</div>
+                    </div>
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-probable-recovery margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.finished_isolation_recovery')}` }}</div>
+                    </div>
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-probable-dead margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.probable')} - ${$t('label.discarded')}` }}</div>
+                    </div>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="3"
+                    class="py-0"
+                  >
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-suspect-sick margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.suspect')} - ${$t('label.still_sick')}` }}</div>
+                    </div>
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-suspect-discarded margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.suspect')} - ${$t('label.discarded')}` }}</div>
+                    </div>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="3"
+                    class="py-0"
+                  >
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-close-contact-quarantine margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.tight_contact')} - ${$t('label.still_quarantine')}` }}</div>
+                    </div>
+                    <div class="d-flex mb-1 align-top">
+                      <div class="legend-color cluster-close-contact-discarded margin-top-3" />
+                      <div class="legend-text">{{ `${$t('label.tight_contact')} - ${$t('label.discarded')}` }}</div>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col
+                cols="12"
+                md="12"
+              >
+                <div class="d-flex mb-1">
+                  <div class="legend-color-title legend-description margin-top-3" />
+                  <div class="legend-text-title">{{ $t('label.information') }}</div>
+                </div>
+                <ol class="text-description">
+                  <li>{{ $t('label.map_description_step_1') }}</li>
+                  <li>{{ $t('label.map_description_step_2') }}</li>
+                </ol>
+              </v-col>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-row>
     </div>
     <div
@@ -315,7 +341,10 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
+import { formatDatetime } from '@/utils/parseDatetime'
 import { mapGetters } from 'vuex'
+import { rolesWidget } from '@/utils/constantVariable'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import 'leaflet-easybutton'
@@ -363,6 +392,7 @@ export default {
       jsonVillage,
       disclaimer: 'none',
       disabledDistrict: false,
+      dashboardMapPanel: [],
       districtCity: {
         kota_kode: this.districtCode,
         kota_nama: this.districtName
@@ -376,6 +406,7 @@ export default {
         desa_nama: this.villageName
       },
       isFilterLayer: false,
+      isLoading: false,
       filterLayer: {
         isCity: false,
         isDistrict: false,
@@ -509,7 +540,7 @@ export default {
     }
   },
   async beforeMount() {
-    if (this.roles[0] === 'dinkeskota') {
+    if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
       this.disabledDistrict = true
       this.filterLayer.isCity = true
       this.filterLayer.city = this.district_user
@@ -602,7 +633,7 @@ export default {
       try {
         let paramCity = null
         if (this.filterLayer.isCity) {
-          if (this.roles[0] === 'dinkeskota') {
+          if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
             paramCity = this.district_user
           } else {
             paramCity = this.filterLayer.city
@@ -632,15 +663,12 @@ export default {
         this.stage[this.filterActive].data = res.data
 
         if (type === 'init') {
-          if (
-            this.roles[0] === 'dinkesprov' ||
-            this.roles[0] === 'superadmin'
-          ) {
+          if (rolesWidget['superadmin'].includes(this.roles[0])) {
             this.zoomOld = 1
             this.zoomNew = 1
             this.createLayerCity()
             this.createMarker()
-          } else if (this.roles[0] === 'dinkeskota') {
+          } else if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
             this.zoomOld = 2
             this.zoomNew = 2
             this.createLayerDistrict(this.district_user)
@@ -1306,7 +1334,7 @@ export default {
       this.removeMarker()
       this.removeLayer()
 
-      if (this.roles[0] === 'dinkesprov' || this.roles[0] === 'superadmin') {
+      if (rolesWidget['superadmin'].includes(this.roles[0])) {
         this.clearVillage()
         this.clearDistrict()
         this.clearCity()
@@ -1358,6 +1386,18 @@ export default {
     },
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    async onPrintPNG() {
+      this.isLoading = true
+      const el = document.querySelector('#map')
+      const dateNow = Date.now()
+      const filename = `Peta Penyebaran - ${this.district_name_user} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.png`
+      const options = {
+        type: 'dataURL'
+      }
+      const output = await this.$html2canvas(el, options)
+      await FileSaver.saveAs(output, filename)
+      this.isLoading = false
     }
   }
 }
@@ -1722,5 +1762,8 @@ export default {
 .img-center {
   display: block;
   margin: 0 auto;
+}
+.v-expansion-panel-header__icon {
+    margin-left: 2% !important;
 }
 </style>

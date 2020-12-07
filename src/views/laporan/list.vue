@@ -248,7 +248,7 @@
                         <v-list-item @click="handleDetail(item, item._id)">
                           {{ $t('label.edit_and_detail') }}
                         </v-list-item>
-                        <div v-if="rolesWidget['dinkesKotaAndFaskes'].includes(roles[0])">
+                        <div v-if="rolesWidget['all'].includes(roles[0])">
                           <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
                             {{ $t('label.print_pe_form') }}
                           </v-list-item>

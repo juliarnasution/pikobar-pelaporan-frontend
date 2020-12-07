@@ -92,7 +92,7 @@
               <label>{{ $t('label.phone_number') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="isPhoneNumber">
+              <ValidationProvider v-slot="{ errors }" :rules="disabled ? '':'isPhoneNumber'">
                 <v-text-field v-model="formCloseContact.phone_number" :disabled="disabled" :error-messages="errors" placeholder="08xxxxxxxxx" solo-inverted type="number" />
               </ValidationProvider>
             </v-col>
@@ -196,7 +196,10 @@
           <v-row align="start">
             <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}" />
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" rules="required">
+              <ValidationProvider
+                v-slot="{ errors }"
+                :rules="disabled ? '':'required'"
+              >
                 <v-textarea
                   v-model="formCloseContact.address_street"
                   :disabled="disabled"

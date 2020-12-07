@@ -89,6 +89,10 @@ export default {
       type: Object,
       default: null
     },
+    listHistoryCase: {
+      type: Array,
+      default: function() { return [] }
+    },
     idCase: {
       type: String,
       default: ''
@@ -103,7 +107,7 @@ export default {
       show: this.showDialog,
       isEditHistoryCase: false,
       isLoading: false,
-      listHistoryCase: [],
+      // listHistoryCase: [],
       dialogDecline: false,
       showFormHistoryCase: false,
       idCloseContact: null,
@@ -122,11 +126,8 @@ export default {
     ])
   },
   watch: {
-    showDialog(value) {
+    async showDialog(value) {
       this.show = value
-      if (value) {
-        this.getListHistoryCase(this.idCase)
-      }
     },
     show(value) {
       this.$emit('update:show', value)
@@ -134,15 +135,13 @@ export default {
         this.$emit('update:caseId', '')
       }
     },
-    showFormHistoryCase(value) {
-      if (!value) {
-        this.getListHistoryCase(this.idCase)
-      }
+    async showFormHistoryCase(value) {
+      this.$emit('update:refreshListHistoryCase', true)
     },
-    dialogDelete(value) {
+    async dialogDelete(value) {
       if (!value) {
         this.dataDelete = null
-        this.getListHistoryCase(this.idCase)
+        this.$emit('update:refreshListHistoryCase', true)
       }
     }
   },
@@ -165,12 +164,6 @@ export default {
       this.formRiwayatPasien.case = this.detailCase
       this.isEditHistoryCase = true
       this.showFormHistoryCase = true
-    },
-    async getListHistoryCase(id) {
-      const response = await this.$store.dispatch('reports/listHistoryCase', id)
-      if (response !== undefined) {
-        this.listHistoryCase = response
-      }
     },
     async getDetailLastHistory(id) {
       const response = await this.$store.dispatch('reports/detailHistoryCase', id)
