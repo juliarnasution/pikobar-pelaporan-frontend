@@ -153,8 +153,8 @@ export default {
           const polygon = layer.addTo(this.map)
           this.dataLayer.push(polygon)
 
-          const nameCity = feature.properties.kemendagri_kabupaten_nama
-          const nameDistrict = feature.properties.kemendagri_kecamatan_nama
+          const nameCity = feature.properties.kemendagri_kabupaten_nama ? feature.properties.kemendagri_kabupaten_nama : '-'
+          const nameDistrict = feature.properties.kemendagri_kecamatan_nama ? feature.properties.kemendagri_kecamatan_nama : '-'
           layer.bindTooltip(`
             ${this.titleize(nameCity)} <br>
             ${this.$t('label.select_sub_district')} ${nameDistrict}
