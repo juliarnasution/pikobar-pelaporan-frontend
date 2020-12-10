@@ -56,7 +56,7 @@
             <!--            </ValidationProvider>-->
             <ValidationProvider
               v-slot="{ errors }"
-              :rules="isNikNull ? 'numeric' : 'required|numeric|sixteenDigits|provinceCode'"
+              :rules="isNikNull ? 'numeric' : 'required|numeric|sixteenDigits'"
             >
               <label :class="!isNikNull ? 'required' : ''">{{ $t('label.nik') }}</label>
               <v-text-field

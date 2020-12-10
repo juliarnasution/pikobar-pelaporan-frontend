@@ -821,6 +821,7 @@ export default {
     test_already: 'Sudah Tes',
     provincial_health_service: 'Dinas Kesehatan Provinsi',
     district_or_city_health_service: 'Dinas Kesehatan Kab/Kota',
+    district_or_city_faskes: 'Fasilitas Kesehatan Kab/Kota',
     name_of_officer_or_cellphone: 'Nama Petugas/HP',
     today: 'Hari ini',
     amount_in_the_past_1_week: 'Jumlah Dalam 1 minggu terakhir',
