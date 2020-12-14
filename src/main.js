@@ -15,7 +15,7 @@ import vueDebounce from 'vue-debounce'
 
 moment.locale('id')
 
-import './plugins/firebase'
+import * as firebase from './plugins/firebase'
 import vuetify from './plugins/vuetify'
 Vue.config.performance = process.env.NODE_ENV === 'development'
 
@@ -76,6 +76,7 @@ Vue.use(VeeValidate, {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  firebase,
   router,
   store,
   i18n,

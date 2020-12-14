@@ -2,6 +2,9 @@ export default {
   show: (state, getters) => {
     return state.show
   },
+  notification: (state, getters) => {
+    return state.notification
+  },
   color: (state, getters) => {
     return state.color
   },

@@ -28,6 +28,28 @@
         @click.stop="primaryDrawer.model = !primaryDrawer.model"
       />
       <v-spacer />
+      <div class="pr-6">
+        <v-badge
+          color="red"
+          content="6"
+          offset-x="10"
+          offset-y="10"
+        >
+          <v-btn
+            fab
+            dark
+            small
+            color="grey"
+          >
+            <v-icon
+              medium
+              color="darken-2"
+            >
+              mdi-bell-outline
+            </v-icon>
+          </v-btn>
+        </v-badge>
+      </div>
       <div>
         <v-label>{{ fullName }}</v-label>
       </div>

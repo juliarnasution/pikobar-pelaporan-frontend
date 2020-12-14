@@ -1,4 +1,8 @@
 export default {
+  NOTIFICATION_TOAST: (state, message) => {
+    state.notification = true
+    state.message = message
+  },
   INFO_TOAST: (state, message) => {
     state.show = true
     state.color = 'info'
@@ -21,5 +25,6 @@ export default {
   },
   INACTIVE_TOAST: (state) => {
     state.show = false
+    state.notification = false
   }
 }

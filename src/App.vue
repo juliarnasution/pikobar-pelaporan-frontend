@@ -2,7 +2,8 @@
   <v-app
     id="inspire"
   >
-    <toast-notification />
+    <notification-dialog />
+    <toast-dialog />
     <loading-logo
       :loading="$store.state.animationLottie.isLoading"
     />
