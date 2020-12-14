@@ -31,15 +31,16 @@
       <div class="pr-6">
         <v-badge
           color="red"
-          content="6"
-          offset-x="10"
-          offset-y="10"
+          :content="totalNoReadNotif"
+          :value="totalNoReadNotif"
+          overlap
         >
           <v-btn
             fab
             dark
             small
             color="grey"
+            @click="handleNotif"
           >
             <v-icon
               medium
@@ -136,6 +137,12 @@ export default {
     ...mapGetters('user', [
       'fullName'
     ]),
+    ...mapGetters('notifDrawer', [
+      'notifDrawer'
+    ]),
+    ...mapGetters('toast', [
+      'totalNoReadNotif'
+    ]),
     ...mapGetters('primaryDrawer', [
       'primaryDrawer'
     ])
@@ -157,6 +164,9 @@ export default {
     // change language
     changeLanguage: function(lang) {
       this.$i18n.locale = lang
+    },
+    handleNotif() {
+      this.$store.dispatch('notifDrawer/notificationDrawer', !this.notifDrawer)
     }
   }
 };

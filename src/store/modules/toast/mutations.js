@@ -2,6 +2,7 @@ export default {
   NOTIFICATION_TOAST: (state, message) => {
     state.notification = true
     state.message = message
+    state.totalNoReadNotif += 1
   },
   INFO_TOAST: (state, message) => {
     state.show = true

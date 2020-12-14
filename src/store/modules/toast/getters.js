@@ -10,5 +10,8 @@ export default {
   },
   message: (state, getters) => {
     return state.message
+  },
+  totalNoReadNotif: (state, getters) => {
+    return state.totalNoReadNotif
   }
 }

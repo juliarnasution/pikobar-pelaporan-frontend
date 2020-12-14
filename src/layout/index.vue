@@ -9,6 +9,13 @@
       <v-row style="padding: 5px 20px;">
         <breadcrumb />
       </v-row>
+
+      <!-- Notif Drawer -->
+      <notification-list
+        :drawer-notif="isNotif"
+        :notif-drawer.sync="isNotif"
+      />
+
       <!-- App Router -->
       <div class="app-container">
         <transition name="fade" mode="out-in">
@@ -25,6 +32,7 @@
 <script>
 /* eslint-disable */
 import Header from "./Header/Header.vue"
+import { mapGetters } from 'vuex'
 import {
   getUserSurvey
 } from '@/utils/cookies'
@@ -42,6 +50,17 @@ export default {
       ],
   }),
   computed: {
+    ...mapGetters('notifDrawer', [
+      'notifDrawer'
+    ]),
+    isNotif: {
+      set(value) {
+        return this.notifDrawer
+      },
+      get() {
+        return this.notifDrawer
+      }
+    },
     key() {
       return this.$route.fullPath
     }

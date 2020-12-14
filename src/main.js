@@ -45,7 +45,7 @@ import '@/utils/vee-validate' // include all validate form
 import i18n from './lang' // Internationalization
 import '@/helpers/filters' // include all filters
 import VueHtml2Canvas from 'vue-html2canvas'
-// import './registerServiceWorker'
+import './registerServiceWorker'
 
 Vue.use(vueDebounce, {
   listenTo: 'input'
