@@ -213,8 +213,7 @@
     />
     <v-row
       v-if="multipleSelect"
-      class="mx-auto my-12 center"
-      style="position: fixed;bottom: 3%;left: 40%;width: 30%;"
+      class="mx-auto my-12 center multiple-action"
     >
       <v-col>
         <v-toolbar
@@ -222,7 +221,7 @@
           style="border-radius: 15px;"
           dark
         >
-          <v-toolbar-title class="text-wrap">{{ selected.length + ' Pasien dipilih' }}</v-toolbar-title>
+          <v-toolbar-title class="text-wrap">{{ selected.length + ` ` + $t('label.choose_patient') }}</v-toolbar-title>
           <v-divider
             class="mx-2"
             style="border: 1px solid white;"
@@ -504,5 +503,11 @@ export default {
   }
   .success-message {
     color: #27ae60;
+  }
+  .multiple-action {
+    position: fixed;
+    bottom: 3%;
+    left: 40%;
+    width: 30%;
   }
 </style>

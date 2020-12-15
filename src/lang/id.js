@@ -808,6 +808,7 @@ export default {
     date_last_status: 'Tanggal Update Status Terakhir',
     patient_status_update: 'Update Status Pasien',
     status_update: 'Update Status',
+    choose_patient: 'Pasien dipilih',
     patient_condition_update: 'Update Kondisi Pasien',
     data_transmission_type_and_cluster_type: 'Data jenis transmisi dan jenis klaster',
     recap_close_suspect_possible_confirmed_contacts: 'Rekap Kontak Erat, Suspek, Probable & Terkonfirmasi',
