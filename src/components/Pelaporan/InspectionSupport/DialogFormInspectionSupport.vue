@@ -279,7 +279,7 @@ export default {
     },
     async getListHospital() {
       const paramHospitalWestJava = { 'rs_jabar': true }
-      const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
+      const responseWestJava = await this.$store.dispatch('region/getListUnitLab', paramHospitalWestJava)
       this.hospitalWestJavaList = responseWestJava.data
     },
     async handleSave() {
