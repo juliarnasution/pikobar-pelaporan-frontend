@@ -280,7 +280,7 @@ export default {
     async getListHospital() {
       const paramHospitalWestJava = { 'rs_jabar': true }
       const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
-      this.hospitalWestJavaList = responseWestJava.data
+      this.hospitalWestJavaList = responseWestJava.data ? responseWestJava.data : []
     },
     async handleSave() {
       const valid = await this.$refs.observer.validate()

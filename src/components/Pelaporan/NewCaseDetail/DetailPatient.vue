@@ -198,7 +198,7 @@
         <p>{{ $t('label.citizenship') }}</p>
       </v-col>
       <v-col>
-        <p>{{ detail.nationality.toUpperCase() }}</p>
+        <p>{{ detail.nationality ? detail.nationality.toUpperCase():'-' }}</p>
       </v-col>
     </v-row>
   </div>
