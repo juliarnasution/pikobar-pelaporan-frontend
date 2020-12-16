@@ -4,7 +4,7 @@
       <v-data-table
         :headers="headers"
         :items="listHistoryTravel"
-        :mobile-breakpoint="NaN"
+        mobile-breakpoint="0"
         :no-data-text="$t('label.data_empty')"
         :items-per-page="10"
         hide-default-footer

@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="referralHistoryCase"
-    :mobile-breakpoint="NaN"
+    mobile-breakpoint="0"
     :no-data-text="$t('label.data_empty')"
     :items-per-page="100"
     fixed-header
