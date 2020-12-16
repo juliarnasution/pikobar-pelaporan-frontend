@@ -678,7 +678,7 @@ export default {
     },
     async resendVerificationCase() {
       const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
-      if (response.status !== ResponseRequest.UNPROCESSABLE) {
+      if (response.status && response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.send_data_success'))
         await this.$store.dispatch('reports/resetFormPasien')
         await this.$router.push('/laporan/verification')
