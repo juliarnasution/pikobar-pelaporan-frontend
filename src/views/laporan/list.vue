@@ -230,6 +230,7 @@
           />
           <v-toolbar-title
             class="text-wrap"
+            style="cursor: pointer;"
             @click="handleUpdateMultipleStatusCase"
           >
             <v-icon left>mdi-pencil-box-outline</v-icon>
@@ -509,5 +510,10 @@ export default {
     bottom: 3%;
     left: 40%;
     width: 30%;
+  }
+  @media(min-width: 1360px) {
+    .multiple-action {
+      width: 21.2%;
+    }
   }
 </style>
