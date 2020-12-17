@@ -211,43 +211,54 @@
       :success.sync="successDialog"
       :message.sync="errorMessage"
     />
-    <v-row
+    <v-toolbar
       v-if="multipleSelect"
-      class="mx-auto my-12 center multiple-action"
+      color="primary"
+      class="multiple-action"
+      style="border-radius: 15px;"
+      dark
     >
-      <v-col>
-        <v-toolbar
-          color="primary"
-          style="border-radius: 15px;"
-          dark
-        >
-          <v-toolbar-title class="text-wrap">{{ selected.length + ` ` + $t('label.choose_patient') }}</v-toolbar-title>
+      <v-row
+        class="mx-auto my-12 center"
+        align="center"
+        justify="center"
+      >
+        <v-col cols="4" class="px-0">
+          <v-toolbar-title class="text-wrap subtitle-1">
+            {{ selected.length + ` ` + $t('label.choose_patient') }}
+          </v-toolbar-title>
+        </v-col>
+        <v-col cols="1">
           <v-divider
-            class="mx-2"
-            style="border: 1px solid white;"
+            style="border: 1px solid white; height: 40px;"
             inset
             vertical
           />
+        </v-col>
+        <v-col cols="5" class="px-0">
           <v-toolbar-title
-            class="text-wrap"
+            class="text-wrap subtitle-1"
             style="cursor: pointer;"
             @click="handleUpdateMultipleStatusCase"
           >
             <v-icon left>mdi-pencil-box-outline</v-icon>
             {{ $t('label.status_update') }}
           </v-toolbar-title>
+        </v-col>
+        <v-col cols="1">
           <v-divider
-            class="mx-2"
-            style="border: 1px solid white;"
+            style="border: 1px solid white; height: 40px;"
             inset
             vertical
           />
+        </v-col>
+        <v-col cols="1" class="pl-0">
           <v-icon @click="cancelMultiple">
             mdi-close-circle-outline
           </v-icon>
-        </v-toolbar>
-      </v-col>
-    </v-row>
+        </v-col>
+      </v-row>
+    </v-toolbar>
     <dialog-update-status-case
       :show-dialog="dialogUpdateMultiple"
       :show.sync="dialogUpdateMultiple"
@@ -509,29 +520,21 @@ export default {
     position: fixed;
     bottom: 3%;
     left: 40%;
-    width: 30%;
   }
   @media (min-width: 320px) and (max-width: 540px){
     .multiple-action {
-      left: 0%;
-      width: 100%;
+      left: 5vh;
+      bottom: 10%;
     }
   }
   @media (min-width: 540px) and (max-width: 600px) {
     .multiple-action {
-      left: 16%;
-      width: 70%;
+      left: 18vh;
     }
   }
   @media (min-width: 600px) and (max-width: 900px) {
     .multiple-action {
-      left: 20%;
-      width: 58%;
-    }
-  }
-  @media(min-width: 1360px) {
-    .multiple-action {
-      width: 30%;
+      left: 30vh;
     }
   }
 </style>
