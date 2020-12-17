@@ -511,9 +511,27 @@ export default {
     left: 40%;
     width: 30%;
   }
+  @media (min-width: 320px) and (max-width: 540px){
+    .multiple-action {
+      left: 0%;
+      width: 100%;
+    }
+  }
+  @media (min-width: 540px) and (max-width: 600px) {
+    .multiple-action {
+      left: 16%;
+      width: 70%;
+    }
+  }
+  @media (min-width: 600px) and (max-width: 900px) {
+    .multiple-action {
+      left: 20%;
+      width: 58%;
+    }
+  }
   @media(min-width: 1360px) {
     .multiple-action {
-      width: 21.2%;
+      width: 30%;
     }
   }
 </style>
