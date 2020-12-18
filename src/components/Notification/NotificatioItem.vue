@@ -1,21 +1,15 @@
 <template>
   <v-badge
+    :value="item.isRead ? 0:1"
     dot
     overlap
   >
-    <v-list-item class="pl-1">
+    <v-list-item class="pl-1" @click="onRead(item._id)">
       <v-list-item-content>
         <v-list-item-title>
-          <v-chip
-            color="#EB5757"
-            label
-            small
-          >
-            {{ item.status }}
-          </v-chip>
-          <span class="ml-1">{{ timeRemain(item.time) }}</span>
+          <notification-status :status="item.eventType" :date="item.createdAt" />
         </v-list-item-title>
-        <v-list-item-subtitle>{{ item.body }}</v-list-item-subtitle>
+        <v-list-item-subtitle class="subtitle-2 text-wrap">{{ item.message }}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
   </v-badge>
@@ -28,14 +22,10 @@ export default {
     item: {
       type: Object,
       default: null
-    }
-  },
-  methods: {
-    timeRemain(value) {
-      const now = this.$moment()
-      const maxVerifiedDate = this.$moment(value).add(1, 'days')
-
-      return now.to(maxVerifiedDate)
+    },
+    onRead: {
+      type: Function,
+      default: null
     }
   }
 }

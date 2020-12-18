@@ -31,8 +31,8 @@
       <div class="pr-6">
         <v-badge
           color="red"
-          :content="totalNoReadNotif"
-          :value="totalNoReadNotif"
+          :content="notificationTotalUnread"
+          :value="notificationTotalUnread"
           overlap
         >
           <v-btn
@@ -140,8 +140,8 @@ export default {
     ...mapGetters('notifDrawer', [
       'notifDrawer'
     ]),
-    ...mapGetters('toast', [
-      'totalNoReadNotif'
+    ...mapGetters('notifications', [
+      'notificationTotalUnread'
     ]),
     ...mapGetters('primaryDrawer', [
       'primaryDrawer'

@@ -2,6 +2,9 @@ export default {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
+  SET_USER_ID: (state, user_id) => {
+    state.user_id = user_id
+  },
   SET_ROLES: (state, roles) => {
     state.roles = roles
   },

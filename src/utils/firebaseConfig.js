@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'
+import store from '@/store'
 import 'firebase/messaging'
 
 const firebaseConfig = {
@@ -22,4 +23,35 @@ const messaging = (function initMessaging() {
   return m
 }())
 
-export { messaging, firebaseConfig }
+function setTokenFirebase() {
+  messaging.requestPermission().then(() => {
+    console.log('Notification permission granted.')
+    messaging.getToken().then(async(token) => {
+      const user_id = await store.getters['user/user_id']
+      const data = {
+        'appId': 'web',
+        'token': token
+      }
+      await store.dispatch('notifications/setNotificationToken', { user_id: user_id, data })
+    })
+  }).catch((err) => {
+    console.log('Unable to get permission to notify.', err)
+  })
+}
+
+function setRefreshFirebase() {
+  messaging.onTokenRefresh(function() {
+    messaging.getToken().then(async function(newToken) {
+      const user_id = await store.getters['user/user_id']
+      const data = {
+        'appId': 'web',
+        'token': newToken
+      }
+      await store.dispatch('notifications/setNotificationToken', { user_id: user_id, data })
+    }).catch(function(err) {
+      console.log('Unable to retrieve refreshed token ', err)
+    })
+  })
+}
+
+export { messaging, setTokenFirebase, setRefreshFirebase, firebaseConfig }

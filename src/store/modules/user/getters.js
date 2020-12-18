@@ -2,6 +2,9 @@ export default {
   roles: (state, getters) => {
     return state.roles
   },
+  user_id: (state, getters) => {
+    return state.user_id
+  },
   token: (state, getters) => {
     return state.token
   },

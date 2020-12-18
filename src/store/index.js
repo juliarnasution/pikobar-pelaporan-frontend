@@ -19,6 +19,7 @@ import publicPlace from './modules/publicPlace'
 import hospitalReferral from './modules/hospitalReferral'
 import exportReports from './modules/exportReports'
 import notifDrawer from './modules/notifDrawer'
+import notifications from './modules/notifications'
 
 Vue.use(Vuex)
 
@@ -42,6 +43,7 @@ const store = new Vuex.Store({
     localTransmissionArea,
     inspectionSupport,
     notifDrawer,
+    notifications,
     publicPlace
   }
 })

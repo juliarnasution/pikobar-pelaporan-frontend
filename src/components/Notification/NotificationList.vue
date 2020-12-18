@@ -9,15 +9,16 @@
       <v-list-item
         v-for="item in items"
         :key="item.title"
-        :style="item.read ? 'background: #C0EDFF 30%':''"
+        :style="item.isRead ? '':'background: #C0EDFF 30%'"
         link
       >
-        <notification-item :item="item" />
+        <notification-item :item="item" :on-read="onRead" />
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'NotificationList',
@@ -29,13 +30,14 @@ export default {
   },
   data() {
     return {
-      items: [
-        { status: 'Kasus Ditolak', time: '2020-12-12 15:00:00', body: 'test aja', read: false },
-        { status: 'Kasus Ditolak', time: '2020-12-11 15:00:00', body: 'test aja', read: true }
-      ]
+      params: {},
+      items: []
     }
   },
   computed: {
+    ...mapGetters('user', [
+      'user_id'
+    ]),
     isShowDrawer: {
       set(drawerNotif) {
         this.$emit('update:notifDrawer', drawerNotif)
@@ -43,6 +45,20 @@ export default {
       get() {
         return this.drawerNotif
       }
+    }
+  },
+  watch: {
+    async drawerNotif(value) {
+      if (value) {
+        const response = await this.$store.dispatch('notifications/getListNotifications', this.params)
+        this.items = response.data ? response.data.itemsList : []
+      }
+    }
+  },
+  methods: {
+    async onRead(id) {
+      await this.$store.dispatch('notifications/onReadNotification', id)
+      // caseID
     }
   }
 }

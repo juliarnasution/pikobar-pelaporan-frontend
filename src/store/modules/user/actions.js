@@ -5,20 +5,22 @@ import {
   removeToken
 } from '@/utils/cookies'
 import { resetRouter } from '@/router'
-// import {
-//   getFCMNotifToken
-// } from '@/plugins/firebase'
+import {
+  setTokenFirebase,
+  setRefreshFirebase
+} from '@/utils/firebaseConfig'
 
 export default {
   // user login
   login({ commit }, userInfo) {
     return new Promise((resolve, reject) => {
       requestServer('/api/login', 'POST', userInfo).then((response) => {
-        const { token } = response.data
+        const { token, id } = response.data
         commit('SET_TOKEN', token)
+        commit('SET_USER_ID', id)
         setToken(token)
         setUserSurvey(true)
-        // getFCMNotifToken()
+        setTokenFirebase()
         resolve(response.data)
       }).catch((error) => {
         reject(error)
@@ -47,6 +49,7 @@ export default {
           commit('SET_UNIT_NAME', unit_id.name)
           commit('SET_UNIT_TYPE', unit_id.unit_type)
         }
+        setRefreshFirebase()
         resolve([role])
       }).catch((error) => {
         reject(error)
