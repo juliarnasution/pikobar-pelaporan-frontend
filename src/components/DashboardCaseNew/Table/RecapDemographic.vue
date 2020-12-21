@@ -19,6 +19,7 @@
             <table-recap-demographic
               :list-recap-demographic="listDemographicCase"
               :headers-table="headersStatus"
+              :is-loading="isLoading"
             />
           </div>
         </v-card>
@@ -83,10 +84,12 @@ export default {
   },
   methods: {
     async getAgregateSummaryCase() {
+      this.isLoading = true
       const res = await this.$store.dispatch('statistic/agregateSummaryCase', this.params)
       if (res.data) {
         this.listDemographicCase = res.data[0].demographic
       }
+      this.isLoading = false
     },
     onReset() {
       this.params.start_date = ''

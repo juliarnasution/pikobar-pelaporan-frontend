@@ -35,6 +35,7 @@
                   <table-recap-case
                     :list-recap-case="listSummaryCase"
                     :headers-table="headersStatus"
+                    :is-loading="isLoading"
                   />
                 </div>
               </v-card>
@@ -137,10 +138,12 @@ export default {
       this.isLoading = false
     },
     async getAgregateSummaryCase() {
+      this.isLoading = true
       const res = await this.$store.dispatch('statistic/agregateSummaryCase', this.params)
       if (res.data) {
         this.listSummaryCase = res.data[0].summary
       }
+      this.isLoading = false
     },
     onReset() {
       this.params.start_date = ''
