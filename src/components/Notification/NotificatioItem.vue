@@ -4,7 +4,7 @@
     dot
     overlap
   >
-    <v-list-item class="pl-1" @click="onRead(item._id)">
+    <v-list-item class="pl-1" @click="onRead(item)">
       <v-list-item-content>
         <v-list-item-title>
           <notification-status :status="item.eventType" :date="item.createdAt" />

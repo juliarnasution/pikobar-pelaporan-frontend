@@ -5,11 +5,11 @@
     absolute
     temporary
   >
-    <v-list dense>
+    <v-list d-flex dense style="max-height: 90vh;overflow: auto;">
       <v-list-item
         v-for="item in items"
         :key="item.title"
-        :style="item.isRead ? '':'background: #C0EDFF 30%'"
+        :style="item.isRead ? '':'background: #C0EDFF 30%;'"
         link
       >
         <notification-item :item="item" :on-read="onRead" />
@@ -50,15 +50,19 @@ export default {
   watch: {
     async drawerNotif(value) {
       if (value) {
-        const response = await this.$store.dispatch('notifications/getListNotifications', this.params)
-        this.items = response.data ? response.data.itemsList : []
+        await this.getListNotifications()
       }
     }
   },
   methods: {
-    async onRead(id) {
-      await this.$store.dispatch('notifications/onReadNotification', id)
+    async onRead(item) {
+      await this.$store.dispatch('notifications/onReadNotification', item._id)
+      item.isRead = true
       // caseID
+    },
+    async getListNotifications() {
+      const response = await this.$store.dispatch('notifications/getListNotifications', this.params)
+      this.items = response.data ? response.data.itemsList : []
     }
   }
 }
