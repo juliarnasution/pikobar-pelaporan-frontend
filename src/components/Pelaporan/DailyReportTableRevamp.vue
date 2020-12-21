@@ -6,8 +6,10 @@
       <div class="pa-3">{{ $t('label.west_java') }}</div>
     </v-row>
     <v-row class="ml-2">
-      <div class="pa-3">{{ $t('label.district_or_city_health_service') }}</div>
-      <div class="py-3">:</div>
+      <div class="pa-3 width-title-header">
+        {{ roles[0] !== 'faskes' ? $t('label.district_or_city_health_service') : $t('label.district_or_city_faskes') }}
+      </div>
+      <div class="py-3 pl-3">:</div>
       <div class="pa-3">{{ fullName }}</div>
     </v-row>
     <v-row class="ml-2">
@@ -347,6 +349,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', [
+      'roles',
       'fullName',
       'phoneNumber'
     ])

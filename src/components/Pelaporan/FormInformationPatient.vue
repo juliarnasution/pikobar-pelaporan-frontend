@@ -32,7 +32,7 @@
           >
             <ValidationProvider
               v-slot="{ errors }"
-              rules="isHtml|sixteenDigits|numeric|provinceCode"
+              rules="isHtml|sixteenDigits|numeric"
             >
               <v-text-field
                 v-model="formPasien.nik"

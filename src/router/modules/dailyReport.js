@@ -10,7 +10,7 @@ const dailyReportRouter = {
   meta: {
     title: 'daily_report',
     icon: 'mdi-calendar-blank',
-    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
   },
   active: false,
   children: [
@@ -22,7 +22,7 @@ const dailyReportRouter = {
         icon: 'mdi-calendar-blank',
         child: true,
         noCache: true,
-        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     }
   ]

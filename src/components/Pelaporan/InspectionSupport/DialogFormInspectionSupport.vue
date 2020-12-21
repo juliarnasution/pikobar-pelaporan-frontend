@@ -84,7 +84,7 @@
                       <label>{{ $t('label.place_testing') }}</label>
                     </v-col>
                     <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                      <ValidationProvider v-slot="{ errors }" rules="required">
+                      <ValidationProvider v-slot="{ errors }">
                         <v-autocomplete
                           v-model="formData.inspection_location"
                           name="current_location_address"
@@ -279,7 +279,7 @@ export default {
     },
     async getListHospital() {
       const paramHospitalWestJava = { 'rs_jabar': true }
-      const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
+      const responseWestJava = await this.$store.dispatch('region/getListUnitLab', paramHospitalWestJava)
       this.hospitalWestJavaList = responseWestJava.data ? responseWestJava.data : []
     },
     async handleSave() {

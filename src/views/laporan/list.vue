@@ -19,102 +19,47 @@
         </v-container>
       </v-card>
     </v-skeleton-loader>
-    <v-row
-      v-show="false"
-    >
-      <v-col>
-        <v-skeleton-loader
-          :loading="loading"
-          type="article"
-        >
-          <v-card
-            class="mx-auto"
-            outlined
-          >
-            <v-list-item two-line style="background-color: #eb5757">
-              <v-list-item-content>
-                <v-list-item-title style="color: #FFFFFF;">{{ $t('label.total_case_confirmed').toUpperCase() }}</v-list-item-title>
-                <v-list-item-title class="headline mb-1 font-weight-bold" style="color: #FFFFFF;">{{ totalConfirmation }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-skeleton-loader>
-      </v-col>
-      <v-col>
-        <v-skeleton-loader
-          :loading="loading"
-          type="article"
-        >
-          <v-card
-            class="mx-auto"
-            style="border: 2px solid #F2C94C;"
-            outlined
-          >
-            <v-list-item two-line>
-              <v-list-item-content>
-                <v-list-item-title>{{ $t('label.total_probable').toUpperCase() }}</v-list-item-title>
-                <v-list-item-title class="headline mb-1 font-weight-bold">{{ totalProbable }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-skeleton-loader>
-      </v-col>
-      <v-col>
-        <v-skeleton-loader
-          :loading="loading"
-          type="article"
-        >
-          <v-card
-            class="mx-auto"
-            style="border: 2px solid #27AE60;"
-            outlined
-          >
-            <v-list-item two-line>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ $t('label.total_suspect').toUpperCase() }}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1 font-weight-bold">{{ totalSuspect }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-skeleton-loader>
-      </v-col>
-      <v-col>
-        <v-skeleton-loader
-          :loading="loading"
-          style="border: 2px solid #2D9CDB;"
-          type="article"
-        >
-          <v-card
-            class="mx-auto"
-            outlined
-          >
-            <v-list-item two-line>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ $t('label.total_close_contact').toUpperCase() }}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1 font-weight-bold">{{ totalCloseCase }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-skeleton-loader>
-      </v-col>
-    </v-row>
     <v-card
       outlined
       class="mt-2"
     >
       <v-row>
-        <v-col cols="12" md="6" sm="6" class="ma-1">
+        <v-col cols="12" md="4" sm="4" class="ma-1">
           <search
             :list-query="listQuery"
             :handle-search="handleSearch"
           />
         </v-col>
-        <v-col class="px-0">
-          <v-card-actions class="ma-0 py-0 float-right">
+        <v-col cols="12" md="2" sm="2" class="mr-4">
+          <v-btn
+            color="primary"
+            block
+            outlined
+            :disabled="multipleSelect"
+            @click="multipleSelect = !multipleSelect"
+          >
+            <v-icon left>
+              mdi-table-edit
+            </v-icon>
+            {{ $t('label.multiple_update') }}
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="2" sm="2" class="pr-0">
+          <v-btn
+            v-if="roles[0] !== 'faskes'"
+            color="#27AE60"
+            block
+            outlined
+            @click="showImportForm = true"
+          >
+            <v-icon left>
+              mdi-download
+            </v-icon>
+            {{ $t('label.import') }}
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="2" sm="2" class="px-0">
+          <v-card-actions class="py-0">
             <v-menu
               :close-on-content-click="false"
               offset-y
@@ -122,7 +67,7 @@
               <template v-slot:activator="{ on }">
                 <v-btn
                   color="#27AE60"
-                  class="btn-import-export"
+                  block
                   tile
                   outlined
                   v-on="on"
@@ -141,23 +86,10 @@
               </v-card>
             </v-menu>
           </v-card-actions>
-          <v-btn
-            v-if="roles[0] !== 'faskes'"
-            color="#27AE60"
-            class="btn-import-export float-right"
-            outlined
-            @click="showImportForm = true"
-          >
-            <v-icon left>
-              mdi-download
-            </v-icon>
-            {{ $t('label.import') }}
-          </v-btn>
         </v-col>
-        <v-col>
+        <v-col cols="12" md="1" sm="1" class="px-0">
           <v-btn
             color="primary"
-            class="mr-4 float-right"
             block
             @click="handleFilter"
           >
@@ -188,87 +120,20 @@
       </v-row>
       <hr class="table-divider">
       <v-row>
-        <v-col auto>
-          <v-data-table
-            :headers="headers"
-            :items="listKasus"
-            :mobile-breakpoint="0"
-            :no-data-text="$t('label.data_empty')"
-            :items-per-page="listQuery.limit"
-            :options.sync="optionsDataTable"
-            :loading="loadingTable"
-            hide-default-footer
-          >
-            <template v-slot:item="{ item, index }">
-              <tr
-                @click="handleNewDetail(item, item._id)"
-              >
-                <td>{{ getTableRowNumbering(index) }}</td>
-                <td>{{ item.id_case ? item.id_case.toUpperCase() : '-' }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ getAge(item.age) }}</td>
-                <td>
-                  <div v-if="item.gender ==='P'">
-                    {{ $t('label.female_initials') }}
-                  </div>
-                  <div v-else>
-                    {{ $t('label.male_initials') }}
-                  </div>
-                </td>
-                <td>{{ item.phone_number }}</td>
-                <td><status :status="item.status" /> </td>
-                <td><final-result :final-result="item.final_result" /></td>
-                <td>{{ item.author.username }}</td>
-                <td>{{ item.updatedAt ? formatDatetime(item.updatedAt, 'DD MMMM YYYY') : '-' }}</td>
-                <td>
-                  <v-card-actions>
-                    <v-menu
-                      :close-on-content-click="false"
-                      :nudge-width="100"
-                      :nudge-left="220"
-                      :nudge-top="40"
-                      offset-y
-                    >
-                      <template v-slot:activator="{ on }">
-                        <v-btn
-                          class="ma-1"
-                          color="#828282"
-                          style="text-transform: none;height: 30px;min-width: 80px;"
-                          tile
-                          outlined
-                          v-on="on"
-                        >
-                          {{ $t('label.choose_action') }}
-                          <v-icon style="color: #009D57;font-size: 2rem;" right>
-                            mdi-menu-down
-                          </v-icon>
-                        </v-btn>
-                      </template>
-                      <v-card>
-                        <v-list-item @click="handleDetail(item, item._id)">
-                          {{ $t('label.edit_and_detail') }}
-                        </v-list-item>
-                        <div v-if="rolesWidget['all'].includes(roles[0])">
-                          <v-list-item @click="handlePrintPEForm(item._id, item.id_case)">
-                            {{ $t('label.print_pe_form') }}
-                          </v-list-item>
-                          <v-divider class="mt-0 mb-0" />
-                          <v-list-item
-                            v-if="rolesWidget['dinkeskota'].includes(roles[0])"
-                            style="color: #EB5757 !important;"
-                            @click="handleDeleteCase(item)"
-                          >
-                            {{ $t('label.deleted_case') }}
-                          </v-list-item>
-                        </div>
-                      </v-card>
-                    </v-menu>
-                  </v-card-actions>
-                </td>
-              </tr>
-            </template>
-          </v-data-table>
-        </v-col>
+        <table-case
+          :list-kasus="listKasus"
+          :roles-widget="rolesWidget"
+          :loading-table="loadingTable"
+          :multiple-select="multipleSelect"
+          :handle-detail="handleDetail"
+          :handle-print-p-e-form="handlePrintPEForm"
+          :handle-delete-case="handleDeleteCase"
+          :selected="selected"
+          :selected-case.sync="selected"
+          :list-query="listQuery"
+          :options-table="optionsDataTable"
+          :options-data-table.sync="optionsDataTable"
+        />
       </v-row>
     </v-card>
     <pagination
@@ -346,6 +211,61 @@
       :success.sync="successDialog"
       :message.sync="errorMessage"
     />
+    <v-toolbar
+      v-if="multipleSelect"
+      color="primary"
+      class="multiple-action"
+      style="border-radius: 15px;"
+      dark
+    >
+      <v-row
+        class="mx-auto my-12 center"
+        align="center"
+        justify="center"
+      >
+        <v-col cols="4" class="px-0">
+          <v-toolbar-title class="text-wrap subtitle-1">
+            {{ selected.length + ` ` + $t('label.choose_patient') }}
+          </v-toolbar-title>
+        </v-col>
+        <v-col cols="1">
+          <v-divider
+            style="border: 1px solid white; height: 40px;"
+            inset
+            vertical
+          />
+        </v-col>
+        <v-col cols="5" class="px-0">
+          <v-toolbar-title
+            class="text-wrap subtitle-1"
+            style="cursor: pointer;"
+            @click="handleUpdateMultipleStatusCase"
+          >
+            <v-icon left>mdi-pencil-box-outline</v-icon>
+            {{ $t('label.status_update') }}
+          </v-toolbar-title>
+        </v-col>
+        <v-col cols="1">
+          <v-divider
+            style="border: 1px solid white; height: 40px;"
+            inset
+            vertical
+          />
+        </v-col>
+        <v-col cols="1" class="pl-0">
+          <v-icon @click="cancelMultiple">
+            mdi-close-circle-outline
+          </v-icon>
+        </v-col>
+      </v-row>
+    </v-toolbar>
+    <dialog-update-status-case
+      :show-dialog="dialogUpdateMultiple"
+      :show.sync="dialogUpdateMultiple"
+      :refresh-page.sync="refreshPage"
+      :form-pasien="formStatusCase"
+      :selected-case="selected"
+    />
   </div>
 </template>
 
@@ -359,22 +279,13 @@ export default {
   name: 'LaporanList',
   data() {
     return {
-      headers: [
-        { text: '#', value: '_id', sortable: false },
-        { text: this.$t('label.case_code').toUpperCase(), value: 'id_case' },
-        { text: this.$t('label.name').toUpperCase(), value: 'name' },
-        { text: this.$t('label.age').toUpperCase(), value: 'age' },
-        { text: this.$t('label.gender_abbreviation').toUpperCase(), value: 'gender' },
-        { text: this.$t('label.short_phone_number').toUpperCase(), value: 'phone_number' },
-        { text: this.$t('label.criteria').toUpperCase(), value: 'status' },
-        { text: this.$t('label.latest_patient_status').toUpperCase(), value: 'final_result' },
-        { text: this.$t('label.author').toUpperCase(), value: 'author' },
-        { text: this.$t('label.last_updated_date').toUpperCase(), value: 'updatedAt' },
-        { text: this.$t('label.action'), value: 'actions', sortable: false }
-      ],
+      selected: [],
       loading: true,
       resetStatistic: false,
       loadingTable: false,
+      multipleSelect: false,
+      dialogUpdateMultiple: false,
+      refreshPage: false,
       totalConfirmation: 0,
       totalProbable: 0,
       totalSuspect: 0,
@@ -384,6 +295,11 @@ export default {
       },
       rolesWidget,
       optionsDataTable: {},
+      formStatusCase: {
+        status: '',
+        final_result: '',
+        last_date_status_patient: ''
+      },
       listQuery: {
         address_district_code: '',
         address_subdistrict_code: '',
@@ -458,6 +374,14 @@ export default {
         }
       },
       immediate: true
+    },
+    refreshPage(value) {
+      if (value) {
+        this.multipleSelect = false
+        this.refreshPage = false
+        this.selected = []
+        this.handleSearch()
+      }
     },
     'resetStatistic'(value) {
       if (value) {
@@ -548,10 +472,18 @@ export default {
       const fileName = `Data Riwayat Klinis ${this.fullName} - ${formatDatetime(dateNow, 'DD/MM/YYYY HH:mm')} WIB.xlsx`
       FileSaver.saveAs(response, fileName)
     },
-    getAge(value) {
-      const yearsOld = Math.floor(value)
-      const age = `${yearsOld} ${this.$t('label.year')}`
-      return age
+    handleUpdateMultipleStatusCase() {
+      this.formStatusCase.status = ''
+      this.formStatusCase.final_result = ''
+      this.formStatusCase.last_date_status_patient = ''
+      this.dialogUpdateMultiple = true
+    },
+    cancelMultiple() {
+      this.formStatusCase.status = ''
+      this.formStatusCase.final_result = ''
+      this.formStatusCase.last_date_status_patient = ''
+      this.multipleSelect = false
+      this.selected = []
     }
   }
 }
@@ -583,5 +515,26 @@ export default {
   }
   .success-message {
     color: #27ae60;
+  }
+  .multiple-action {
+    position: fixed;
+    bottom: 3%;
+    left: 40%;
+  }
+  @media (min-width: 320px) and (max-width: 540px){
+    .multiple-action {
+      left: 5vh;
+      bottom: 10%;
+    }
+  }
+  @media (min-width: 540px) and (max-width: 600px) {
+    .multiple-action {
+      left: 18vh;
+    }
+  }
+  @media (min-width: 600px) and (max-width: 900px) {
+    .multiple-action {
+      left: 30vh;
+    }
   }
 </style>
