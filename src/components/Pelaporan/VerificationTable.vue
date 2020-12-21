@@ -4,7 +4,7 @@
       :key="list.length"
       :headers="headers"
       :items="list"
-      mobile-breakpoint="0"
+      :mobile-breakpoint="0"
       :no-data-text="$t('label.data_empty')"
       :items-per-page="listQuery.limit"
       hide-default-footer

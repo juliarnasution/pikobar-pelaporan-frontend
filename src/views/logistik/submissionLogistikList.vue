@@ -25,7 +25,7 @@
           <v-data-table
             :headers="headers"
             :items="listKasus"
-            mobile-breakpoint="0"
+            :mobile-breakpoint="0"
             :no-data-text="$t('label.data_empty')"
             :items-per-page="listQuery.limit"
             :options.sync="optionsDataTable"
