@@ -2,7 +2,8 @@
   <v-data-table
     :headers="headersTable"
     :items="listRecapCase"
-    :mobile-breakpoint="NaN"
+    :loading="isLoading"
+    :mobile-breakpoint="0"
     :no-data-text="$t('label.data_empty')"
     :items-per-page="100"
     hide-default-footer
@@ -33,6 +34,10 @@ export default {
     headersTable: {
       type: Array,
       default: function() { return [] }
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

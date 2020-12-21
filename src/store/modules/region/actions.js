@@ -109,5 +109,13 @@ export default {
     } catch (error) {
       return error.response
     }
+  },
+  async getListUnitLab({ commit }) {
+    try {
+      const response = await requestServer('/api/areas/list-unit-lab', 'GET')
+      return response
+    } catch (error) {
+      return error.response
+    }
   }
 }

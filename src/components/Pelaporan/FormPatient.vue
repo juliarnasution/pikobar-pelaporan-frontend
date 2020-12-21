@@ -18,7 +18,7 @@
         <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
           <v-row>
             <v-col cols="12" md="9" sm="12">
-              <ValidationProvider v-slot="{ errors }" :rules="!formPasien.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits|provinceCode'">
+              <ValidationProvider v-slot="{ errors }" :rules="!formPasien.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits'">
                 <v-text-field
                   v-model="formPasien.nik"
                   name="nik"

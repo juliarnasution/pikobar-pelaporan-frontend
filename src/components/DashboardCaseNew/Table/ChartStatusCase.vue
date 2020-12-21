@@ -1,46 +1,51 @@
 <template>
-  <v-card
-    class="chart-test-area"
+  <v-skeleton-loader
+    :loading="isLoading"
+    type="article"
   >
-    <v-card-text>
-      <div class="chartWrapper">
-        <div class="chartAreaWrapper">
-          <chart-bar-horizontal
-            v-if="loaded"
-            ref="horizontalBarChart"
-            :chart-data="chartData"
-            :options="chartOptions"
-            :styles="chartStyles"
-            :name="'chart-test-area'"
-            @callbackFooter="setFooter"
+    <v-card
+      class="chart-test-area"
+    >
+      <v-card-text>
+        <div class="chartWrapper">
+          <div class="chartAreaWrapper">
+            <chart-bar-horizontal
+              v-if="loaded"
+              ref="horizontalBarChart"
+              :chart-data="chartData"
+              :options="chartOptions"
+              :styles="chartStyles"
+              :name="'chart-test-area'"
+              @callbackFooter="setFooter"
+            />
+          </div>
+          <canvas
+            ref="chartXAxis"
+            height="350"
           />
-        </div>
-        <canvas
-          ref="chartXAxis"
-          height="350"
-        />
-        <div
-          ref="chartLegend"
-          class="mt-2"
-        >
-          <div class="chart-legend d-flex justify-center">
-            <div
-              v-for="(legend, index) in legends"
-              :key="legend.label"
-              class="d-flex mr-3"
-              @click="onClickLegend(index)"
-            >
+          <div
+            ref="chartLegend"
+            class="mt-2"
+          >
+            <div class="chart-legend d-flex justify-center">
               <div
-                class="box mr-2"
-                :style="{ backgroundColor: legend.backgroundColor }"
-              />
-              <span :ref="'chartLegendLabel' + index">{{ legend.label }}</span>
+                v-for="(legend, index) in legends"
+                :key="legend.label"
+                class="d-flex mr-3"
+                @click="onClickLegend(index)"
+              >
+                <div
+                  class="box mr-2"
+                  :style="{ backgroundColor: legend.backgroundColor }"
+                />
+                <span :ref="'chartLegendLabel' + index">{{ legend.label }}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </v-card-text>
-  </v-card>
+      </v-card-text>
+    </v-card>
+  </v-skeleton-loader>
 </template>
 
 <script>
@@ -74,6 +79,10 @@ export default {
     dataVisualization: {
       type: Object,
       default: null
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

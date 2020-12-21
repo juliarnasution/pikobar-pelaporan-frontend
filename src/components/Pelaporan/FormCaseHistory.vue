@@ -606,7 +606,7 @@ export default {
     const paramHospitalWestJava = { 'rs_jabar': true }
     const paramHospitalNonWestJava = { 'rs_jabar': false }
     const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
-    this.hospitalWestJavaList = responseWestJava.data
+    this.hospitalWestJavaList = responseWestJava.data ? responseWestJava.data : []
     const responseNonWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalNonWestJava)
     this.hospitalNonWestJavaList = responseNonWestJava.data
     if (this.roles[0] === 'faskes') {

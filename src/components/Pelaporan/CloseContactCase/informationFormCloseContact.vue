@@ -21,7 +21,7 @@
         >
           <ValidationProvider
             v-slot="{ errors }"
-            :rules="formBody.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits|provinceCode'"
+            :rules="formBody.is_nik_exists ? 'numeric' : 'required|numeric|sixteenDigits'"
           >
             <v-text-field
               v-model="formBody.nik"

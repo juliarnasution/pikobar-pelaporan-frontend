@@ -44,7 +44,7 @@
               <label>{{ $t('label.nik') }}</label>
             </v-col>
             <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-              <ValidationProvider v-slot="{ errors }" :rules="formCloseContact.is_nik_exists ? 'numeric' : 'numeric|sixteenDigits|provinceCode'">
+              <ValidationProvider v-slot="{ errors }" :rules="formCloseContact.is_nik_exists ? 'numeric' : 'numeric|sixteenDigits'">
                 <v-text-field v-model="formCloseContact.nik" :disabled="disabled" type="number" :error-messages="errors" solo-inverted />
               </ValidationProvider>
             </v-col>

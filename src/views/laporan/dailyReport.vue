@@ -50,7 +50,7 @@
               {{ $t('label.patient_recap') }} <span>{{ fullName }} {{ reportingDate }}</span>
             </div>
           </v-col>
-          <v-col cols="12" sm="4" class="align-right">
+          <v-col cols="12" sm="2" class="align-right">
             <v-btn
               class="mr-5"
               style="float: right;min-width:90px;"
@@ -62,6 +62,8 @@
               <v-icon left>mdi-upload</v-icon>
               {{ $t('label.export_png') }}
             </v-btn>
+          </v-col>
+          <v-col cols="12" sm="2" class="align-right">
             <v-btn
               class="mr-5"
               style="float: right;min-width:90px;"

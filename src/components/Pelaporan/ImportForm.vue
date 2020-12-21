@@ -261,7 +261,7 @@ export default {
         this.tab = 2
         this.successMessage = `Berhasil mengimpor ${response.data.inserted} data laporan kasus`
         this.refreshPage()
-      } else if (response.data.errors[0].rowNumber) {
+      } else if (response.data.errors && response.data.errors[0].rowNumber) {
         this.errorList = response.data.errors
         this.tab = 2
         this.errorType = 'row'
