@@ -41,8 +41,9 @@ function setTokenFirebase() {
 
 function setRefreshFirebase() {
   messaging.onTokenRefresh(function() {
-    messaging.getToken().then(async function(newToken) {
+    messaging.getToken().then(async(newToken) => {
       const user_id = await store.getters['user/user_id']
+      console.log(newToken)
       const data = {
         'appId': 'web',
         'token': newToken

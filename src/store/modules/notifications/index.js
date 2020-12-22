@@ -21,7 +21,6 @@ const actions = {
   async getListNotifications({ commit }, params) {
     try {
       const response = await requestServer(`/api/notifications`, 'GET', params)
-      commit('NOTIFICATION_TOTAL_UNREAD', response.data._meta.itemCount)
       return response
     } catch (error) {
       return error.response
@@ -30,6 +29,17 @@ const actions = {
   async onReadNotification({ commit }, id) {
     try {
       const response = await requestServer(`/api/notifications/read?id=${id}`, 'PUT')
+      commit('NOTIFICATION_READ', 1)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async summaryNotification({ commit }) {
+    try {
+      const response = await requestServer(`/api/notifications/summary`, 'GET')
+      const totalUnread = response.data ? response.data.unread : 0
+      commit('NOTIFICATION_COUNT_UNREAD', totalUnread)
       return response
     } catch (error) {
       return error.response
@@ -48,6 +58,9 @@ const mutations = {
   },
   NOTIFICATION_COUNT_UNREAD: (state, data) => {
     state.notificationTotalUnread += data
+  },
+  NOTIFICATION_READ: (state, data) => {
+    state.notificationTotalUnread -= data
   },
   NOTIFICATION_LIST: (state, data) => {
     state.notificationList = data

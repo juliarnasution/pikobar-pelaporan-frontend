@@ -40,6 +40,7 @@ export default {
           name_district_city,
           unit_id
         } = response.data
+        setRefreshFirebase()
         commit('SET_ROLES', [role])
         commit('SET_DISTRICT', code_district_city)
         commit('SET_FULLNAME', fullname)
@@ -49,7 +50,6 @@ export default {
           commit('SET_UNIT_NAME', unit_id.name)
           commit('SET_UNIT_TYPE', unit_id.unit_type)
         }
-        setRefreshFirebase()
         resolve([role])
       }).catch((error) => {
         reject(error)

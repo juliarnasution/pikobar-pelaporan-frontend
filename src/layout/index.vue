@@ -3,19 +3,17 @@
   <div>
     <!-- App Header -->
     <app-header />
+    <!-- Notif Drawer -->
+    <notification-list
+      :drawer-notif="isNotif"
+      :notif-drawer.sync="isNotif"
+    />
     <!-- App Main Content -->
     <v-main>
       <!-- Breadcrumbs -->
       <v-row style="padding: 5px 20px;">
         <breadcrumb />
       </v-row>
-
-      <!-- Notif Drawer -->
-      <notification-list
-        :drawer-notif="isNotif"
-        :notif-drawer.sync="isNotif"
-      />
-
       <!-- App Router -->
       <div class="app-container">
         <transition name="fade" mode="out-in">

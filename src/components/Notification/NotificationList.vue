@@ -1,20 +1,27 @@
 <template>
   <v-navigation-drawer
     v-model="isShowDrawer"
+    class="mt-16"
     right
-    absolute
+    fixed
     temporary
+    overflow
   >
-    <v-list d-flex dense style="max-height: 90vh;overflow: auto;">
-      <v-list-item
-        v-for="item in items"
-        :key="item.title"
-        :style="item.isRead ? '':'background: #C0EDFF 30%;'"
-        link
-      >
-        <notification-item :item="item" :on-read="onRead" />
-      </v-list-item>
-    </v-list>
+    <v-skeleton-loader
+      :loading="isLoading"
+      type="list-item-three-line"
+    >
+      <v-list d-flex dense style="max-height: 90vh;overflow: auto;">
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :style="item.isRead ? '':'background: #C0EDFF 30%;'"
+          link
+        >
+          <notification-item :item="item" :on-read="onRead" />
+        </v-list-item>
+      </v-list>
+    </v-skeleton-loader>
   </v-navigation-drawer>
 </template>
 <script>
@@ -31,7 +38,8 @@ export default {
   data() {
     return {
       params: {},
-      items: []
+      items: [],
+      isLoading: false
     }
   },
   computed: {
@@ -61,8 +69,10 @@ export default {
       // caseID
     },
     async getListNotifications() {
+      this.isLoading = true
       const response = await this.$store.dispatch('notifications/getListNotifications', this.params)
       this.items = response.data ? response.data.itemsList : []
+      this.isLoading = false
     }
   }
 }
