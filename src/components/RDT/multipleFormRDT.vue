@@ -107,7 +107,7 @@
               <v-data-table
                 :headers="headers"
                 :items="listParticpant"
-                :mobile-breakpoint="NaN"
+                :mobile-breakpoint="0"
                 :no-data-text="$t('label.data_empty')"
                 :items-per-page="1000"
                 hide-default-footer

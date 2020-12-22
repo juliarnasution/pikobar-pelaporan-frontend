@@ -60,6 +60,14 @@ export default {
       return error.response
     }
   },
+  async updateMultipleStatusCase({ commit }, data) {
+    try {
+      const response = await requestServer('/api/v2/cases/multiple-update', 'PUT', data)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async detailReportCase({ commit }, id) {
     try {
       const response = await requestServer(`/api/cases/${id}`, 'GET')
