@@ -904,6 +904,8 @@ export default {
     submit: 'Kirimkan',
     take_survey: 'Ikuti Survei',
     download_excel_template_here: 'Unduh template excel di sini.',
+    notification: 'Notifikasi',
+    see_all_notifications: 'Lihat semua notifikasi',
     usage_guide: 'Panduan Penggunaan',
     terms_and_conditions: 'Syarat & Ketentuan',
     close_contact_finished_quarantine: 'Kontak Erat Selesai Karantina',

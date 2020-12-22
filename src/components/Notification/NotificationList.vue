@@ -2,16 +2,23 @@
   <v-navigation-drawer
     v-model="isShowDrawer"
     class="mt-16"
+    width="320"
     right
     fixed
     temporary
     overflow
   >
+    <v-list>
+      <v-list-item class="font-weight-bold" @click="onClose">
+        <v-icon>mdi-chevron-left</v-icon>
+        {{ $t('label.notification') }}
+      </v-list-item>
+    </v-list>
     <v-skeleton-loader
       :loading="isLoading"
       type="list-item-three-line"
     >
-      <v-list d-flex dense style="max-height: 90vh;overflow: auto;">
+      <v-list d-flex dense style="max-height: 72vh;overflow: auto;">
         <v-list-item
           v-for="item in items"
           :key="item.title"
@@ -22,6 +29,11 @@
         </v-list-item>
       </v-list>
     </v-skeleton-loader>
+    <v-list>
+      <v-list-item class="justify-center">
+        <span style="color: #27AE60;">{{ $t('label.see_all_notifications') }}</span>
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 <script>
@@ -67,6 +79,9 @@ export default {
       await this.$store.dispatch('notifications/onReadNotification', item._id)
       item.isRead = true
       // caseID
+    },
+    onClose() {
+      this.$store.dispatch('notifDrawer/notificationDrawer', !this.isShowDrawer)
     },
     async getListNotifications() {
       this.isLoading = true

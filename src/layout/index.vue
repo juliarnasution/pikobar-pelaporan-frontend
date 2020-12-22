@@ -53,7 +53,7 @@ export default {
     ]),
     isNotif: {
       set(value) {
-        return this.notifDrawer
+        return value
       },
       get() {
         return this.notifDrawer
