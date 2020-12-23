@@ -59,6 +59,7 @@
                       value="3"
                     />
                     <v-radio
+                      v-if="!rolesCriteria['discarded'].includes(formPasien.status)"
                       :label="$t('label.dead')"
                       value="2"
                     />

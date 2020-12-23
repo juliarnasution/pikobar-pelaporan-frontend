@@ -53,6 +53,7 @@
                 @click.prevent="uncheck('3')"
               />
               <v-radio
+                v-if="!rolesCriteria['discarded'].includes(formPasien.status)"
                 :label="$t('label.dead')"
                 value="2"
                 @click.prevent="uncheck('2')"
