@@ -92,6 +92,7 @@
                               :error-messages="errors"
                               :return-object="false"
                               :label="$t('label.choose_place')"
+                              :disabled="!formData.is_other_location"
                               menu-props="auto"
                               item-text="name"
                               item-value="name"
@@ -101,10 +102,10 @@
                               autocomplete
                             />
                           </ValidationProvider>
-                          <ValidationProvider v-if="!formData.is_other_places" v-slot="{ errors }">
+                          <ValidationProvider v-if="!formData.is_other_location" v-slot="{ errors }">
                             <label>{{ $t('label.other_places') }}</label>
                             <v-text-field
-                              v-model="formData.note_other_places"
+                              v-model="formData.other_inspection_location"
                               name="note_nik"
                               :error-messages="errors"
                               solo-inverted
@@ -113,11 +114,13 @@
                         </v-col>
                         <v-col>
                           <v-checkbox
-                            v-model="formData.is_other_places"
+                            v-model="formData.is_other_location"
+                            :value="formData.is_other_location"
                             :true-value="false"
                             :false-value="true"
                             :label="$t('label.other_places')"
                             class="mt-0 pt-0"
+                            @change="handleChangeOtherLocation($event)"
                           />
                         </v-col>
                       </v-row>
@@ -342,6 +345,9 @@ export default {
         this.$emit('update:showFormAddInspectionSupport', false)
       }
       this.$refs.observer.reset()
+    },
+    handleChangeOtherLocation() {
+      this.formData.other_inspection_location = ''
     }
   }
 }
