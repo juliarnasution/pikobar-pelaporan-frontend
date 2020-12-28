@@ -7,6 +7,8 @@ const getDefaultState = () => {
       specimens_type: '',
       inspection_date: '',
       inspection_location: '',
+      is_other_location: true,
+      other_inspection_location: '',
       get_specimens_to: '',
       inspection_result: ''
     }
