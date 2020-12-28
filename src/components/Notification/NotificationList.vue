@@ -21,7 +21,7 @@
       >
         <v-list d-flex dense style="max-height: 72vh;overflow: auto;">
           <v-list-item
-            v-for="item in items"
+            v-for="item in notificationList"
             :key="item.title"
             :style="item.isRead ? '':'background: #C0EDFF 30%;'"
             link
@@ -73,8 +73,9 @@ export default {
   },
   data() {
     return {
-      params: {},
-      items: [],
+      params: {
+        onSideBar: true
+      },
       isLoading: false,
       showVerificationForm: false,
       closeContactCase: [],
@@ -94,6 +95,9 @@ export default {
   computed: {
     ...mapGetters('user', [
       'user_id'
+    ]),
+    ...mapGetters('notifications', [
+      'notificationList'
     ]),
     isShowDrawer: {
       set(drawerNotif) {
@@ -134,8 +138,7 @@ export default {
     },
     async getListNotifications() {
       this.isLoading = true
-      const response = await this.$store.dispatch('notifications/getListNotifications', this.params)
-      this.items = response.data ? response.data.itemsList : []
+      await this.$store.dispatch('notifications/getListNotifications', this.params)
       this.isLoading = false
     },
     async handleDetail(id) {

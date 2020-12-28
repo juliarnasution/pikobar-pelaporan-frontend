@@ -4,6 +4,7 @@ import requestServer from '@/api'
 const getDefaultState = () => {
   return {
     notificationTotalUnread: 0,
+    totalPages: 0,
     notificationList: []
   }
 }
@@ -21,6 +22,10 @@ const actions = {
   async getListNotifications({ commit }, params) {
     try {
       const response = await requestServer(`/api/notifications`, 'GET', params)
+      const listNotification = response.data ? response.data.itemsList : []
+      const totalPages = response.data ? response.data._meta.totalPages : 0
+      commit('NOTIFICATION_LIST', listNotification)
+      if (!params.onSideBar) commit('TOTAL_PAGES', totalPages)
       return response
     } catch (error) {
       return error.response
@@ -47,9 +52,6 @@ const actions = {
   },
   notificationCountUnread({ commit }, data) {
     commit('NOTIFICATION_COUNT_UNREAD', data)
-  },
-  notificationList({ commit }, data) {
-    commit('NOTIFICATION_LIST', data)
   }
 }
 const mutations = {
@@ -64,6 +66,9 @@ const mutations = {
   },
   NOTIFICATION_LIST: (state, data) => {
     state.notificationList = data
+  },
+  TOTAL_PAGES: (state, data) => {
+    state.totalPages = data
   },
   resetState(state) {
     Object.assign(state, getDefaultState())

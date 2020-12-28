@@ -8,7 +8,7 @@
         <table-notification
           :is-loading="isLoading"
           :list-query="listQuery"
-          :list-notification="listNotification"
+          :list-notification="notificationList"
         />
       </v-row>
     </v-card>
@@ -21,13 +21,14 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Notifications',
   data() {
     return {
       listNotification: [],
       isLoading: false,
-      totalPages: 0,
       listQuery: {
         page: 1,
         limit: 100,
@@ -35,15 +36,19 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters('notifications', [
+      'totalPages',
+      'notificationList'
+    ])
+  },
   async mounted() {
     await this.getListNotifications()
   },
   methods: {
     async getListNotifications() {
       this.isLoading = true
-      const response = await this.$store.dispatch('notifications/getListNotifications', this.listQuery)
-      this.listNotification = response.data ? response.data.itemsList : []
-      this.totalPages = response.data ? response.data._meta.totalPages : 0
+      await this.$store.dispatch('notifications/getListNotifications', this.listQuery)
       this.isLoading = false
     },
     async onNext() {
