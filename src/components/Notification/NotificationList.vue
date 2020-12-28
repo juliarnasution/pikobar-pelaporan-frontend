@@ -12,7 +12,7 @@
       <v-list>
         <v-list-item class="font-weight-bold" @click="onClose">
           <v-icon>mdi-chevron-left</v-icon>
-          {{ $t('label.notification') }}
+          {{ $t('route.notification') }}
         </v-list-item>
       </v-list>
       <v-skeleton-loader
@@ -31,7 +31,7 @@
         </v-list>
       </v-skeleton-loader>
       <v-list>
-        <v-list-item class="justify-center">
+        <v-list-item class="justify-center" @click="showAllNotifications">
           <span style="color: #27AE60;">{{ $t('label.see_all_notifications') }}</span>
         </v-list-item>
       </v-list>
@@ -56,7 +56,7 @@
       :show-dialog="showFailedDialog"
       :show.sync="showFailedDialog"
       :title="$t('label.verification_expired_title')"
-      :message="$t('label.verification_expired_message')"
+      :message="''"
     />
   </div>
 </template>
@@ -129,6 +129,7 @@ export default {
       this.isLoading = false
     },
     async handleDetail(id) {
+      this.$store.commit('animationLottie/SET_LOADING', true)
       const response = await this.$store.dispatch('reports/detailReportCase', id)
       const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
       if (response.data.verified_status === 'verified') {
@@ -138,6 +139,11 @@ export default {
         this.closeContactDetail = responseCloseContact.data
         this.showVerificationForm = true
       }
+      this.$store.commit('animationLottie/SET_LOADING', false)
+    },
+    showAllNotifications() {
+      const path = '/notification-list-all'
+      if (this.$route.path !== path) this.$router.push(path)
     }
   }
 }

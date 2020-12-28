@@ -3,7 +3,7 @@
     <v-chip
       v-if="status === 'CaseCreated'"
       color="#1AAFE6"
-      style="width: 40%;"
+      :style="`width: {{ widthChip }}`"
       label
       small
     >
@@ -49,7 +49,11 @@
     >
       {{ $t('label.no_status') }}
     </v-chip>
-    <span class="ml-1">{{ timeRemain(date) }}</span>
+    <span
+      v-if="date"
+    >
+      {{ timeRemain(date) }}
+    </span>
   </div>
 </template>
 
@@ -64,6 +68,10 @@ export default {
     date: {
       type: String,
       default: ''
+    },
+    widthChip: {
+      type: String,
+      default: '40%'
     }
   },
   methods: {
