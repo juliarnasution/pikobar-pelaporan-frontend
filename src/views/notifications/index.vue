@@ -7,6 +7,7 @@
       <v-row>
         <table-notification
           :is-loading="isLoading"
+          :list-query="listQuery"
           :list-notification="listNotification"
         />
       </v-row>

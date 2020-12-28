@@ -4,6 +4,7 @@
       :items="listNotification"
       :mobile-breakpoint="0"
       :no-data-text="$t('label.data_empty')"
+      :items-per-page="listQuery.limit"
       hide-default-footer
     >
       <template v-slot:item="{ item, index }">
@@ -25,6 +26,10 @@ export default {
     listNotification: {
       type: Array,
       default: function() { return [] }
+    },
+    listQuery: {
+      type: Object,
+      default: null
     },
     isLoading: {
       type: Boolean,
