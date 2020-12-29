@@ -2,7 +2,8 @@
   <v-dialog v-model="show" persistent max-width="20%">
     <v-card class="pa-7">
       <v-row class="mx-0 mb-5" justify="center" align="center">
-        <v-icon x-large color="red" left>mdi-close-circle</v-icon><span class="headline">{{ title }}</span>
+        <v-icon x-large color="red" left>mdi-close-circle</v-icon>
+        <span class="headline text-center">{{ title }}</span>
       </v-row>
       <v-row class="mx-0 mb-5 text-center" justify="center">
         {{ message }}

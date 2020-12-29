@@ -6,6 +6,7 @@ import { getToken } from '@/utils/cookies'
 
 const state = {
   token: getToken(),
+  user_id: '',
   roles: [],
   district_user: '',
   user_district_name: '',

@@ -28,6 +28,29 @@
         @click.stop="primaryDrawer.model = !primaryDrawer.model"
       />
       <v-spacer />
+      <div class="pr-6">
+        <v-badge
+          color="red"
+          :content="notificationTotalUnread"
+          :value="notificationTotalUnread"
+          overlap
+        >
+          <v-btn
+            fab
+            dark
+            small
+            color="grey"
+            @click="handleNotif"
+          >
+            <v-icon
+              medium
+              color="darken-2"
+            >
+              mdi-bell-outline
+            </v-icon>
+          </v-btn>
+        </v-badge>
+      </div>
       <div>
         <v-label>{{ fullName }}</v-label>
       </div>
@@ -114,6 +137,12 @@ export default {
     ...mapGetters('user', [
       'fullName'
     ]),
+    ...mapGetters('notifDrawer', [
+      'notifDrawer'
+    ]),
+    ...mapGetters('notifications', [
+      'notificationTotalUnread'
+    ]),
     ...mapGetters('primaryDrawer', [
       'primaryDrawer'
     ])
@@ -135,6 +164,9 @@ export default {
     // change language
     changeLanguage: function(lang) {
       this.$i18n.locale = lang
+    },
+    handleNotif() {
+      this.$store.dispatch('notifDrawer/notificationDrawer', !this.notifDrawer)
     }
   }
 };
