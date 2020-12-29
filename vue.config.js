@@ -18,7 +18,7 @@ let plugins = [
     rel: 'preload',
     as: 'script'
   }),
-  new BundleAnalyzerPlugin()
+  // new BundleAnalyzerPlugin()
 ]
 
 function resolve(dir) {
@@ -67,8 +67,7 @@ module.exports = {
   pwa: {
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      swSrc: 'public/firebase-messaging-sw.js',
-      skipWaiting: true
+      swSrc: 'public/firebase-messaging-sw.js'
     }
   },
   chainWebpack(config) {
