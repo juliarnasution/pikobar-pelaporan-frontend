@@ -53,12 +53,10 @@
                             :label="$t('label.blood')"
                             value="blood"
                           />
-                          <v-row v-else class="ma-0">
-                            <v-radio :label="$t('label.sputum')" value="sputum" />
-                            <v-radio :label="$t('label.swab_nasofaring')" value="swab_nasofaring" />
-                            <v-radio :label="$t('label.swab_orofaring')" value="swab_orofaring" />
-                            <v-radio :label="$t('label.swab_naso_orofaring')" value="swab_naso_orofaring" />
-                          </v-row>
+                          <v-radio v-else :label="$t('label.sputum')" value="sputum" />
+                          <v-radio :label="$t('label.swab_nasofaring')" value="swab_nasofaring" />
+                          <v-radio :label="$t('label.swab_orofaring')" value="swab_orofaring" />
+                          <v-radio :label="$t('label.swab_naso_orofaring')" value="swab_naso_orofaring" />
                         </v-radio-group>
                       </ValidationProvider>
                     </v-col>
@@ -79,27 +77,53 @@
                       </ValidationProvider>
                     </v-col>
                   </v-row>
-                  <v-row align="center">
-                    <v-col cols="12" md="3" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
+                  <v-row align="start">
+                    <v-col cols="12" md="3" sm="12" :class="{'py-0': $vuetify.breakpoint. smAndDown}">
                       <label>{{ $t('label.place_testing') }}</label>
                     </v-col>
                     <v-col cols="12" md="9" sm="12" :class="{'py-0 pb-3': $vuetify.breakpoint. smAndDown}">
-                      <ValidationProvider v-slot="{ errors }">
-                        <v-autocomplete
-                          v-model="formData.inspection_location"
-                          name="current_location_address"
-                          :items="hospitalWestJavaList"
-                          :error-messages="errors"
-                          :return-object="false"
-                          :label="$t('label.choose_place')"
-                          menu-props="auto"
-                          item-text="name"
-                          item-value="name"
-                          single-line
-                          solo
-                          autocomplete
-                        />
-                      </ValidationProvider>
+                      <v-row>
+                        <v-col cols="12" md="9" sm="12">
+                          <ValidationProvider v-slot="{ errors }">
+                            <v-autocomplete
+                              v-model="formData.inspection_location"
+                              name="current_location_address"
+                              :items="hospitalWestJavaList"
+                              :error-messages="errors"
+                              :return-object="false"
+                              :label="$t('label.choose_place')"
+                              :disabled="!formData.is_other_location"
+                              menu-props="auto"
+                              item-text="name"
+                              item-value="name"
+                              single-line
+                              clearable
+                              solo
+                              autocomplete
+                            />
+                          </ValidationProvider>
+                          <ValidationProvider v-if="!formData.is_other_location" v-slot="{ errors }">
+                            <label>{{ $t('label.other_places') }}</label>
+                            <v-text-field
+                              v-model="formData.other_inspection_location"
+                              name="note_nik"
+                              :error-messages="errors"
+                              solo-inverted
+                            />
+                          </ValidationProvider>
+                        </v-col>
+                        <v-col>
+                          <v-checkbox
+                            v-model="formData.is_other_location"
+                            :value="formData.is_other_location"
+                            :true-value="false"
+                            :false-value="true"
+                            :label="$t('label.other_places')"
+                            class="mt-0 pt-0"
+                            @change="handleChangeOtherLocation($event)"
+                          />
+                        </v-col>
+                      </v-row>
                     </v-col>
                   </v-row>
                   <v-row align="center">
@@ -321,6 +345,9 @@ export default {
         this.$emit('update:showFormAddInspectionSupport', false)
       }
       this.$refs.observer.reset()
+    },
+    handleChangeOtherLocation() {
+      this.formData.other_inspection_location = ''
     }
   }
 }
