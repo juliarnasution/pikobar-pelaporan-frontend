@@ -376,6 +376,8 @@ export default {
     action: 'Aksi',
     reason_for_declined: 'Alasan Penolakan',
     date_of_beginning_symptoms: 'Tanggal Awal Gejala',
+    date_of_beginning: 'Tanggal Awal',
+    all_category: 'Semua Kategori',
     verify_case: 'Verifikasi Kasus',
     decline_case: 'Tolak Kasus',
     delete_case: 'Hapus Kasus',

@@ -13,8 +13,8 @@
       <v-col cols="12" sm="3">
         <v-select
           v-model="listQuery.eventType"
-          :items="statusList"
-          :label="'Semua Kategori'"
+          :items="statusNotification"
+          :label="$t('label.all_category')"
           solo
           item-text="label"
           item-value="value"
@@ -23,7 +23,7 @@
       <v-col cols="12" sm="3">
         <input-date-picker
           :format-date="formatDate"
-          :label="'Tanggal Awal'"
+          :label="$t('label.date_of_beginning')"
           :date-value="listQuery.createdAt"
           :value-date.sync="listQuery.createdAt"
           @changeDate="listQuery.createdAt = $event"
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { statusNotification } from '@/utils/constantOption'
 export default {
   name: 'FilterNotification',
   props: {
@@ -69,31 +70,7 @@ export default {
   data() {
     return {
       formatDate: 'YYYY-MM-DD',
-      disabledDistrict: true,
-      codeDistrict: '',
-      nameVillage: '',
-      statusList: [
-        {
-          label: this.$t('route.dashboard_case_new').toUpperCase(),
-          value: 'CaseCreated'
-        },
-        {
-          label: this.$t('label.waiting_for_verification').toUpperCase(),
-          value: 'CasePending'
-        },
-        {
-          label: this.$t('label.verification_expired_title').toUpperCase(),
-          value: 'CaseVerified'
-        },
-        {
-          label: this.$t('label.case_rejected').toUpperCase(),
-          value: 'CaseDeclined'
-        },
-        {
-          label: this.$t('label.close_contact_finished_quarantine').toUpperCase(),
-          value: 'ClosecContactFinishedQuarantine'
-        }
-      ]
+      statusNotification: statusNotification
     }
   },
   methods: {
