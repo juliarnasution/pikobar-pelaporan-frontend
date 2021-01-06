@@ -30,7 +30,7 @@
         </v-list>
       </v-skeleton-loader>
       <template v-slot:append>
-        <v-list-item class="pb-16 justify-center" @click="showAllNotifications">
+        <v-list-item class="mb-16 justify-center" @click="showAllNotifications">
           <span style="color: #27AE60;">{{ $t('label.see_all_notifications') }}</span>
         </v-list-item>
       </template>
