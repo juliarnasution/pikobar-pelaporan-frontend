@@ -7,19 +7,18 @@
       right
       fixed
       temporary
-      overflow
     >
-      <v-list>
+      <template v-slot:prepend>
         <v-list-item class="font-weight-bold" @click="onClose">
           <v-icon>mdi-chevron-left</v-icon>
           {{ $t('route.notification') }}
         </v-list-item>
-      </v-list>
+      </template>
       <v-skeleton-loader
         :loading="isLoading"
         type="list-item-three-line"
       >
-        <v-list d-flex dense style="max-height: 80vh;overflow: auto;">
+        <v-list dense style="max-height: 80vh;">
           <v-list-item
             v-for="item in notificationList"
             :key="item.title"
@@ -31,7 +30,7 @@
         </v-list>
       </v-skeleton-loader>
       <template v-slot:append>
-        <v-list-item class="mb-16 justify-center" @click="showAllNotifications">
+        <v-list-item class="pb-16 justify-center" @click="showAllNotifications">
           <span style="color: #27AE60;">{{ $t('label.see_all_notifications') }}</span>
         </v-list-item>
       </template>

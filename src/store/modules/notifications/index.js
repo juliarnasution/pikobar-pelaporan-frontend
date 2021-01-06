@@ -62,7 +62,7 @@ const mutations = {
     state.notificationTotalUnread += data
   },
   NOTIFICATION_READ: (state, data) => {
-    state.notificationTotalUnread -= data
+    if (state.notificationTotalUnread !== 0) state.notificationTotalUnread -= data
   },
   NOTIFICATION_LIST: (state, data) => {
     state.notificationList = data
