@@ -39,13 +39,15 @@
     <dialog-failed
       :show-dialog="showFailedDialog"
       :show.sync="showFailedDialog"
-      :title="$t('label.verification_expired_title')"
+      :title="titleDialogFailed"
       :message="''"
     />
   </v-col>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'TableNotification',
   props: {
@@ -70,6 +72,7 @@ export default {
       caseDetail: null,
       showFailedDialog: false,
       isSubmit: false,
+      titleDialogFailed: '',
       verificationQuery: {
         'id': '',
         'data': {
@@ -78,6 +81,11 @@ export default {
         }
       }
     }
+  },
+  computed: {
+    ...mapGetters('user', [
+      'roles'
+    ])
   },
   watch: {
     async isSubmit(value) {
@@ -112,14 +120,19 @@ export default {
         this.$store.commit('animationLottie/SET_LOADING', true)
         const response = await this.$store.dispatch('reports/detailReportCase', id)
         const path = `/laporan/detail-report/${id}`
-        if (response.data.verified_status === 'declined' && this.$route.path !== path) this.$router.push(path)
+        if (this.roles[0] === 'faskes' && response.data.verified_status === 'declined' && this.$route.path !== path) this.$router.push(path)
         const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-        if (response.data.verified_status === 'verified') {
+        if ((this.roles[0] !== 'faskes' && response.data.verified_status === 'declined')) {
           this.showFailedDialog = true
+          this.titleDialogFailed = this.$t('label.case_has_been_rejected')
+        } else if (response.data.verified_status === 'verified') {
+          this.showFailedDialog = true
+          this.titleDialogFailed = this.$t('label.verification_expired_title')
         } else {
           this.caseDetail = response.data
           this.closeContactDetail = responseCloseContact.data
-          if (response.data.verified_status !== 'declined') this.showVerificationForm = true
+          // if (response.data.verified_status !== 'declined')
+          this.showVerificationForm = true
         }
         this.$store.commit('animationLottie/SET_LOADING', false)
       }
