@@ -77,7 +77,8 @@ export default {
   methods: {
     timeRemain(value) {
       const now = this.$moment()
-      const maxVerifiedDate = this.$moment(value).add(1, 'days')
+      const maxVerifiedDate = this.$moment(value)
+      // .add(1, 'days')
 
       return now.to(maxVerifiedDate)
     }

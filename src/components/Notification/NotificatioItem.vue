@@ -3,6 +3,7 @@
     :value="item.isRead ? 0:1"
     dot
     overlap
+    offset-y="15"
   >
     <v-list-item class="pl-1" @click="onRead(item)">
       <v-list-item-content>
