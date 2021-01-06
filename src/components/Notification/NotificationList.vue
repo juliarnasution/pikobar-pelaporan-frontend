@@ -19,7 +19,7 @@
         :loading="isLoading"
         type="list-item-three-line"
       >
-        <v-list d-flex dense style="max-height: 72vh;overflow: auto;">
+        <v-list d-flex dense style="max-height: 80vh;overflow: auto;">
           <v-list-item
             v-for="item in notificationList"
             :key="item.title"

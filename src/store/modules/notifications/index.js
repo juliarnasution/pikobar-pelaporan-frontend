@@ -44,7 +44,7 @@ const actions = {
     try {
       const response = await requestServer(`/api/notifications/summary`, 'GET')
       const totalUnread = response.data ? response.data.unread : 0
-      commit('NOTIFICATION_COUNT_UNREAD', totalUnread)
+      commit('NOTIFICATION_TOTAL_UNREAD', totalUnread)
       return response
     } catch (error) {
       return error.response
