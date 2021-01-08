@@ -16,7 +16,7 @@ const dailyReportRouter = {
   children: [
     {
       path: '/daily-report',
-      component: () => import('@/views/laporan/dailyReport'),
+      component: () => import('@/views/Laporan/DailyReport'),
       meta: {
         title: 'daily_report',
         icon: 'mdi-calendar-blank',

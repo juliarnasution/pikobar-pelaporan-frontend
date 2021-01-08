@@ -1,46 +1,46 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import user from './modules/user'
-import permission from './modules/permission'
-import toast from './modules/toast'
-import region from './modules/region'
-import reports from './modules/reports'
-import occupation from './modules/occupation'
-import rdt from './modules/rdt'
-import animationLottie from './modules/animationLottie'
-import statistic from './modules/statistic'
-import logistic from './modules/logistic'
-import closeContactCase from './modules/closeContactCase'
-import primaryDrawer from './modules/primaryDrawer'
-import localTransmissionArea from './modules/localTransmissionArea'
-import historyTravel from './modules/historyTravel'
-import inspectionSupport from './modules/inspectionSupport'
-import publicPlace from './modules/publicPlace'
-import hospitalReferral from './modules/hospitalReferral'
-import exportReports from './modules/exportReports'
+import User from './modules/User'
+import Permission from './modules/Permission'
+import Toast from './modules/Toast'
+import Region from './modules/Region'
+import Reports from './modules/Reports'
+import Occupation from './modules/Occupation'
+import Rdt from './modules/Rdt'
+import AnimationLottie from './modules/AnimationLottie'
+import Statistic from './modules/Statistic'
+import Logistic from './modules/Logistic'
+import CloseContactCase from './modules/CloseContactCase'
+import PrimaryDrawer from './modules/PrimaryDrawer'
+import LocalTransmissionArea from './modules/LocalTransmissionArea'
+import HistoryTravel from './modules/HistoryTravel'
+import InspectionSupport from './modules/InspectionSupport'
+import PublicPlace from './modules/PublicPlace'
+import HospitalReferral from './modules/HospitalReferral'
+import ExportReports from './modules/ExportReports'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    permission,
-    occupation,
-    reports,
-    region,
-    toast,
-    user,
-    rdt,
-    animationLottie,
-    statistic,
-    logistic,
-    closeContactCase,
-    hospitalReferral,
-    primaryDrawer,
-    historyTravel,
-    exportReports,
-    localTransmissionArea,
-    inspectionSupport,
-    publicPlace
+    User,
+    Permission,
+    Toast,
+    Region,
+    Reports,
+    Occupation,
+    Rdt,
+    AnimationLottie,
+    Statistic,
+    Logistic,
+    CloseContactCase,
+    PrimaryDrawer,
+    LocalTransmissionArea,
+    HistoryTravel,
+    InspectionSupport,
+    PublicPlace,
+    HospitalReferral,
+    ExportReports
   }
 })
 

@@ -37,15 +37,15 @@ export default {
       loaded: false,
       chartData: {
         labels: [
-          '<5',
-          '6 - 19',
-          '20 - 29',
-          '30 - 39',
-          '40 - 49',
-          '50 - 59',
-          '60 - 69',
-          '70 - 79',
-          '>80'
+          '0 - 10',
+          '10 - 20',
+          '20 - 30',
+          '30 - 40',
+          '40 - 50',
+          '50 - 60',
+          '60 - 70',
+          '70 - 80',
+          '90 - 100'
         ],
         datasets: [
           {
@@ -140,25 +140,28 @@ export default {
   },
   methods: {
     async getDataAge() {
+      const res = await this.$store.dispatch('statistic/summaryTestResultAge')
+      const { data } = res
+      const list_male_age = Array.isArray(data) ? data[0].male : null
+      const list_female_age = Array.isArray(data) ? data[0].female : null
+      delete list_male_age[0]._id
+      delete list_female_age[0]._id
+      const male_age = Object.values(list_male_age[0])
+      const set_negative_male_age = male_age.map(x => -Math.abs(x))
+      const female_age = Object.values(list_female_age[0])
+      this.setDataAge(set_negative_male_age, female_age)
+    },
+    setDataAge(male_age = [], female_age = []) {
       this.loaded = true
-
-      const male_age = []
-      const female_age = []
-
-      for (let index = 1; index <= 9; index++) {
-        female_age.push(this.randomNumberFemale())
-        male_age.push(-Math.abs(this.randomNumberMale()))
-      }
-
       this.chartData.datasets[0].data = female_age
       this.chartData.datasets[1].data = male_age
       this.setMinMax(female_age, male_age)
     },
     randomNumberMale() {
-      return Math.floor(Math.random() * 501)
+      return Math.floor(Math.random() * 2)
     },
     randomNumberFemale() {
-      return Math.floor(Math.random() * 1001)
+      return Math.floor(Math.random() * 6)
     },
     setMinMax(female, male) {
       const maxFemale = Math.max(...female)

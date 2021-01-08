@@ -1,4 +1,4 @@
-import Layout from '@/layout/distributionCase'
+import Layout from '@/layout/DistributionCase'
 import {
   rolesPerm
 } from '@/utils/constantVariable'
@@ -16,7 +16,7 @@ const distributionCaseRouter = {
   children: [
     {
       path: '/distribution-case/map',
-      component: () => import('@/views/distributionCase/mapv2'),
+      component: () => import('@/views/DistributionCase/mapv2'),
       meta: {
         title: 'distribution_case_map',
         icon: 'mdi-map-marker-radius',
@@ -27,7 +27,7 @@ const distributionCaseRouter = {
     },
     {
       path: '/distribution-case/network',
-      component: () => import('@/views/distributionCase/networkv2'),
+      component: () => import('@/views/DistributionCase/networkv2'),
       meta: {
         title: 'distribution_case_network',
         icon: 'location_on',
@@ -38,7 +38,7 @@ const distributionCaseRouter = {
     },
     {
       path: '/distribution-case/network/:id',
-      component: () => import('@/views/distributionCase/network_detail'),
+      component: () => import('@/views/DistributionCase/network_detail'),
       hidden: true,
       meta: {
         title: 'distribution_case_network',

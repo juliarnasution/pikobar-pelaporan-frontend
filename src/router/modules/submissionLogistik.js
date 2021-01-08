@@ -16,7 +16,7 @@ const submissionLogistikRouter = {
   children: [
     {
       path: '/submission-logistik/create',
-      component: () => import('@/views/logistik/submissionLogistik'),
+      component: () => import('@/views/Logistik/SubmissionLogistik'),
       meta: {
         title: 'submission_Logistics',
         icon: 'mdi-clipboard-plus',

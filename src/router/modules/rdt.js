@@ -16,7 +16,7 @@ const rdtRouter = {
   children: [
     {
       path: '/rdt/create',
-      component: () => import('@/views/rdt/newInput'),
+      component: () => import('@/views/Rdt/NewInput'),
       meta: {
         title: 'create_rdt',
         icon: 'mdi-book-plus',
@@ -27,7 +27,7 @@ const rdtRouter = {
     },
     {
       path: '/rdt/list',
-      component: () => import('@/views/rdt/list'),
+      component: () => import('@/views/Rdt/List'),
       meta: {
         title: 'list_rdt',
         icon: 'mdi-book-plus',
@@ -38,7 +38,7 @@ const rdtRouter = {
     },
     {
       path: '/rdt/update/:id',
-      component: () => import('@/views/rdt/formRapid'),
+      component: () => import('@/views/Rdt/FormRapid'),
       hidden: true,
       meta: {
         title: 'create_rdt',

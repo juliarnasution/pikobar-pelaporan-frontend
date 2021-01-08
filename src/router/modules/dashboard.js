@@ -25,7 +25,7 @@ const dashboardRouter = {
     // },
     {
       path: '/',
-      component: () => import('@/views/dashboard/caseNew'),
+      component: () => import('@/views/Dashboard/CaseNew'),
       meta: {
         title: 'dashboard_case_new',
         icon: 'dashboard',
@@ -36,7 +36,7 @@ const dashboardRouter = {
     },
     {
       path: '/dashboard/test-result',
-      component: () => import('@/views/dashboard/testResult'),
+      component: () => import('@/views/Dashboard/TestResult'),
       meta: {
         title: 'dashboard_test_result',
         icon: 'dashboard',

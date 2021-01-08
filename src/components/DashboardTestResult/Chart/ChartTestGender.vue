@@ -112,21 +112,21 @@ export default {
       this.$refs.doughnutChart.update()
     }
   },
-  mounted() {
-    this.getDataGender()
+  async mounted() {
+    await this.getDataGender()
   },
   methods: {
-    async getDataGender() {
+    setDataGender(male = 0, female = 0) {
       this.loaded = true
-
-      const array = []
-      array.push(this.randomNumber())
-      array.push(this.randomNumber())
-
-      this.chartData.datasets[0].data = array
+      this.chartData.datasets[0].data.push(female)
+      this.chartData.datasets[0].data.push(male)
     },
-    randomNumber() {
-      return Math.floor(Math.random() * 201)
+    async getDataGender() {
+      const res = await this.$store.dispatch('statistic/summaryTestResultGender')
+      const { data } = res
+      const male = Array.isArray(data) ? data[0].male : 0
+      const female = Array.isArray(data) ? data[0].female : 0
+      this.setDataGender(male, female)
     }
   }
 }

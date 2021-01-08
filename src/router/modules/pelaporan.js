@@ -16,7 +16,7 @@ const reportRouter = {
   children: [
     {
       path: '/laporan/create-report',
-      component: () => import('@/views/laporan/newFormCreateReport'),
+      component: () => import('@/views/Laporan/NewFormCreateReport'),
       meta: {
         title: 'laporan_create',
         icon: 'library_books',
@@ -38,7 +38,7 @@ const reportRouter = {
     // },
     {
       path: '/laporan/correct-case-report/:id',
-      component: () => import('@/views/laporan/formCreateReport'),
+      component: () => import('@/views/Laporan/FormCreateReport'),
       hidden: true,
       meta: {
         title: 'correct_case_report',
@@ -50,7 +50,7 @@ const reportRouter = {
     },
     {
       path: '/laporan/detail-report/:id',
-      component: () => import('@/views/laporan/detailReportCase'),
+      component: () => import('@/views/Laporan/DetailReportCase'),
       hidden: true,
       meta: {
         title: 'detail_case',
@@ -62,7 +62,7 @@ const reportRouter = {
     },
     {
       path: '/laporan/verification',
-      component: () => import('@/views/laporan/verification'),
+      component: () => import('@/views/Laporan/Verification'),
       meta: {
         title: 'verify_case',
         icon: 'library_books',
@@ -73,7 +73,7 @@ const reportRouter = {
     },
     {
       path: '/laporan/verification',
-      component: () => import('@/views/laporan/verification'),
+      component: () => import('@/views/Laporan/Verification'),
       meta: {
         title: 'verification_case_list',
         icon: 'library_books',
@@ -84,7 +84,7 @@ const reportRouter = {
     },
     {
       path: '/laporan/list',
-      component: () => import('@/views/laporan/list'),
+      component: () => import('@/views/Laporan/List'),
       meta: {
         title: 'list_case',
         icon: 'library_books',
