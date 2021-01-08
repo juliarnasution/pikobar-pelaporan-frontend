@@ -27,7 +27,7 @@ export function getFCMNotifToken() {
       //   this.saveNotificationToken(token)
     })
   }).catch((err) => {
-    console.log('Unable to get permission to notify.', err)
+    console.error('Unable to get permission to notify.', err)
   })
 }
 
@@ -37,7 +37,7 @@ export function refreshFCMNotifToken() {
       // console.log('Token refreshed: ', newToken)
       //   this.saveNotificationToken(newToken)
     }).catch(function(err) {
-      console.log('Unable to retrieve refreshed token ', err)
+      console.error('Unable to retrieve refreshed token ', err)
     })
   })
 }

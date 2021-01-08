@@ -926,6 +926,7 @@ export default {
     terms_and_conditions_import_8: '8. Untuk proses pelacakan kontak sebaiknya tidak menggunakan fitur import',
     import_data_not_yet: 'Belum ada data, silakan tambah file lalu impor untuk melihat hasil impor',
     import_case_report_data: 'Import Data Laporan Kasus',
+    import_test_result_data: 'Import Data Hasil Tes',
     import_you_must_use_an_existing_excel_template: 'Untuk melakukan import, wajib menggunakan template excel yang sudah tersedia.',
     survei_label: 'Kami tim pikobar ingin mengetahui persepsi para pengguna Aplikasi Pelaporan Pikobar. Partisipasi anda sangat penting karena hasil survei ini akan menjadi bahan masukkan/evaluasi bagi kami untuk meningkatkan layanan saat ini. Yuk, bantu isi survei berikut!',
     tight_contact: 'Kontak Erat',

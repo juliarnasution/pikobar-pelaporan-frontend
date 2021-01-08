@@ -2,7 +2,7 @@
   <v-dialog v-model="show" max-width="70%" :persistent="isLoading">
     <v-card>
       <v-card-title>
-        {{ $t('label.import_case_report_data') }}
+        {{ headerTitle }}
         <v-spacer />
         <v-icon @click="show = false">mdi-close</v-icon>
       </v-card-title>
@@ -165,6 +165,18 @@ import i18n from '@/lang'
 export default {
   name: 'ImportForm',
   props: {
+    headerTitle: {
+      type: String,
+      default: ''
+    },
+    importUrl: {
+      type: String,
+      default: ''
+    },
+    importTemplateExcel: {
+      type: String,
+      default: ''
+    },
     showImportForm: {
       type: Boolean,
       default: false
@@ -179,7 +191,6 @@ export default {
       tab: null,
       selectedFile: null,
       show: this.showImportForm,
-      importTemplateExcel: process.env.VUE_APP_IMPORT_TEMPLATE,
       successMessage: null,
       errorMessage: null,
       failedDialog: false,
@@ -251,7 +262,7 @@ export default {
         formData,
         onProgress: this.onProgress
       }
-      const response = await this.$store.dispatch('exportReports/importExcel', data)
+      const response = await this.$store.dispatch(this.importUrl, data)
       if (!response) {
         this.isLoading = false
         return

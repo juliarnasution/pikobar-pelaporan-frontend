@@ -172,38 +172,21 @@
       :form-riwayat-pasien="formRiwayatPasien"
       :form-pasien="formPasien"
     />
-    <v-dialog v-model="failedDialog" persistent max-width="30%">
-      <v-card>
-        <v-card-title class="headline"><v-icon x-large color="red" left>mdi-close-circle</v-icon>{{ $t('errors.file_failed_upload') }}</v-card-title>
-        <v-card-text>{{ errorMessage }}</v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="green darken-1" text @click="failedDialog = false">{{ $t('label.ok') }}</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="successDialog" max-width="40%">
-      <v-card class="container">
-        <v-row class="mx-0" align="center" justify="center">
-          <v-card-title><v-icon size="80px" color="success">mdi-checkbox-marked-circle</v-icon></v-card-title>
-        </v-row>
-        <v-row class="mx-0" align="center" justify="center">
-          <v-card-title class="display-1 font-weight-bold pt-0 success-message">{{ $t('label.congratulation') }}</v-card-title>
-        </v-row>
-        <v-row class="mx-0" align="center" justify="center">
-          <v-card-text
-            :class="{'subtitle-1': $vuetify.breakpoint. mdAndDown, 'headline': $vuetify.breakpoint. lgAndUp}"
-            class="pt-0 text-center success-message"
-          >
-            {{ $t('label.import_success_message') }}
-          </v-card-text>
-        </v-row>
-        <v-row class="mx-0" align="center" justify="center">
-          <v-btn color="green darken-1" text @click="successDialog = false">{{ $t('label.ok') }}</v-btn>
-        </v-row>
-      </v-card>
-    </v-dialog>
+    <failed-dialog
+      :failed-dialog-title="$t('errors.file_failed_upload')"
+      :failed-dialog="failedDialog"
+      :dialog-failed.sync="failedDialog"
+      :error-message="errorMessage"
+    />
+    <success-dialog
+      :success-dialog="successDialog"
+      :success-dialog-title="$t('label.congratulation')"
+      :success-message="$t('label.import_success_message')"
+    />
     <import-form
+      :header-title="$t('label.import_case_report_data')"
+      :import-url="'exportReports/importExcelCase'"
+      :import-template-excel="urlTemplateImport"
       :show-import-form="showImportForm"
       :refresh-page="handleSearch"
       :show.sync="showImportForm"
@@ -328,6 +311,7 @@ export default {
       closeContactCase: [],
       listCloseContact: [],
       listTransmissionArea: [],
+      urlTemplateImport: process.env.VUE_APP_IMPORT_TEMPLATE,
       idCase: null,
       idUniqueCase: '',
       listHistoryCase: [],

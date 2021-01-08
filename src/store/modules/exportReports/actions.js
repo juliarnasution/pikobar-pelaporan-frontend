@@ -55,13 +55,25 @@ export default {
       return error.response
     }
   },
-  async importExcel({ commit }, data) {
+  async importExcelCase({ commit }, data) {
     const {
       formData,
       onProgress
     } = data
     try {
       const response = await requestServer('/api/v2/cases-import', 'UPLOAD', formData, onProgress)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
+  async importExcelRDT({ commit }, data) {
+    const {
+      formData,
+      onProgress
+    } = data
+    try {
+      const response = await requestServer('/api/rdt-import', 'UPLOAD', formData, onProgress)
       return response
     } catch (error) {
       return error.response

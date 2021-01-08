@@ -67,7 +67,7 @@
               item-value="value"
             />
           </v-col> -->
-          <v-col cols="12" sm="4">
+          <v-col cols="12" sm="3">
             <v-label class="title">{{ $t('label.inspection_date') }}:</v-label>
             <input-date-picker
               :format-date="formatDate"
@@ -77,7 +77,7 @@
               @changeDate="listQuery.start_date = $event"
             />
           </v-col>
-          <v-col cols="12" sm="4">
+          <v-col cols="12" sm="3">
             <br>
             <input-date-picker
               :format-date="formatDate"
@@ -87,9 +87,23 @@
               @changeDate="listQuery.end_date = $event"
             />
           </v-col>
-          <v-col cols="12" sm="4">
+          <v-col cols="12" sm="6">
             <br>
             <v-row>
+              <v-col class="pt-0">
+                <v-btn
+                  v-if="roles[0] !== 'faskes'"
+                  color="#27AE60"
+                  block
+                  outlined
+                  @click="showImportForm = true"
+                >
+                  <v-icon left>
+                    mdi-download
+                  </v-icon>
+                  {{ $t('label.import') }}
+                </v-btn>
+              </v-col>
               <v-col class="pt-0">
                 <v-btn
                   block
@@ -115,6 +129,27 @@
         </v-row>
       </v-container>
     </v-form>
+    <import-form
+      :header-title="$t('label.import_test_result_data')"
+      :import-url="'exportReports/importExcelRDT'"
+      :show-import-form="showImportForm"
+      :refresh-page="onSearch"
+      :show.sync="showImportForm"
+      :failed.sync="failedDialog"
+      :success.sync="successDialog"
+      :message.sync="errorMessage"
+    />
+    <failed-dialog
+      :failed-dialog-title="$t('errors.file_failed_upload')"
+      :failed-dialog="failedDialog"
+      :dialog-failed.sync="failedDialog"
+      :error-message="errorMessage"
+    />
+    <success-dialog
+      :success-dialog="successDialog"
+      :success-dialog-title="$t('label.congratulation')"
+      :success-message="$t('label.import_success_message')"
+    />
   </div>
 </template>
 
@@ -136,6 +171,10 @@ export default {
   data() {
     return {
       formatDate: 'YYYY-MM-DD',
+      showImportForm: false,
+      failedDialog: false,
+      successDialog: false,
+      errorMessage: '',
       districtCity: {
         kota_kode: ''
       },
