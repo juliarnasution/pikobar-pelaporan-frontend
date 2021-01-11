@@ -27,6 +27,10 @@ export default {
       type: String,
       default: null
     },
+    params: {
+      type: Object,
+      default: null
+    },
     chartHeight: {
       type: Number,
       default: 300
@@ -140,7 +144,7 @@ export default {
   },
   methods: {
     async getDataAge() {
-      const res = await this.$store.dispatch('statistic/summaryTestResultAge')
+      const res = await this.$store.dispatch('statistic/summaryTestResultAge', this.params)
       const { data } = res
       const list_male_age = Array.isArray(data) ? data[0].male : null
       const list_female_age = Array.isArray(data) ? data[0].female : null
@@ -156,12 +160,6 @@ export default {
       this.chartData.datasets[0].data = female_age
       this.chartData.datasets[1].data = male_age
       this.setMinMax(female_age, male_age)
-    },
-    randomNumberMale() {
-      return Math.floor(Math.random() * 2)
-    },
-    randomNumberFemale() {
-      return Math.floor(Math.random() * 6)
     },
     setMinMax(female, male) {
       const maxFemale = Math.max(...female)

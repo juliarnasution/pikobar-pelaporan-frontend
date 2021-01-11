@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'ChartTestDaily',
+  name: 'ChartTestMonthly',
   props: {
     tabActive: {
       type: String,
@@ -50,6 +50,10 @@ export default {
     chartHeight: {
       type: Number,
       default: 300
+    },
+    dataTestMonthly: {
+      type: Array,
+      default: function() { return [] }
     }
   },
   data() {
@@ -68,12 +72,13 @@ export default {
           xAxes: [
             {
               gridLines: {
+                drawBorder: false
+              },
+              scaleLabel: {
                 display: false
               },
               ticks: {
-                callback: (label) => {
-                  return this.$moment(new Date(label)).format('DD/MM')
-                }
+                precision: 0
               }
             }
           ],
@@ -94,28 +99,33 @@ export default {
           ]
         },
         legend: {
-          display: true,
+          display: false,
           position: 'bottom',
           labels: {
             boxWidth: 10
           }
         },
+        legendCallback: (chart) => {
+          this.charts = chart
+          this.legends = chart.data.datasets
+        },
         tooltips: {
           displayColors: false,
-          callbacks: {
-            title: (item) => {
-              return this.$moment(item[0].label).format('DD/MM')
-            }
-          }
+          mode: 'index',
+          intersect: false,
+          tooltipCaretSize: 0
         }
-      }
+      },
+      chartStyles: {}
     }
   },
   computed: {
-    chartStyles() {
-      return {
-        height: `${this.chartHeight}px`,
-        position: 'relative'
+    optionsDataMontly: {
+      get: function() {
+        return this.dataTestMonthly
+      },
+      set: function(value) {
+        this.$emit('update:testMonthlyData', value)
       }
     }
   },
@@ -130,6 +140,9 @@ export default {
     },
     '$refs'() {
       this.$refs.barChart.update()
+    },
+    optionsDataMontly(value) {
+      if (value) this.getDataAll()
     }
   },
   mounted() {
@@ -138,25 +151,33 @@ export default {
   methods: {
     filterTab() {
       this.loaded = true
-      if (this.tabActive === 'all') {
-        this.label = null
-        this.getDataAll()
-      } else if (this.tabActive === 'rapid') {
+      if (this.tabActive === 'rapid') {
         this.label = this.$t('label.rapid')
         this.getDataRapid()
       } else if (this.tabActive === 'pcr') {
         this.label = this.$t('label.pcr')
         this.getDataPCR()
+      } else {
+        this.label = null
+        this.getDataAll()
       }
+      if (this.$refs.barChart) this.$refs.barChart.update()
     },
     filterSample() {
-      this.getDataRapid()
       this.$refs.barChart.update()
     },
     getDataAll() {
       const date = []
       const one = []
       const two = []
+
+      this.setHeight(this.chartHeight)
+
+      // for (let index = 0; index < this.optionsDataMontly.length; index++) {
+      //   date.push(this.optionsDataMontly[index]._id)
+      //   one.push(this.optionsDataMontly[index].rdt)
+      //   two.push(this.optionsDataMontly[index].pcr)
+      // }
 
       for (let index = 0; index <= 9; index++) {
         date.push('2020-07-1' + index)
@@ -181,6 +202,7 @@ export default {
           data: two
         }
       )
+      if (this.$refs.barChart) this.$refs.barChart.update()
     },
     getDataRapid() {
       const date = []
@@ -233,7 +255,6 @@ export default {
       }
 
       this.chartData.labels = date
-
       this.chartData.datasets = []
       this.chartData.datasets.push(
         {
@@ -255,6 +276,25 @@ export default {
           data: two
         }
       )
+    },
+    setHeight(total) {
+      const limit = 8
+
+      let height
+      if (total > 0 && total <= limit) {
+        height = '100%'
+      } else if (total > limit && total <= limit * 2) {
+        height = '200%'
+      } else if (total > limit * 2 && total <= limit * 3) {
+        height = '300%'
+      } else if (total > limit * 3 && total <= limit * 4) {
+        height = '400%'
+      }
+
+      this.chartStyles = {
+        height,
+        position: 'relative'
+      }
     },
     randomNumber() {
       return Math.floor(Math.random() * 101)

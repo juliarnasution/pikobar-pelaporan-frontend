@@ -55,6 +55,10 @@ export default {
     tabActive: {
       type: String,
       default: null
+    },
+    dataTestRegion: {
+      type: Array,
+      default: function() { return [] }
     }
   },
   data() {
@@ -124,6 +128,16 @@ export default {
       }
     }
   },
+  computed: {
+    optionsData: {
+      get: function() {
+        return this.dataTestRegion
+      },
+      set: function(value) {
+        this.$emit('update:testRegionData', value)
+      }
+    }
+  },
   watch: {
     'tabActive': {
       handler(value) {
@@ -135,6 +149,9 @@ export default {
     },
     '$refs'() {
       this.$refs.horizontalBarChart.update()
+    },
+    optionsData(value) {
+      if (value) this.getDataAll()
     }
   },
   mounted() {
@@ -152,46 +169,19 @@ export default {
       }
     },
     getDataAll() {
-      const area = [
-        'Kota Bandung',
-        'Kab. Bandung',
-        'Kab. Bandung Barat',
-        'Kab. Ciamis',
-        'Kab. Garut',
-        'Kab. Cirebon',
-        'Kab. Bogor',
-        'Kota Bogor',
-        'Kota Sukabumi',
-        'Kota Depok',
-        'Kota Bekasi',
-        'Kota Tasikmalaya',
-        'Kab. Tasikmalaya',
-        'Kab. Bekasi',
-        'Kota Banjar',
-        'Kota Depok',
-        'Kota Bekasi',
-        'Kota Tasikmalaya',
-        'Kab. Tasikmalaya',
-        'Kab. Bekasi',
-        'Kab. Tasikmalaya',
-        'Kab. Bekasi',
-        'Kota Banjar',
-        'Kota Depok',
-        'Kota Bekasi',
-        'Kota Tasikmalaya',
-        'Kab. Tasikmalaya'
-      ]
-      const one = []
-      const two = []
+      const listRegion = []
+      const listRdt = []
+      const listPcr = []
 
-      this.setHeight(area.length)
+      this.setHeight(this.optionsData.length)
 
-      for (let index = 1; index <= 27; index++) {
-        one.push(this.randomNumber())
-        two.push(this.randomNumber())
+      for (let index = 0; index < this.optionsData.length; index++) {
+        listRegion.push(this.optionsData[index]._id)
+        listRdt.push(this.optionsData[index].rdt)
+        listPcr.push(this.optionsData[index].pcr)
       }
 
-      this.chartData.labels = area
+      this.chartData.labels = listRegion
 
       this.chartData.datasets = []
       this.chartData.datasets.push(
@@ -199,7 +189,7 @@ export default {
           label: this.$t('label.rapid_test_id'),
           backgroundColor: '#27AE60',
           hoverBackgroundColor: '#27AE60',
-          data: one,
+          data: listRdt,
           hidden: false,
           barThickness: 15
         },
@@ -207,7 +197,7 @@ export default {
           label: this.$t('label.pcr'),
           backgroundColor: '#F2C94C',
           hoverBackgroundColor: '#F2C94C',
-          data: two,
+          data: listPcr,
           hidden: false,
           barThickness: 15
         }

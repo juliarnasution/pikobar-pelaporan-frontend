@@ -27,6 +27,10 @@ export default {
       type: String,
       default: null
     },
+    params: {
+      type: Object,
+      default: null
+    },
     chartHeight: {
       type: Number,
       default: 300
@@ -118,11 +122,10 @@ export default {
   methods: {
     setDataGender(male = 0, female = 0) {
       this.loaded = true
-      this.chartData.datasets[0].data.push(female)
-      this.chartData.datasets[0].data.push(male)
+      this.chartData.datasets[0].data = [female, male]
     },
     async getDataGender() {
-      const res = await this.$store.dispatch('statistic/summaryTestResultGender')
+      const res = await this.$store.dispatch('statistic/summaryTestResultGender', this.params)
       const { data } = res
       const male = Array.isArray(data) ? data[0].male : 0
       const female = Array.isArray(data) ? data[0].female : 0
