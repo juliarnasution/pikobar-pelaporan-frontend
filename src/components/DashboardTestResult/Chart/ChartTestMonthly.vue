@@ -54,6 +54,14 @@ export default {
     dataTestMonthly: {
       type: Array,
       default: function() { return [] }
+    },
+    dataTestMonthlyRdt: {
+      type: Array,
+      default: function() { return [] }
+    },
+    dataTestMonthlyPcr: {
+      type: Array,
+      default: function() { return [] }
     }
   },
   data() {
@@ -127,6 +135,22 @@ export default {
       set: function(value) {
         this.$emit('update:testMonthlyData', value)
       }
+    },
+    optionsDataMontlyRdt: {
+      get: function() {
+        return this.dataTestMonthlyRdt
+      },
+      set: function(value) {
+        this.$emit('update:testMonthlyRdtData', value)
+      }
+    },
+    optionsDataMontlyPcr: {
+      get: function() {
+        return this.dataTestMonthlyPcr
+      },
+      set: function(value) {
+        this.$emit('update:testMonthlyPcrData', value)
+      }
     }
   },
   watch: {
@@ -139,7 +163,7 @@ export default {
       deep: true
     },
     '$refs'() {
-      this.$refs.barChart.update()
+      if (this.$refs.barChart) this.$refs.barChart.update()
     },
     optionsDataMontly(value) {
       if (value) this.getDataAll()
@@ -150,7 +174,7 @@ export default {
   },
   methods: {
     filterTab() {
-      this.loaded = true
+      this.loaded = false
       if (this.tabActive === 'rapid') {
         this.label = this.$t('label.rapid')
         this.getDataRapid()
@@ -161,31 +185,25 @@ export default {
         this.label = null
         this.getDataAll()
       }
-      if (this.$refs.barChart) this.$refs.barChart.update()
+      this.loaded = true
     },
     filterSample() {
       this.$refs.barChart.update()
     },
     getDataAll() {
-      const date = []
-      const one = []
-      const two = []
+      const listNameMonth = []
+      const listRdt = []
+      const listPcr = []
 
       this.setHeight(this.chartHeight)
 
-      // for (let index = 0; index < this.optionsDataMontly.length; index++) {
-      //   date.push(this.optionsDataMontly[index]._id)
-      //   one.push(this.optionsDataMontly[index].rdt)
-      //   two.push(this.optionsDataMontly[index].pcr)
-      // }
-
-      for (let index = 0; index <= 9; index++) {
-        date.push('2020-07-1' + index)
-        one.push(this.randomNumber())
-        two.push(this.randomNumber())
+      for (let index = 0; index < this.optionsDataMontly.length; index++) {
+        listNameMonth.push(this.optionsDataMontly[index].name)
+        listRdt.push(this.optionsDataMontly[index].rdt)
+        listPcr.push(this.optionsDataMontly[index].pcr)
       }
 
-      this.chartData.labels = date
+      this.chartData.labels = listNameMonth
 
       this.chartData.datasets = []
       this.chartData.datasets.push(
@@ -193,31 +211,33 @@ export default {
           label: this.$t('label.rapid_test_id'),
           backgroundColor: '#27AE60',
           hoverBackgroundColor: '#27AE60',
-          data: one
+          data: listRdt
         },
         {
           label: this.$t('label.pcr'),
           backgroundColor: '#F2C94C',
           hoverBackgroundColor: '#F2C94C',
-          data: two
+          data: listPcr
         }
       )
       if (this.$refs.barChart) this.$refs.barChart.update()
     },
     getDataRapid() {
-      const date = []
-      const one = []
-      const two = []
-      const three = []
+      if (this.$refs.barChart) this.$refs.barChart.$data._chart.destroy()
 
-      for (let index = 0; index <= 9; index++) {
-        date.push('2020-07-1' + index)
-        one.push(this.randomNumber())
-        two.push(this.randomNumber())
-        three.push(this.randomNumber())
+      const listNameMonth = []
+      const listReaktif = []
+      const listNonReaktif = []
+      const listInkonkuslif = []
+
+      for (let index = 0; index < this.optionsDataMontlyRdt.length; index++) {
+        listNameMonth.push(this.optionsDataMontlyRdt[index].name)
+        listReaktif.push(this.optionsDataMontlyRdt[index].reaktif)
+        listNonReaktif.push(this.optionsDataMontlyRdt[index].non_reaktif)
+        listInkonkuslif.push(this.optionsDataMontlyRdt[index].inkonkuslif)
       }
 
-      this.chartData.labels = date
+      this.chartData.labels = listNameMonth
 
       this.chartData.datasets = []
       this.chartData.datasets.push(
@@ -225,57 +245,67 @@ export default {
           label: this.$t('label.reaktif'),
           backgroundColor: '#27AE60',
           hoverBackgroundColor: '#27AE60',
-          data: one
+          data: listReaktif
         },
         {
           label: this.$t('label.non_reaktif'),
           backgroundColor: '#F2C94C',
           hoverBackgroundColor: '#F2C94C',
-          data: two
+          data: listNonReaktif
         },
         {
           label: this.$t('label.inkonklusif'),
           backgroundColor: '#2F80ED',
           hoverBackgroundColor: '#2F80ED',
-          data: two
+          data: listInkonkuslif
         }
       )
+      if (this.$refs.barChart) {
+        this.$refs.barChart.renderChart(this.chartData)
+        this.$refs.barChart.update()
+      }
     },
     getDataPCR() {
-      const date = []
-      const one = []
-      const two = []
-      const three = []
+      if (this.$refs.barChart) this.$refs.barChart.$data._chart.destroy()
 
-      for (let index = 0; index <= 9; index++) {
-        date.push('2020-07-1' + index)
-        one.push(this.randomNumber())
-        two.push(this.randomNumber())
-        three.push(this.randomNumber())
+      const listNameMonth = []
+      const listReaktif = []
+      const listNonReaktif = []
+      const listInkonkuslif = []
+
+      for (let index = 0; index < this.optionsDataMontlyPcr.length; index++) {
+        listNameMonth.push(this.optionsDataMontlyPcr[index].name)
+        listReaktif.push(this.optionsDataMontlyRdt[index].reaktif)
+        listNonReaktif.push(this.optionsDataMontlyRdt[index].non_reaktif)
+        listInkonkuslif.push(this.optionsDataMontlyRdt[index].inkonkuslif)
       }
 
-      this.chartData.labels = date
+      this.chartData.labels = listNameMonth
       this.chartData.datasets = []
       this.chartData.datasets.push(
         {
           label: this.$t('label.positif'),
           backgroundColor: '#27AE60',
           hoverBackgroundColor: '#27AE60',
-          data: one
+          data: listReaktif
         },
         {
           label: this.$t('label.negatif'),
           backgroundColor: '#F2C94C',
           hoverBackgroundColor: '#F2C94C',
-          data: two
+          data: listNonReaktif
         },
         {
           label: this.$t('label.invalid'),
           backgroundColor: '#2F80ED',
           hoverBackgroundColor: '#2F80ED',
-          data: two
+          data: listInkonkuslif
         }
       )
+      if (this.$refs.barChart) {
+        this.$refs.barChart.renderChart(this.chartData)
+        this.$refs.barChart.update()
+      }
     },
     setHeight(total) {
       const limit = 8

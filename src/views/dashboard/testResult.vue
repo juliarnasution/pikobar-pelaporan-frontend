@@ -310,6 +310,10 @@
           :tab-active="tabActive"
           :data-test-monthly="summaryTestResultMonthly"
           :test-monthly-data.sync="summaryTestResultMonthly"
+          :data-test-monthly-rdt="summaryTestResultMonthlyRDT"
+          :data-test-monthly-pcr="summaryTestResultMonthlyPCR"
+          :test-monthly-rdt-data.sync="summaryTestResultMonthlyRDT"
+          :test-monthly-pcr-data.sync="summaryTestResultMonthlyPCR"
         />
       </v-col>
     </v-row>
@@ -433,6 +437,8 @@ export default {
         totalPcrInvalid: 0
       },
       summaryTestResultMonthly: [],
+      summaryTestResultMonthlyRDT: [],
+      summaryTestResultMonthlyPCR: [],
       summaryTestResultRegion: [],
       summaryTestResultTargets: []
     }
@@ -482,6 +488,7 @@ export default {
 
     await this.getStatisticTestResult()
     await this.getSummaryTestResult()
+    await this.getSummaryTestResultLocation()
   },
   beforeDestroy() {
     this.clearCity()
@@ -611,7 +618,14 @@ export default {
     async getSummaryTestResult() {
       const res = await this.$store.dispatch('statistic/summaryTestResult', this.filterActive)
       const { data } = res
+      console.log(data)
       this.summaryTestResultMonthly = Array.isArray(data) ? data[0].month : []
+      this.summaryTestResultMonthlyRDT = Array.isArray(data) ? data[0].month_rdt : []
+      this.summaryTestResultMonthlyPCR = Array.isArray(data) ? data[0].month_pcr : []
+    },
+    async getSummaryTestResultLocation() {
+      const res = await this.$store.dispatch('statistic/summaryTestResultLocation', this.filterActive)
+      const { data } = res
       this.summaryTestResultRegion = Array.isArray(data) ? data[0].summary : []
       this.summaryTestResultTargets = Array.isArray(data) ? data[0].targets : []
     }

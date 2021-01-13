@@ -153,6 +153,14 @@ export default {
       return error.response
     }
   },
+  async summaryTestResultLocation({ commit }, params) {
+    try {
+      const response = await requestServer(`/api/dashboard/summary-test-result-location`, 'GET', params)
+      return response
+    } catch (error) {
+      return error.response
+    }
+  },
   async summaryTestResultGender({ commit }, params) {
     try {
       const response = await requestServer(`/api/dashboard/summary-test-result-gender`, 'GET', params)

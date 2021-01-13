@@ -86,12 +86,15 @@ export default {
         },
         hover: {
           mode: 'nearest',
+          animationDuration: 0,
           intersect: true
         },
         animation: {
+          duration: 0,
           animateScale: true,
           animateRotate: true
-        }
+        },
+        responsiveAnimationDuration: 0
       }
     }
   },
