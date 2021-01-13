@@ -8,7 +8,7 @@
           <v-icon @click="show = false">mdi-close</v-icon>
         </v-card-title>
         <v-divider />
-        <v-row class="mx-6">
+        <v-container fluid>
           <ValidationObserver ref="observer">
             <v-form
               ref="form"
@@ -60,7 +60,7 @@
               </v-container>
             </v-form>
           </ValidationObserver>
-        </v-row>
+        </v-container>
       </v-card>
     </v-dialog>
   </v-row>
