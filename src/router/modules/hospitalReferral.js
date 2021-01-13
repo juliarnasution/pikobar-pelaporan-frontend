@@ -16,7 +16,7 @@ const hospitalReferralRouter = {
   children: [
     {
       path: '/hospital-referral/create',
-      component: () => import('@/views/HospitalReferral/form'),
+      component: () => import('@/views/hospitalReferral/form'),
       meta: {
         title: 'make_referral',
         icon: 'mdi-account-switch',
@@ -27,7 +27,7 @@ const hospitalReferralRouter = {
     },
     {
       path: '/hospital-referral/list',
-      component: () => import('@/views/HospitalReferral/list'),
+      component: () => import('@/views/hospitalReferral/list'),
       meta: {
         title: 'referral_patient_list',
         icon: 'mdi-account-switch',

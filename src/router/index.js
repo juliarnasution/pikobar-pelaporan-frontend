@@ -7,14 +7,14 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import dashboardRouter from './modules/Dashboard'
-import reportRouter from './modules/Pelaporan'
-import rdtRouter from './modules/Rdt'
-import settingRouter from './modules/Setting'
-import distributionCaseRouter from './modules/DistributionCase'
-import submissionLogistikRouter from './modules/SubmissionLogistik'
-import dailyReportRouter from './modules/DailyReport'
-import hospitalReferralRouter from './modules/HospitalReferral'
+import dashboardRouter from './modules/dashboard'
+import reportRouter from './modules/pelaporan'
+import rdtRouter from './modules/rdt'
+import settingRouter from './modules/setting'
+import distributionCaseRouter from './modules/distributionCase'
+import submissionLogistikRouter from './modules/submissionLogistik'
+import dailyReportRouter from './modules/dailyReport'
+import hospitalReferralRouter from './modules/hospitalReferral'
 // import closeContactCase from './modules/CloseContactCase'
 
 /**
@@ -30,18 +30,18 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path(.*)',
-        component: () => import('@/views/Redirect/index')
+        component: () => import('@/views/redirect/index')
       }
     ]
   },
   {
     path: '/login',
-    component: () => import('@/views/Login/index'),
+    component: () => import('@/views/login/index'),
     hidden: true
   },
   {
     path: '/auth-redirect',
-    component: () => import('@/views/Login/AuthRedirect'),
+    component: () => import('@/views/login/authredirect'),
     hidden: true
   },
   {
@@ -54,7 +54,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/change-password',
-        component: () => import('@/views/ChangePassword/index'),
+        component: () => import('@/views/changePassword/index'),
         hidden: true,
         meta: {
           title: 'change_password'
@@ -71,7 +71,7 @@ export const constantRoutes = [
     },
     children: [{
       path: '/user/update',
-      component: () => import('@/views/User/EditUser'),
+      component: () => import('@/views/user/editUser'),
       hidden: true,
       meta: {
         title: 'update_profile'

@@ -165,7 +165,6 @@ export default {
       if (this.$refs.barChart) this.$refs.barChart.update()
     },
     optionsDataMontly(val) {
-      console.log(val)
       this.filterTab()
     },
     optionsDataMontlyRdt() {

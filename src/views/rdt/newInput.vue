@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import FormRapid from './FormRapid'
+import FormRapid from './formRapid'
 export default {
   name: 'NewInput',
   components: {

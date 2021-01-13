@@ -16,7 +16,7 @@ const settingRouter = {
   children: [
     {
       path: '/user/list',
-      component: () => import('@/views/User/List'),
+      component: () => import('@/views/user/list'),
       meta: {
         title: 'user_management',
         icon: 'mdi-account-multiple',
@@ -27,7 +27,7 @@ const settingRouter = {
     },
     {
       path: '/user/create',
-      component: () => import('@/views/User/FormUser'),
+      component: () => import('@/views/user/formUser'),
       hidden: true,
       meta: {
         title: 'user_create',
@@ -39,7 +39,7 @@ const settingRouter = {
     },
     {
       path: '/user/detail/:id',
-      component: () => import('@/views/User/Detail'),
+      component: () => import('@/views/user/detail'),
       hidden: true,
       meta: {
         title: 'user_detail',
@@ -50,7 +50,7 @@ const settingRouter = {
     },
     {
       path: '/user/edit/:id',
-      component: () => import('@/views/User/EditUser'),
+      component: () => import('@/views/user/editUser'),
       hidden: true,
       meta: {
         title: 'user_edit',
@@ -61,7 +61,7 @@ const settingRouter = {
     },
     {
       path: '/user/update',
-      component: () => import('@/views/User/EditUser'),
+      component: () => import('@/views/user/editUser'),
       hidden: true,
       meta: {
         title: 'user_edit',
@@ -72,7 +72,7 @@ const settingRouter = {
     },
     {
       path: '/change-password/:id',
-      component: () => import('@/views/ChangePassword/index'),
+      component: () => import('@/views/changePassword/index'),
       hidden: true,
       meta: {
         title: 'change_password',
