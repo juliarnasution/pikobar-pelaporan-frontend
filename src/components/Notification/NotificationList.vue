@@ -139,7 +139,7 @@ export default {
     },
     async getListNotifications() {
       this.isLoading = true
-      await this.$store.dispatch('notifications/getListNotifications', this.params)
+      await this.$store.dispatch('notifications/getListNotifications')
       this.isLoading = false
     },
     async handleDetail(id, eventType) {
@@ -161,7 +161,6 @@ export default {
         } else {
           this.caseDetail = response.data
           this.closeContactDetail = responseCloseContact.data
-          // if (response.data.verified_status !== 'declined')
           this.showVerificationForm = true
         }
         this.$store.commit('animationLottie/SET_LOADING', false)

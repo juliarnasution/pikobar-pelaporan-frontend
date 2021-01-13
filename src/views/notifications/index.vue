@@ -43,7 +43,7 @@ export default {
         limit: 30,
         search: '',
         eventType: '',
-        createdAt: ''
+        startDate: ''
       }
     }
   },
