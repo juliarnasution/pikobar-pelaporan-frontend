@@ -158,15 +158,21 @@ export default {
       handler(value) {
         this.tabActive = value
         this.filterTab()
-        this.$refs.barChart.update()
       },
       deep: true
     },
     '$refs'() {
       if (this.$refs.barChart) this.$refs.barChart.update()
     },
-    optionsDataMontly(value) {
-      if (value) this.getDataAll()
+    optionsDataMontly(val) {
+      console.log(val)
+      this.filterTab()
+    },
+    optionsDataMontlyRdt() {
+      this.filterTab()
+    },
+    optionsDataMontlyPcr() {
+      this.filterTab()
     }
   },
   mounted() {
@@ -220,7 +226,8 @@ export default {
           data: listPcr
         }
       )
-      if (this.$refs.barChart) this.$refs.barChart.update()
+
+      if (this.$refs.barChart) this.updateChart(this.chartData)
     },
     getDataRapid() {
       if (this.$refs.barChart) this.$refs.barChart.$data._chart.destroy()
@@ -260,24 +267,22 @@ export default {
           data: listInkonkuslif
         }
       )
-      if (this.$refs.barChart) {
-        this.$refs.barChart.renderChart(this.chartData)
-        this.$refs.barChart.update()
-      }
+
+      if (this.$refs.barChart) this.updateChart(this.chartData)
     },
     getDataPCR() {
       if (this.$refs.barChart) this.$refs.barChart.$data._chart.destroy()
 
       const listNameMonth = []
-      const listReaktif = []
-      const listNonReaktif = []
-      const listInkonkuslif = []
+      const listPositif = []
+      const listNegaitf = []
+      const listInvalid = []
 
       for (let index = 0; index < this.optionsDataMontlyPcr.length; index++) {
         listNameMonth.push(this.optionsDataMontlyPcr[index].name)
-        listReaktif.push(this.optionsDataMontlyRdt[index].reaktif)
-        listNonReaktif.push(this.optionsDataMontlyRdt[index].non_reaktif)
-        listInkonkuslif.push(this.optionsDataMontlyRdt[index].inkonkuslif)
+        listPositif.push(this.optionsDataMontlyPcr[index].positif)
+        listNegaitf.push(this.optionsDataMontlyPcr[index].negaitf)
+        listInvalid.push(this.optionsDataMontlyPcr[index].invalid)
       }
 
       this.chartData.labels = listNameMonth
@@ -287,25 +292,22 @@ export default {
           label: this.$t('label.positif'),
           backgroundColor: '#27AE60',
           hoverBackgroundColor: '#27AE60',
-          data: listReaktif
+          data: listPositif
         },
         {
           label: this.$t('label.negatif'),
           backgroundColor: '#F2C94C',
           hoverBackgroundColor: '#F2C94C',
-          data: listNonReaktif
+          data: listNegaitf
         },
         {
           label: this.$t('label.invalid'),
           backgroundColor: '#2F80ED',
           hoverBackgroundColor: '#2F80ED',
-          data: listInkonkuslif
+          data: listInvalid
         }
       )
-      if (this.$refs.barChart) {
-        this.$refs.barChart.renderChart(this.chartData)
-        this.$refs.barChart.update()
-      }
+      if (this.$refs.barChart) this.updateChart(this.chartData)
     },
     setHeight(total) {
       const limit = 8
@@ -325,6 +327,10 @@ export default {
         height,
         position: 'relative'
       }
+    },
+    updateChart(data) {
+      this.$refs.barChart.renderChart(data)
+      this.$refs.barChart.update()
     },
     randomNumber() {
       return Math.floor(Math.random() * 101)

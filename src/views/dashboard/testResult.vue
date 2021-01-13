@@ -515,7 +515,9 @@ export default {
           this.filterActive.max_date = event[1]
         }
       }
-      this.getStatisticTestResult()
+      await this.getStatisticTestResult()
+      await this.getSummaryTestResult()
+      await this.getSummaryTestResultLocation()
     },
     async onSelectDistrict(value) {
       this.districtCity = value
@@ -525,7 +527,9 @@ export default {
       this.$emit('update:nameDistrict', value.kota_nama)
 
       this.filterActive.address_district_code = value.kota_kode
-      this.getStatisticTestResult()
+      await this.getStatisticTestResult()
+      await this.getSummaryTestResult()
+      await this.getSummaryTestResultLocation()
     },
     async onSelectSubDistrict(value) {
       this.subDistrict = value
@@ -534,7 +538,9 @@ export default {
       this.$emit('update:nameSubDistrict', value.kecamatan_nama)
 
       this.filterActive.address_subdistrict_code = value.kecamatan_kode
-      this.getStatisticTestResult()
+      await this.getStatisticTestResult()
+      await this.getSummaryTestResult()
+      await this.getSummaryTestResultLocation()
     },
     async onSelectVillage(value) {
       this.village = value
@@ -542,7 +548,9 @@ export default {
       this.$emit('update:nameVillage', value.desa_nama)
 
       this.filterActive.address_village_code = value.desa_kode
-      this.getStatisticTestResult()
+      await this.getStatisticTestResult()
+      await this.getSummaryTestResult()
+      await this.getSummaryTestResultLocation()
     },
     async onReset() {
       if (rolesWidget['superadmin'].includes(this.roles[0])) {
@@ -618,7 +626,6 @@ export default {
     async getSummaryTestResult() {
       const res = await this.$store.dispatch('statistic/summaryTestResult', this.filterActive)
       const { data } = res
-      console.log(data)
       this.summaryTestResultMonthly = Array.isArray(data) ? data[0].month : []
       this.summaryTestResultMonthlyRDT = Array.isArray(data) ? data[0].month_rdt : []
       this.summaryTestResultMonthlyPCR = Array.isArray(data) ? data[0].month_pcr : []
