@@ -27,6 +27,10 @@ export default {
       type: String,
       default: null
     },
+    params: {
+      type: Object,
+      default: null
+    },
     chartHeight: {
       type: Number,
       default: 300
@@ -82,12 +86,15 @@ export default {
         },
         hover: {
           mode: 'nearest',
+          animationDuration: 0,
           intersect: true
         },
         animation: {
+          duration: 0,
           animateScale: true,
           animateRotate: true
-        }
+        },
+        responsiveAnimationDuration: 0
       }
     }
   },
@@ -104,29 +111,44 @@ export default {
       handler(value) {
         this.tabActive = value
         this.getDataGender()
-        this.$refs.doughnutChart.update()
+      },
+      deep: true
+    },
+    'params': {
+      handler(value) {
+        this.getDataGender()
       },
       deep: true
     },
     '$refs'() {
-      this.$refs.doughnutChart.update()
+      this.updateChart(this.chartData)
     }
   },
-  mounted() {
-    this.getDataGender()
+  async mounted() {
+    await this.getDataGender()
   },
   methods: {
-    async getDataGender() {
+    setDataGender(male = 0, female = 0) {
       this.loaded = true
-
-      const array = []
-      array.push(this.randomNumber())
-      array.push(this.randomNumber())
-
-      this.chartData.datasets[0].data = array
+      this.chartData.datasets[0].data = [female, male]
+      this.updateChart(this.chartData)
     },
-    randomNumber() {
-      return Math.floor(Math.random() * 201)
+    async getDataGender() {
+      const res = await this.$store.dispatch('statistic/summaryTestResultGender', this.params)
+      const { data } = res
+      let male = 0
+      let female = 0
+      if (data.length > 0) {
+        male = Array.isArray(data) ? data[0].male : 0
+        female = Array.isArray(data) ? data[0].female : 0
+      }
+      this.setDataGender(male, female)
+    },
+    updateChart(data) {
+      if (this.$refs.doughnutChart) {
+        this.$refs.doughnutChart.renderChart(data, this.chartOptions)
+        this.$refs.doughnutChart.update()
+      }
     }
   }
 }
