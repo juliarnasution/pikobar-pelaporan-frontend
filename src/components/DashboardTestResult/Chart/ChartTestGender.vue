@@ -111,12 +111,17 @@ export default {
       handler(value) {
         this.tabActive = value
         this.getDataGender()
-        this.$refs.doughnutChart.update()
+      },
+      deep: true
+    },
+    'params': {
+      handler(value) {
+        this.getDataGender()
       },
       deep: true
     },
     '$refs'() {
-      this.$refs.doughnutChart.update()
+      this.updateChart(this.chartData)
     }
   },
   async mounted() {
@@ -126,13 +131,24 @@ export default {
     setDataGender(male = 0, female = 0) {
       this.loaded = true
       this.chartData.datasets[0].data = [female, male]
+      this.updateChart(this.chartData)
     },
     async getDataGender() {
       const res = await this.$store.dispatch('statistic/summaryTestResultGender', this.params)
       const { data } = res
-      const male = Array.isArray(data) ? data[0].male : 0
-      const female = Array.isArray(data) ? data[0].female : 0
+      let male = 0
+      let female = 0
+      if (data.length > 0) {
+        male = Array.isArray(data) ? data[0].male : 0
+        female = Array.isArray(data) ? data[0].female : 0
+      }
       this.setDataGender(male, female)
+    },
+    updateChart(data) {
+      if (this.$refs.doughnutChart) {
+        this.$refs.doughnutChart.renderChart(data, this.chartOptions)
+        this.$refs.doughnutChart.update()
+      }
     }
   }
 }

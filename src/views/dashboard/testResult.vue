@@ -308,6 +308,8 @@
       <v-col cols="12">
         <chart-test-monthly
           :tab-active="tabActive"
+          :test-tools="filterActive.test_tools"
+          :filter-test-tools.sync="filterActive.test_tools"
           :data-test-monthly="summaryTestResultMonthly"
           :test-monthly-data.sync="summaryTestResultMonthly"
           :data-test-monthly-rdt="summaryTestResultMonthlyRDT"
@@ -422,7 +424,9 @@ export default {
         address_subdistrict_code: null,
         address_village_code: null,
         min_date: null,
-        max_date: null
+        max_date: null,
+        test_tools: ['vena', 'kapiler']
+
       },
       tabActive: 'all',
       statistic: {
@@ -473,6 +477,14 @@ export default {
         desa_kode: value,
         desa_nama: this.villageName
       }
+    },
+    'filterActive': {
+      async handler(value) {
+        await this.getStatisticTestResult()
+        await this.getSummaryTestResult()
+        await this.getSummaryTestResultLocation()
+      },
+      deep: true
     }
   },
   async mounted() {
@@ -515,9 +527,6 @@ export default {
           this.filterActive.max_date = event[1]
         }
       }
-      await this.getStatisticTestResult()
-      await this.getSummaryTestResult()
-      await this.getSummaryTestResultLocation()
     },
     async onSelectDistrict(value) {
       this.districtCity = value
@@ -527,9 +536,6 @@ export default {
       this.$emit('update:nameDistrict', value.kota_nama)
 
       this.filterActive.address_district_code = value.kota_kode
-      await this.getStatisticTestResult()
-      await this.getSummaryTestResult()
-      await this.getSummaryTestResultLocation()
     },
     async onSelectSubDistrict(value) {
       this.subDistrict = value
@@ -538,9 +544,6 @@ export default {
       this.$emit('update:nameSubDistrict', value.kecamatan_nama)
 
       this.filterActive.address_subdistrict_code = value.kecamatan_kode
-      await this.getStatisticTestResult()
-      await this.getSummaryTestResult()
-      await this.getSummaryTestResultLocation()
     },
     async onSelectVillage(value) {
       this.village = value
@@ -548,9 +551,6 @@ export default {
       this.$emit('update:nameVillage', value.desa_nama)
 
       this.filterActive.address_village_code = value.desa_kode
-      await this.getStatisticTestResult()
-      await this.getSummaryTestResult()
-      await this.getSummaryTestResultLocation()
     },
     async onReset() {
       if (rolesWidget['superadmin'].includes(this.roles[0])) {
@@ -564,8 +564,6 @@ export default {
       this.filterActive.address_village_code = null
       this.filterActive.min_date = null
       this.filterActive.max_date = null
-
-      this.getStatisticTestResult()
     },
     clearDate() {
       this.dateActive = []

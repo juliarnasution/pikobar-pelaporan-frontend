@@ -138,12 +138,17 @@ export default {
       handler(value) {
         this.tabActive = value
         this.getDataAge()
-        this.$refs.horizontalBarChart.update()
+      },
+      deep: true
+    },
+    'params': {
+      handler(value) {
+        this.getDataAge()
       },
       deep: true
     },
     '$refs'() {
-      this.$refs.horizontalBarChart.update()
+      this.updateChart(this.chartData)
     }
   },
   mounted() {
@@ -155,11 +160,17 @@ export default {
       const { data } = res
       const list_male_age = Array.isArray(data) ? data[0].male : null
       const list_female_age = Array.isArray(data) ? data[0].female : null
-      delete list_male_age[0]._id
-      delete list_female_age[0]._id
-      const male_age = Object.values(list_male_age[0])
-      const set_negative_male_age = male_age.map(x => -Math.abs(x))
-      const female_age = Object.values(list_female_age[0])
+      let set_negative_male_age = []
+      let female_age = []
+      if (list_male_age.length > 0) {
+        delete list_male_age[0]._id
+        const male_age = Object.values(list_male_age[0])
+        set_negative_male_age = male_age.map(x => -Math.abs(x))
+      }
+      if (list_female_age.length > 0) {
+        delete list_female_age[0]._id
+        female_age = Object.values(list_female_age[0])
+      }
       this.setDataAge(set_negative_male_age, female_age)
     },
     setDataAge(male_age = [], female_age = []) {
@@ -188,6 +199,13 @@ export default {
 
       this.chartOptions.scales.xAxes[0].ticks.min = -Math.abs(max + plus)
       this.chartOptions.scales.xAxes[0].ticks.max = max + plus
+      this.updateChart(this.chartData)
+    },
+    updateChart(data) {
+      if (this.$refs.horizontalBarChart) {
+        this.$refs.horizontalBarChart.renderChart(data, this.chartOptions)
+        this.$refs.horizontalBarChart.update()
+      }
     }
   }
 }

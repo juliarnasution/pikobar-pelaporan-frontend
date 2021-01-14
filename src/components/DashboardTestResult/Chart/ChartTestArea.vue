@@ -143,12 +143,11 @@ export default {
       handler(value) {
         this.tabActive = value
         this.filterTab()
-        this.$refs.horizontalBarChart.update()
       },
       deep: true
     },
     '$refs'() {
-      this.$refs.horizontalBarChart.update()
+      this.updateChart(this.chartData)
     },
     optionsData(value) {
       if (value) this.getDataAll()
@@ -202,6 +201,7 @@ export default {
           barThickness: 15
         }
       )
+      this.updateChart(this.chartData)
     },
     getDataRapid() { },
     getDataPCR() { },
@@ -254,6 +254,12 @@ export default {
       this.chartStyles = {
         height,
         position: 'relative'
+      }
+    },
+    updateChart(data) {
+      if (this.$refs.horizontalBarChart) {
+        this.$refs.horizontalBarChart.renderChart(data, this.chartOptions)
+        this.$refs.horizontalBarChart.update()
       }
     }
   }

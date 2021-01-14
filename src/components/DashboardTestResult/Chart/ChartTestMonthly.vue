@@ -51,6 +51,10 @@ export default {
       type: Number,
       default: 300
     },
+    testTools: {
+      type: Array,
+      default: function() { return [] }
+    },
     dataTestMonthly: {
       type: Array,
       default: function() { return [] }
@@ -68,7 +72,6 @@ export default {
     return {
       loaded: false,
       label: null,
-      sampleActive: ['vena', 'kapiler'],
       chartData: {
         labels: [],
         datasets: []
@@ -136,6 +139,14 @@ export default {
         this.$emit('update:testMonthlyData', value)
       }
     },
+    sampleActive: {
+      get: function() {
+        return this.testTools
+      },
+      set: function(value) {
+        this.$emit('update:filterTestTools', value)
+      }
+    },
     optionsDataMontlyRdt: {
       get: function() {
         return this.dataTestMonthlyRdt
@@ -193,7 +204,7 @@ export default {
       this.loaded = true
     },
     filterSample() {
-      this.$refs.barChart.update()
+      this.updateChart(this.chartData)
     },
     getDataAll() {
       const listNameMonth = []
@@ -328,8 +339,10 @@ export default {
       }
     },
     updateChart(data) {
-      this.$refs.barChart.renderChart(data)
-      this.$refs.barChart.update()
+      if (this.$refs.barChart) {
+        this.$refs.barChart.renderChart(data, this.chartOptions)
+        this.$refs.barChart.update()
+      }
     },
     randomNumber() {
       return Math.floor(Math.random() * 101)
