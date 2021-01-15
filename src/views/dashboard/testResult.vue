@@ -23,7 +23,6 @@
             <v-dialog
               ref="dialog"
               v-model="modal"
-              :return-value.sync="dateActive"
               persistent
               width="291"
             >
@@ -40,6 +39,7 @@
               </template>
               <v-date-picker
                 v-model="dateActive"
+                :allowed-dates="disablePastDates"
                 range
                 scrollable
                 locale="id"
@@ -48,6 +48,14 @@
                   class="d-flex justify-end"
                   style="width: 100%"
                 >
+                  <v-btn
+                    color="grey darken-3"
+                    class="button white--text mr-3"
+                    min-width="auto"
+                    @click="dateActive = []"
+                  >
+                    {{ $t('label.reset') }}
+                  </v-btn>
                   <v-btn
                     color="grey darken-3"
                     class="button white--text mr-3"
@@ -510,6 +518,12 @@ export default {
   methods: {
     filterTab(value) {
       this.tabActive = value
+    },
+    disablePastDates(val) {
+      if (this.dateActive.length > 0) {
+        return val >= new Date(this.dateActive[0]).toISOString().substr(0, 10)
+      }
+      return val
     },
     async onSelectDate(event) {
       this.$refs.dialog.save(event)

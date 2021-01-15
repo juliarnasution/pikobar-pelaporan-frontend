@@ -64,23 +64,18 @@ export default {
         },
         tooltips: {
           displayColors: false,
-          mode: 'index',
-          intersect: false,
           callbacks: {
             title: (tooltipItem, data) => {
-              return data['labels'][tooltipItem[0]['index']]
+              return data.labels[tooltipItem.datasetIndex]
             },
-            label: (tooltipItem, data) => {
-              return 'Jumlah: ' + data['datasets'][0]['data'][tooltipItem['index']]
-            },
-            afterLabel: (tooltipItem, data) => {
+            afterLabel: function(tooltipItem, data) {
               var dataset = data.datasets[tooltipItem.datasetIndex]
-              var total = dataset.data.reduce((previousValue, currentValue, currentIndex, array) => {
+              var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
                 return previousValue + currentValue
               })
               var currentValue = dataset.data[tooltipItem.index]
               var percentage = Math.floor(((currentValue / total) * 100) + 0.5)
-              return 'Persen: ' + percentage + '%'
+              return percentage + '%'
             }
           }
         },
