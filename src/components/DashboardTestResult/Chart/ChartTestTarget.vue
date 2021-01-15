@@ -4,7 +4,7 @@
     outlined
   >
     <v-card-title class="title ml-0 black--text">
-      {{ $t('label.total_test_result') }} {{ $t('label.based').toLowerCase() }} {{ $t('label.target') }}
+      {{ $t('label.total_test_result') }} {{ $t('label.based') }} {{ $t('label.target') }}
     </v-card-title>
     <v-divider class="mt-0 mb-2" />
     <v-card-text>
