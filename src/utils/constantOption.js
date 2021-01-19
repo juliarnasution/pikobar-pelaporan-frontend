@@ -181,14 +181,6 @@ export const statusNotification = [
     value: 'CaseCreated'
   },
   {
-    label: i18n.t('label.waiting_for_verification'),
-    value: 'CasePending'
-  },
-  {
-    label: i18n.t('label.verification_expired_title'),
-    value: 'CaseVerified'
-  },
-  {
     label: i18n.t('label.case_rejected'),
     value: 'CaseDeclined'
   },
