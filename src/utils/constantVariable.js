@@ -98,3 +98,4 @@ export const testResults = {
   'testResults2': ['pcr', 'tcm_sars_cov_2'],
   'testResults3': ['pcr', 'rapid', 'tcm_sars_cov_2']
 }
+

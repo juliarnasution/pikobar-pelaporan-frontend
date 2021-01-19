@@ -174,3 +174,26 @@ export const healthWorkerList = [
   { value: 'Tenaga Kesehatan Masyarakat', text: i18n.t('label.community_health_workers') },
   { value: 'Lainnya', text: i18n.t('label.other') }
 ]
+
+export const statusNotification = [
+  {
+    label: i18n.t('route.dashboard_case_new'),
+    value: 'CaseCreated'
+  },
+  {
+    label: i18n.t('label.waiting_for_verification'),
+    value: 'CasePending'
+  },
+  {
+    label: i18n.t('label.verification_expired_title'),
+    value: 'CaseVerified'
+  },
+  {
+    label: i18n.t('label.case_rejected'),
+    value: 'CaseDeclined'
+  },
+  {
+    label: i18n.t('label.close_contact_finished_quarantine'),
+    value: 'ClosecContactFinishedQuarantine'
+  }
+]

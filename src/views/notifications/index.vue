@@ -4,6 +4,15 @@
       outlined
       class="mt-2"
     >
+      <v-card-title class="pb-0">
+        {{ $t('route.notification') }}
+        <v-spacer />
+      </v-card-title>
+      <v-divider />
+      <filter-notification
+        :list-query="listQuery"
+        :on-search="getListNotifications"
+      />
       <v-row>
         <table-notification
           :is-loading="isLoading"
@@ -31,8 +40,10 @@ export default {
       isLoading: false,
       listQuery: {
         page: 1,
-        limit: 100,
-        search: ''
+        limit: 30,
+        search: '',
+        eventType: '',
+        startDate: ''
       }
     }
   },
@@ -41,6 +52,20 @@ export default {
       'totalPages',
       'notificationList'
     ])
+  },
+  watch: {
+    'listQuery': {
+      handler: function(value) {
+        if ((value !== undefined) && (value.length >= 2)) {
+          this.listQuery.page = 1
+          this.getListNotifications()
+        } else if (value.length === 0) {
+          this.listQuery.page = 1
+          this.getListNotifications()
+        }
+      },
+      deep: true
+    }
   },
   async mounted() {
     await this.getListNotifications()

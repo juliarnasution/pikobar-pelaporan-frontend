@@ -376,6 +376,8 @@ export default {
     action: 'Aksi',
     reason_for_declined: 'Alasan Penolakan',
     date_of_beginning_symptoms: 'Tanggal Awal Gejala',
+    date_of_beginning: 'Tanggal Awal',
+    all_category: 'Semua Kategori',
     verify_case: 'Verifikasi Kasus',
     decline_case: 'Tolak Kasus',
     delete_case: 'Hapus Kasus',
@@ -948,7 +950,8 @@ export default {
     redaction_detail_faskes: 'Lengkapi data riwayat dan informasi pasien di bawah ini, Klik “Simpan Sebagai Draft” atau “Selesai & Ajukan” jika data sudah lengkap',
     part_one_of_two: 'Bagian 1 dari 2',
     part_two_of_two: 'Bagian 2 dari 2',
-    fill_in_identity_criteria_and_clinical_information: 'Isikan Identitas, kriteria dan informasi klinis'
+    fill_in_identity_criteria_and_clinical_information: 'Isikan Identitas, kriteria dan informasi klinis',
+    case_has_been_rejected: 'Kasus telah ditolak'
   },
   success: {
     login_success: 'Login Berhasil',

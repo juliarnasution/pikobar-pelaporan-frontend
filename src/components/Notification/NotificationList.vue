@@ -7,19 +7,18 @@
       right
       fixed
       temporary
-      overflow
     >
-      <v-list>
+      <template v-slot:prepend>
         <v-list-item class="font-weight-bold" @click="onClose">
           <v-icon>mdi-chevron-left</v-icon>
           {{ $t('route.notification') }}
         </v-list-item>
-      </v-list>
+      </template>
       <v-skeleton-loader
         :loading="isLoading"
         type="list-item-three-line"
       >
-        <v-list d-flex dense style="max-height: 72vh;overflow: auto;">
+        <v-list dense style="max-height: 80vh;">
           <v-list-item
             v-for="item in notificationList"
             :key="item.title"
@@ -55,7 +54,7 @@
     <dialog-failed
       :show-dialog="showFailedDialog"
       :show.sync="showFailedDialog"
-      :title="$t('label.verification_expired_title')"
+      :title="titleDialogFailed"
       :message="''"
     />
   </div>
@@ -83,6 +82,7 @@ export default {
       caseDetail: null,
       showFailedDialog: false,
       isSubmit: false,
+      titleDialogFailed: '',
       verificationQuery: {
         'id': '',
         'data': {
@@ -94,7 +94,8 @@ export default {
   },
   computed: {
     ...mapGetters('user', [
-      'user_id'
+      'user_id',
+      'roles'
     ]),
     ...mapGetters('notifications', [
       'notificationList'
@@ -119,7 +120,7 @@ export default {
         const response = await this.$store.dispatch('reports/verifyCase', this.verificationQuery)
         if (response.status === 200 || response.status === 201) {
           await this.$store.dispatch('toast/successToast', this.verificationQuery.data.verified_status === 'verified' ? this.$t('success.verification_success') : this.$t('success.rejection_success'))
-          this.handleSearch()
+          this.getListNotifications()
         }
         this.isSubmit = false
       }
@@ -131,30 +132,39 @@ export default {
         await this.$store.dispatch('notifications/onReadNotification', item._id)
         item.isRead = true
       }
-      this.handleDetail(item.referenceId)
+      this.handleDetail(item.referenceId, item.eventType)
     },
     onClose() {
       this.$store.dispatch('notifDrawer/notificationDrawer', !this.isShowDrawer)
     },
     async getListNotifications() {
       this.isLoading = true
-      await this.$store.dispatch('notifications/getListNotifications', this.params)
+      await this.$store.dispatch('notifications/getListNotifications')
       this.isLoading = false
     },
-    async handleDetail(id) {
-      this.$store.commit('animationLottie/SET_LOADING', true)
-      const response = await this.$store.dispatch('reports/detailReportCase', id)
-      const path = `/laporan/detail-report/${id}`
-      if (response.data.verified_status === 'declined' && this.$route.path !== path) this.$router.push(path)
-      const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
-      if (response.data.verified_status === 'verified') {
-        this.showFailedDialog = true
+    async handleDetail(id, eventType) {
+      if (eventType !== 'CaseCreated') {
+        const path = `/laporan/detail-report/${id}`
+        if (this.$route.path !== path) this.$router.push(path)
       } else {
-        this.caseDetail = response.data
-        this.closeContactDetail = responseCloseContact.data
-        if (response.data.verified_status !== 'declined') this.showVerificationForm = true
+        this.$store.commit('animationLottie/SET_LOADING', true)
+        const response = await this.$store.dispatch('reports/detailReportCase', id)
+        const path = `/laporan/detail-report/${id}`
+        if (this.roles[0] === 'faskes' && response.data.verified_status === 'declined' && this.$route.path !== path) this.$router.push(path)
+        const responseCloseContact = await this.$store.dispatch('closeContactCase/getListCloseContactByCase', id)
+        if ((this.roles[0] !== 'faskes' && response.data.verified_status === 'declined')) {
+          this.showFailedDialog = true
+          this.titleDialogFailed = this.$t('label.case_has_been_rejected')
+        } else if (response.data.verified_status === 'verified') {
+          this.showFailedDialog = true
+          this.titleDialogFailed = this.$t('label.verification_expired_title')
+        } else {
+          this.caseDetail = response.data
+          this.closeContactDetail = responseCloseContact.data
+          this.showVerificationForm = true
+        }
+        this.$store.commit('animationLottie/SET_LOADING', false)
       }
-      this.$store.commit('animationLottie/SET_LOADING', false)
     },
     showAllNotifications() {
       const path = '/notification-list-all'
