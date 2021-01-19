@@ -263,6 +263,7 @@ export default {
     formatDatetime,
     async saveData() {
       const valid = await this.$refs.observer.validate()
+      this.loading = true
       if (!valid) {
         this.validateScrollUp()
         return

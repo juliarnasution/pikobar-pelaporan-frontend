@@ -2,7 +2,7 @@
   <v-dialog v-model="show" :max-width="maxWidthDialog">
     <v-card class="pa-7">
       <new-case-detail
-        v-if="caseDetail && caseDetail.verified_status !== 'declined'"
+        v-if="caseDetail"
         :detail="caseDetail"
         :close-contact-case="closeContactCase"
       />

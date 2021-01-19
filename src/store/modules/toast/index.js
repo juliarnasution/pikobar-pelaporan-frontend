@@ -4,8 +4,10 @@ import getters from './getters'
 
 const state = {
   show: false,
+  notification: false,
   color: '',
-  message: ''
+  message: '',
+  totalNoReadNotif: 0
 }
 
 export default {

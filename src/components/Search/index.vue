@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSearch">
     <v-text-field
       v-model="listQuery.search"
       v-debounce:500="handleSearch"

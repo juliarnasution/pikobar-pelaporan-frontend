@@ -249,7 +249,7 @@ export default {
       caseDetail: null,
       closeContactCase: [],
       tab: null,
-      tabLabel: [this.$t('label.all'), this.$t('label.waiting_for_verification'), this.$t('label.case_rejected'), this.$t('label.case_draft')],
+      tabLabel: [this.$t('label.all'), this.$t('label.waiting_for_verification'), this.$t('label.data_case_rejected'), this.$t('label.case_draft')],
       showVerificationForm: false,
       showConfirmation: false,
       showFailedDialog: false,

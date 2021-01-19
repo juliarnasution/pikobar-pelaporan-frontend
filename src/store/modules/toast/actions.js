@@ -1,4 +1,7 @@
 export default {
+  notificationToast({ commit }, message) {
+    commit('NOTIFICATION_TOAST', message)
+  },
   infoToast({ commit }, message) {
     commit('INFO_TOAST', message)
   },

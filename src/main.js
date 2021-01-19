@@ -15,7 +15,7 @@ import vueDebounce from 'vue-debounce'
 
 moment.locale('id')
 
-import './plugins/firebase'
+import * as firebase from './plugins/firebase'
 import vuetify from './plugins/vuetify'
 Vue.config.performance = process.env.NODE_ENV === 'development'
 
@@ -45,7 +45,7 @@ import '@/utils/vee-validate' // include all validate form
 import i18n from './lang' // Internationalization
 import '@/helpers/filters' // include all filters
 import VueHtml2Canvas from 'vue-html2canvas'
-// import './registerServiceWorker'
+import './registerServiceWorker'
 
 Vue.use(vueDebounce, {
   listenTo: 'input'
@@ -76,6 +76,7 @@ Vue.use(VeeValidate, {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  firebase,
   router,
   store,
   i18n,

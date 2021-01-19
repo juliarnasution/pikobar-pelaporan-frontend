@@ -3,6 +3,11 @@
   <div>
     <!-- App Header -->
     <app-header />
+    <!-- Notif Drawer -->
+    <notification-list
+      :drawer-notif="isNotif"
+      :notif-drawer.sync="isNotif"
+    />
     <!-- App Main Content -->
     <v-main>
       <!-- Breadcrumbs -->
@@ -25,6 +30,7 @@
 <script>
 /* eslint-disable */
 import Header from "./Header/Header.vue"
+import { mapGetters } from 'vuex'
 import {
   getUserSurvey
 } from '@/utils/cookies'
@@ -42,6 +48,17 @@ export default {
       ],
   }),
   computed: {
+    ...mapGetters('notifDrawer', [
+      'notifDrawer'
+    ]),
+    isNotif: {
+      set(value) {
+        return value
+      },
+      get() {
+        return this.notifDrawer
+      }
+    },
     key() {
       return this.$route.fullPath
     }
