@@ -10,7 +10,7 @@ const settingRouter = {
   meta: {
     title: 'setting',
     icon: 'mdi-settings',
-    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA]
+    roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
   },
   active: false,
   children: [
@@ -79,6 +79,18 @@ const settingRouter = {
         child: true,
         noCache: true,
         roles: [rolesPerm.ADMIN]
+      }
+    },
+    {
+      path: '/notification-list-all',
+      component: () => import('@/views/notifications/index'),
+      hidden: true,
+      meta: {
+        title: 'notification',
+        icon: 'mdi-bell-outline',
+        child: true,
+        noCache: true,
+        roles: [rolesPerm.ADMIN, rolesPerm.DINKESPROV, rolesPerm.DINKESKOTA, rolesPerm.FASKES]
       }
     }
   ]

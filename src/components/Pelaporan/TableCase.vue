@@ -41,7 +41,7 @@
           <td><status :status="item.status" /> </td>
           <td><final-result :final-result="item.final_result" /></td>
           <td>{{ item.author.username }}</td>
-          <td>{{ item.last_history ? formatDatetime(item.last_history.last_changed, 'DD MMMM YYYY') : '-' }}</td>
+          <td>{{ item.updatedAt ? formatDatetime(item.updatedAt, 'DD MMMM YYYY') : '-' }}</td>
           <td>
             <v-card-actions>
               <v-menu

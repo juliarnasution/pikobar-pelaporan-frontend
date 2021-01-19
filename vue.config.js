@@ -1,24 +1,16 @@
 const path = require('path')
 const pkg = require('./package.json')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-// const glob = require('glob-all')
+const vueEnverywere = require('vue-enverywhere')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
-// const PurgecssPlugin = require('purgecss-webpack-plugin')
 
 let plugins = [
+  new vueEnverywere({ filename: 'env-vars.js' }),
   new MiniCssExtractPlugin({
     filename: "[name].css",
   }),
-  // new PurgecssPlugin({
-  //   paths: glob.sync([
-  //     path.join(__dirname, './src/index.html'),
-  //     path.join(__dirname, './src/**/*.vue'),
-  //     path.join(__dirname, './src/**/*.js')
-  //   ]),
-  //   minify: true
-  // }),
   new webpack.IgnorePlugin(
     /^\.\/locale$/, /moment$/
   ),
@@ -26,6 +18,7 @@ let plugins = [
     rel: 'preload',
     as: 'script'
   }),
+  // new BundleAnalyzerPlugin()
 ]
 
 function resolve(dir) {
@@ -72,8 +65,9 @@ module.exports = {
     plugins,
   },
   pwa: {
+    workboxPluginMode: 'InjectManifest',
     workboxOptions: {
-      skipWaiting: true
+      swSrc: 'public/firebase-messaging-sw.js'
     }
   },
   chainWebpack(config) {
