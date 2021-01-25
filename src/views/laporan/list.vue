@@ -447,17 +447,11 @@ export default {
 
       const response = await this.$store.dispatch('reports/countReportCase', listQueryStatistic)
       if (response) this.loading = false
-      if (response.data === undefined) {
-        this.totalConfirmation = 0
-        this.totalProbable = 0
-        this.totalSuspect = 0
-        this.totalCloseCase = 0
-      } else {
-        this.totalConfirmation = response.data.confirmed
-        this.totalProbable = response.data.probable
-        this.totalSuspect = response.data.suspect
-        this.totalCloseCase = response.data.closeContact
-      }
+      const { data } = response || null
+      this.totalConfirmation = data ? data.confirmed : 0
+      this.totalProbable = data ? data.probable : 0
+      this.totalSuspect = data ? data.suspect : 0
+      this.totalCloseCase = data ? data.closeContact : 0
     },
     async onExportCase() {
       const response = await this.$store.dispatch('exportReports/exportExcelCase', this.listQuery)

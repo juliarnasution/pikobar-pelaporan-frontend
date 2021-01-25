@@ -692,8 +692,8 @@ export default {
       this.loading = false
     },
     onSelectHospital(value) {
-      this.formPasien.current_hospital_id = value._id
-      this.formPasien.current_location_address = value.name
+      this.formPasien.current_hospital_id = value._id || null
+      this.formPasien.current_location_address = value.name || null
     },
     uncheck(value) {
       if (value === this.formPasien.final_result) {

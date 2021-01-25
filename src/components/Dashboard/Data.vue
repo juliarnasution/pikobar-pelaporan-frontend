@@ -247,13 +247,12 @@ export default {
         address_district_code: this.district_user
       }
     }
-    const data = await this.$store.dispatch('reports/countReportCase', params)
+    const dataCase = await this.$store.dispatch('reports/countReportCase', params)
     const dataFinal = await this.$store.dispatch('reports/countReportCaseFinal', params)
 
     if (dataFinal) this.loading = false
-
-    this.patien = data.data
-    this.final = dataFinal.data
+    if (dataCase.data) this.patien = dataCase.data
+    if (dataFinal.data) this.final = dataFinal.data
     this.total = this.patien.OTG + this.patien.ODP + this.patien.PDP + this.patien.POSITIF
     this.totalConfirmation = this.final.POSITIF + this.final.SEMBUH + this.final.MENINGGAL
   }

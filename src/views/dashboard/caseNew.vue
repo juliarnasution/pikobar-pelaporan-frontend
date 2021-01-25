@@ -311,19 +311,19 @@ export default {
       this.districtCity = value
       this.clearDistrict()
       this.clearVillage()
-      this.$emit('update:codeDistrict', value.kota_kode)
-      this.$emit('update:nameDistrict', value.kota_nama)
+      this.$emit('update:codeDistrict', value.kota_kode || null)
+      this.$emit('update:nameDistrict', value.kota_nama || null)
     },
     async onSelectSubDistrict(value) {
       this.subDistrict = value
       this.clearVillage()
-      this.$emit('update:codeSubDistrict', value.kecamatan_kode)
-      this.$emit('update:nameSubDistrict', value.kecamatan_nama)
+      this.$emit('update:codeSubDistrict', value.kecamatan_kode || null)
+      this.$emit('update:nameSubDistrict', value.kecamatan_nama || null)
     },
     async onSelectVillage(value) {
       this.village = value
-      this.$emit('update:codeVillage', value.desa_kode)
-      this.$emit('update:nameVillage', value.desa_nama)
+      this.$emit('update:codeVillage', value.desa_kode || null)
+      this.$emit('update:nameVillage', value.desa_nama || null)
     },
     async onSearch() {
       this.filterActive.address_district_code = this.districtCity.kota_kode
@@ -381,26 +381,26 @@ export default {
       if (res) this.loadingStatistic = false
 
       this.statistic.confirmed = {
-        sick_home: res.data[0].confirmed[0].sick_home,
-        sick_hospital: res.data[0].confirmed[0].sick_hospital,
-        recovered: res.data[0].confirmed[0].recovered,
-        decease: res.data[0].confirmed[0].decease
+        sick_home: res.data[0].confirmed[0].sick_home || 0,
+        sick_hospital: res.data[0].confirmed[0].sick_hospital || 0,
+        recovered: res.data[0].confirmed[0].recovered || 0,
+        decease: res.data[0].confirmed[0].decease || 0
       }
 
       this.statistic.probable = {
-        sick: res.data[0].probable[0].sick,
-        recovered: res.data[0].probable[0].recovered,
-        decease: res.data[0].probable[0].decease
+        sick: res.data[0].probable[0].sick || 0,
+        recovered: res.data[0].probable[0].recovered || 0,
+        decease: res.data[0].probable[0].decease || 0
       }
 
       this.statistic.suspect = {
-        sick: res.data[0].suspect[0].sick,
-        discarded: res.data[0].suspect[0].discarded
+        sick: res.data[0].suspect[0].sick || 0,
+        discarded: res.data[0].suspect[0].discarded || 0
       }
 
       this.statistic.closeContact = {
-        quarantine: res.data[0].closeContact[0].quarantine,
-        discarded: res.data[0].closeContact[0].discarded
+        quarantine: res.data[0].closeContact[0].quarantine || 0,
+        discarded: res.data[0].closeContact[0].discarded || 0
       }
     }
   }
