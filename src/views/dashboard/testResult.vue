@@ -546,23 +546,23 @@ export default {
       this.districtCity = value
       this.clearDistrict()
       this.clearVillage()
-      this.$emit('update:codeDistrict', value.kota_kode)
-      this.$emit('update:nameDistrict', value.kota_nama)
+      this.$emit('update:codeDistrict', value.kota_kode || null)
+      this.$emit('update:nameDistrict', value.kota_nama || null)
 
       this.filterActive.address_district_code = value.kota_kode
     },
     async onSelectSubDistrict(value) {
       this.subDistrict = value
       this.clearVillage()
-      this.$emit('update:codeSubDistrict', value.kecamatan_kode)
-      this.$emit('update:nameSubDistrict', value.kecamatan_nama)
+      this.$emit('update:codeSubDistrict', value.kecamatan_kode || null)
+      this.$emit('update:nameSubDistrict', value.kecamatan_nama || null)
 
       this.filterActive.address_subdistrict_code = value.kecamatan_kode
     },
     async onSelectVillage(value) {
       this.village = value
-      this.$emit('update:codeVillage', value.desa_kode)
-      this.$emit('update:nameVillage', value.desa_nama)
+      this.$emit('update:codeVillage', value.desa_kode || null)
+      this.$emit('update:nameVillage', value.desa_nama || null)
 
       this.filterActive.address_village_code = value.desa_kode
     },

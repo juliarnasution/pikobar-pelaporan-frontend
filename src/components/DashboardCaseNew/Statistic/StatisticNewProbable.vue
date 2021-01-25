@@ -169,9 +169,9 @@ export default {
   },
   methods: {
     getData() {
-      const sick = this.probable.sick
-      const recovered = this.probable.recovered
-      const decease = this.probable.decease
+      const sick = this.probable.sick || 0
+      const recovered = this.probable.recovered || 0
+      const decease = this.probable.decease || 0
 
       this.totalProbable = sick + recovered + decease
       this.totalSick = sick

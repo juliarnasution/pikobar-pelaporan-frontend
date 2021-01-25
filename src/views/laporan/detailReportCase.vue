@@ -610,7 +610,8 @@ export default {
       }
     },
     backPage() {
-      this.$router.push('/laporan/list')
+      const path = '/laporan/list'
+      if (this.$route.path !== path) this.$router.push(path)
     },
     detailNameCase(nameCase, nik) {
       let completeNameCase = ''
@@ -681,7 +682,8 @@ export default {
       if (response.status && response.status !== ResponseRequest.UNPROCESSABLE) {
         await this.$store.dispatch('toast/successToast', this.$t('success.send_data_success'))
         await this.$store.dispatch('reports/resetFormPasien')
-        await this.$router.push('/laporan/verification')
+        const path = '/laporan/verification'
+        if (this.$route.path !== path) await this.$router.push(path)
       } else {
         await this.$store.dispatch('toast/errorToast', response.data.message)
       }
