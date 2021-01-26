@@ -808,6 +808,7 @@ export default {
         if (this.filter[cat]) {
           this.jsonAll = this.data[cat]
         }
+        return
       })
 
       let geojsonLayer

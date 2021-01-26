@@ -209,7 +209,7 @@ export default {
           this.listQuery.page = 1
           this.handleSearch()
           this.loadingTable = false
-        } else if (value.length === 0) {
+        } else if (value && value.length === 0) {
           this.loadingTable = true
           this.listQuery.page = 1
           this.handleSearch()

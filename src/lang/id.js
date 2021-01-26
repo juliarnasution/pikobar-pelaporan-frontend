@@ -257,7 +257,6 @@ export default {
     testing_date: 'Tanggal Pemeriksaan',
     clinical_info: 'Info Klinis',
     enter_place: 'Masukkan Tempat',
-    choose_place: 'Pilih Tempat',
     complete_address_place_testing: 'Alamat Lengkap Tempat Pemeriksaan',
     additional_information: 'Keterangan Tambahan',
     search_participant_by_name_nik: 'Cari Nama Peserta/NIK/No Telepon',
