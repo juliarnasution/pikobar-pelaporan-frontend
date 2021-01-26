@@ -262,11 +262,11 @@ export default {
         this.successMessage = `Berhasil mengimpor ${response.data.inserted} data laporan kasus`
         this.refreshPage()
       } else if (response.data.errors && response.data.errors[0].rowNumber) {
-        this.errorList = response.data.errors
+        this.errorList = response.data.errors || []
         this.tab = 2
         this.errorType = 'row'
       } else {
-        this.errorList = response.data.errors
+        this.errorList = response.data.errors || []
         this.errorType = 'message'
       }
       this.isLoading = false

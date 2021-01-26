@@ -170,7 +170,7 @@ export default {
         await this.$store.dispatch('toast/successToast', this.$t('success.create_data_success'))
         this.$router.push('/rdt/list')
         await this.$refs.form.reset()
-      } catch {
+      } catch (error) {
         await this.$store.dispatch('toast/errorToast', 'Data gagal disimpan')
       } finally {
         this.loading = false
@@ -209,7 +209,7 @@ export default {
           await this.$store.dispatch('reports/createReportCase', this.formRapid)
         }
         this.saveData()
-      } catch {
+      } catch (error) {
         await this.$store.dispatch('toast/errorToast', 'Data gagal disimpan')
       } finally {
         this.loading = false

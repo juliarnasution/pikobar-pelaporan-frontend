@@ -330,7 +330,8 @@ export default {
   methods: {
     async handleSearch() {
       const response = await this.$store.dispatch('reports/listReportCase', this.listQuery)
-      this.totalItem = response.data ? response.data._meta.itemCount : 0
+      const { data } = response || null
+      this.totalItem = data ? data._meta.itemCount : 0
     },
     async onNext() {
       await this.$store.dispatch('reports/listReportCase', this.listQuery)
