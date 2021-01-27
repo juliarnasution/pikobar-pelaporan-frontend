@@ -148,9 +148,9 @@ export default {
     show(value) {
       this.$emit('update:show', value)
     },
-    'formPasien.birth_date': function(value) {
-      if (value !== null && value.length > 0) {
-        const age = this.getAgeWithMonth(value)
+    'formPasien.birth_date': function(dateVal) {
+      if (dateVal && dateVal.length > 0) {
+        const age = this.getAgeWithMonth(dateVal)
         this.formPasien.yearsOld = age.year
         this.formPasien.monthsOld = age.month
         this.formPasien.age = Number((this.formPasien.yearsOld + (this.formPasien.monthsOld / 12)).toFixed(2))

@@ -204,7 +204,7 @@ export default {
   watch: {
     'listQuery.search': {
       handler: function(value) {
-        if ((value !== undefined) && (value.length >= 2)) {
+        if (value && value.length >= 2) {
           this.loadingTable = true
           this.listQuery.page = 1
           this.handleSearch()

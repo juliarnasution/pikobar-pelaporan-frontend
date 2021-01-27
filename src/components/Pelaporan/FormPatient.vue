@@ -437,7 +437,7 @@ export default {
   watch: {
     'formPasien.birth_date': function(value) {
       if (value === null) return
-      if (value && value.length > 0) {
+      if (value !== undefined && value.length > 0) {
         const age = this.getAgeWithMonth(value)
         this.formPasien.yearsOld = age.year
         this.formPasien.monthsOld = age.month
