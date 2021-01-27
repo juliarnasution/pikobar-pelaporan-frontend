@@ -198,10 +198,10 @@ export default {
   watch: {
     'listQuery.search': {
       handler: function(value) {
-        if ((value !== undefined) && (value.length >= 2)) {
+        if (value && value.length >= 2) {
           this.listQuery.page = 1
           this.handleSearch()
-        } else if (value.length === 0) {
+        } else if (value && value.length === 0) {
           this.listQuery.page = 1
           this.handleSearch()
         }

@@ -804,9 +804,9 @@ export default {
     },
     createMarker(value = null) {
       this.jsonAll = []
-      Object.keys(this.filter).map((cat) => {
+      Object.keys(this.filter).map(cat => {
         if (this.filter[cat]) {
-          this.jsonAll = this.data[cat]
+          return this.jsonAll = this.data[cat]
         }
       })
 
@@ -946,7 +946,7 @@ export default {
           })
         }
 
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       }
@@ -1114,7 +1114,7 @@ export default {
           const newLayer = cluster[element.feature.properties.bps_kabupaten_kode][key].addTo(this.map)
           this.dataMarker.push(newLayer)
 
-          cluster[element.feature.properties.bps_kabupaten_kode][key].on('clusterclick', (c) => {
+          return cluster[element.feature.properties.bps_kabupaten_kode][key].on('clusterclick', (c) => {
             this.isFilter = false
             this.sidebar.show()
 
@@ -1144,7 +1144,7 @@ export default {
           const newLayer = cluster[element.feature.properties.bps_kecamatan_kode][key].addTo(this.map)
           this.dataMarker.push(newLayer)
 
-          cluster[element.feature.properties.bps_kecamatan_kode][key].on('clusterclick', (c) => {
+          return cluster[element.feature.properties.bps_kecamatan_kode][key].on('clusterclick', (c) => {
             this.isFilter = false
             this.sidebar.show()
 
@@ -1176,12 +1176,12 @@ export default {
       } else if (this.zoomNew === 3) {
         Object.keys(cluster[element.feature.properties.bps_desa_kode]).map((key) => {
           const newLayer = cluster[element.feature.properties.bps_desa_kode][key].addTo(this.map)
-          this.dataMarker.push(newLayer)
+          return this.dataMarker.push(newLayer)
         })
       } else if (this.zoomNew === 4) {
         Object.keys(cluster).map((key) => {
           const newLayer = cluster[key].addTo(this.map)
-          this.dataMarker.push(newLayer)
+          return this.dataMarker.push(newLayer)
         })
       }
     },
@@ -1230,7 +1230,7 @@ export default {
     },
     onFilter(category) {
       Object.keys(this.filter).map((cat) => {
-        this.filter[cat] = false
+        return this.filter[cat] = false
       })
 
       this.filter[category] = !this.filter[category]
@@ -1255,8 +1255,8 @@ export default {
       this.districtCity = value
       this.clearDistrict()
       this.clearVillage()
-      this.$emit('update:codeDistrict', value.kota_kode || null)
-      this.$emit('update:nameDistrict', value.kota_nama || null)
+      if (value.kota_kode) this.$emit('update:codeDistrict', value.kota_kode)
+      if (value.kota_nama) this.$emit('update:nameDistrict', value.kota_nama)
 
       this.map.spin(true)
       this.zoomNew = 2
@@ -1275,8 +1275,8 @@ export default {
       this.isFilterLayer = true
       this.subDistrict = value
       this.clearVillage()
-      this.$emit('update:codeSubDistrict', value.kecamatan_kode || null)
-      this.$emit('update:nameSubDistrict', value.kecamatan_nama || null)
+      if (value.kecamatan_kode) this.$emit('update:codeSubDistrict', value.kecamatan_kode)
+      if (value.kecamatan_nama) this.$emit('update:nameSubDistrict', value.kecamatan_nama)
 
       this.map.spin(true)
       this.zoomNew = 3
@@ -1294,8 +1294,8 @@ export default {
 
       this.isFilterLayer = true
       this.village = value
-      this.$emit('update:codeVillage', value.desa_kode || null)
-      this.$emit('update:nameVillage', value.desa_nama || null)
+      if (value.desa_kode) this.$emit('update:codeVillage', value.desa_kode)
+      if (value.desa_nama) this.$emit('update:nameVillage', value.desa_nama)
 
       this.map.spin(true)
       this.zoomNew = 4

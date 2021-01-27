@@ -59,7 +59,7 @@ export function scrollUp(key) {
 
 export function validateScrollUp() {
   const el = document.querySelector('.v-messages.error--text')
-  if (el.parentElement) this.$vuetify.goTo(el.parentElement.parentElement)
+  if (el) this.$vuetify.goTo(el.parentElement.parentElement)
 }
 
 export function setUpDataCase2(caseV2, detail) {

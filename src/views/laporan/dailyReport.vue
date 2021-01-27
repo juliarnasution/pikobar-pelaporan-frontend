@@ -131,7 +131,7 @@ export default {
   watch: {
     'listQuery.date': {
       handler: function(value) {
-        if (value.length > 0) {
+        if (value !== undefined && value.length > 0) {
           this.reportingDate = this.$moment(value).format('DD MMMM YYYY')
           this.handleSearch()
         } else {

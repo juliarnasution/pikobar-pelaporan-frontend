@@ -356,7 +356,7 @@ export default {
   },
   watch: {
     date(value) {
-      if (value.length > 1) {
+      if (value && value.length > 1) {
         this.reportingDate = this.$moment(value).format('DD MMMM YYYY')
       } else {
         this.reportingDate = this.$moment().format('DD MMMM YYYY')

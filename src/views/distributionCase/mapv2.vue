@@ -728,11 +728,11 @@ export default {
       })
 
       if (!this.isZoom) {
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
           this.map.fitBounds(geojsonLayer.getBounds())
         } else if (
-          geojsonLayer.getLayers() &&
+          geojsonLayer !== undefined &&
           geojsonLayer.getLayers().length === 1
         ) {
           this.map.setView(geojsonLayer.getLayers()[0].getLatLng(), 12)
@@ -763,10 +763,10 @@ export default {
       })
 
       if (!this.isZoom) {
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer.getLayers() !== undefined && geojsonLayer.getLayers().length > 1) {
           this.map.fitBounds(geojsonLayer.getBounds())
         } else if (
-          geojsonLayer.getLayers() &&
+          geojsonLayer !== undefined &&
           geojsonLayer.getLayers().length === 1
         ) {
           this.map.setView(geojsonLayer.getLayers()[0].getLatLng(), 12)
@@ -803,9 +803,8 @@ export default {
     createMarker(value = null) {
       this.jsonAll = []
       Object.keys(this.stage).map(cat => {
-        if (this.stage[cat].filter) {
-          this.jsonAll = this.stage[cat].data
-        }
+        if (this.stage[cat].filter) this.jsonAll = this.stage[cat].data
+        return
       })
 
       let geojsonLayer
@@ -820,7 +819,7 @@ export default {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
                 const longitude = Number(elPasien.latitude)
                 const latitude = Number(elPasien.longitude)
-                if (longitude !== null && latitude !== null) {
+                if (longitude && latitude) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
                   if (isInside) {
@@ -833,7 +832,7 @@ export default {
           }
         })
 
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       } else if (this.zoomNew === 2) {
@@ -851,7 +850,7 @@ export default {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
                 const longitude = Number(elPasien.latitude)
                 const latitude = Number(elPasien.longitude)
-                if (longitude !== null && latitude !== null) {
+                if (longitude && latitude) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
                   if (isInside) {
@@ -864,7 +863,7 @@ export default {
           }
         })
 
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       } else if (this.zoomNew === 3) {
@@ -882,7 +881,7 @@ export default {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
                 const longitude = Number(elPasien.latitude)
                 const latitude = Number(elPasien.longitude)
-                if (longitude !== null && latitude !== null) {
+                if (longitude && latitude) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
                   if (isInside) {
@@ -895,7 +894,7 @@ export default {
           }
         })
 
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       } else if (this.zoomNew === 4) {
@@ -911,7 +910,7 @@ export default {
               if ('longitude' in elPasien && 'latitude' in elPasien) {
                 const longitude = Number(elPasien.latitude)
                 const latitude = Number(elPasien.longitude)
-                if (longitude !== null && latitude !== null) {
+                if (longitude && latitude) {
                   const point = turf.point([longitude, latitude])
                   const isInside = turf.inside(point, element.feature)
                   if (isInside) {
@@ -928,7 +927,7 @@ export default {
           }
         })
 
-        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       }
@@ -1076,7 +1075,7 @@ export default {
           ][key].addTo(this.map)
           this.dataMarker.push(newLayer)
 
-          cluster[element.feature.properties.kemendagri_kabupaten_kode][key].on(
+          return cluster[element.feature.properties.kemendagri_kabupaten_kode][key].on(
             'clusterclick',
             c => {
               this.isFilter = false
@@ -1113,7 +1112,7 @@ export default {
           ][key].addTo(this.map)
           this.dataMarker.push(newLayer)
 
-          cluster[element.feature.properties.kemendagri_kecamatan_kode][key].on(
+          return cluster[element.feature.properties.kemendagri_kecamatan_kode][key].on(
             'clusterclick',
             c => {
               this.isFilter = false
@@ -1153,12 +1152,12 @@ export default {
           const newLayer = cluster[
             element.feature.properties.kemendagri_desa_kode
           ][key].addTo(this.map)
-          this.dataMarker.push(newLayer)
+          return this.dataMarker.push(newLayer)
         })
       } else if (this.zoomNew === 4) {
         Object.keys(cluster).map(key => {
           const newLayer = cluster[key].addTo(this.map)
-          this.dataMarker.push(newLayer)
+          return this.dataMarker.push(newLayer)
         })
       }
     },
@@ -1239,7 +1238,8 @@ export default {
     onFilter(category) {
       this.sidebar.hide()
       Object.keys(this.stage).map(res => {
-        this.stage[res].filter = false
+        if (this.stage[res].filter) this.stage[res].filter = false
+        return
       })
 
       this.stage[category].filter = !this.stage[category].filter
@@ -1256,8 +1256,8 @@ export default {
       this.districtCity = value
       this.clearDistrict()
       this.clearVillage()
-      this.$emit('update:codeDistrict', value.kota_kode || null)
-      this.$emit('update:nameDistrict', value.kota_nama || null)
+      if (value.kota_kode) this.$emit('update:codeDistrict', value.kota_kode)
+      if (value.kota_nama) this.$emit('update:nameDistrict', value.kota_nama)
 
       this.map.spin(true)
       this.zoomNew = 2
@@ -1277,8 +1277,8 @@ export default {
       this.isFilterLayer = true
       this.subDistrict = value
       this.clearVillage()
-      this.$emit('update:codeSubDistrict', value.kecamatan_kode || null)
-      this.$emit('update:nameSubDistrict', value.kecamatan_nama || null)
+      if (value.kecamatan_kode) this.$emit('update:codeSubDistrict', value.kecamatan_kode)
+      if (value.kecamatan_nama) this.$emit('update:nameSubDistrict', value.kecamatan_nama)
 
       this.map.spin(true)
       this.zoomNew = 3
@@ -1297,8 +1297,8 @@ export default {
 
       this.isFilterLayer = true
       this.village = value
-      this.$emit('update:codeVillage', value.desa_kode || null)
-      this.$emit('update:nameVillage', value.desa_nama || null)
+      if (value.desa_kode) this.$emit('update:codeVillage', value.desa_kode)
+      if (value.desa_nama) this.$emit('update:nameVillage', value.desa_nama)
 
       this.map.spin(true)
       this.zoomNew = 4

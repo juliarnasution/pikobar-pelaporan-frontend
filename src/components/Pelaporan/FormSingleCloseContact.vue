@@ -357,7 +357,7 @@ export default {
       }
     },
     'formCloseContact.name'(value) {
-      if (value.length === 0) {
+      if (value && value.length === 0) {
         this.disabled = false
       }
     }

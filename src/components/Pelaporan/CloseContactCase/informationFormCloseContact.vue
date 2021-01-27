@@ -508,13 +508,13 @@ export default {
   },
   watch: {
     'formBody.birth_date': function(value) {
-      if (value === null) return
-      if (value.length > 0) {
+      if (value !== undefined && value.length > 0) {
         const age = this.getAgeWithMonth(value)
         this.formBody.yearsOld = age.year
         this.formBody.month = age.month
         this.formBody.age = Number((this.formBody.yearsOld + (this.formBody.month / 12)).toFixed(2))
       }
+      return
     },
     'formBody.yearsOld'(value) {
       if (this.formBody.monthsOld !== '') {
