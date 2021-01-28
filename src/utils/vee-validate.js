@@ -69,7 +69,7 @@ extend('isUsernameUsed', {
   message: (_, values) => i18n.t('errors.username_are_used', values),
   validate: async(value) => {
     let isUsed = true
-    if (value.length > 3) {
+    if (value !== undefined && value.length > 3) {
       const response = await store.dispatch('user/checkUsernameEmail', {
         params: value
       })
@@ -83,7 +83,7 @@ extend('isEmailUsed', {
   message: (_, values) => i18n.t('errors.email_are_used', values),
   validate: async(value) => {
     let isUsed = true
-    if (value.length > 3) {
+    if (value !== undefined && value.length > 3) {
       const response = await store.dispatch('user/checkUsernameEmail', {
         params: value
       })
@@ -118,7 +118,7 @@ extend('provinceCode', {
 extend('sixteenDigits', {
   message: (_, values) => i18n.t('errors.field_must_contains_sixteen_digits', values),
   validate: (value) => {
-    return (value.length === 16)
+    return (value !== undefined && value.length === 16)
   }
 })
 

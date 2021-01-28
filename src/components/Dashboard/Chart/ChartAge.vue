@@ -191,7 +191,8 @@ export default {
       if (max > 10 && max <= 100) {
         last = max % 10
         plus = (last <= 5) ? 10 - last : 15 - last
-      } else if (max > 100 && max <= 1000) {
+      }
+      if (max > 100 && max <= 1000) {
         last = max % 100
         plus = (last <= 75) ? 75 - last : 100 - last
       } else if (max > 1000) {

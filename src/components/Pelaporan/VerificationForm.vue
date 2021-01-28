@@ -170,13 +170,14 @@ export default {
           }
           this.listNameCases.push(this.relatedCaseObject)
           const response = await this.$store.dispatch('region/listCountry')
-          this.listCountry = response.data
+          const { data } = response
+          this.listCountry = data
           const paramHospitalWestJava = { 'rs_jabar': true }
           const paramHospitalNonWestJava = { 'rs_jabar': false }
           const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
-          this.hospitalWestJavaList = responseWestJava.data ? responseWestJava.data : []
           const responseNonWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalNonWestJava)
-          this.hospitalNonWestJavaList = responseNonWestJava.data
+          this.hospitalWestJavaList = responseWestJava.data ? responseWestJava.data : []
+          this.hospitalNonWestJavaList = responseNonWestJava.data ? responseNonWestJava.data : []
         }
       }
     },

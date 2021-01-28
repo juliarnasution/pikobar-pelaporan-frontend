@@ -285,10 +285,6 @@ export default {
     }
   },
   async beforeMount() {
-    // if (this.roles[0] === 'faskes') {
-    //   this.display = false
-    // }
-
     if (rolesWidget['dinkesKotaAndFaskes'].includes(this.roles[0])) {
       this.disabledDistrict = true
       this.filterActive.address_district_code = this.district_user

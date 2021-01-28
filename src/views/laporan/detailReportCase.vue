@@ -646,8 +646,11 @@ export default {
     },
     async getStatusCase(id) {
       const response = await this.$store.dispatch('reports/statusCase', id)
-      this.statusCase = response.data
-      this.checkStatusHistoryTravel(response.data)
+      const { data } = response || null
+      if (data) {
+        this.statusCase = data
+        this.checkStatusHistoryTravel(data)
+      }
     },
     async getSummaryCase(id) {
       const response = await this.$store.dispatch('reports/summaryReportCase', id)

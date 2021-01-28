@@ -80,7 +80,7 @@ export default {
       }
     },
     codeDistrict: async function(value) {
-      if (value && value.length > 0) {
+      if (value) {
         const response = await this.$store.dispatch('region/getListSubDistrict', value)
         this.listSubDistrict = response.data
         this.disable = false
