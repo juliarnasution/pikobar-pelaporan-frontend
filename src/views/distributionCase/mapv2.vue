@@ -728,13 +728,10 @@ export default {
       })
 
       if (!this.isZoom) {
-        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
           this.map.fitBounds(geojsonLayer.getBounds())
-        } else if (
-          geojsonLayer !== undefined &&
-          geojsonLayer.getLayers().length === 1
-        ) {
+        } else if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length === 1) {
           this.map.setView(geojsonLayer.getLayers()[0].getLatLng(), 12)
         }
       }
@@ -765,10 +762,7 @@ export default {
       if (!this.isZoom) {
         if (geojsonLayer.getLayers() !== undefined && geojsonLayer.getLayers().length > 1) {
           this.map.fitBounds(geojsonLayer.getBounds())
-        } else if (
-          geojsonLayer !== undefined &&
-          geojsonLayer.getLayers().length === 1
-        ) {
+        } else if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length === 1) {
           this.map.setView(geojsonLayer.getLayers()[0].getLatLng(), 12)
         }
       }
@@ -804,7 +798,7 @@ export default {
       this.jsonAll = []
       Object.keys(this.stage).map(cat => {
         if (this.stage[cat].filter) this.jsonAll = this.stage[cat].data
-        return
+        return this.jsonAll
       })
 
       let geojsonLayer
@@ -832,7 +826,7 @@ export default {
           }
         })
 
-        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       } else if (this.zoomNew === 2) {
@@ -863,7 +857,7 @@ export default {
           }
         })
 
-        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       } else if (this.zoomNew === 3) {
@@ -894,7 +888,7 @@ export default {
           }
         })
 
-        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       } else if (this.zoomNew === 4) {
@@ -927,7 +921,7 @@ export default {
           }
         })
 
-        if (geojsonLayer !== undefined && geojsonLayer.getLayers().length > 1) {
+        if (geojsonLayer.getLayers() && geojsonLayer.getLayers().length > 1) {
           this.centerCity = geojsonLayer.getBounds()
         }
       }
@@ -1239,7 +1233,7 @@ export default {
       this.sidebar.hide()
       Object.keys(this.stage).map(res => {
         if (this.stage[res].filter) this.stage[res].filter = false
-        return
+        return this.stage[res].filter
       })
 
       this.stage[category].filter = !this.stage[category].filter

@@ -1,7 +1,8 @@
 on:
   push:
     branches:
-      - feature/setup-git-action-sonarcube
+      - master
+      - development
     pull_request:
       types: [assigned, opened, synchronize, reopened]
 name: Run SonarCloud Scan

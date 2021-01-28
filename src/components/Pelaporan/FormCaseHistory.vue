@@ -608,8 +608,10 @@ export default {
     const paramHospitalNonWestJava = { 'rs_jabar': false }
     const responseWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalWestJava)
     const responseNonWestJava = await this.$store.dispatch('region/getListHospital', paramHospitalNonWestJava)
-    this.hospitalWestJavaList = responseWestJava.data ? responseWestJava.data : []
-    this.hospitalNonWestJavaList = responseNonWestJava.data ? responseNonWestJava.data : []
+    const { data: westJavaData } = responseWestJava || null
+    const { data: nonWestJavaData } = responseNonWestJava || null
+    this.hospitalWestJavaList = westJavaData || []
+    this.hospitalNonWestJavaList = nonWestJavaData || []
     if (this.roles[0] === 'faskes') {
       this.formPasien.report_source = this.fullName
       this.disabledReportResource = true
